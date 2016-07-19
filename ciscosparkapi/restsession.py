@@ -3,7 +3,7 @@
 
 import urlparse
 import requests
-import exception
+import exceptions
 
 
 # Default api.ciscospark.com base URL
@@ -23,7 +23,7 @@ def _validate_base_url(base_url):
     else:
         error_message = "base_url must contain a valid scheme (protocol " \
                         "specifier) and network location (hostname)"
-        raise exception.CiscoSparkApiException(error_message)
+        raise exceptions.CiscoSparkApiException(error_message)
 
 
 def _raise_if_extra_kwargs(kwargs):
@@ -33,9 +33,9 @@ def _raise_if_extra_kwargs(kwargs):
 
 def _check_response_code(response, erc):
     if response.status_code != erc:
-        raise exception.CiscoSparkApiError(response.status_code,
-                                           request=response.request,
-                                           response=response)
+        raise exceptions.CiscoSparkApiError(response.status_code,
+                                            request=response.request,
+                                            response=response)
 
 
 def _extract_and_parse_json(response):
@@ -137,7 +137,7 @@ class RestSession(object):
             else:
                 error_message = "'items' object not found in JSON data: %r" \
                                 % json_page
-                raise exception.CiscoSparkApiException(error_message)
+                raise exceptions.CiscoSparkApiException(error_message)
 
     def post(self, url, json_dict, **kwargs):
         # Process args

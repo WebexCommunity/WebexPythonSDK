@@ -1,2 +1,2 @@
-import exception
+import exceptions
 import restsession
