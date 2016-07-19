@@ -3,17 +3,19 @@
 
 import urlparse
 import requests
-import exceptions
+from .exceptions import ciscosparkapiException, SparkApiError
 
 
 # Default api.ciscospark.com base URL
 DEFAULT_API_URL = 'https://api.ciscospark.com/v1/'
 
 # Cisco Spark cloud Expected Response Codes (HTTP Response Codes)
-ERC = {'GET': 200,
-       'POST': 200,
-       'PUT': 200,
-       'DELETE': 204}
+ERC = {
+    'GET': 200,
+    'POST': 200,
+    'PUT': 200,
+    'DELETE': 204
+}
 
 
 def _validate_base_url(base_url):
@@ -23,7 +25,7 @@ def _validate_base_url(base_url):
     else:
         error_message = "base_url must contain a valid scheme (protocol " \
                         "specifier) and network location (hostname)"
-        raise exceptions.CiscoSparkApiException(error_message)
+        raise ciscosparkapiException(error_message)
 
 
 def _raise_if_extra_kwargs(kwargs):
@@ -33,9 +35,9 @@ def _raise_if_extra_kwargs(kwargs):
 
 def _check_response_code(response, erc):
     if response.status_code != erc:
-        raise exceptions.CiscoSparkApiError(response.status_code,
-                                            request=response.request,
-                                            response=response)
+        raise SparkApiError(response.status_code,
+                            request=response.request,
+                            response=response)
 
 
 def _extract_and_parse_json(response):
@@ -137,7 +139,7 @@ class RestSession(object):
             else:
                 error_message = "'items' object not found in JSON data: %r" \
                                 % json_page
-                raise exceptions.CiscoSparkApiException(error_message)
+                raise ciscosparkapiException(error_message)
 
     def post(self, url, json_dict, **kwargs):
         # Process args

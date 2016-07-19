@@ -1,11 +1,4 @@
-"""ciscosparkapi package-level exceptions."""
-
-
-class CiscoSparkApiException(Exception):
-    """Base class for all ciscosparkapi package exceptions."""
-
-    def __init__(self, *args, **kwargs):
-        super(CiscoSparkApiException, self).__init__(*args, **kwargs)
+"""ciscosparkapi exception classes."""
 
 
 SPARK_RESPONSE_CODES = {
@@ -26,7 +19,14 @@ SPARK_RESPONSE_CODES = {
 }
 
 
-class CiscoSparkApiError(CiscoSparkApiException):
+class ciscosparkapiException(Exception):
+    """Base class for all ciscosparkapi package exceptions."""
+
+    def __init__(self, *args, **kwargs):
+        super(ciscosparkapiException, self).__init__(*args, **kwargs)
+
+
+class SparkApiError(ciscosparkapiException):
     """Errors returned by requests to the Cisco Spark cloud APIs."""
 
     def __init__(self, response_code, request=None, response=None):
@@ -37,7 +37,9 @@ class CiscoSparkApiError(CiscoSparkApiException):
         response_text = SPARK_RESPONSE_CODES.get(response_code)
         if response_text:
             self.response_text = response_text
-            error_message = "[%s]: %s" % (response_code, response_text)
+            error_message = "Response Code [%s] - %s" % \
+                            (response_code, response_text)
         else:
-            error_message = "[%s]: Unknown Response Code" % response_code
-        super(CiscoSparkApiError, self).__init__(error_message)
+            error_message = "Response Code [%s] - Unknown Response Code" % \
+                            response_code
+        super(SparkApiError, self).__init__(error_message)
