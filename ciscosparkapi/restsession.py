@@ -51,7 +51,8 @@ class RestSession(object):
         self._access_token = access_token
         self._req_session = requests.session()
         self._timeout = None
-        self.update_headers({'Authorization': 'Bearer ' + access_token})
+        self.update_headers({'Authorization': 'Bearer ' + access_token,
+                             'Content-type': 'application/json;charset=utf-8'})
         self.timeout = timeout
 
     @property
