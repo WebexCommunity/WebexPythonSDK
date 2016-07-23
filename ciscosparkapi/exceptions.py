@@ -3,6 +3,7 @@
 
 SPARK_RESPONSE_CODES = {
     200: "OK",
+    204: "Member deleted.",
     400: "The request was invalid or cannot be otherwise served. An "
          "accompanying error message will explain further.",
     401: "Authentication credentials were missing or incorrect.",
