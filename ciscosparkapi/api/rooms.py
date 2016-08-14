@@ -4,15 +4,42 @@
 from ciscosparkapi.exceptions import ciscosparkapiException
 from ciscosparkapi.helperfunc import utf8
 from ciscosparkapi.restsession import RestSession
+from ciscosparkapi.sparkdata import SparkData
 
 
-class Room(object):
-    """Spark Room object wrapper class."""
+class Room(SparkData):
+    """Spark Room-object wrapper class."""
 
     def __init__(self, json):
-        assert isinstance(json, dict)
-        super(Room, self).__init__()
-        self.json = json
+        super(Room, self).__init__(json)
+
+    @property
+    def id(self):
+        return self._json[u'id']
+
+    @property
+    def title(self):
+        return self._json[u'title']
+
+    @property
+    def type(self):
+        return self._json[u'type']
+
+    @property
+    def isLocked(self):
+        return self._json[u'isLocked']
+
+    @property
+    def lastActivity(self):
+        return self._json[u'lastActivity']
+
+    @property
+    def created(self):
+        return self._json[u'created']
+
+    @property
+    def teamId(self):
+        return self._json.get(u'teamId', None)
 
 
 class RoomsAPI(object):
