@@ -1,4 +1,11 @@
-"""Cisco Spark rooms API wrapper classes."""
+"""Cisco Spark rooms API wrapper classes.
+
+Classes:
+    Room: Models a Spark 'room' JSON object as a native Python object.
+    RoomsAPI: Wrappers the Cisco Spark Rooms-API and exposes the API calls as
+        Python method calls that return native Python objects.
+
+"""
 
 
 from ciscosparkapi.exceptions import ciscosparkapiException
@@ -8,9 +15,18 @@ from ciscosparkapi.sparkdata import SparkData
 
 
 class Room(SparkData):
-    """Spark room-object wrapper class."""
+    """Model a Spark 'room' JSON object as a native Python object."""
 
     def __init__(self, json):
+        """Initialize a new Room data object from a JSON dictionary or string.
+
+        Args:
+            json(dict, unicode, str): Input JSON object.
+
+        Raises:
+            TypeError: If the input object is not a dictionary or string.
+
+        """
         super(Room, self).__init__(json)
 
     @property
@@ -50,9 +66,28 @@ class Room(SparkData):
 
 
 class RoomsAPI(object):
-    """Cisco Spark rooms API request wrapper class."""
+    """Cisco Spark Rooms-API wrapper class.
+
+    Wrappers the Cisco Spark Rooms-API and exposes the API calls as Python
+    method calls that return native Python objects.
+
+    Attributes:
+        session(RestSession): The RESTful session object to be used for API
+            calls to the Cisco Spark service.
+
+    """
 
     def __init__(self, session):
+        """Inits a new RoomAPI object with the provided RestSession.
+
+        Args:
+            session(RestSession): The RESTful session object to be used for
+                API calls to the Cisco Spark service.
+
+        Raises:
+            AssertionError: If the parameter types are incorrect.
+
+        """
         assert isinstance(session, RestSession)
         super(RoomsAPI, self).__init__()
         self.session = session
@@ -64,25 +99,27 @@ class RoomsAPI(object):
 
         This method supports Cisco Spark's implmentation of RFC5988 Web Linking
         to provide pagination support.  It returns an iterator that
-        incrementally yields all rooms returned by the query.  It will
-        automatically and efficiently request the additional 'pages' of
-        responses from Spark as needed until all responses have been exhausted.
+        incrementally yield all rooms returned by the query.  It will
+        automatically request additional 'pages' of responses from Spark as
+        needed until all responses have been returned.
 
         Args:
             max(int): Limits the maximum number of rooms returned from the
                 Spark service per request.
+            **query_params:
+                teamId(string): Limit the rooms to those associated with a
+                    team.
+                type(string):
+                    'direct': returns all 1-to-1 rooms.
+                    'group': returns all group rooms.
 
-        **query_params:
-            teamId(string): Limit the rooms to those associated with a team.
-            type(string):
-                'direct': returns all 1-to-1 rooms.
-                'group': returns all group rooms.
-
-        Returns:
-            A Room iterator.
+        Yields:
+            Room: The the next room from the Cisco Spark query.
 
         Raises:
-            SparkApiError: If the list request fails.
+            AssertionError: If the parameter types are incorrect.
+            SparkApiError: If the Cisco Spark cloud returns an error.
+
         """
         # Process args
         assert max is None or isinstance(max, int)
@@ -109,7 +146,8 @@ class RoomsAPI(object):
             teamId(string): The team ID with which this room is associated.
 
         Raises:
-            SparkApiError: If the create operation fails.
+            AssertionError: If the parameter types are incorrect.
+            SparkApiError: If the Cisco Spark cloud returns an error.
         """
         # Process args
         assert isinstance(title, basestring)
@@ -129,7 +167,9 @@ class RoomsAPI(object):
             roomId(string): The roomId of the room.
 
         Raises:
-            SparkApiError: If the get operation fails.
+            AssertionError: If the parameter types are incorrect.
+            SparkApiError: If the Cisco Spark cloud returns an error.
+
         """
         # Process args
         assert isinstance(roomId, basestring)
@@ -151,8 +191,10 @@ class RoomsAPI(object):
             A Room object with the updated Spark room details.
 
         Raises:
+            AssertionError: If the parameter types are incorrect.
             ciscosparkapiException: If an update attribute is not provided.
-            SparkApiError: If the update operation fails.
+            SparkApiError: If the Cisco Spark cloud returns an error.
+
         """
         # Process args
         assert isinstance(roomId, basestring)
@@ -177,7 +219,9 @@ class RoomsAPI(object):
             roomId(string): The roomId of the room to be deleted.
 
         Raises:
-            SparkApiError: If the delete operation fails.
+            AssertionError: If the parameter types are incorrect.
+            SparkApiError: If the Cisco Spark cloud returns an error.
+
         """
         # Process args
         assert isinstance(roomId, basestring)

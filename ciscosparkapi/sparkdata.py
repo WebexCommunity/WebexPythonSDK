@@ -19,6 +19,7 @@ Example:
     u'Chris Lunsford (chrlunsf)'
     >>> python_obj.created
     u'2012-06-15T20:36:48.914Z'
+
 """
 
 
@@ -36,6 +37,7 @@ def _json_dict(json):
 
     Raises:
         TypeError: If the input object is not a dictionary or string.
+
     """
     if isinstance(json, dict):
         return json
@@ -51,13 +53,14 @@ class SparkData(object):
     """Model Spark JSON objects as native Python objects."""
 
     def __init__(self, json):
-        """Create a new SparkData object from a JSON dictionary or string.
+        """Inits a new SparkData object from a JSON dictionary or string.
 
         Args:
             json(dict, unicode, str): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
+
         """
         super(SparkData, self).__init__()
         self._json = _json_dict(json)
@@ -80,6 +83,7 @@ class SparkData(object):
         Raises:
             AttributeError:  If the JSON object does not contain the attribute
                 requested.
+
         """
         if item in self._json.keys():
             item_data = self._json[item]
