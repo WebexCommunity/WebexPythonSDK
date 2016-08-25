@@ -1,4 +1,4 @@
-import exceptions
+from exceptions import ciscosparkapiException, SparkApiError
 from restsession import RestSession
 from api.rooms import Room, RoomsAPI
 
