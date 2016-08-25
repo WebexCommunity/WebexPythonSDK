@@ -1,4 +1,4 @@
-"""Spark - Rooms API - wrapper classes."""
+"""Cisco Spark rooms API wrapper classes."""
 
 
 from ciscosparkapi.exceptions import ciscosparkapiException
@@ -8,7 +8,7 @@ from ciscosparkapi.sparkdata import SparkData
 
 
 class Room(SparkData):
-    """Spark Room-object wrapper class."""
+    """Spark room-object wrapper class."""
 
     def __init__(self, json):
         super(Room, self).__init__(json)
@@ -39,11 +39,18 @@ class Room(SparkData):
 
     @property
     def teamId(self):
+        """Return the room teamId, if it exists, otherwise return None.
+
+        teamId is an 'optional' attribute that only exists for Spark rooms that
+        are associated with a Spark Team.  To simplify use, rather than
+        requiring use of try/catch statements or hasattr() calls, we simply
+        return None if a room does not have a teamId attribute.
+        """
         return self._json.get(u'teamId', None)
 
 
 class RoomsAPI(object):
-    """Spark Rooms API request wrapper."""
+    """Cisco Spark rooms API request wrapper class."""
 
     def __init__(self, session):
         assert isinstance(session, RestSession)

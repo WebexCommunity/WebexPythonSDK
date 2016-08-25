@@ -13,7 +13,9 @@ class CiscoSparkAPI(object):
         session_args = {}
         if base_url:  session_args['base_url'] = base_url
         if timeout:  session_args['timeout'] = timeout
-        # Create API session
+        # Create API session - All of the API calls associated with a
+        # CiscoSparkAPI object will leverage a single RESTful 'session'
+        # connecting to the Cisco Spark cloud.
         self.session = RestSession(access_token, **session_args)
         # Setup Spark API wrappers
         self.rooms = RoomsAPI(self.session)
