@@ -9,7 +9,7 @@ Classes:
 
 
 from ciscosparkapi.exceptions import ciscosparkapiException
-from ciscosparkapi.helperfunc import utf8
+from ciscosparkapi.helper import utf8, generator_container
 from ciscosparkapi.restsession import RestSession
 from ciscosparkapi.sparkdata import SparkData
 
@@ -92,16 +92,20 @@ class RoomsAPI(object):
         super(RoomsAPI, self).__init__()
         self.session = session
 
+    @generator_container
     def list(self, max=None, **query_params):
         """List rooms.
 
         By default, lists rooms to which the authenticated user belongs.
 
         This method supports Cisco Spark's implmentation of RFC5988 Web Linking
-        to provide pagination support.  It returns an iterator that
-        incrementally yield all rooms returned by the query.  It will
-        automatically request additional 'pages' of responses from Spark as
-        needed until all responses have been returned.
+        to provide pagination support.  It returns a generator container that
+        incrementally yield all rooms returned by the query.  The generator
+        will automatically request additional 'pages' of responses from Spark
+        as needed until all responses have been returned.  The container makes
+        the generator safe for reuse.  A new API call will be made, using the
+        same parameters that were specified when the generator was created,
+        every time a new iterator is requested from the container.
 
         Args:
             max(int): Limits the maximum number of rooms returned from the
