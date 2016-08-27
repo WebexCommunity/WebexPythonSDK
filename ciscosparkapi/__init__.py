@@ -1,6 +1,7 @@
 from exceptions import ciscosparkapiException, SparkApiError
 from restsession import RestSession
 from api.rooms import Room, RoomsAPI
+from api.people import Person, PeopleAPI
 
 
 class CiscoSparkAPI(object):
@@ -13,12 +14,16 @@ class CiscoSparkAPI(object):
         session_args = {}
         if base_url:  session_args['base_url'] = base_url
         if timeout:  session_args['timeout'] = timeout
-        # Create API session - All of the API calls associated with a
-        # CiscoSparkAPI object will leverage a single RESTful 'session'
-        # connecting to the Cisco Spark cloud.
+
+        # Create API session
+        # All of the API calls associated with a CiscoSparkAPI object will
+        # leverage a single RESTful 'session' connecting to the Cisco Spark
+        # cloud.
         self.session = RestSession(access_token, **session_args)
-        # Setup Spark API wrappers
+
+        # Spark API wrappers
         self.rooms = RoomsAPI(self.session)
+        self.people = PeopleAPI(self.session)
 
     @property
     def access_token(self):
