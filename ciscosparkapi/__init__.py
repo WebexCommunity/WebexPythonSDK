@@ -1,8 +1,8 @@
 from exceptions import ciscosparkapiException, SparkApiError
 from restsession import RestSession
-from api.rooms import Room, RoomsAPI
 from api.people import Person, PeopleAPI
-
+from api.rooms import Room, RoomsAPI
+from api.memberships import Membership, MembershipsAPI
 
 class CiscoSparkAPI(object):
     """Cisco Spark API wrapper class."""
@@ -22,8 +22,9 @@ class CiscoSparkAPI(object):
         self.session = RestSession(access_token, **session_args)
 
         # Spark API wrappers
-        self.rooms = RoomsAPI(self.session)
         self.people = PeopleAPI(self.session)
+        self.rooms = RoomsAPI(self.session)
+        self.memberships = MembershipsAPI(self.session)
 
     @property
     def access_token(self):
