@@ -1,4 +1,4 @@
-"""Cisco Spark rooms API wrapper classes.
+"""Cisco Spark Rooms-API wrapper classes.
 
 Classes:
     Room: Models a Spark 'room' JSON object as a native Python object.
@@ -18,7 +18,7 @@ class Room(SparkData):
     """Model a Spark 'room' JSON object as a native Python object."""
 
     def __init__(self, json):
-        """Initialize a new Room data object from a JSON dictionary or string.
+        """Init a new Person data object from a JSON dictionary or string.
 
         Args:
             json(dict, unicode, str): Input JSON object.
@@ -78,7 +78,7 @@ class RoomsAPI(object):
     """
 
     def __init__(self, session):
-        """Inits a new RoomAPI object with the provided RestSession.
+        """Init a new RoomAPI object with the provided RestSession.
 
         Args:
             session(RestSession): The RESTful session object to be used for
@@ -111,14 +111,14 @@ class RoomsAPI(object):
             max(int): Limits the maximum number of rooms returned from the
                 Spark service per request.
             **query_params:
-                teamId(string): Limit the rooms to those associated with a
-                    team.
-                type(string):
+                teamId(unicode, str): Limit the rooms to those associated with
+                    a team.
+                type(unicode, str):
                     'direct': returns all 1-to-1 rooms.
                     'group': returns all group rooms.
 
         Yields:
-            Room: The the next room from the Cisco Spark query.
+            Person: The the next room from the Cisco Spark query.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
@@ -136,22 +136,24 @@ class RoomsAPI(object):
                 params[utf8(param)] = value
         # API request - get items
         items = self.session.get_items('rooms', params=params)
-        # Yield Room objects created from the returned items JSON objects
+        # Yield Person objects created from the returned items JSON objects
         for item in items:
             yield Room(item)
 
     def create(self, title, teamId=None):
-        """Creates a room.
+        """Create a room.
 
         The authenticated user is automatically added as a member of the room.
 
         Args:
-            title(string): A user-friendly name for the room.
-            teamId(string): The team ID with which this room is associated.
+            title(unicode, str): A user-friendly name for the room.
+            teamId(unicode, str): The team ID with which this room is
+                associated.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
+
         """
         # Process args
         assert isinstance(title, basestring)
@@ -160,15 +162,15 @@ class RoomsAPI(object):
         post_data[u'title'] = utf8(title)
         if teamId: post_data[u'teamId'] = utf8(teamId)
         # API request
-        json_room_obj = self.session.post('rooms', json=post_data)
-        # Return a Room object created from the response JSON data
-        return Room(json_room_obj)
+        json_obj = self.session.post('rooms', json=post_data)
+        # Return a Person object created from the response JSON data
+        return Room(json_obj)
 
     def get(self, roomId):
-        """Gets the details of a room.
+        """Get the details of a room, by ID.
 
         Args:
-            roomId(string): The roomId of the room.
+            roomId(unicode, str): The roomId of the room.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
@@ -178,21 +180,21 @@ class RoomsAPI(object):
         # Process args
         assert isinstance(roomId, basestring)
         # API request
-        json_room_obj = self.session.get('rooms/'+roomId)
-        # Return a Room object created from the response JSON data
-        return Room(json_room_obj)
+        json_obj = self.session.get('rooms/'+roomId)
+        # Return a Person object created from the response JSON data
+        return Room(json_obj)
 
     def update(self, roomId, **update_attributes):
-        """Updates details for a room.
+        """Update details for a room.
 
         Args:
-            roomId(string): The roomId of the room to be updated.
+            roomId(unicode, str): The roomId of the room to be updated.
 
         **update_attributes:
-            title(string): A user-friendly name for the room.
+            title(unicode, str): A user-friendly name for the room.
 
         Returns:
-            A Room object with the updated Spark room details.
+            A Person object with the updated Spark room details.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
@@ -204,23 +206,23 @@ class RoomsAPI(object):
         assert isinstance(roomId, basestring)
         # Process update_attributes keyword arguments
         if not update_attributes:
-            error_message = "You must provide at least one " \
-                            "**update_attributes keyword argument; 0 provided."
+            error_message = "At least one **update_attributes keyword " \
+                            "argument must be specified."
             raise ciscosparkapiException(error_message)
         put_data = {}
         for param, value in update_attributes.items():
             if isinstance(value, basestring): value = utf8(value)
             put_data[utf8(param)] = value
         # API request
-        json_room_obj = self.session.post('rooms', json=put_data)
-        # Return a Room object created from the response JSON data
-        return Room(json_room_obj)
+        json_obj = self.session.post('rooms', json=put_data)
+        # Return a Person object created from the response JSON data
+        return Room(json_obj)
 
     def delete(self, roomId):
         """Delete a room.
 
         Args:
-            roomId(string): The roomId of the room to be deleted.
+            roomId(unicode, str): The roomId of the room to be deleted.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
