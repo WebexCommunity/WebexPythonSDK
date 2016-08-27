@@ -102,14 +102,15 @@ class RoomsAPI(object):
 
         By default, lists rooms to which the authenticated user belongs.
 
-        This method supports Cisco Spark's implmentation of RFC5988 Web Linking
-        to provide pagination support.  It returns a generator container that
-        incrementally yield all rooms returned by the query.  The generator
-        will automatically request additional 'pages' of responses from Spark
-        as needed until all responses have been returned.  The container makes
-        the generator safe for reuse.  A new API call will be made, using the
-        same parameters that were specified when the generator was created,
-        every time a new iterator is requested from the container.
+        This method supports Cisco Spark's implementation of RFC5988 Web
+        Linking to provide pagination support.  It returns a generator
+        container that incrementally yield all rooms returned by the
+        query.  The generator will automatically request additional 'pages' of
+        responses from Spark as needed until all responses have been returned.
+        The container makes the generator safe for reuse.  A new API call will
+        be made, using the same parameters that were specified when the
+        generator was created, every time a new iterator is requested from the
+        container.
 
         Args:
             max(int): Limits the maximum number of rooms returned from the
@@ -132,11 +133,13 @@ class RoomsAPI(object):
         # Process args
         assert max is None or isinstance(max, int)
         params = {}
-        if max: params[u'max'] = max
+        if max:
+            params[u'max'] = max
         # Process query_param keyword arguments
         if query_params:
             for param, value in query_params.items():
-                if isinstance(value, basestring): value = utf8(value)
+                if isinstance(value, basestring):
+                    value = utf8(value)
                 params[utf8(param)] = value
         # API request - get items
         items = self.session.get_items('rooms', params=params)
@@ -164,10 +167,11 @@ class RoomsAPI(object):
         assert teamId is None or isinstance(teamId, basestring)
         post_data = {}
         post_data[u'title'] = utf8(title)
-        if teamId: post_data[u'teamId'] = utf8(teamId)
+        if teamId:
+            post_data[u'teamId'] = utf8(teamId)
         # API request
         json_obj = self.session.post('rooms', json=post_data)
-        # Return a Person object created from the response JSON data
+        # Return a Room object created from the response JSON data
         return Room(json_obj)
 
     def get(self, roomId):
@@ -185,7 +189,7 @@ class RoomsAPI(object):
         assert isinstance(roomId, basestring)
         # API request
         json_obj = self.session.get('rooms/'+roomId)
-        # Return a Person object created from the response JSON data
+        # Return a Room object created from the response JSON data
         return Room(json_obj)
 
     def update(self, roomId, **update_attributes):
@@ -215,11 +219,12 @@ class RoomsAPI(object):
             raise ciscosparkapiException(error_message)
         put_data = {}
         for param, value in update_attributes.items():
-            if isinstance(value, basestring): value = utf8(value)
+            if isinstance(value, basestring):
+                value = utf8(value)
             put_data[utf8(param)] = value
         # API request
         json_obj = self.session.post('rooms', json=put_data)
-        # Return a Person object created from the response JSON data
+        # Return a Room object created from the response JSON data
         return Room(json_obj)
 
     def delete(self, roomId):

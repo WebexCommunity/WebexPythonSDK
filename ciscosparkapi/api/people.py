@@ -91,14 +91,15 @@ class PeopleAPI(object):
 
         An email address or displayName must be provided.
 
-        This method supports Cisco Spark's implmentation of RFC5988 Web Linking
-        to provide pagination support.  It returns a generator container that
-        incrementally yield all people returned by the query.  The generator
-        will automatically request additional 'pages' of responses from Spark
-        as needed until all responses have been returned.  The container makes
-        the generator safe for reuse.  A new API call will be made, using the
-        same parameters that were specified when the generator was created,
-        every time a new iterator is requested from the container.
+        This method supports Cisco Spark's implementation of RFC5988 Web
+        Linking to provide pagination support.  It returns a generator
+        container that incrementally yield all people returned by the
+        query.  The generator will automatically request additional 'pages' of
+        responses from Spark as needed until all responses have been returned.
+        The container makes the generator safe for reuse.  A new API call will
+        be made, using the same parameters that were specified when the
+        generator was created, every time a new iterator is requested from the
+        container.
 
         Args:
             email(unicode, str): The e-mail address of the person to be found.
@@ -123,9 +124,9 @@ class PeopleAPI(object):
         assert max is None or isinstance(max, int)
         params = {}
         if email:
-            params[u'email'] = email
+            params[u'email'] = utf8(email)
         elif displayName:
-            params[u'displayName'] = displayName
+            params[u'displayName'] = utf8(displayName)
         else:
             error_message = "An email or displayName argument must be " \
                             "specified."
