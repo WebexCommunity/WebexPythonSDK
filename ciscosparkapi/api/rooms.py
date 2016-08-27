@@ -54,6 +54,10 @@ class Room(SparkData):
         return self._json[u'created']
 
     @property
+    def creatorId(self):
+        return self._json[u'creatorId']
+
+    @property
     def teamId(self):
         """Return the room teamId, if it exists, otherwise return None.
 
@@ -78,7 +82,7 @@ class RoomsAPI(object):
     """
 
     def __init__(self, session):
-        """Init a new RoomAPI object with the provided RestSession.
+        """Init a new RoomsAPI object with the provided RestSession.
 
         Args:
             session(RestSession): The RESTful session object to be used for
