@@ -93,8 +93,7 @@ class RestSession(object):
         erc = kwargs.pop('erc', ERC['GET'])
         _raise_if_extra_kwargs(kwargs)
         # API request
-        response = self._req_session.get(abs_url,
-                                         params=params,
+        response = self._req_session.get(abs_url, params=params,
                                          timeout=timeout)
         # Process response
         _check_response_code(response, erc)
@@ -110,8 +109,7 @@ class RestSession(object):
         erc = kwargs.pop('erc', ERC['GET'])
         _raise_if_extra_kwargs(kwargs)
         # API request - get first page
-        response = self._req_session.get(abs_url,
-                                         params=params,
+        response = self._req_session.get(abs_url, params=params,
                                          timeout=timeout)
         while True:
             # Process response - Yield page's JSON data
@@ -142,36 +140,32 @@ class RestSession(object):
                                 % json_page
                 raise ciscosparkapiException(error_message)
 
-    def post(self, url, json_dict, **kwargs):
+    def post(self, url, json, **kwargs):
         # Process args
         assert isinstance(url, basestring)
-        assert isinstance(json_dict, dict)
+        assert isinstance(json, dict)
         abs_url = self.urljoin(url)
         # Process kwargs
         timeout = kwargs.pop('timeout', self.timeout)
         erc = kwargs.pop('erc', ERC['POST'])
         _raise_if_extra_kwargs(kwargs)
         # API request
-        response = self._req_session.post(abs_url,
-                                          json=json_dict,
-                                          timeout=timeout)
+        response = self._req_session.post(abs_url, json=json, timeout=timeout)
         # Process response
         _check_response_code(response, erc)
         return _extract_and_parse_json(response)
 
-    def put(self, url, json_dict, **kwargs):
+    def put(self, url, json, **kwargs):
         # Process args
         assert isinstance(url, basestring)
-        assert isinstance(json_dict, dict)
+        assert isinstance(json, dict)
         abs_url = self.urljoin(url)
         # Process kwargs
         timeout = kwargs.pop('timeout', self.timeout)
         erc = kwargs.pop('erc', ERC['PUT'])
         _raise_if_extra_kwargs(kwargs)
         # API request
-        response = self._req_session.put(abs_url,
-                                         json=json_dict,
-                                         timeout=timeout)
+        response = self._req_session.put(abs_url, json=json, timeout=timeout)
         # Process response
         _check_response_code(response, erc)
         return _extract_and_parse_json(response)
