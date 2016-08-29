@@ -3,6 +3,7 @@ from restsession import RestSession
 from api.people import Person, PeopleAPI
 from api.rooms import Room, RoomsAPI
 from api.memberships import Membership, MembershipsAPI
+from api.messages import Message, MessagesAPI
 
 class CiscoSparkAPI(object):
     """Cisco Spark API wrapper class."""
@@ -25,6 +26,7 @@ class CiscoSparkAPI(object):
         self.people = PeopleAPI(self.session)
         self.rooms = RoomsAPI(self.session)
         self.memberships = MembershipsAPI(self.session)
+        self.messages = MessagesAPI(self.session)
 
     @property
     def access_token(self):
