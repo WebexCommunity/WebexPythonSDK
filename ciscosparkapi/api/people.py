@@ -145,6 +145,9 @@ class PeopleAPI(object):
         Args:
             personId(unicode, str): The personID of the person.
 
+        Returns:
+            Person: With the details of the requested person.
+
         Raises:
             AssertionError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.

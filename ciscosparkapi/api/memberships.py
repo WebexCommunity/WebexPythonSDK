@@ -175,6 +175,9 @@ class MembershipsAPI(object):
             isModerator(bool): If True, adds the person as a moderator for the
                 room. If False, adds the person as normal member of the room.
 
+        Returns:
+            Membership: With the details of the created membership.
+
         Raises:
             AssertionError: If the parameter types are incorrect.
             ciscosparkapiException: If neither a personId or personEmail are
@@ -209,6 +212,9 @@ class MembershipsAPI(object):
         Args:
             membershipId(unicode, str): The membershipId of the membership.
 
+        Returns:
+            Membership: With the details of the requested membership.
+
         Raises:
             AssertionError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
@@ -233,7 +239,7 @@ class MembershipsAPI(object):
                 room. If False, removes the person as a moderator for the room.
 
         Returns:
-            A Person object with the updated Spark membership details.
+            Membership: With the updated Spark membership details.
 
         Raises:
             AssertionError: If the parameter types are incorrect.

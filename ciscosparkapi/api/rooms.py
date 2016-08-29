@@ -18,7 +18,7 @@ class Room(SparkData):
     """Model a Spark 'room' JSON object as a native Python object."""
 
     def __init__(self, json):
-        """Init a new Person data object from a JSON dictionary or string.
+        """Init a new Room data object from a JSON dictionary or string.
 
         Args:
             json(dict, unicode, str): Input JSON object.
@@ -123,7 +123,7 @@ class RoomsAPI(object):
                     'group': returns all group rooms.
 
         Yields:
-            Person: The the next room from the Cisco Spark query.
+            Room: The the next room from the Cisco Spark query.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
@@ -143,7 +143,7 @@ class RoomsAPI(object):
                 params[utf8(param)] = value
         # API request - get items
         items = self.session.get_items('rooms', params=params)
-        # Yield Person objects created from the returned items JSON objects
+        # Yield Room objects created from the returned items JSON objects
         for item in items:
             yield Room(item)
 
@@ -156,6 +156,9 @@ class RoomsAPI(object):
             title(unicode, str): A user-friendly name for the room.
             teamId(unicode, str): The team ID with which this room is
                 associated.
+
+        Returns:
+            Room: With the details of the created room.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
@@ -180,6 +183,9 @@ class RoomsAPI(object):
         Args:
             roomId(unicode, str): The roomId of the room.
 
+        Returns:
+            Room: With the details of the requested room.
+
         Raises:
             AssertionError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
@@ -202,7 +208,7 @@ class RoomsAPI(object):
             title(unicode, str): A user-friendly name for the room.
 
         Returns:
-            A Person object with the updated Spark room details.
+            Room: With the updated Spark room details.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
