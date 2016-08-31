@@ -260,7 +260,8 @@ class MembershipsAPI(object):
                 value = utf8(value)
             put_data[utf8(param)] = value
         # API request
-        json_obj = self.session.post('memberships', json=put_data)
+        json_obj = self.session.post('memberships/'+membershipId,
+                                     json=put_data)
         # Return a Membership object created from the response JSON data
         return Membership(json_obj)
 

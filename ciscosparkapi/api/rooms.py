@@ -229,7 +229,7 @@ class RoomsAPI(object):
                 value = utf8(value)
             put_data[utf8(param)] = value
         # API request
-        json_obj = self.session.post('rooms', json=put_data)
+        json_obj = self.session.post('rooms/'+roomId, json=put_data)
         # Return a Room object created from the response JSON data
         return Room(json_obj)
 
