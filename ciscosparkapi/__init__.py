@@ -5,6 +5,7 @@ from api.rooms import Room, RoomsAPI
 from api.memberships import Membership, MembershipsAPI
 from api.messages import Message, MessagesAPI
 from api.teams import Team, TeamsAPI
+from api.teammemberships import TeamMembership, TeamMembershipsAPI
 
 class CiscoSparkAPI(object):
     """Cisco Spark API wrapper class."""
@@ -29,6 +30,7 @@ class CiscoSparkAPI(object):
         self.memberships = MembershipsAPI(self.session)
         self.messages = MessagesAPI(self.session)
         self.teams = TeamsAPI(self.session)
+        self.team_memberships = TeamMembershipsAPI(self.session)
 
     @property
     def access_token(self):
