@@ -6,6 +6,7 @@ from api.memberships import Membership, MembershipsAPI
 from api.messages import Message, MessagesAPI
 from api.teams import Team, TeamsAPI
 from api.teammemberships import TeamMembership, TeamMembershipsAPI
+from api.webhooks import Webhook, WebhooksAPI
 
 class CiscoSparkAPI(object):
     """Cisco Spark API wrapper class."""
@@ -31,6 +32,7 @@ class CiscoSparkAPI(object):
         self.messages = MessagesAPI(self.session)
         self.teams = TeamsAPI(self.session)
         self.team_memberships = TeamMembershipsAPI(self.session)
+        self.webhooks = WebhooksAPI(self.session)
 
     @property
     def access_token(self):
