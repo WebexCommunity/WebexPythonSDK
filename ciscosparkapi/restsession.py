@@ -1,53 +1,18 @@
 """RestSession class for creating 'connections' to the Cisco Spark APIs."""
 
-
 import urlparse
+
 import requests
-from .exceptions import ciscosparkapiException, SparkApiError
 
-
-# Default api.ciscospark.com base URL
-DEFAULT_API_URL = 'https://api.ciscospark.com/v1/'
-
-# Cisco Spark cloud Expected Response Codes (HTTP Response Codes)
-ERC = {
-    'GET': 200,
-    'POST': 200,
-    'PUT': 200,
-    'DELETE': 204
-}
-
-
-def _validate_base_url(base_url):
-    parsed_url = urlparse.urlparse(base_url)
-    if parsed_url.scheme and parsed_url.netloc:
-        return parsed_url.geturl()
-    else:
-        error_message = "base_url must contain a valid scheme (protocol " \
-                        "specifier) and network location (hostname)"
-        raise ciscosparkapiException(error_message)
-
-
-def _raise_if_extra_kwargs(kwargs):
-    if kwargs:
-        raise TypeError("Unexpected **kwargs: %r" % kwargs)
-
-
-def _check_response_code(response, erc):
-    if response.status_code != erc:
-        raise SparkApiError(response.status_code,
-                            request=response.request,
-                            response=response)
-
-
-def _extract_and_parse_json(response):
-    return response.json()
+from .exceptions import ciscosparkapiException
+from .helper import ERC, validate_base_url, \
+    raise_if_extra_kwargs, check_response_code, extract_and_parse_json
 
 
 class RestSession(object):
-    def __init__(self, access_token, base_url=DEFAULT_API_URL, timeout=None):
+    def __init__(self, access_token, base_url, timeout=None):
         super(RestSession, self).__init__()
-        self._base_url = _validate_base_url(base_url)
+        self._base_url = validate_base_url(base_url)
         self._access_token = access_token
         self._req_session = requests.session()
         self._timeout = None
@@ -91,13 +56,13 @@ class RestSession(object):
         # Process kwargs
         timeout = kwargs.pop('timeout', self.timeout)
         erc = kwargs.pop('erc', ERC['GET'])
-        _raise_if_extra_kwargs(kwargs)
+        raise_if_extra_kwargs(kwargs)
         # API request
         response = self._req_session.get(abs_url, params=params,
                                          timeout=timeout)
         # Process response
-        _check_response_code(response, erc)
-        return _extract_and_parse_json(response)
+        check_response_code(response, erc)
+        return extract_and_parse_json(response)
 
     def get_pages(self, url, params=None, **kwargs):
         # Process args
@@ -107,14 +72,14 @@ class RestSession(object):
         # Process kwargs
         timeout = kwargs.pop('timeout', self.timeout)
         erc = kwargs.pop('erc', ERC['GET'])
-        _raise_if_extra_kwargs(kwargs)
+        raise_if_extra_kwargs(kwargs)
         # API request - get first page
         response = self._req_session.get(abs_url, params=params,
                                          timeout=timeout)
         while True:
             # Process response - Yield page's JSON data
-            _check_response_code(response, erc)
-            yield _extract_and_parse_json(response)
+            check_response_code(response, erc)
+            yield extract_and_parse_json(response)
             # Get next page
             if response.links.get('next'):
                 next_url = response.links.get('next').get('url')
@@ -148,12 +113,12 @@ class RestSession(object):
         # Process kwargs
         timeout = kwargs.pop('timeout', self.timeout)
         erc = kwargs.pop('erc', ERC['POST'])
-        _raise_if_extra_kwargs(kwargs)
+        raise_if_extra_kwargs(kwargs)
         # API request
         response = self._req_session.post(abs_url, json=json, timeout=timeout)
         # Process response
-        _check_response_code(response, erc)
-        return _extract_and_parse_json(response)
+        check_response_code(response, erc)
+        return extract_and_parse_json(response)
 
     def put(self, url, json, **kwargs):
         # Process args
@@ -163,12 +128,12 @@ class RestSession(object):
         # Process kwargs
         timeout = kwargs.pop('timeout', self.timeout)
         erc = kwargs.pop('erc', ERC['PUT'])
-        _raise_if_extra_kwargs(kwargs)
+        raise_if_extra_kwargs(kwargs)
         # API request
         response = self._req_session.put(abs_url, json=json, timeout=timeout)
         # Process response
-        _check_response_code(response, erc)
-        return _extract_and_parse_json(response)
+        check_response_code(response, erc)
+        return extract_and_parse_json(response)
 
     def delete(self, url, **kwargs):
         # Process args
@@ -177,8 +142,8 @@ class RestSession(object):
         # Process kwargs
         timeout = kwargs.pop('timeout', self.timeout)
         erc = kwargs.pop('erc', ERC['DELETE'])
-        _raise_if_extra_kwargs(kwargs)
+        raise_if_extra_kwargs(kwargs)
         # API request
         response = self._req_session.delete(abs_url, timeout=timeout)
         # Process response
-        _check_response_code(response, erc)
+        check_response_code(response, erc)
