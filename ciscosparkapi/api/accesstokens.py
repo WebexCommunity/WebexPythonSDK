@@ -77,7 +77,7 @@ class AccessTokensAPI(object):
 
         """
         assert isinstance(base_url, basestring)
-        assert timeout is None or isinstance(timeout, basestring)
+        assert timeout is None or isinstance(timeout, int)
         super(AccessTokensAPI, self).__init__()
         self._base_url = validate_base_url(base_url)
         self._timeout = timeout
