@@ -1,5 +1,6 @@
 from exceptions import ciscosparkapiException, SparkApiError
 from restsession import RestSession
+from api.accesstokens import AccessToken, AccessTokensAPI
 from api.people import Person, PeopleAPI
 from api.rooms import Room, RoomsAPI
 from api.memberships import Membership, MembershipsAPI
@@ -31,6 +32,7 @@ class CiscoSparkAPI(object):
         self.session = RestSession(access_token, base_url, **session_args)
 
         # Spark API wrappers
+        self.access_tokens = AccessTokensAPI(self.base_url, timeout=timeout)
         self.people = PeopleAPI(self.session)
         self.rooms = RoomsAPI(self.session)
         self.memberships = MembershipsAPI(self.session)
