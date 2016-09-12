@@ -1,0 +1,4 @@
+include LICENSE.txt
+include README.md
+include versioneer.py
+include ciscosparkapi/_version.py

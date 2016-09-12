@@ -1,3 +1,8 @@
+# Versioneer version control
+from ._version import get_versions
+__version__ = get_versions()['version']
+del get_versions
+
 from exceptions import ciscosparkapiException, SparkApiError
 from restsession import RestSession
 from api.accesstokens import AccessToken, AccessTokensAPI
@@ -52,4 +57,3 @@ class CiscoSparkAPI(object):
     @property
     def timeout(self):
         return self.session.timeout
-
