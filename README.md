@@ -1,5 +1,5 @@
 # ciscosparkapi
-A simple, scalable and lightweight API wrapper for the Cisco Spark services APIs
+Simple, lightweight and scalable Python API wrapper for the Cisco Spark APIs
 
 ## Overview
 A single Pythonic wrapper class representing the Cisco Spark API interfaces and returned JSON objects as method calls that return native Python objects.
