@@ -1,19 +1,25 @@
 """A setuptools based setup module."""
 
-from setuptools import setup, find_packages
+
 from codecs import open
 from os import path
+from setuptools import setup, find_packages
+import versioneer
+
 
 here = path.abspath(path.dirname(__file__))
+
 
 # Get the long description from the README file
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
+
 setup(
     name='ciscosparkapi',
 
-    version='0.1',
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass(),
 
     description='Simple, lightweight and scalable Python API wrapper for the '
                 'Cisco Spark APIs',
@@ -42,6 +48,6 @@ setup(
 
     keywords='cisco spark api enterprise messaging',
 
-    packages='ciscosparkapi',
+    packages=['ciscosparkapi'],
     install_requires=['requests>=2.4.2'],
 )
