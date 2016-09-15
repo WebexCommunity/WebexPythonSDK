@@ -48,6 +48,6 @@ setup(
 
     keywords='cisco spark api enterprise messaging',
 
-    packages=['ciscosparkapi'],
+    packages=['ciscosparkapi', 'ciscosparkapi.api'],
     install_requires=['requests>=2.4.2'],
 )
