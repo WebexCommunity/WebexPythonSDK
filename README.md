@@ -18,14 +18,18 @@ A single Pythonic wrapper class representing the Cisco Spark API interfaces and 
 ### Examples
 
 ```python
+import os
 from ciscosparkapi import CiscoSparkAPI
 
-access_token = "abcdefg..."
-api = CiscoSparkAPI(access_token)
+
+access_token = os.environ['SPARK_ACCESS_TOKEN']
+api = CiscoSparkAPI(access_token, timeout=60)
+
 
 rooms = api.rooms.list()    # Returns an generator container providing support for RFC5988 paging
 for room in rooms:          # Efficiently iterates through returned objects
     print room.title        # JSON objects are represented as native Python objects
+
 
 # Creating a list from the returned generator containers is easy
 team_list = list(api.teams.list())
