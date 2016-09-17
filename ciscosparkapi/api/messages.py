@@ -236,7 +236,8 @@ class MessagesAPI(object):
         if markdown:
             post_data[u'markdown'] = utf8(markdown)
         if files:
-            post_data[u'files'] = utf8(files)
+            files = map(utf8, files)
+            post_data[u'files'] = files
         # API request
         json_obj = self.session.post('messages', json=post_data)
         # Return a Message object created from the response JSON data

@@ -9,6 +9,43 @@ from .helper import ERC, validate_base_url, \
     raise_if_extra_kwargs, check_response_code, extract_and_parse_json
 
 
+def _fix_next_url(next_url):
+    """Remove max=null parameter from URL.
+
+    Patch for Cisco Spark Defect: 'next' URL returned in the Link headers of
+    the responses contain an errant 'max=null' parameter, which  causes the
+    next request (to this URL) to fail if the URL is requested as-is.
+
+    This patch parses the next_url to remove the max=null parameter.
+
+    Args:
+        next_url(unicode, str): The 'next' URL to be parsed and cleaned.
+
+    Returns:
+        str: The clean URL to be used for the 'next' request.
+
+    Raises:
+        AssertionError: If the parameter types are incorrect.
+        ciscosparkapiException: If 'next_url' does not contain a valid API
+            endpoint URL (scheme, netloc and path).
+
+    """
+    assert isinstance(next_url, basestring)
+    parsed_url = urlparse.urlparse(next_url)
+    if not parsed_url.scheme or not parsed_url.netloc or not parsed_url.path:
+        error_message = "'next_url' must be a valid API endpoint URL, " \
+                        "minimally containing a scheme, netloc and path."
+        raise ciscosparkapiException(error_message)
+    if parsed_url.query:
+        query_list = parsed_url.query.split('&')
+        if 'max=null' in query_list:
+            query_list.remove('max=null')
+        new_query = '&'.join(query_list)
+        parsed_url = list(parsed_url)
+        parsed_url[4] = new_query
+    return urlparse.urlunparse(parsed_url)
+
+
 class RestSession(object):
     def __init__(self, access_token, base_url, timeout=None):
         super(RestSession, self).__init__()
@@ -83,6 +120,8 @@ class RestSession(object):
             # Get next page
             if response.links.get('next'):
                 next_url = response.links.get('next').get('url')
+                # Patch for Cisco Spark 'max=null' in next URL bug.
+                next_url = _fix_next_url(next_url)
                 # API request - get next page
                 response = self._req_session.get(next_url, timeout=timeout)
             else:
