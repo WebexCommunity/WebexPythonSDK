@@ -2,7 +2,7 @@
 
 from ciscosparkapi import CiscoSparkAPI
 
-# VERY simple script to create a room, post a message, and post a file.  Alternaitvely, if the room already exists it will delete the room.
+# VERY simple script to create a room, post a message, and post a file.  Alternatively, if the room already exists it will delete the room.
 
 
 #storing the Authentication token in a file in the OS vs. leaving in script
