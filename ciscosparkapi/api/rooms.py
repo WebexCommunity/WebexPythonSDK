@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Cisco Spark Rooms-API wrapper classes.
 
 Classes:
@@ -8,12 +9,11 @@ Classes:
 """
 
 
-from __future__ import unicode_literals
-from past.builtins import basestring
 from builtins import object
+from six import string_types
 
 from ciscosparkapi.exceptions import ciscosparkapiException
-from ciscosparkapi.helper import utf8, generator_container
+from ciscosparkapi.helper import generator_container
 from ciscosparkapi.restsession import RestSession
 from ciscosparkapi.sparkdata import SparkData
 
@@ -25,7 +25,7 @@ class Room(SparkData):
         """Init a new Room data object from a JSON dictionary or string.
 
         Args:
-            json(dict, unicode, str): Input JSON object.
+            json(dict, string_types): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -35,31 +35,31 @@ class Room(SparkData):
 
     @property
     def id(self):
-        return self._json[u'id']
+        return self._json['id']
 
     @property
     def title(self):
-        return self._json[u'title']
+        return self._json['title']
 
     @property
     def type(self):
-        return self._json[u'type']
+        return self._json['type']
 
     @property
     def isLocked(self):
-        return self._json[u'isLocked']
+        return self._json['isLocked']
 
     @property
     def lastActivity(self):
-        return self._json[u'lastActivity']
+        return self._json['lastActivity']
 
     @property
     def created(self):
-        return self._json[u'created']
+        return self._json['created']
 
     @property
     def creatorId(self):
-        return self._json[u'creatorId']
+        return self._json['creatorId']
 
     @property
     def teamId(self):
@@ -70,7 +70,7 @@ class Room(SparkData):
         requiring use of try/catch statements or hasattr() calls, we simply
         return None if a room does not have a teamId attribute.
         """
-        return self._json.get(u'teamId', None)
+        return self._json.get('teamId', None)
 
 
 class RoomsAPI(object):
@@ -120,9 +120,9 @@ class RoomsAPI(object):
             max(int): Limits the maximum number of rooms returned from the
                 Spark service per request.
             **query_params:
-                teamId(unicode, str): Limit the rooms to those associated with
+                teamId(string_types): Limit the rooms to those associated with
                     a team.
-                type(unicode, str):
+                type(string_types):
                     'direct': returns all 1-to-1 rooms.
                     'group': returns all group rooms.
 
@@ -138,13 +138,10 @@ class RoomsAPI(object):
         assert max is None or isinstance(max, int)
         params = {}
         if max:
-            params[u'max'] = max
-        # Process query_param keyword arguments
+            params['max'] = max
+        # Process query_param keyword arguments 
         if query_params:
-            for param, value in query_params.items():
-                if isinstance(value, basestring):
-                    value = utf8(value)
-                params[utf8(param)] = value
+            params.update(query_params)
         # API request - get items
         items = self.session.get_items('rooms', params=params)
         # Yield Room objects created from the returned items JSON objects
@@ -157,8 +154,8 @@ class RoomsAPI(object):
         The authenticated user is automatically added as a member of the room.
 
         Args:
-            title(unicode, str): A user-friendly name for the room.
-            teamId(unicode, str): The team ID with which this room is
+            title(string_types): A user-friendly name for the room.
+            teamId(string_types): The team ID with which this room is
                 associated.
 
         Returns:
@@ -170,12 +167,12 @@ class RoomsAPI(object):
 
         """
         # Process args
-        assert isinstance(title, basestring)
-        assert teamId is None or isinstance(teamId, basestring)
+        assert isinstance(title, string_types)
+        assert teamId is None or isinstance(teamId, string_types)
         post_data = {}
-        post_data[u'title'] = utf8(title)
+        post_data['title'] = title
         if teamId:
-            post_data[u'teamId'] = utf8(teamId)
+            post_data['teamId'] = teamId
         # API request
         json_obj = self.session.post('rooms', json=post_data)
         # Return a Room object created from the response JSON data
@@ -185,7 +182,7 @@ class RoomsAPI(object):
         """Get the details of a room, by ID.
 
         Args:
-            roomId(unicode, str): The roomId of the room.
+            roomId(string_types): The roomId of the room.
 
         Returns:
             Room: With the details of the requested room.
@@ -196,7 +193,7 @@ class RoomsAPI(object):
 
         """
         # Process args
-        assert isinstance(roomId, basestring)
+        assert isinstance(roomId, string_types)
         # API request
         json_obj = self.session.get('rooms/'+roomId)
         # Return a Room object created from the response JSON data
@@ -206,10 +203,10 @@ class RoomsAPI(object):
         """Update details for a room.
 
         Args:
-            roomId(unicode, str): The roomId of the room to be updated.
+            roomId(string_types): The roomId of the room to be updated.
 
         **update_attributes:
-            title(unicode, str): A user-friendly name for the room.
+            title(string_types): A user-friendly name for the room.
 
         Returns:
             Room: With the updated Spark room details.
@@ -221,19 +218,14 @@ class RoomsAPI(object):
 
         """
         # Process args
-        assert isinstance(roomId, basestring)
+        assert isinstance(roomId, string_types)
         # Process update_attributes keyword arguments
         if not update_attributes:
             error_message = "At least one **update_attributes keyword " \
                             "argument must be specified."
             raise ciscosparkapiException(error_message)
-        put_data = {}
-        for param, value in update_attributes.items():
-            if isinstance(value, basestring):
-                value = utf8(value)
-            put_data[utf8(param)] = value
         # API request
-        json_obj = self.session.post('rooms/'+roomId, json=put_data)
+        json_obj = self.session.post('rooms/'+roomId, json=update_attributes)
         # Return a Room object created from the response JSON data
         return Room(json_obj)
 
@@ -241,7 +233,7 @@ class RoomsAPI(object):
         """Delete a room.
 
         Args:
-            roomId(unicode, str): The roomId of the room to be deleted.
+            roomId(string_types): The roomId of the room to be deleted.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
@@ -249,6 +241,6 @@ class RoomsAPI(object):
 
         """
         # Process args
-        assert isinstance(roomId, basestring)
+        assert isinstance(roomId, string_types)
         # API request
         self.session.delete('rooms/'+roomId)

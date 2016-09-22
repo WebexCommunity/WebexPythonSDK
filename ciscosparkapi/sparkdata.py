@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """SparkData base-class; models Spark JSON objects as native Python objects.
 
 The SparkData class models any JSON object passed to it as a string or Python
@@ -7,8 +8,8 @@ native object.attribute syntax.
 SparkData is intended to serve as a base-class, which provides inheritable
 functionality, for concrete sub-classes that model specific Cisco Spark data
 objects (rooms, messages, webhooks, etc.).  The SparkData base-class provides
-attribute access to any additonal JSON attributes received from the Cisco Spark
-cloud, which haven't been implemented by the concrete sub-classes.  This
+attribute access to any additional JSON attributes received from the Cisco
+Spark cloud, which haven't been implemented by the concrete sub-classes.  This
 provides a measure of future-proofing when additional data attributes are added
 to objects by the Cisco Spark cloud.
 
@@ -23,9 +24,8 @@ Example:
 """
 
 
-from __future__ import unicode_literals
-from past.builtins import basestring
 from builtins import object
+from six import string_types
 
 import json as json_pkg
 
@@ -34,7 +34,7 @@ def _json_dict(json):
     """Given a JSON dictionary or string; return a dictionary.
 
     Args:
-        json(dict, unicode, str): Input JSON object.
+        json(dict, string_types): Input JSON object.
 
     Returns:
         A Python dictionary with the contents of the JSON object.
@@ -45,7 +45,7 @@ def _json_dict(json):
     """
     if isinstance(json, dict):
         return json
-    elif isinstance(json, basestring):
+    elif isinstance(json, string_types):
         return json_pkg.loads(json)
     else:
         error = "'json' must be a dictionary or string; " \
@@ -57,10 +57,10 @@ class SparkData(object):
     """Model Spark JSON objects as native Python objects."""
 
     def __init__(self, json):
-        """Inits a new SparkData object from a JSON dictionary or string.
+        """Init a new SparkData object from a JSON dictionary or string.
 
         Args:
-            json(dict, unicode, str): Input JSON object.
+            json(dict, string_types): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -82,7 +82,7 @@ class SparkData(object):
         the JSON object's attributes.
 
         Args:
-            item(unicode, str): Name of the Attribute being accessed.
+            item(string_types): Name of the Attribute being accessed.
 
         Raises:
             AttributeError:  If the JSON object does not contain the attribute

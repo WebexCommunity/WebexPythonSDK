@@ -1,22 +1,9 @@
-"""Package helper functions and classes.
-
-Functions:
-    utf8: Returns the input string as a UTF-8 unicode encoded string.
-    generator_container: Function decorator that containerizes calls to
-        generator functions.
-
-Classes:
-    GeneratorContainer: Container for storing a function call to a generator
-        function.
-
-"""
+# -*- coding: utf-8 -*-
+"""Package helper functions and classes."""
 
 
-from __future__ import unicode_literals
 from future import standard_library
 standard_library.install_aliases()
-from builtins import str
-from past.builtins import basestring
 from builtins import object
 
 import functools
@@ -87,28 +74,6 @@ def extract_and_parse_json(response):
     return response.json()
 
 
-def utf8(string):
-    """Return the 'string' as a UTF-8 unicode encoded string.
-
-    Ensure that 'string' is a unicode encoded string; converting if necessary.
-
-    Args:
-        string(unicode, str): The input string.
-
-    Returns:
-        unicode: The input string encoded as a unicode string.
-
-    Raises:
-        AssertionError: If the parameter types are incorrect.
-
-    """
-    assert isinstance(string, basestring)
-    if isinstance(string, str):
-        return string
-    elif isinstance(string, str):
-        return str(string, encoding='utf-8')
-
-
 class GeneratorContainer(object):
     """Container for storing a function call to a generator function.
 
@@ -123,7 +88,7 @@ class GeneratorContainer(object):
     """
 
     def __init__(self, generator, *args, **kwargs):
-        """Inits a new GeneratorContainer.
+        """Init a new GeneratorContainer.
 
         Args:
             generator(func): The generator function.

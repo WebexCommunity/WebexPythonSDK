@@ -11,7 +11,7 @@ fat=open ("/home/brad/brad_at.txt","r+")  #open the file with the token
 access_token=fat.readline().rstrip()      #strip whitespace, newline, etc.
 fat.close                                 #close file
 
-room_name="TEST Hello World Room"         #set the name of our test room - PLEASE NOTE this room can be delted by script so don't use a current name
+room_name="TEST Hello World Room"         #set the name of our test room - PLEASE NOTE this room can be deleted by script so don't use a current name
 room_count=0
 test_message="Hello World"                #set the test message we will post
 test_url=["https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Cisco_logo.svg/375px-Cisco_logo.svg.png"] #set the location of  a file we will post

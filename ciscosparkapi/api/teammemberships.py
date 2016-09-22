@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Cisco Spark Memberships-API wrapper classes.
 
 Classes:
@@ -9,12 +10,11 @@ Classes:
 """
 
 
-from __future__ import unicode_literals
-from past.builtins import basestring
 from builtins import object
+from six import string_types
 
 from ciscosparkapi.exceptions import ciscosparkapiException
-from ciscosparkapi.helper import utf8, generator_container
+from ciscosparkapi.helper import generator_container
 from ciscosparkapi.restsession import RestSession
 from ciscosparkapi.sparkdata import SparkData
 
@@ -27,7 +27,7 @@ class TeamMembership(SparkData):
         """Init a new TeamMembership object from a JSON dictionary or string.
 
         Args:
-            json(dict, unicode, str): Input JSON object.
+            json(dict, string_types): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -37,31 +37,31 @@ class TeamMembership(SparkData):
 
     @property
     def id(self):
-        return self._json[u'id']
+        return self._json['id']
 
     @property
     def teamId(self):
-        return self._json[u'teamId']
+        return self._json['teamId']
 
     @property
     def personId(self):
-        return self._json[u'personId']
+        return self._json['personId']
 
     @property
     def personEmail(self):
-        return self._json[u'personEmail']
+        return self._json['personEmail']
 
     @property
     def personDisplayName(self):
-        return self._json[u'personDisplayName']
+        return self._json['personDisplayName']
 
     @property
     def isModerator(self):
-        return self._json[u'isModerator']
+        return self._json['isModerator']
 
     @property
     def created(self):
-        return self._json[u'created']
+        return self._json['created']
 
 
 class TeamMembershipsAPI(object):
@@ -111,7 +111,7 @@ class TeamMembershipsAPI(object):
         container.
 
         Args:
-            teamId(unicode, str): List memberships for the team with teamId.
+            teamId(string_types): List memberships for the team with teamId.
             max(int): Limits the maximum number of memberships returned from
                 the Spark service per request.
 
@@ -126,13 +126,13 @@ class TeamMembershipsAPI(object):
 
         """
         # Process args
-        assert teamId is None or isinstance(teamId, basestring)
+        assert teamId is None or isinstance(teamId, string_types)
         assert max is None or isinstance(max, int)
         params = {}
         if teamId:
-            params[u'teamId'] = utf8(teamId)
+            params['teamId'] = teamId
         if max:
-            params[u'max'] = max
+            params['max'] = max
         # API request - get items
         items = self.session.get_items('team/memberships', params=params)
         # Yield Person objects created from the returned items JSON objects
@@ -147,10 +147,10 @@ class TeamMembershipsAPI(object):
         them a moderator.
 
         Args:
-            teamId(unicode, str): ID of the team to which the person will be
+            teamId(string_types): ID of the team to which the person will be
                 added.
-            personId(unicode, str): ID of the person to be added to the team.
-            personEmail(unicode, str): Email address of the person to be added
+            personId(string_types): ID of the person to be added to the team.
+            personEmail(string_types): Email address of the person to be added
                 to the team.
             isModerator(bool): If True, adds the person as a moderator for the
                 team. If False, adds the person as normal member of the team.
@@ -166,21 +166,21 @@ class TeamMembershipsAPI(object):
 
         """
         # Process args
-        assert isinstance(teamId, basestring)
-        assert personId is None or isinstance(personId, basestring)
-        assert personEmail is None or isinstance(personEmail, basestring)
+        assert isinstance(teamId, string_types)
+        assert personId is None or isinstance(personId, string_types)
+        assert personEmail is None or isinstance(personEmail, string_types)
         assert isModerator is None or isinstance(isModerator, bool)
         post_data = {}
-        post_data[u'teamId'] = utf8(teamId)
+        post_data['teamId'] = teamId
         if personId:
-            post_data[u'personId'] = utf8(personId)
+            post_data['personId'] = personId
         elif personEmail:
-            post_data[u'personEmail'] = utf8(personEmail)
+            post_data['personEmail'] = personEmail
         else:
             error_message = "personId or personEmail must be provided to " \
                             "add a person to a team.  Neither were provided."
             raise ciscosparkapiException(error_message)
-        post_data[u'isModerator'] = isModerator
+        post_data['isModerator'] = isModerator
         # API request
         json_obj = self.session.post('team/memberships', json=post_data)
         # Return a TeamMembership object created from the response JSON data
@@ -190,7 +190,7 @@ class TeamMembershipsAPI(object):
         """Get details for a team membership by ID.
 
         Args:
-            membershipId(unicode, str): The membershipId of the team
+            membershipId(string_types): The membershipId of the team
                 membership.
 
         Returns:
@@ -202,7 +202,7 @@ class TeamMembershipsAPI(object):
 
         """
         # Process args
-        assert isinstance(membershipId, basestring)
+        assert isinstance(membershipId, string_types)
         # API request
         json_obj = self.session.get('team/memberships/'+membershipId)
         # Return a TeamMembership object created from the response JSON data
@@ -212,7 +212,7 @@ class TeamMembershipsAPI(object):
         """Update details for a team membership.
 
         Args:
-            membershipId(unicode, str): The membershipId of the team membership
+            membershipId(string_types): The membershipId of the team membership
                 to be updated.
 
         **update_attributes:
@@ -229,20 +229,15 @@ class TeamMembershipsAPI(object):
 
         """
         # Process args
-        assert isinstance(membershipId, basestring)
+        assert isinstance(membershipId, string_types)
         # Process update_attributes keyword arguments
         if not update_attributes:
             error_message = "At least one **update_attributes keyword " \
                             "argument must be specified."
             raise ciscosparkapiException(error_message)
-        put_data = {}
-        for param, value in update_attributes.items():
-            if isinstance(value, basestring):
-                value = utf8(value)
-            put_data[utf8(param)] = value
         # API request
         json_obj = self.session.post('team/memberships/'+membershipId,
-                                     json=put_data)
+                                     json=update_attributes)
         # Return a TeamMembership object created from the response JSON data
         return TeamMembership(json_obj)
 
@@ -250,7 +245,7 @@ class TeamMembershipsAPI(object):
         """Delete a team membership, by ID.
 
         Args:
-            membershipId(unicode, str): The membershipId of the team membership
+            membershipId(string_types): The membershipId of the team membership
                 to be deleted.
 
         Raises:
@@ -259,6 +254,6 @@ class TeamMembershipsAPI(object):
 
         """
         # Process args
-        assert isinstance(membershipId, basestring)
+        assert isinstance(membershipId, string_types)
         # API request
         self.session.delete('team/memberships/'+membershipId)

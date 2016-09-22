@@ -1,11 +1,11 @@
+# -*- coding: utf-8 -*-
 """RestSession class for creating 'connections' to the Cisco Spark APIs."""
 
 
-from __future__ import unicode_literals
 from future import standard_library
 standard_library.install_aliases()
-from past.builtins import basestring
 from builtins import object
+from six import string_types
 
 import urllib.parse
 
@@ -26,7 +26,7 @@ def _fix_next_url(next_url):
     This patch parses the next_url to remove the max=null parameter.
 
     Args:
-        next_url(unicode, str): The 'next' URL to be parsed and cleaned.
+        next_url(string_types): The 'next' URL to be parsed and cleaned.
 
     Returns:
         str: The clean URL to be used for the 'next' request.
@@ -37,7 +37,8 @@ def _fix_next_url(next_url):
             endpoint URL (scheme, netloc and path).
 
     """
-    assert isinstance(next_url, basestring)
+    assert isinstance(next_url, string_types)
+    next_url = str(next_url)
     parsed_url = urllib.parse.urlparse(next_url)
     if not parsed_url.scheme or not parsed_url.netloc or not parsed_url.path:
         error_message = "'next_url' must be a valid API endpoint URL, " \
@@ -56,7 +57,7 @@ def _fix_next_url(next_url):
 class RestSession(object):
     def __init__(self, access_token, base_url, timeout=None):
         super(RestSession, self).__init__()
-        self._base_url = validate_base_url(base_url)
+        self._base_url = str(validate_base_url(base_url))
         self._access_token = access_token
         self._req_session = requests.session()
         self._timeout = None
@@ -90,11 +91,11 @@ class RestSession(object):
         self._timeout = value
 
     def urljoin(self, suffix_url):
-        return urllib.parse.urljoin(self.base_url, suffix_url)
+        return urllib.parse.urljoin(str(self.base_url), str(suffix_url))
 
     def get(self, url, params=None, **kwargs):
         # Process args
-        assert isinstance(url, basestring)
+        assert isinstance(url, string_types)
         assert params is None or isinstance(params, dict)
         abs_url = self.urljoin(url)
         # Process kwargs
@@ -110,7 +111,7 @@ class RestSession(object):
 
     def get_pages(self, url, params=None, **kwargs):
         # Process args
-        assert isinstance(url, basestring)
+        assert isinstance(url, string_types)
         assert params is None or isinstance(params, dict)
         abs_url = self.urljoin(url)
         # Process kwargs
@@ -153,7 +154,7 @@ class RestSession(object):
 
     def post(self, url, json, **kwargs):
         # Process args
-        assert isinstance(url, basestring)
+        assert isinstance(url, string_types)
         assert isinstance(json, dict)
         abs_url = self.urljoin(url)
         # Process kwargs
@@ -168,7 +169,7 @@ class RestSession(object):
 
     def put(self, url, json, **kwargs):
         # Process args
-        assert isinstance(url, basestring)
+        assert isinstance(url, string_types)
         assert isinstance(json, dict)
         abs_url = self.urljoin(url)
         # Process kwargs
@@ -183,7 +184,7 @@ class RestSession(object):
 
     def delete(self, url, **kwargs):
         # Process args
-        assert isinstance(url, basestring)
+        assert isinstance(url, string_types)
         abs_url = self.urljoin(url)
         # Process kwargs
         timeout = kwargs.pop('timeout', self.timeout)

@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 # Version: 0.16
 
 """The Versioneer - like a rocketeer, but for versions.
@@ -349,7 +349,6 @@ https://creativecommons.org/publicdomain/zero/1.0/ .
 """
 
 from __future__ import print_function
-from __future__ import unicode_literals
 from future import standard_library
 standard_library.install_aliases()
 from builtins import str

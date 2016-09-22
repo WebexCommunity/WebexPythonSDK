@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Cisco Spark Memberships-API wrapper classes.
 
 Classes:
@@ -9,12 +10,11 @@ Classes:
 """
 
 
-from __future__ import unicode_literals
-from past.builtins import basestring
 from builtins import object
+from six import string_types
 
 from ciscosparkapi.exceptions import ciscosparkapiException
-from ciscosparkapi.helper import utf8, generator_container
+from ciscosparkapi.helper import generator_container
 from ciscosparkapi.restsession import RestSession
 from ciscosparkapi.sparkdata import SparkData
 
@@ -26,7 +26,7 @@ class Membership(SparkData):
         """Init a new Membership data object from a JSON dictionary or string.
 
         Args:
-            json(dict, unicode, str): Input JSON object.
+            json(dict, string_types): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -36,35 +36,35 @@ class Membership(SparkData):
 
     @property
     def id(self):
-        return self._json[u'id']
+        return self._json['id']
 
     @property
     def roomId(self):
-        return self._json[u'roomId']
+        return self._json['roomId']
 
     @property
     def personId(self):
-        return self._json[u'personId']
+        return self._json['personId']
 
     @property
     def personEmail(self):
-        return self._json[u'personEmail']
+        return self._json['personEmail']
 
     @property
     def personDisplayName(self):
-        return self._json[u'personDisplayName']
+        return self._json['personDisplayName']
 
     @property
     def isModerator(self):
-        return self._json[u'isModerator']
+        return self._json['isModerator']
 
     @property
     def isMonitor(self):
-        return self._json[u'isMonitor']
+        return self._json['isMonitor']
 
     @property
     def created(self):
-        return self._json[u'created']
+        return self._json['created']
 
 
 class MembershipsAPI(object):
@@ -118,10 +118,10 @@ class MembershipsAPI(object):
         container.
 
         Args:
-            roomId(unicode, str): List memberships for the room with roomId.
-            personId(unicode, str): Filter results to include only those with
+            roomId(string_types): List memberships for the room with roomId.
+            personId(string_types): Filter results to include only those with
                 personId.
-            personEmail(unicode, str): Filter results to include only those
+            personEmail(string_types): Filter results to include only those
                 with personEmail.
             max(int): Limits the maximum number of memberships returned from
                 the Spark service per request.
@@ -138,17 +138,17 @@ class MembershipsAPI(object):
 
         """
         # Process args
-        assert roomId is None or isinstance(roomId, basestring)
-        assert personId is None or isinstance(personId, basestring)
-        assert personEmail is None or isinstance(personEmail, basestring)
+        assert roomId is None or isinstance(roomId, string_types)
+        assert personId is None or isinstance(personId, string_types)
+        assert personEmail is None or isinstance(personEmail, string_types)
         assert max is None or isinstance(max, int)
         params = {}
         if roomId:
-            params[u'roomId'] = utf8(roomId)
+            params['roomId'] = roomId
             if personId:
-                params[u'personId'] = utf8(personId)
+                params['personId'] = personId
             elif personEmail:
-                params[u'personEmail'] = utf8(personEmail)
+                params['personEmail'] = personEmail
         elif personId or personEmail:
             error_message = "A roomId must be specified. A personId or " \
                             "personEmail filter may only be specified when " \
@@ -156,7 +156,7 @@ class MembershipsAPI(object):
                             "roomId argument."
             raise ciscosparkapiException(error_message)
         if max:
-            params[u'max'] = max
+            params['max'] = max
         # API request - get items
         items = self.session.get_items('memberships', params=params)
         # Yield Person objects created from the returned items JSON objects
@@ -171,10 +171,10 @@ class MembershipsAPI(object):
         making them a moderator.
 
         Args:
-            roomId(unicode, str): ID of the room to which the person will be
+            roomId(string_types): ID of the room to which the person will be
                 added.
-            personId(unicode, str): ID of the person to be added to the room.
-            personEmail(unicode, str): Email address of the person to be added
+            personId(string_types): ID of the person to be added to the room.
+            personEmail(string_types): Email address of the person to be added
                 to the room.
             isModerator(bool): If True, adds the person as a moderator for the
                 room. If False, adds the person as normal member of the room.
@@ -190,21 +190,21 @@ class MembershipsAPI(object):
 
         """
         # Process args
-        assert isinstance(roomId, basestring)
-        assert personId is None or isinstance(personId, basestring)
-        assert personEmail is None or isinstance(personEmail, basestring)
+        assert isinstance(roomId, string_types)
+        assert personId is None or isinstance(personId, string_types)
+        assert personEmail is None or isinstance(personEmail, string_types)
         assert isModerator is None or isinstance(isModerator, bool)
         post_data = {}
-        post_data[u'roomId'] = utf8(roomId)
+        post_data['roomId'] = roomId
         if personId:
-            post_data[u'personId'] = utf8(personId)
+            post_data['personId'] = personId
         elif personEmail:
-            post_data[u'personEmail'] = utf8(personEmail)
+            post_data['personEmail'] = personEmail
         else:
             error_message = "personId or personEmail must be provided to " \
                             "add a person to a room.  Neither were provided."
             raise ciscosparkapiException(error_message)
-        post_data[u'isModerator'] = isModerator
+        post_data['isModerator'] = isModerator
         # API request
         json_obj = self.session.post('memberships', json=post_data)
         # Return a Membership object created from the response JSON data
@@ -214,7 +214,7 @@ class MembershipsAPI(object):
         """Get details for a membership by ID.
 
         Args:
-            membershipId(unicode, str): The membershipId of the membership.
+            membershipId(string_types): The membershipId of the membership.
 
         Returns:
             Membership: With the details of the requested membership.
@@ -225,7 +225,7 @@ class MembershipsAPI(object):
 
         """
         # Process args
-        assert isinstance(membershipId, basestring)
+        assert isinstance(membershipId, string_types)
         # API request
         json_obj = self.session.get('memberships/'+membershipId)
         # Return a Membership object created from the response JSON data
@@ -235,7 +235,7 @@ class MembershipsAPI(object):
         """Update details for a membership.
 
         Args:
-            membershipId(unicode, str): The membershipId of the membership to
+            membershipId(string_types): The membershipId of the membership to
                 be updated.
 
         **update_attributes:
@@ -252,20 +252,15 @@ class MembershipsAPI(object):
 
         """
         # Process args
-        assert isinstance(membershipId, basestring)
+        assert isinstance(membershipId, string_types)
         # Process update_attributes keyword arguments
         if not update_attributes:
             error_message = "At least one **update_attributes keyword " \
                             "argument must be specified."
             raise ciscosparkapiException(error_message)
-        put_data = {}
-        for param, value in update_attributes.items():
-            if isinstance(value, basestring):
-                value = utf8(value)
-            put_data[utf8(param)] = value
         # API request
         json_obj = self.session.post('memberships/'+membershipId,
-                                     json=put_data)
+                                     json=update_attributes)
         # Return a Membership object created from the response JSON data
         return Membership(json_obj)
 
@@ -273,7 +268,7 @@ class MembershipsAPI(object):
         """Delete a membership, by ID.
 
         Args:
-            membershipId(unicode, str): The membershipId of the membership to
+            membershipId(string_types): The membershipId of the membership to
                 be deleted.
 
         Raises:
@@ -282,6 +277,6 @@ class MembershipsAPI(object):
 
         """
         # Process args
-        assert isinstance(membershipId, basestring)
+        assert isinstance(membershipId, string_types)
         # API request
         self.session.delete('memberships/'+membershipId)

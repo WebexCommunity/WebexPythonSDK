@@ -1,7 +1,5 @@
+# -*- coding: utf-8 -*-
 """ciscosparkapi exception classes."""
-
-
-from __future__ import unicode_literals
 
 
 SPARK_RESPONSE_CODES = {

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Cisco Spark People-API wrapper classes.
 
 Classes:
@@ -8,12 +9,11 @@ Classes:
 """
 
 
-from __future__ import unicode_literals
-from past.builtins import basestring
 from builtins import object
+from six import string_types
 
 from ciscosparkapi.exceptions import ciscosparkapiException
-from ciscosparkapi.helper import utf8, generator_container
+from ciscosparkapi.helper import generator_container
 from ciscosparkapi.restsession import RestSession
 from ciscosparkapi.sparkdata import SparkData
 
@@ -25,7 +25,7 @@ class Person(SparkData):
         """Init a new Person data object from a JSON dictionary or string.
 
         Args:
-            json(dict, unicode, str): Input JSON object.
+            json(dict, string_types): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -35,31 +35,31 @@ class Person(SparkData):
 
     @property
     def id(self):
-        return self._json[u'id']
+        return self._json['id']
 
     @property
     def emails(self):
-        return self._json[u'emails']
+        return self._json['emails']
 
     @property
     def displayName(self):
-        return self._json[u'displayName']
+        return self._json['displayName']
 
     @property
     def avatar(self):
-        return self._json[u'avatar']
+        return self._json['avatar']
 
     @property
     def created(self):
-        return self._json[u'created']
+        return self._json['created']
 
     @property
     def lastActivity(self):
-        return self._json[u'lastActivity']
+        return self._json['lastActivity']
 
     @property
     def status(self):
-        return self._json[u'status']
+        return self._json['status']
 
 
 class PeopleAPI(object):
@@ -106,8 +106,8 @@ class PeopleAPI(object):
         container.
 
         Args:
-            email(unicode, str): The e-mail address of the person to be found.
-            displayName(unicode, str): The complete or beginning portion of
+            email(string_types): The e-mail address of the person to be found.
+            displayName(string_types): The complete or beginning portion of
                 the displayName to be searched.
             max(int): Limits the maximum number of people returned from the
                 Spark service per request.
@@ -123,20 +123,20 @@ class PeopleAPI(object):
 
         """
         # Process args
-        assert email is None or isinstance(email, basestring)
-        assert displayName is None or isinstance(displayName, basestring)
+        assert email is None or isinstance(email, string_types)
+        assert displayName is None or isinstance(displayName, string_types)
         assert max is None or isinstance(max, int)
         params = {}
         if email:
-            params[u'email'] = utf8(email)
+            params['email'] = email
         elif displayName:
-            params[u'displayName'] = utf8(displayName)
+            params['displayName'] = displayName
         else:
             error_message = "An email or displayName argument must be " \
                             "specified."
             raise ciscosparkapiException(error_message)
         if max:
-            params[u'max'] = max
+            params['max'] = max
         # API request - get items
         items = self.session.get_items('people', params=params)
         # Yield Person objects created from the returned items JSON objects
@@ -147,7 +147,7 @@ class PeopleAPI(object):
         """Get person details, by personId.
 
         Args:
-            personId(unicode, str): The personID of the person.
+            personId(string_types): The personID of the person.
 
         Returns:
             Person: With the details of the requested person.
@@ -158,7 +158,7 @@ class PeopleAPI(object):
 
         """
         # Process args
-        assert isinstance(personId, basestring)
+        assert isinstance(personId, string_types)
         # API request
         json_obj = self.session.get('people/'+personId)
         # Return a Person object created from the response JSON data

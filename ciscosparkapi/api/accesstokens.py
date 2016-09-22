@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Cisco Spark Access-Tokens-API wrapper classes.
 
 Classes:
@@ -9,22 +10,21 @@ Classes:
 """
 
 
-from __future__ import unicode_literals
 from future import standard_library
 standard_library.install_aliases()
-from past.builtins import basestring
 from builtins import object
+from six import string_types
 
 import urllib.parse
 
 import requests
 
-from ciscosparkapi.helper import utf8, ERC, validate_base_url, \
+from ciscosparkapi.helper import ERC, validate_base_url, \
     check_response_code, extract_and_parse_json
 from ciscosparkapi.sparkdata import SparkData
 
 
-API_ENDPOINT = u"access_token"
+API_ENDPOINT = "access_token"
 
 
 class AccessToken(SparkData):
@@ -34,7 +34,7 @@ class AccessToken(SparkData):
         """Init a new AccessToken data object from a JSON dictionary or string.
 
         Args:
-            json(dict, unicode, str): Input JSON object.
+            json(dict, string_types): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -45,22 +45,22 @@ class AccessToken(SparkData):
     @property
     def access_token(self):
         """Cisco Spark access_token."""
-        return self._json.get(u'access_token')
+        return self._json.get('access_token')
 
     @property
     def expires_in(self):
         """Access token expires_in number of seconds."""
-        return self._json.get(u'expires_in')
+        return self._json.get('expires_in')
 
     @property
     def refresh_token(self):
         """refresh_token used to request a new/refreshed access_token."""
-        return self._json.get(u'refresh_token')
+        return self._json.get('refresh_token')
 
     @property
     def refresh_token_expires_in(self):
         """refresh_token_expires_in number of seconds."""
-        return self._json.get(u'refresh_token_expires_in')
+        return self._json.get('refresh_token_expires_in')
 
 
 class AccessTokensAPI(object):
@@ -75,21 +75,21 @@ class AccessTokensAPI(object):
         """Init a new AccessTokensAPI object with the provided RestSession.
 
         Args:
-            base_url(unicode, str): The base URL the API endpoints.
+            base_url(string_types): The base URL the API endpoints.
             timeout(int): Timeout in seconds for the API requests.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
 
         """
-        assert isinstance(base_url, basestring)
+        assert isinstance(base_url, string_types)
         assert timeout is None or isinstance(timeout, int)
         super(AccessTokensAPI, self).__init__()
-        self._base_url = validate_base_url(base_url)
+        self._base_url = str(validate_base_url(base_url))
         self._timeout = timeout
         self._endpoint_url = urllib.parse.urljoin(self.base_url, API_ENDPOINT)
         self._request_kwargs = {}
-        self._request_kwargs[u"timeout"] = timeout
+        self._request_kwargs["timeout"] = timeout
 
     @property
     def base_url(self):
@@ -106,13 +106,13 @@ class AccessTokensAPI(object):
         invoke the APIs.
 
         Args:
-            client_id(unicode, str): Provided when you created your
+            client_id(string_types): Provided when you created your
                 integration.
-            client_secret(unicode, str): Provided when you created your
+            client_secret(string_types): Provided when you created your
                 integration.
-            code(unicode, str): The Authorization Code provided by the user
+            code(string_types): The Authorization Code provided by the user
                 OAuth process.
-            redirect_uri(unicode, str): The redirect URI used in the user OAuth
+            redirect_uri(string_types): The redirect URI used in the user OAuth
                 process.
 
         Returns:
@@ -125,17 +125,17 @@ class AccessTokensAPI(object):
 
         """
         # Process args
-        assert isinstance(client_id, basestring)
-        assert isinstance(client_secret, basestring)
-        assert isinstance(code, basestring)
-        assert isinstance(redirect_uri, basestring)
+        assert isinstance(client_id, string_types)
+        assert isinstance(client_secret, string_types)
+        assert isinstance(code, string_types)
+        assert isinstance(redirect_uri, string_types)
         # Build request parameters
         data = {}
-        data[u"grant_type"] = u"authorization_code"
-        data[u"client_id"] = utf8(client_id)
-        data[u"client_secret"] = utf8(client_secret)
-        data[u"code"] = utf8(code)
-        data[u"redirect_uri"] = utf8(redirect_uri)
+        data["grant_type"] = "authorization_code"
+        data["client_id"] = client_id
+        data["client_secret"] = client_secret
+        data["code"] = code
+        data["redirect_uri"] = redirect_uri
         # API request
         response = requests.post(self._endpoint_url, data=data,
                                  **self._request_kwargs)
@@ -148,11 +148,11 @@ class AccessTokensAPI(object):
         """Return a refreshed Access Token via the provided refresh_token.
 
         Args:
-            client_id(unicode, str): Provided when you created your
+            client_id(string_types): Provided when you created your
                 integration.
-            client_secret(unicode, str): Provided when you created your
+            client_secret(string_types): Provided when you created your
                 integration.
-            refresh_token(unicode, str): Provided when you requested the Access
+            refresh_token(string_types): Provided when you requested the Access
                 Token.
 
         Returns:
@@ -165,15 +165,15 @@ class AccessTokensAPI(object):
 
         """
         # Process args
-        assert isinstance(client_id, basestring)
-        assert isinstance(client_secret, basestring)
-        assert isinstance(refresh_token, basestring)
+        assert isinstance(client_id, string_types)
+        assert isinstance(client_secret, string_types)
+        assert isinstance(refresh_token, string_types)
         # Build request parameters
         data = {}
-        data[u"grant_type"] = u"refresh_token"
-        data[u"client_id"] = utf8(client_id)
-        data[u"client_secret"] = utf8(client_secret)
-        data[u"refresh_token"] = utf8(refresh_token)
+        data["grant_type"] = "refresh_token"
+        data["client_id"] = client_id
+        data["client_secret"] = client_secret
+        data["refresh_token"] = refresh_token
         # API request
         response = requests.post(self._endpoint_url, data=data,
                                  **self._request_kwargs)
