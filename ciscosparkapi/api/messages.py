@@ -9,6 +9,9 @@ Classes:
 
 
 from __future__ import unicode_literals
+from builtins import map
+from past.builtins import basestring
+from builtins import object
 
 from ciscosparkapi.exceptions import ciscosparkapiException
 from ciscosparkapi.helper import utf8, generator_container
@@ -238,7 +241,7 @@ class MessagesAPI(object):
         if markdown:
             post_data[u'markdown'] = utf8(markdown)
         if files:
-            files = map(utf8, files)
+            files = list(map(utf8, files))
             post_data[u'files'] = files
         # API request
         json_obj = self.session.post('messages', json=post_data)

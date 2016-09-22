@@ -24,6 +24,8 @@ Example:
 
 
 from __future__ import unicode_literals
+from past.builtins import basestring
+from builtins import object
 
 import json as json_pkg
 
@@ -87,7 +89,7 @@ class SparkData(object):
                 requested.
 
         """
-        if item in self._json.keys():
+        if item in list(self._json.keys()):
             item_data = self._json[item]
             if isinstance(item_data, dict):
                 return SparkData(item_data)

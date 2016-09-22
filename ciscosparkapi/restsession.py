@@ -2,8 +2,12 @@
 
 
 from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from past.builtins import basestring
+from builtins import object
 
-import urlparse
+import urllib.parse
 
 import requests
 
@@ -34,7 +38,7 @@ def _fix_next_url(next_url):
 
     """
     assert isinstance(next_url, basestring)
-    parsed_url = urlparse.urlparse(next_url)
+    parsed_url = urllib.parse.urlparse(next_url)
     if not parsed_url.scheme or not parsed_url.netloc or not parsed_url.path:
         error_message = "'next_url' must be a valid API endpoint URL, " \
                         "minimally containing a scheme, netloc and path."
@@ -46,7 +50,7 @@ def _fix_next_url(next_url):
         new_query = '&'.join(query_list)
         parsed_url = list(parsed_url)
         parsed_url[4] = new_query
-    return urlparse.urlunparse(parsed_url)
+    return urllib.parse.urlunparse(parsed_url)
 
 
 class RestSession(object):
@@ -86,7 +90,7 @@ class RestSession(object):
         self._timeout = value
 
     def urljoin(self, suffix_url):
-        return urlparse.urljoin(self.base_url, suffix_url)
+        return urllib.parse.urljoin(self.base_url, suffix_url)
 
     def get(self, url, params=None, **kwargs):
         # Process args

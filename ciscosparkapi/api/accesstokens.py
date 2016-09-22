@@ -10,8 +10,12 @@ Classes:
 
 
 from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from past.builtins import basestring
+from builtins import object
 
-import urlparse
+import urllib.parse
 
 import requests
 
@@ -83,7 +87,7 @@ class AccessTokensAPI(object):
         super(AccessTokensAPI, self).__init__()
         self._base_url = validate_base_url(base_url)
         self._timeout = timeout
-        self._endpoint_url = urlparse.urljoin(self.base_url, API_ENDPOINT)
+        self._endpoint_url = urllib.parse.urljoin(self.base_url, API_ENDPOINT)
         self._request_kwargs = {}
         self._request_kwargs[u"timeout"] = timeout
 

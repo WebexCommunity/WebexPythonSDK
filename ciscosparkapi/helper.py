@@ -13,9 +13,14 @@ Classes:
 
 
 from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from past.builtins import basestring
+from builtins import object
 
 import functools
-import urlparse
+import urllib.parse
 
 from ciscosparkapi import ciscosparkapiException, SparkApiError
 
@@ -31,7 +36,7 @@ ERC = {
 
 def validate_base_url(base_url):
     """Verify that base_url specifies a protocol and network location."""
-    parsed_url = urlparse.urlparse(base_url)
+    parsed_url = urllib.parse.urlparse(base_url)
     if parsed_url.scheme and parsed_url.netloc:
         return parsed_url.geturl()
     else:
@@ -98,10 +103,10 @@ def utf8(string):
 
     """
     assert isinstance(string, basestring)
-    if isinstance(string, unicode):
+    if isinstance(string, str):
         return string
     elif isinstance(string, str):
-        return unicode(string, encoding='utf-8')
+        return str(string, encoding='utf-8')
 
 
 class GeneratorContainer(object):

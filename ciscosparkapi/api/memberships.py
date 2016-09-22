@@ -10,6 +10,8 @@ Classes:
 
 
 from __future__ import unicode_literals
+from past.builtins import basestring
+from builtins import object
 
 from ciscosparkapi.exceptions import ciscosparkapiException
 from ciscosparkapi.helper import utf8, generator_container
