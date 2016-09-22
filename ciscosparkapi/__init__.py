@@ -1,24 +1,26 @@
 """Python API wrapper for the Cisco Spark APIs."""
 
 
+from __future__ import absolute_import
+from __future__ import unicode_literals
+
 # Versioneer version control
 from ._version import get_versions
 __version__ = get_versions()['version']
 del get_versions
 
-
 import os
 
-from exceptions import ciscosparkapiException, SparkApiError
-from restsession import RestSession
-from api.accesstokens import AccessToken, AccessTokensAPI
-from api.people import Person, PeopleAPI
-from api.rooms import Room, RoomsAPI
-from api.memberships import Membership, MembershipsAPI
-from api.messages import Message, MessagesAPI
-from api.teams import Team, TeamsAPI
-from api.teammemberships import TeamMembership, TeamMembershipsAPI
-from api.webhooks import Webhook, WebhooksAPI
+from .exceptions import ciscosparkapiException, SparkApiError
+from .restsession import RestSession
+from .api.accesstokens import AccessToken, AccessTokensAPI
+from .api.people import Person, PeopleAPI
+from .api.rooms import Room, RoomsAPI
+from .api.memberships import Membership, MembershipsAPI
+from .api.messages import Message, MessagesAPI
+from .api.teams import Team, TeamsAPI
+from .api.teammemberships import TeamMembership, TeamMembershipsAPI
+from .api.webhooks import Webhook, WebhooksAPI
 
 
 DEFAULT_BASE_URL = 'https://api.ciscospark.com/v1/'

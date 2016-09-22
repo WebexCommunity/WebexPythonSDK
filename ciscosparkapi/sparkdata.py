@@ -23,6 +23,8 @@ Example:
 """
 
 
+from __future__ import unicode_literals
+
 import json as json_pkg
 
 

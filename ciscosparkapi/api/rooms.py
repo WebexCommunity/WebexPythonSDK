@@ -8,6 +8,8 @@ Classes:
 """
 
 
+from __future__ import unicode_literals
+
 from ciscosparkapi.exceptions import ciscosparkapiException
 from ciscosparkapi.helper import utf8, generator_container
 from ciscosparkapi.restsession import RestSession

@@ -1,9 +1,12 @@
 """A setuptools based setup module."""
 
 
+from __future__ import unicode_literals
+
 from codecs import open
 from os import path
-from setuptools import setup, find_packages
+from setuptools import setup
+
 import versioneer
 
 

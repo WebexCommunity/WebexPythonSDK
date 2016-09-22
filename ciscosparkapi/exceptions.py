@@ -1,6 +1,9 @@
 """ciscosparkapi exception classes."""
 
 
+from __future__ import unicode_literals
+
+
 SPARK_RESPONSE_CODES = {
     200: "OK",
     204: "Member deleted.",

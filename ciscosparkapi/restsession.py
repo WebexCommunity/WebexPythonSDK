@@ -1,5 +1,8 @@
 """RestSession class for creating 'connections' to the Cisco Spark APIs."""
 
+
+from __future__ import unicode_literals
+
 import urlparse
 
 import requests
