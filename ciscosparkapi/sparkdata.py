@@ -48,8 +48,8 @@ def _json_dict(json):
     elif isinstance(json, string_types):
         return json_pkg.loads(json)
     else:
-        error = "'json' must be a dictionary or string; " \
-                "received: %r" % json
+        error = "'json' must be a dictionary or JSON string; " \
+                "received: {!r}".format(json)
         raise TypeError(error)
 
 
@@ -96,19 +96,19 @@ class SparkData(object):
             else:
                 return item_data
         else:
-            error = "'%s' object has no attribute '%s'" % \
-                    (self.__class__.__name__, item)
+            error = "'{}' object has no attribute " \
+                    "'{}'".format(self.__class__.__name__, item)
             raise AttributeError(error)
 
     def __str__(self):
         """Return a human-readable string representation of this object."""
         class_str = self.__class__.__name__
         json_str = json_pkg.dumps(self._json, indent=2)
-        return "%s:\n%s" % (class_str, json_str)
+        return "{}:\n{}".format(class_str, json_str)
 
     def __repr__(self):
         """Return a string representing this object as valid Python expression.
         """
         class_str = self.__class__.__name__
         json_str = json_pkg.dumps(self._json, ensure_ascii=False)
-        return "%s(%r)" % (class_str, json_str)
+        return "{}({})".format(class_str, json_str)

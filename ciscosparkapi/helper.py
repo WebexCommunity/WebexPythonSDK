@@ -35,7 +35,7 @@ def validate_base_url(base_url):
 def raise_if_extra_kwargs(kwargs):
     """Raise a TypeError if kwargs is not empty."""
     if kwargs:
-        raise TypeError("Unexpected **kwargs: %r" % kwargs)
+        raise TypeError("Unexpected **kwargs: {!r}".format(kwargs))
 
 
 def check_response_code(response, erc):

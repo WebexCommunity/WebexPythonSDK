@@ -148,8 +148,8 @@ class RestSession(object):
                 for item in items:
                     yield item
             else:
-                error_message = "'items' object not found in JSON data: %r" \
-                                % json_page
+                error_message = "'items' object not found in JSON data: " \
+                                "{!r}".format(json_page)
                 raise ciscosparkapiException(error_message)
 
     def post(self, url, json, **kwargs):
