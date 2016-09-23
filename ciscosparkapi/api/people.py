@@ -164,7 +164,6 @@ class PeopleAPI(object):
         # Return a Person object created from the response JSON data
         return Person(json_obj)
 
-
     def me(self):
         """Get the person details of the account accessing the API 'me'.
 

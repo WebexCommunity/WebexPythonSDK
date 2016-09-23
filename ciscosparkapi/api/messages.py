@@ -65,22 +65,18 @@ class Message(SparkData):
         """Optional attribute; returns None if not present."""
         return self._json.get('markdown')
 
-
     @property
     def files(self):
         """Optional attribute; returns None if not present."""
         return self._json.get('files')
 
-
     @property
     def personId(self):
         return self._json['personId']
 
-
     @property
     def personEmail(self):
         return self._json['personEmail']
-
 
     @property
     def created(self):
