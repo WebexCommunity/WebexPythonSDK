@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
 """A setuptools based setup module."""
 
 
 from codecs import open
 from os import path
-from setuptools import setup, find_packages
+from setuptools import setup
+
 import versioneer
 
 
@@ -41,7 +43,12 @@ setup(
         'Natural Language :: English',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
         'Topic :: Communications',
         'Topic :: Communications :: Chat'
     ],
@@ -49,5 +56,5 @@ setup(
     keywords='cisco spark api enterprise messaging',
 
     packages=['ciscosparkapi', 'ciscosparkapi.api'],
-    install_requires=['requests>=2.4.2'],
+    install_requires=['requests>=2.4.2', 'six'],
 )
