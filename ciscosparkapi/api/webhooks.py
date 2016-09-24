@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Cisco Spark Webhooks-API wrapper classes.
 
 Classes:
@@ -8,8 +9,11 @@ Classes:
 """
 
 
+from builtins import object
+from six import string_types
+
 from ciscosparkapi.exceptions import ciscosparkapiException
-from ciscosparkapi.helper import utf8, generator_container
+from ciscosparkapi.helper import generator_container
 from ciscosparkapi.restsession import RestSession
 from ciscosparkapi.sparkdata import SparkData
 
@@ -21,7 +25,7 @@ class Webhook(SparkData):
         """Init a new Webhook data object from a JSON dictionary or string.
 
         Args:
-            json(dict, unicode, str): Input JSON object.
+            json(dict, string_types): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -32,42 +36,42 @@ class Webhook(SparkData):
     @property
     def id(self):
         """Webhook ID."""
-        return self._json.get(u'id')
+        return self._json.get('id')
 
     @property
     def name(self):
         """A user-friendly name for this webhook."""
-        return self._json.get(u'name')
+        return self._json.get('name')
 
     @property
     def targetUrl(self):
         """The URL that receives POST requests for each event."""
-        return self._json.get(u'targetUrl')
+        return self._json.get('targetUrl')
 
     @property
     def resource(self):
         """The resource type for the webhook."""
-        return self._json.get(u'resource')
+        return self._json.get('resource')
 
     @property
     def event(self):
         """The event type for the webhook."""
-        return self._json.get(u'event')
+        return self._json.get('event')
 
     @property
     def filter(self):
         """The filter that defines the webhook scope."""
-        return self._json.get(u'filter')
+        return self._json.get('filter')
 
     @property
     def secret(self):
         """Secret used to generate payload signature."""
-        return self._json.get(u'secret')
+        return self._json.get('secret')
 
     @property
     def created(self):
         """Creation date and time in ISO8601 format."""
-        return self._json.get(u'created')
+        return self._json.get('created')
 
     @property
     def data(self):
@@ -80,7 +84,7 @@ class Webhook(SparkData):
         resource, as specified in the Messages API documentation.
 
         """
-        object_data = self._json.get(u'data', None)
+        object_data = self._json.get('data', None)
         if object_data:
             return SparkData(object_data)
         else:
@@ -144,7 +148,7 @@ class WebhooksAPI(object):
         assert max is None or isinstance(max, int)
         params = {}
         if max:
-            params[u'max'] = max
+            params['max'] = max
         # API request - get items
         items = self.session.get_items('webhooks', params=params)
         # Yield Webhook objects created from the returned items JSON objects
@@ -156,13 +160,13 @@ class WebhooksAPI(object):
         """Create a webhook.
 
         Args:
-            name(unicode, str): A user-friendly name for this webhook.
-            targetUrl(unicode, str): The URL that receives POST requests for
+            name(string_types): A user-friendly name for this webhook.
+            targetUrl(string_types): The URL that receives POST requests for
                 each event.
-            resource(unicode, str): The resource type for the webhook.
-            event(unicode, str): The event type for the webhook.
-            filter(unicode, str): The filter that defines the webhook scope.
-            secret(unicode, str): secret used to generate payload signature.
+            resource(string_types): The resource type for the webhook.
+            event(string_types): The event type for the webhook.
+            filter(string_types): The filter that defines the webhook scope.
+            secret(string_types): secret used to generate payload signature.
 
         Returns:
             Webhook: With the details of the created webhook.
@@ -173,21 +177,21 @@ class WebhooksAPI(object):
 
         """
         # Process args
-        assert isinstance(name, basestring)
-        assert isinstance(targetUrl, basestring)
-        assert isinstance(resource, basestring)
-        assert isinstance(event, basestring)
-        assert filter is None or isinstance(filter, basestring)
-        assert secret is None or isinstance(secret, basestring)
+        assert isinstance(name, string_types)
+        assert isinstance(targetUrl, string_types)
+        assert isinstance(resource, string_types)
+        assert isinstance(event, string_types)
+        assert filter is None or isinstance(filter, string_types)
+        assert secret is None or isinstance(secret, string_types)
         post_data = {}
-        post_data[u'name'] = utf8(name)
-        post_data[u'targetUrl'] = utf8(targetUrl)
-        post_data[u'resource'] = utf8(resource)
-        post_data[u'event'] = utf8(event)
+        post_data['name'] = name
+        post_data['targetUrl'] = targetUrl
+        post_data['resource'] = resource
+        post_data['event'] = event
         if filter:
-            post_data[u'filter'] = utf8(filter)
+            post_data['filter'] = filter
         if secret:
-            post_data[u'secret'] = utf8(secret)
+            post_data['secret'] = secret
         # API request
         json_obj = self.session.post('webhooks', json=post_data)
         # Return a Webhook object created from the response JSON data
@@ -197,7 +201,7 @@ class WebhooksAPI(object):
         """Get the details of a webhook, by ID.
 
         Args:
-            webhookId(unicode, str): The webhookId of the webhook.
+            webhookId(string_types): The webhookId of the webhook.
 
         Returns:
             Webhook: With the details of the requested webhook.
@@ -208,7 +212,7 @@ class WebhooksAPI(object):
 
         """
         # Process args
-        assert isinstance(webhookId, basestring)
+        assert isinstance(webhookId, string_types)
         # API request
         json_obj = self.session.get('webhooks/' + webhookId)
         # Return a Webhook object created from the response JSON data
@@ -218,12 +222,12 @@ class WebhooksAPI(object):
         """Update details for a webhook.
 
         Args:
-            webhookId(unicode, str): The webhookId of the webhook to be
+            webhookId(string_types): The webhookId of the webhook to be
                 updated.
 
             **update_attributes:
-                name(unicode, str): A user-friendly name for this webhook.
-                targetUrl(unicode, str): The URL that receives POST requests
+                name(string_types): A user-friendly name for this webhook.
+                targetUrl(string_types): The URL that receives POST requests
                     for each event.
 
         Returns:
@@ -236,19 +240,15 @@ class WebhooksAPI(object):
 
         """
         # Process args
-        assert isinstance(webhookId, basestring)
+        assert isinstance(webhookId, string_types)
         # Process update_attributes keyword arguments
         if not update_attributes:
             error_message = "At least one **update_attributes keyword " \
                             "argument must be specified."
             raise ciscosparkapiException(error_message)
-        put_data = {}
-        for param, value in update_attributes.items():
-            if isinstance(value, basestring):
-                value = utf8(value)
-            put_data[utf8(param)] = value
         # API request
-        json_obj = self.session.post('webhooks/' + webhookId, json=put_data)
+        json_obj = self.session.post('webhooks/' + webhookId, 
+                                     json=update_attributes)
         # Return a Webhook object created from the response JSON data
         return Webhook(json_obj)
 
@@ -256,7 +256,7 @@ class WebhooksAPI(object):
         """Delete a webhook.
 
         Args:
-            webhookId(unicode, str): The webhookId of the webhook to be
+            webhookId(string_types): The webhookId of the webhook to be
                 deleted.
 
         Raises:
@@ -265,6 +265,6 @@ class WebhooksAPI(object):
 
         """
         # Process args
-        assert isinstance(webhookId, basestring)
+        assert isinstance(webhookId, string_types)
         # API request
         self.session.delete('webhooks/' + webhookId)
