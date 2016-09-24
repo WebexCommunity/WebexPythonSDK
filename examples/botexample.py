@@ -18,6 +18,10 @@ https://developer.ciscospark.com.  The bot's Access Token should be added as a
 'SPARK_ACCESS_TOKEN' environment variable on the web server hosting this
 script.
 
+NOTE:  While this script is written to support Python versions 2 and 3, as of
+the time of this writing web.py (v0.38) only supports Python 2.
+Therefore this script only supports Python 2.
+
 """
 
 
