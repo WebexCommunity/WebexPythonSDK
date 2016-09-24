@@ -6,7 +6,7 @@ Provides single Pythonic wrapper class that represents the Cisco Spark API inter
 
  * Supports Python versions 2 and 3.
  
- * Leverages generator containers and RFC5988 web linking to provide simple and efficient 'paging' of Cisco Spark data objects returned by the Cisco Spark clout.
+ * Leverages generator containers and RFC5988 web linking to provide simple and efficient 'paging' of Cisco Spark data objects returned by the Cisco Spark cloud.
 
  * All Cisco Spark JSON objects and attributes are represented as native python objects.
    * As new Cisco Spark attributes are added and returned by the Spark cloud service, they will be automatically available in the respective Python objects - no library update required.

@@ -82,7 +82,7 @@ class webhook(object):
             # Message was sent by me (bot); do not respond.
             return 'OK'
         else:
-            # Mesage was sent by someone else; parse message and respond.
+            # Message was sent by someone else; parse message and respond.
             if "/CAT" in message.text:
                 print("FOUND '/CAT'")
                 cat_fact = get_catfact()                                          # Get a cat fact
