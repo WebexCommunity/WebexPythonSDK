@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Cisco Spark Teams-API wrapper classes.
 
 Classes:
@@ -8,8 +9,11 @@ Classes:
 """
 
 
+from builtins import object
+from six import string_types
+
 from ciscosparkapi.exceptions import ciscosparkapiException
-from ciscosparkapi.helper import utf8, generator_container
+from ciscosparkapi.helper import generator_container
 from ciscosparkapi.restsession import RestSession
 from ciscosparkapi.sparkdata import SparkData
 
@@ -21,7 +25,7 @@ class Team(SparkData):
         """Init a new Team data object from a JSON dictionary or string.
 
         Args:
-            json(dict, unicode, str): Input JSON object.
+            json(dict, string_types): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -31,15 +35,15 @@ class Team(SparkData):
 
     @property
     def id(self):
-        return self._json[u'id']
+        return self._json['id']
 
     @property
     def name(self):
-        return self._json[u'name']
+        return self._json['name']
 
     @property
     def created(self):
-        return self._json[u'created']
+        return self._json['created']
 
 
 class TeamsAPI(object):
@@ -99,7 +103,7 @@ class TeamsAPI(object):
         assert max is None or isinstance(max, int)
         params = {}
         if max:
-            params[u'max'] = max
+            params['max'] = max
         # API request - get items
         items = self.session.get_items('teams', params=params)
         # Yield Team objects created from the returned items JSON objects
@@ -112,7 +116,7 @@ class TeamsAPI(object):
         The authenticated user is automatically added as a member of the team.
 
         Args:
-            name(unicode, str): A user-friendly name for the team.
+            name(string_types): A user-friendly name for the team.
 
         Returns:
             Team: With the details of the created team.
@@ -123,9 +127,9 @@ class TeamsAPI(object):
 
         """
         # Process args
-        assert isinstance(name, basestring)
+        assert isinstance(name, string_types)
         post_data = {}
-        post_data[u'name'] = utf8(name)
+        post_data['name'] = name
         # API request
         json_obj = self.session.post('teams', json=post_data)
         # Return a Team object created from the response JSON data
@@ -135,7 +139,7 @@ class TeamsAPI(object):
         """Get the details of a team, by ID.
 
         Args:
-            teamId(unicode, str): The teamId of the team.
+            teamId(string_types): The teamId of the team.
 
         Returns:
             Team: With the details of the requested team.
@@ -146,7 +150,7 @@ class TeamsAPI(object):
 
         """
         # Process args
-        assert isinstance(teamId, basestring)
+        assert isinstance(teamId, string_types)
         # API request
         json_obj = self.session.get('teams/'+teamId)
         # Return a Team object created from the response JSON data
@@ -156,10 +160,10 @@ class TeamsAPI(object):
         """Update details for a team.
 
         Args:
-            teamId(unicode, str): The teamId of the team to be updated.
+            teamId(string_types): The teamId of the team to be updated.
 
         **update_attributes:
-            name(unicode, str): A user-friendly name for the team.
+            name(string_types): A user-friendly name for the team.
 
         Returns:
             Team: With the updated Spark team details.
@@ -171,19 +175,14 @@ class TeamsAPI(object):
 
         """
         # Process args
-        assert isinstance(teamId, basestring)
+        assert isinstance(teamId, string_types)
         # Process update_attributes keyword arguments
         if not update_attributes:
             error_message = "At least one **update_attributes keyword " \
                             "argument must be specified."
             raise ciscosparkapiException(error_message)
-        put_data = {}
-        for param, value in update_attributes.items():
-            if isinstance(value, basestring):
-                value = utf8(value)
-            put_data[utf8(param)] = value
         # API request
-        json_obj = self.session.post('teams/'+teamId, json=put_data)
+        json_obj = self.session.post('teams/'+teamId, json=update_attributes)
         # Return a Team object created from the response JSON data
         return Team(json_obj)
 
@@ -191,7 +190,7 @@ class TeamsAPI(object):
         """Delete a team.
 
         Args:
-            teamId(unicode, str): The teamId of the team to be deleted.
+            teamId(string_types): The teamId of the team to be deleted.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
@@ -199,6 +198,6 @@ class TeamsAPI(object):
 
         """
         # Process args
-        assert isinstance(teamId, basestring)
+        assert isinstance(teamId, string_types)
         # API request
         self.session.delete('teams/'+teamId)

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Cisco Spark Messages-API wrapper classes.
 
 Classes:
@@ -8,8 +9,11 @@ Classes:
 """
 
 
+from builtins import object
+from six import string_types
+
 from ciscosparkapi.exceptions import ciscosparkapiException
-from ciscosparkapi.helper import utf8, generator_container
+from ciscosparkapi.helper import generator_container
 from ciscosparkapi.restsession import RestSession
 from ciscosparkapi.sparkdata import SparkData
 
@@ -21,7 +25,7 @@ class Message(SparkData):
         """Init a new Message data object from a JSON dictionary or string.
 
         Args:
-            json(dict, unicode, str): Input JSON object.
+            json(dict, string_types): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -31,61 +35,57 @@ class Message(SparkData):
 
     @property
     def id(self):
-        return self._json[u'id']
+        return self._json['id']
 
     @property
     def roomId(self):
-        return self._json[u'roomId']
+        return self._json['roomId']
 
     @property
     def roomType(self):
-        return self._json[u'roomType']
+        return self._json['roomType']
 
     @property
     def toPersonId(self):
         """Optional attribute; returns None if not present."""
-        return self._json.get(u'toPersonId')
+        return self._json.get('toPersonId')
 
     @property
     def toPersonEmail(self):
         """Optional attribute; returns None if not present."""
-        return self._json.get(u'toPersonEmail')
+        return self._json.get('toPersonEmail')
 
     @property
     def text(self):
         """Optional attribute; returns None if not present."""
-        return self._json.get(u'text')
+        return self._json.get('text')
 
     @property
     def markdown(self):
         """Optional attribute; returns None if not present."""
-        return self._json.get(u'markdown')
-
+        return self._json.get('markdown')
 
     @property
     def files(self):
         """Optional attribute; returns None if not present."""
-        return self._json.get(u'files')
-
+        return self._json.get('files')
 
     @property
     def personId(self):
-        return self._json[u'personId']
-
+        return self._json['personId']
 
     @property
     def personEmail(self):
-        return self._json[u'personEmail']
-
+        return self._json['personEmail']
 
     @property
     def created(self):
-        return self._json[u'created']
+        return self._json['created']
 
     @property
     def mentionedPeople(self):
         """Optional attribute; returns None if not present."""
-        return self._json.get(u'mentionedPeople')
+        return self._json.get('mentionedPeople')
 
 
 class MessagesAPI(object):
@@ -135,12 +135,12 @@ class MessagesAPI(object):
         container.
 
         Args:
-            roomId(unicode, str): List messages for the room with roomId.
-            mentionedPeople(unicode, str): List messages for a person, by
+            roomId(string_types): List messages for the room with roomId.
+            mentionedPeople(string_types): List messages for a person, by
                 personId or me.
-            before(unicode, str): List messages sent before a date and time,
+            before(string_types): List messages sent before a date and time,
                 in ISO8601 format
-            beforeMessage(unicode, str): List messages sent before a message,
+            beforeMessage(string_types): List messages sent before a message,
                 by message ID
             max(int): Limit the maximum number of messages returned from the
                 Spark service per request.
@@ -154,22 +154,22 @@ class MessagesAPI(object):
 
         """
         # Process args
-        assert isinstance(roomId, basestring)
+        assert isinstance(roomId, string_types)
         assert mentionedPeople is None or \
-               isinstance(mentionedPeople, basestring)
-        assert before is None or isinstance(before, basestring)
-        assert beforeMessage is None or isinstance(beforeMessage, basestring)
+               isinstance(mentionedPeople, string_types)
+        assert before is None or isinstance(before, string_types)
+        assert beforeMessage is None or isinstance(beforeMessage, string_types)
         assert max is None or isinstance(max, int)
         params = {}
-        params[u'roomId'] = utf8(roomId)
+        params['roomId'] = roomId
         if mentionedPeople:
-            params[u'mentionedPeople'] = utf8(mentionedPeople)
+            params['mentionedPeople'] = mentionedPeople
         if before:
-            params[u'before'] = utf8(before)
+            params['before'] = before
         if beforeMessage:
-            params[u'beforeMessage'] = utf8(beforeMessage)
+            params['beforeMessage'] = beforeMessage
         if max:
-            params[u'max'] = max
+            params['max'] = max
         # API request - get items
         items = self.session.get_items('messages', params=params)
         # Yield Message objects created from the returned items JSON objects
@@ -187,15 +187,15 @@ class MessagesAPI(object):
         markdown, files).
 
         Args:
-            roomId(unicode, str): The room ID.
-            toPersonId(unicode, str): The ID of the recipient when sending a
+            roomId(string_types): The room ID.
+            toPersonId(string_types): The ID of the recipient when sending a
                 private 1:1 message.
-            toPersonEmail(unicode, str): The email address of the recipient
+            toPersonEmail(string_types): The email address of the recipient
                 when sending a private 1:1 message.
-            text(unicode, str): The message, in plain text. If markdown is
-                speficied this parameter may be optionally used to provide
+            text(string_types): The message, in plain text. If markdown is
+                specified this parameter may be optionally used to provide
                 alternate text forUI clients that do not support rich text.
-            markdown(unicode, str): The message, in markdown format.
+            markdown(string_types): The message, in markdown format.
             files(list): A list of URL references for the message attachments.
 
         Returns:
@@ -209,19 +209,19 @@ class MessagesAPI(object):
 
         """
         # Process args
-        assert roomId is None or isinstance(roomId, basestring)
-        assert toPersonId is None or isinstance(toPersonId, basestring)
-        assert toPersonEmail is None or isinstance(toPersonEmail, basestring)
-        assert text is None or isinstance(text, basestring)
-        assert markdown is None or isinstance(markdown, basestring)
+        assert roomId is None or isinstance(roomId, string_types)
+        assert toPersonId is None or isinstance(toPersonId, string_types)
+        assert toPersonEmail is None or isinstance(toPersonEmail, string_types)
+        assert text is None or isinstance(text, string_types)
+        assert markdown is None or isinstance(markdown, string_types)
         assert files is None or isinstance(files, list)
         post_data = {}
         if roomId:
-            post_data[u'roomId'] = utf8(roomId)
+            post_data['roomId'] = roomId
         elif toPersonId:
-            post_data[u'toPersonId'] = utf8(toPersonId)
+            post_data['toPersonId'] = toPersonId
         elif toPersonEmail:
-            post_data[u'toPersonEmail'] = utf8(toPersonEmail)
+            post_data['toPersonEmail'] = toPersonEmail
         else:
             error_message = "You must specify a roomId, toPersonId, or " \
                             "toPersonEmail to which you want to post a new " \
@@ -232,11 +232,11 @@ class MessagesAPI(object):
                             "markdown, files) when posting a message."
             raise ciscosparkapiException(error_message)
         if text:
-            post_data[u'text'] = utf8(text)
+            post_data['text'] = text
         if markdown:
-            post_data[u'markdown'] = utf8(markdown)
+            post_data['markdown'] = markdown
         if files:
-            post_data[u'files'] = utf8(files)
+            post_data['files'] = files
         # API request
         json_obj = self.session.post('messages', json=post_data)
         # Return a Message object created from the response JSON data
@@ -246,7 +246,7 @@ class MessagesAPI(object):
         """Get the details of a message, by ID.
 
         Args:
-            messageId(unicode, str): The messageId of the message.
+            messageId(string_types): The messageId of the message.
 
         Returns:
             Message: With the details of the requested message.
@@ -257,7 +257,7 @@ class MessagesAPI(object):
 
         """
         # Process args
-        assert isinstance(messageId, basestring)
+        assert isinstance(messageId, string_types)
         # API request
         json_obj = self.session.get('messages/'+messageId)
         # Return a Message object created from the response JSON data
@@ -267,7 +267,7 @@ class MessagesAPI(object):
         """Delete a message.
 
         Args:
-            messageId(unicode, str): The messageId of the message to be
+            messageId(string_types): The messageId of the message to be
                 deleted.
 
         Raises:
@@ -276,6 +276,6 @@ class MessagesAPI(object):
 
         """
         # Process args
-        assert isinstance(messageId, basestring)
+        assert isinstance(messageId, string_types)
         # API request
         self.session.delete('messages/'+messageId)

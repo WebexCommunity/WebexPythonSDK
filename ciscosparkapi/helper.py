@@ -1,19 +1,13 @@
-"""Package helper functions and classes.
+# -*- coding: utf-8 -*-
+"""Package helper functions and classes."""
 
-Functions:
-    utf8: Returns the input string as a UTF-8 unicode encoded string.
-    generator_container: Function decorator that containerizes calls to
-        generator functions.
 
-Classes:
-    GeneratorContainer: Container for storing a function call to a generator
-        function.
-
-"""
-
+from future import standard_library
+standard_library.install_aliases()
+from builtins import object
 
 import functools
-import urlparse
+import urllib.parse
 
 from ciscosparkapi import ciscosparkapiException, SparkApiError
 
@@ -29,7 +23,7 @@ ERC = {
 
 def validate_base_url(base_url):
     """Verify that base_url specifies a protocol and network location."""
-    parsed_url = urlparse.urlparse(base_url)
+    parsed_url = urllib.parse.urlparse(base_url)
     if parsed_url.scheme and parsed_url.netloc:
         return parsed_url.geturl()
     else:
@@ -41,7 +35,7 @@ def validate_base_url(base_url):
 def raise_if_extra_kwargs(kwargs):
     """Raise a TypeError if kwargs is not empty."""
     if kwargs:
-        raise TypeError("Unexpected **kwargs: %r" % kwargs)
+        raise TypeError("Unexpected **kwargs: {!r}".format(kwargs))
 
 
 def check_response_code(response, erc):
@@ -80,28 +74,6 @@ def extract_and_parse_json(response):
     return response.json()
 
 
-def utf8(string):
-    """Return the 'string' as a UTF-8 unicode encoded string.
-
-    Ensure that 'string' is a unicode encoded string; converting if necessary.
-
-    Args:
-        string(unicode, str): The input string.
-
-    Returns:
-        unicode: The input string encoded as a unicode string.
-
-    Raises:
-        AssertionError: If the parameter types are incorrect.
-
-    """
-    assert isinstance(string, basestring)
-    if isinstance(string, unicode):
-        return string
-    elif isinstance(string, str):
-        return unicode(string, encoding='utf-8')
-
-
 class GeneratorContainer(object):
     """Container for storing a function call to a generator function.
 
@@ -116,7 +88,7 @@ class GeneratorContainer(object):
     """
 
     def __init__(self, generator, *args, **kwargs):
-        """Inits a new GeneratorContainer.
+        """Init a new GeneratorContainer.
 
         Args:
             generator(func): The generator function.

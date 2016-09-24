@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """ciscosparkapi exception classes."""
 
 
@@ -38,9 +39,9 @@ class SparkApiError(ciscosparkapiException):
         response_text = SPARK_RESPONSE_CODES.get(response_code)
         if response_text:
             self.response_text = response_text
-            error_message = "Response Code [%s] - %s" % \
-                            (response_code, response_text)
+            error_message = "Response Code [{!s}] - {}".format(response_code,
+                                                               response_text)
         else:
-            error_message = "Response Code [%s] - Unknown Response Code" % \
-                            response_code
+            error_message = "Response Code [{!s}] - " \
+                            "Unknown Response Code".format(response_code)
         super(SparkApiError, self).__init__(error_message)
