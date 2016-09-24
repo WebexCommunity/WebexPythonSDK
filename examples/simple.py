@@ -1,44 +1,49 @@
-#!/usr/bin/python
+#!/usr/bin/env python
+#  -*- coding: utf-8 -*-
+"""Simple ciscosparkapi demonstration script.
 
+Very simple script to create a demo room, post a message, and post a file.
+If one or more rooms with the name of the demo room already exist, it will
+delete the previously existing rooms.
+
+The package natively retrieves your Spark access token from the
+SPARK_ACCESS_TOKEN environment variable.  You must have this environment
+variable set to run this script.
+
+"""
+
+
+from __future__ import print_function
 from ciscosparkapi import CiscoSparkAPI
 
-# VERY simple script to create a room, post a message, and post a file.  Alternatively, if the room already exists it will delete the room.
+
+DEMO_ROOM_NAME = "ciscosparkapi Demo Room"
+DEMO_PEOPLE = ["test01@cmlccie.com", "test02@cmlccie.com"]
+DEMO_MESSAGE = u"Cisco Spark rocks!  \ud83d\ude0e"
+DEMO_FILE_URL = "https://developer.ciscospark.com/images/logo_spark_lg@256.png"
 
 
-#storing the Authentication token in a file in the OS vs. leaving in script
-# see https://developer.ciscospark.com/getting-started.html to copy your token and simply place in a text file
-fat=open ("/home/brad/brad_at.txt","r+")  #open the file with the token
-access_token=fat.readline().rstrip()      #strip whitespace, newline, etc.
-fat.close                                 #close file
-
-room_name="TEST Hello World Room"         #set the name of our test room - PLEASE NOTE this room can be deleted by script so don't use a current name
-room_count=0
-test_message="Hello World"                #set the test message we will post
-test_url=["https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Cisco_logo.svg/375px-Cisco_logo.svg.png"] #set the location of  a file we will post
-
-api = CiscoSparkAPI(access_token)         #invoke the API
-
-rooms = api.rooms.list()                  #grab the list of rooms where the user(from Access Token) is a member
+api = CiscoSparkAPI()    # Create a CiscoSparkAPI connection object; uses your SPARK_ACCESS_TOKEN
 
 
-for room in rooms:                        #iterate through list of rooms
-    if room.title == room_name:           #look for our room
-         room_count += 1                  #if we find a room with the same name increment a counter
-         print (room.title)  
-         room_id = room.id                #grab the room id
-         print (room_id)
-         api.rooms.delete(room_id)        #delete the room
-         print ("Room Deleted")
-
-if (room_count == 0):                     #Otherwise create the room, post a message, add a user,  and attachment                   
-    room = api.rooms.create(room_name)    #create a room with room_name  - room.id will be the id of this new room
-    print room                            #prints returned JSON                      
-    message = api.messages.create(room.id,None,None,test_message)       #create a message in the new room
-    print message 
-    message = api.messages.create(room.id,None,None,None,None,test_url) #Post a file in the new room from test_url
-    print message
+# Clean up previous demo rooms
+print("Searching for existing demo rooms...")
+rooms = api.rooms.list()                                                          # Creates a generator container (iterable) that lists the rooms where you are a member
+existing_demo_rooms = [room for room in rooms if room.title == DEMO_ROOM_NAME]    # Builds a list of rooms with the name DEMO_ROOM_NAME
+if existing_demo_rooms:
+    print("Found {} existing room(s); "
+          "deleting them.".format(len(existing_demo_rooms)))
+    for room in existing_demo_rooms:
+         api.rooms.delete(room.id)                                                # Delete the room
+         print ("Room '{}' deleted.".format(room.id))
 
 
 
-
-
+demo_room = api.rooms.create(DEMO_ROOM_NAME)                          # Create a new demo room
+print(demo_room)                                                      # Print the room details (formatted JSON)
+for person_email in DEMO_PEOPLE:
+    api.memberships.create(demo_room.id, personEmail=person_email)    # Add people to the room
+message = api.messages.create(demo_room.id,text=DEMO_MESSAGE)         # Create a message in the new room
+print(message)                                                        # Print the message details (formatted JSON)
+message = api.messages.create(demo_room.id,files=[DEMO_FILE_URL])     # Post a file in the new room from test_url
+print(message)                                                        # Print the message details (formatted JSON)
