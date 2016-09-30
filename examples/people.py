@@ -13,7 +13,10 @@ from __future__ import print_function
 from ciscosparkapi import CiscoSparkAPI
 
 
-api = CiscoSparkAPI()    # Create a CiscoSparkAPI connection object; uses your SPARK_ACCESS_TOKEN
+try:
+    api = CiscoSparkAPI()    # Create a CiscoSparkAPI connection object; uses your SPARK_ACCESS_TOKEN
+except Exception as e:
+    print(e)
 
 
 # Get my user information
