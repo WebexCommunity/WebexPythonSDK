@@ -178,44 +178,22 @@ class RoomsAPI(object):
         # Return a Room object created from the response JSON data
         return Room(json_obj)
 
-    def get(self, roomId=None, title=None):
-        """Get the details of a room, by ID or Title.
-
+    def get(self, roomId):
+        """Get the details of a room, by ID.
         Args:
             roomId(string_types): The roomId of the room.
-            title(string_types): The title of the room.
-
         Returns:
             Room: With the details of the requested room.
-            List of Rooms: When more than 1 room found.
-
         Raises:
             AssertionError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
-
         """
         # Process args
-        if roomId:
-            assert isinstance(roomId, string_types)
-            # API request
-            json_obj = self.session.get('rooms/'+roomId)
-            # Return a Room object created from the response JSON data
-            return Room(json_obj)
-        elif title:
-            assert isinstance(title, string_types)
-            rooms = []
-            for r in self.list():
-                if r.title == title:
-                    rooms.append(r)
-            if len(rooms) == 1:
-                return rooms[0]
-            if len(rooms) > 1:
-                return rooms
-            if len(rooms) == 0:
-                return Room({})
-        else:
-            error_message = "You must specify either the roomId or title."
-            raise ciscosparkapiException(error_message)
+        assert isinstance(roomId, string_types)
+        # API request
+        json_obj = self.session.get('rooms/' + roomId)
+        # Return a Room object created from the response JSON data
+        return Room(json_obj)
 
     def update(self, roomId, **update_attributes):
         """Update details for a room.
