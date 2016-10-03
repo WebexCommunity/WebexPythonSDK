@@ -180,18 +180,22 @@ class RoomsAPI(object):
 
     def get(self, roomId):
         """Get the details of a room, by ID.
+
         Args:
             roomId(string_types): The roomId of the room.
+
         Returns:
             Room: With the details of the requested room.
+
         Raises:
             AssertionError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
+
         """
         # Process args
         assert isinstance(roomId, string_types)
         # API request
-        json_obj = self.session.get('rooms/' + roomId)
+        json_obj = self.session.get('rooms/'+roomId)
         # Return a Room object created from the response JSON data
         return Room(json_obj)
 
