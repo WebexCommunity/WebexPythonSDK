@@ -144,13 +144,13 @@ class RestSession(object):
             # objects contained within the top level 'items' array
             assert isinstance(json_page, dict)
             items = json_page.get(u'items')
-            if items:
-                for item in items:
-                    yield item
-            else:
+            if items is None:
                 error_message = "'items' object not found in JSON data: " \
                                 "{!r}".format(json_page)
                 raise ciscosparkapiException(error_message)
+            else:
+                for item in items:
+                    yield item
 
     def post(self, url, json, **kwargs):
         # Process args
