@@ -247,7 +247,7 @@ class WebhooksAPI(object):
                             "argument must be specified."
             raise ciscosparkapiException(error_message)
         # API request
-        json_obj = self.session.post('webhooks/' + webhookId, 
+        json_obj = self.session.put('webhooks/' + webhookId,
                                      json=update_attributes)
         # Return a Webhook object created from the response JSON data
         return Webhook(json_obj)
