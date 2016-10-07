@@ -152,17 +152,31 @@ class RestSession(object):
                 for item in items:
                     yield item
 
-    def post(self, url, json, **kwargs):
+    def post(self, url, json=None, data=None, headers=None, **kwargs):
         # Process args
         assert isinstance(url, string_types)
-        assert isinstance(json, dict)
         abs_url = self.urljoin(url)
-        # Process kwargs
-        timeout = kwargs.pop('timeout', self.timeout)
+        # Process listed kwargs
+        request_args = {}
+        assert json is None or isinstance(json, dict)
+        assert headers is None or isinstance(headers, dict)
+        if json and data:
+            raise TypeError("You must provide either a json or data argument, "
+                            "not both.")
+        elif json:
+            request_args['json'] = json
+        elif data:
+            request_args['data'] = data
+        elif not json and not data:
+            raise TypeError("You must provide either a json or data argument.")
+        if headers:
+            request_args['headers'] = headers
+        # Process unlisted kwargs
+        request_args['timeout'] = kwargs.pop('timeout', self.timeout)
         erc = kwargs.pop('erc', ERC['POST'])
         raise_if_extra_kwargs(kwargs)
         # API request
-        response = self._req_session.post(abs_url, json=json, timeout=timeout)
+        response = self._req_session.post(abs_url, **request_args)
         # Process response
         check_response_code(response, erc)
         return extract_and_parse_json(response)

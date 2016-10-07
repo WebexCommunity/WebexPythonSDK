@@ -46,7 +46,6 @@ setup(
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Topic :: Communications',
@@ -56,5 +55,5 @@ setup(
     keywords='cisco spark api enterprise messaging',
 
     packages=['ciscosparkapi', 'ciscosparkapi.api'],
-    install_requires=['requests>=2.4.2', 'six', 'future'],
+    install_requires=['requests>=2.4.2', 'requests_toolbelt', 'six', 'future'],
 )
