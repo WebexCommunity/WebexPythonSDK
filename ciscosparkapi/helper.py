@@ -5,8 +5,12 @@
 from future import standard_library
 standard_library.install_aliases()
 from builtins import object
+from six import string_types
 
+from collections import namedtuple
 import functools
+import mimetypes
+import os
 import urllib.parse
 
 from ciscosparkapi import ciscosparkapiException, SparkApiError
@@ -21,6 +25,10 @@ ERC = {
 }
 
 
+EncodableFile = namedtuple('EncodableFile',
+                           ['file_name', 'file_object', 'content_type'])
+
+
 def validate_base_url(base_url):
     """Verify that base_url specifies a protocol and network location."""
     parsed_url = urllib.parse.urlparse(base_url)
@@ -30,6 +38,36 @@ def validate_base_url(base_url):
         error_message = "base_url must contain a valid scheme (protocol " \
                         "specifier) and network location (hostname)"
         raise ciscosparkapiException(error_message)
+
+
+def is_web_url(string):
+    """Check to see if string is an validly-formatted web url."""
+    assert isinstance(string, string_types)
+    parsed_url = urllib.parse.urlparse(string)
+    if (parsed_url.scheme.lower() == 'http' \
+        or parsed_url.scheme.lower() == 'https') \
+        and parsed_url.netloc:
+        return True
+    else:
+        return False
+
+
+def is_local_file(string):
+    """Check to see if string is a valid local file path."""
+    assert isinstance(string, string_types)
+    return os.path.isfile(string)
+
+
+def open_local_file(file_path):
+    """Open the file and return an EncodableFile tuple."""
+    assert isinstance(file_path, string_types)
+    assert is_local_file(file_path)
+    file_name = os.path.basename(file_path)
+    file_object = open(file_path, 'rb')
+    content_type = mimetypes.guess_type(file_name)[0] or 'text/plain'
+    return EncodableFile(file_name=file_name,
+                         file_object=file_object,
+                         content_type=content_type)
 
 
 def raise_if_extra_kwargs(kwargs):

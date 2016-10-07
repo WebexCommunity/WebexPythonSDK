@@ -12,8 +12,11 @@ Classes:
 from builtins import object
 from six import string_types
 
+from requests_toolbelt import MultipartEncoder
+
 from ciscosparkapi.exceptions import ciscosparkapiException
-from ciscosparkapi.helper import generator_container
+from ciscosparkapi.helper import generator_container, is_web_url, \
+    is_local_file, open_local_file
 from ciscosparkapi.restsession import RestSession
 from ciscosparkapi.sparkdata import SparkData
 
@@ -196,7 +199,11 @@ class MessagesAPI(object):
                 specified this parameter may be optionally used to provide
                 alternate text forUI clients that do not support rich text.
             markdown(string_types): The message, in markdown format.
-            files(list): A list of URL references for the message attachments.
+            files(list): A list containing local paths or URL references for
+                the message attachment(s).  The files attribute currently only
+                takes a list containing one (1) filename or URL as an input.
+                This is a Spark API limitation that may be lifted at a later
+                date.
 
         Returns:
             Message: With the details of the created message.
@@ -216,6 +223,7 @@ class MessagesAPI(object):
         assert markdown is None or isinstance(markdown, string_types)
         assert files is None or isinstance(files, list)
         post_data = {}
+        # Where is message to be posted?
         if roomId:
             post_data['roomId'] = roomId
         elif toPersonId:
@@ -227,18 +235,45 @@ class MessagesAPI(object):
                             "toPersonEmail to which you want to post a new " \
                             "message."
             raise ciscosparkapiException(error_message)
+        # Ensure some message 'content' is provided.
         if not text and not markdown and not files:
             error_message = "You must supply some message content (text, " \
                             "markdown, files) when posting a message."
             raise ciscosparkapiException(error_message)
+        # Process the content.
         if text:
             post_data['text'] = text
         if markdown:
             post_data['markdown'] = markdown
+        upload_local_file = False
         if files:
-            post_data['files'] = files
+            if len(files) > 1:
+                error_message = "The files attribute currently only takes a " \
+                                "list containing one (1) filename or URL as " \
+                                "an input.  This is a Spark API limitation " \
+                                "that may be lifted at a later date."
+                raise ciscosparkapiException(error_message)
+            if is_web_url(files[0]):
+                post_data['files'] = files
+            elif is_local_file(files[0]):
+                upload_local_file = True
+                post_data['files'] = open_local_file(files[0])
+            else:
+                error_message = "The provided files argument does not " \
+                                "contain a valid URL or local file path."
+                raise ciscosparkapiException(error_message)
         # API request
-        json_obj = self.session.post('messages', json=post_data)
+        if upload_local_file:
+            try:
+                multipart_data = MultipartEncoder(post_data)
+                headers = {'Content-type': multipart_data.content_type}
+                json_obj = self.session.post('messages',
+                                             data=multipart_data,
+                                             headers=headers)
+            finally:
+                post_data['files'].file_object.close()
+        else:
+            json_obj = self.session.post('messages', json=post_data)
         # Return a Message object created from the response JSON data
         return Message(json_obj)
 
