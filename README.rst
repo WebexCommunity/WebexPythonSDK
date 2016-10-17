@@ -51,12 +51,12 @@ With ciscosparkapi, the above Python code can be consolidated to the following:
 
     from ciscosparkapi import CiscoSparkAPI
 
-    api = CiscoSparkAPI()                                                  # Creates a new API 'connection object'
+    api = CiscoSparkAPI()
     try:
-        message = api.messages.create('<room_id>', text='<message_text>')  # Creates a new message and raises an exception if something goes wrong.
+        message = api.messages.create('<room_id>', text='<message_text>')
         print("New message created, with ID:", message.id)
         print(message.text)
-    except SparkApiError as e:                                             # Handles the exception, if something goes wrong
+    except SparkApiError as e:
         print(e)
 
 The ciscosparkapi package handles all of this for you:
