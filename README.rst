@@ -6,9 +6,10 @@ ciscosparkapi
 Simple, lightweight and scalable Python API wrapper for the Cisco Spark APIs
 ----------------------------------------------------------------------------
 
-Sure, working with the Cisco Spark APIs is easy (see `devloper.ciscospark.com`_).  They are RESTful, simply and naturally structured, require only a simple Access Token to authenticate, and the data is elegantly represented in intuitive JSON.  What could be easier?
+Sure, working with the Cisco Spark APIs is easy (see `devloper.ciscospark.com`_).  They are *RESTful*,  *naturally structured*, require only a *simple Access Token for authentication*, and *the data is elegantly represented in intuitive JSON*.  What could be easier?
 
 .. code-block:: python
+
     import requests
 
     URL = 'https://api.ciscospark.com/v1/messages'
@@ -31,19 +32,20 @@ Sure, working with the Cisco Spark APIs is easy (see `devloper.ciscospark.com`_)
         # Oops something went wrong...  Better do something about it.
         print(response.status_code, response.text)
 
-Like I said, easy.  However, it is rather repetitive...
+Like I said, *EASY*.  However, in use, the code can be rather repetitive...
 
-- You have to setup this same environment every time you want do something with just one of the API calls.
-- ...and this was just posting a text message to Spark, what about when you want to do something like uploading a file?
-- What if you your application or use case needs to make calls to several of the Spark APIs?
-- This can turn into a lot of boiler plate code!
-- Sure, you can consolidate the repetitious code into functions, and end up building your own library of functions (and many have done this!), or you can build upon the shoulders of those who have gone before you...
+- You have to setup the environment every time
+- You have to remember URLs and request arguments (or reference the docs)
+- You have to parse the returned JSON and setup variables to hold the attributes you need
+- When requesting lists of items, you have to deal with pagination_
 
-Enter **ciscosparkapi**, a simple API wrapper that wraps the RESTful Spark API calls and returned JSON objects within native Python objects and function calls.
 
-The above Python code can be consolidated to the following:
+Enter **ciscosparkapi**, a simple API wrapper that wraps all of the Spark API calls and returned JSON objects within native Python objects and function calls.
+
+With ciscosparkapi, the above Python code can be consolidated to the following:
 
 .. code-block:: python
+
     from ciscosparkapi import CiscoSparkAPI
 
     api = CiscoSparkAPI()                                                  # Creates a new API 'connection object'
@@ -56,20 +58,22 @@ The above Python code can be consolidated to the following:
 
 The ciscosparkapi package handles all of this for you:
 
-+ Your Spark access token can automatically be retrieved from a ``SPARK_ACCESS_TOKEN`` environment variable.  *You don't have to provide it every time you create a new API connection object.*
-+ *You don't have to remember the API endpoint URLs or JSON parameters.*  They have been wrapped in native Python methods.
-+ If your Python IDE supports **auto-completion** (like PyCharm_), *you can simply navigate the available methods and object attributes right within your IDE*.
-+ The JSON objects returned from the Cisco Spark cloud are modeled as native Python objects, which also support auto-completion and native attribute access.  *You don't have to think about parsing the JSON objects or working with dictionaries or creating lots of variables to hold the returned object's attributes.  You can simply interact with the returned object as a native Python object.*
-+ When requesting 'lists of objects' from Spark, like enumerating the messages in a room or a list of rooms of which you are a member, you don't have think about handling and requesting pages_ of responses.  These are simply and efficiently abstracted and requested as needed - as you access the returned objects.  *Other than a slight delay as additional objects are requested from the Spark cloud, you won't have to deal with or think about pages of responses.*
++ Reads your Spark access token from a ``SPARK_ACCESS_TOKEN`` environment variable
++ Wraps and represents all Spark API calls as a simple hierarchal tree of native-Python methods (with default arguments everywhere possible)
++ If your Python IDE supports **auto-completion** (like PyCharm_), you can navigate the available methods and object attributes right within your IDE
++ Represents all returned JSON objects as native Python objects - you can access all of the object's attributes using native *dot-syntax*
++ **Automatic and Transparent Pagination!**  When requesting 'lists of objects' from Spark, requests for additional pages of responses are efficiently and automatically requested as needed
++ Multipart encoding and uploading of local files, when creating messages with local file attachements
 
-...which lets you do powerful things simply:
+All of this, combined, lets you do powerful things simply:
 
 .. code-block:: python
+
     from ciscosparkapi import CiscoSparkAPI
 
     api = CiscoSparkAPI()
 
-    # Find all of rooms that have 'ciscosparkapi Demo' in their title
+    # Find all rooms that have 'ciscosparkapi Demo' in their title
     all_rooms = api.rooms.list()
     demo_rooms = [room for room in all_rooms if 'ciscosparkapi Demo' in room.title]
 
@@ -82,28 +86,32 @@ The ciscosparkapi package handles all of this for you:
 
     # Add people to the new demo room
     email_addresses = ["test01@cmlccie.com", "test02@cmlccie.com"]
-    for email_address in email_addresses:
-        api.memberships.create(demo_room.id, personEmail=email_address)
+    for email in email_addresses:
+        api.memberships.create(demo_room.id, personEmail=email)
 
     # Post a message to the new room, and upload a file
     api.message.create(demo_room.id, text="Welcome to the room!", files=["welcome.jpg"])
 
-That's at least six Spark API calls, and likely more than that depending on how rooms are returned by Spark (remember paging is handled for you automatically) and how many people you add to the room.  All in only about 23 lines (which includes comments).
+That's more than six Spark API calls in less than 23 lines of script code (with comments)!
+...and likely more than that depending on how many rooms are returned by Spark (remember pagination is handled for you automatically)
 
 
 Installation
 ------------
 
-ciscosparkapi is available on PyPI.  Install it via PIP, or alternatively you can download the package from GitHub and install it via setuptools.
+ciscosparkapi is available on PyPI.  Installation and updating of ciscosparkapi is easy:
 
-**PIP Installation**
+**Install via PIP**
+
 .. code-block:: bash
+
     $ pip install ciscosparkapi
 
-**git / setuptools Installation**
+**Upgrading to the latest Version**
+
 .. code-block:: bash
-    $ git clone https://github.com/CiscoDevNet/ciscosparkapi.git
-    $ python ciscosparkapi/setup.py install
+
+    $ pip install ciscosparkapi --upgrade
 
 
 Releases & Release Notes
@@ -111,7 +119,7 @@ Releases & Release Notes
 
 Complete and usable *Beta* releases have been published for this package.
 
-While the package APIs may change while in beta, the package capabilities should all be functional.  If you expereince any issues using this package, please report them using the issues_ log on the packages GitHub page.
+While the package APIs may change while in beta, the package capabilities should all be functional.  If you expereince any issues using this package, please report them using the issues_ log.
 
 Please see the releases_ page for release notes on the incremental functionality and bug fixes that have been incorporated into the published releases.
 
@@ -122,19 +130,23 @@ Contribution
 ciscosparkapi_ and it's sister project ciscosparksdk_ are community development projects.  Feedback, thoughts, ideas and code contributions are most welcome!
 
 To contribute to ciscosparkapi_ please use the following resources:
+
 * Feedback, issues, thoughts and ideas... Please use the issues_ log.
 * Interested in contributing code?
-  # Check for open issues_ or create a new one.
-    * Assign yourself to the issue you want to work on, and communicate with any others that may be working the issue.
-    * Project workflow is being managed via the GitHub projects_ feature.  Move your issue to the 'In Progress' column of the project being worked.
-  # Review the project charter_ for coding standards and practices.
-  # Fork a copy of `the repository`_.
-  # Add your code to your forked repository.
-  # Submit a `pull request`_, and move your issue to the 'Code Review' column on the projects_ page.
+
+  #. Check for open issues_ or create a new one.
+
+     * Assign yourself to the issue you want to work on, and communicate with any others that may be working the issue.
+     * Project workflow is being managed via the GitHub projects_ feature.  Move your issue to the 'In Progress' column of the project being worked.
+
+  #. Review the project charter_ for coding standards and practices.
+  #. Fork a copy of `the repository`_.
+  #. Add your code to your forked repository.
+  #. Submit a `pull request`_, and move your issue to the 'Code Review' column on the projects_ page.
 
 
 .. _devloper.ciscospark.com: https://developer.ciscospark.com
-.. _pages: https://developer.ciscospark.com/pagination.html
+.. _pagination: https://developer.ciscospark.com/pagination.html
 .. _PyCharm: https://www.jetbrains.com/pycharm/
 .. _ciscosparkapi: https://github.com/CiscoDevNet/ciscosparkapi
 .. _ciscosparksdk: https://github.com/CiscoDevNet/ciscosparksdk
