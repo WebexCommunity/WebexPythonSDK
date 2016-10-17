@@ -2,9 +2,9 @@
 ciscosparkapi
 =============
 
-----------------------------------------------------------------------------
-Simple, lightweight and scalable Python API wrapper for the Cisco Spark APIs
-----------------------------------------------------------------------------
+-------------------------------------------------------------------------
+Simple, lightweight, scalable Python API wrapper for the Cisco Spark APIs
+-------------------------------------------------------------------------
 
 .. image:: https://img.shields.io/pypi/v/ciscosparkapi.svg
     :target: https://pypi.python.org/pypi/ciscosparkapi
