@@ -142,9 +142,9 @@ All of the user-facing methods have complete docstrings.  You can view the docst
 
 .. code-block:: python
 
-    >> from ciscosparkapi import CiscoSparkAPI
-    >> api = CiscoSparkAPI()
-    >> help(api.messages.create)
+    >>> from ciscosparkapi import CiscoSparkAPI
+    >>> api = CiscoSparkAPI()
+    >>> help(api.messages.create)
     create(self, roomId=None, toPersonId=None, toPersonEmail=None, text=None, markdown=None, files=None) method of ciscosparkapi.api.messages.MessagesAPI instance
         Posts a message to a room.
 
@@ -170,18 +170,19 @@ ciscosparkapi_ and it's sister project ciscosparksdk_ are community development 
 
 To contribute to ciscosparkapi please use the following resources:
 
-* Feedback, issues, thoughts and ideas... Please use the issues_ log.
-* Interested in contributing code?
+Feedback, issues, thoughts and ideas... Please use the issues_ log.
 
-  1. Check for open issues_ or create a new one.
+Interested in contributing code?
 
-     * Assign yourself to the issue you want to work on, and communicate with any others that may be working the issue.
-     * Project workflow is being managed via the GitHub projects_ feature.  Move your issue to the 'In Progress' column of the project being worked.
+#. Check for open issues_ or create a new one.
 
-  2. Review the project charter_ for coding standards and practices.
-  3. Fork a copy of `the repository`_.
-  4. Add your code to your forked repository.
-  5. Submit a `pull request`_, and move your issue to the 'Code Review' column on the projects_ page.
+   * Assign yourself to the issue you want to work on, and communicate with any others that may be working the issue.
+   * Project workflow is being managed via the GitHub projects_ feature.  Move your issue to the 'In Progress' column of the project being worked.
+
+#. Review the project charter_ for coding standards and practices.
+#. Fork a copy of `the repository`_.
+#. Add your code to your forked repository.
+#. Submit a `pull request`_, and move your issue to the 'Code Review' column on the projects_ page.
 
 
 .. _developer.ciscospark.com: https://developer.ciscospark.com
