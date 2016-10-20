@@ -23,7 +23,7 @@ setup(
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
 
-    description='Simple, lightweight and scalable Python API wrapper for the '
+    description='Simple, lightweight, scalable Python API wrapper for the '
                 'Cisco Spark APIs',
     long_description=long_description,
 
