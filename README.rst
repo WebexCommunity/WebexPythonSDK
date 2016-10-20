@@ -9,7 +9,7 @@ Simple, lightweight, scalable Python API wrapper for the Cisco Spark APIs
 .. image:: https://img.shields.io/pypi/v/ciscosparkapi.svg
     :target: https://pypi.python.org/pypi/ciscosparkapi
 
-Sure, working with the Cisco Spark APIs is easy (see `developer.ciscospark.com`_).  They are *RESTful*,  *naturally structured*, require only a *simple Access Token for authentication*, and *the data is elegantly represented in intuitive JSON*.  What could be easier?
+Sure, working with the Cisco Spark APIs is easy (see `developer.ciscospark.com`_).  They are RESTful,  naturally structured, require only a simple Access Token for authentication, and the data is elegantly represented in intuitive JSON.  What could be easier?
 
 .. code-block:: python
 
@@ -28,14 +28,14 @@ Sure, working with the Cisco Spark APIs is easy (see `developer.ciscospark.com`_
     if response.status_code == 200:
         # Great your message was posted!
         message_id = response.json['id']
-        message_text = response.json['id']
+        message_text = response.json['text']
         print("New message created, with ID:", message_id)
         print(message_text)
     else:
         # Oops something went wrong...  Better do something about it.
         print(response.status_code, response.text)
 
-Like I said, *EASY*.  However, in use, the code can be rather repetitive...
+Like I said, EASY.  However, in use, the code can become rather repetitive...
 
 - You have to setup the environment every time
 - You have to remember URLs and request arguments (or reference the docs)
