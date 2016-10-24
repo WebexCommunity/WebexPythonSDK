@@ -30,7 +30,34 @@ DEFAULT_BASE_URL = 'https://api.ciscospark.com/v1/'
 
 
 class CiscoSparkAPI(object):
-    """Cisco Spark API wrapper class."""
+    """Cisco Spark API wrapper class.
+
+    Creates a 'session' for all API calls through a created CiscoSparkAPI
+    object.  The 'session' handles authentication, provides the needed headers,
+    and checks all responses for error conditions.
+
+    CiscoSparkAPI wraps all of the individual Cisco Spark APIs and represents
+    them in a simple hierarchical structure.
+
+    Attributes:
+        access_tokens(AccessTokensAPI):
+            :class:`Access Tokens API <AccessTokensAPI>`
+        people(PeopleAPI):
+            :class:`People API <PeopleAPI>`
+        rooms(RoomsAPI):
+            :class:`Rooms API <RoomsAPI>`
+        memberships(MembershipsAPI):
+            :class:`Memberships API <MembershipsAPI>`
+        messages(MessagesAPI):
+            :class:`Messages API <MessagesAPI>`
+        teams(TeamsAPI):
+            :class:`Teams API <TeamsAPI>`
+        team_memberships(TeamMembershipsAPI):
+            :class:`Team Memberships API <TeamMembershipsAPI>`
+        webhooks(WebhooksAPI):
+            :class:`Webhooks API <WebhooksAPI>`
+
+    """
 
     def __init__(self, access_token=None, base_url=DEFAULT_BASE_URL,
                  timeout=60):
