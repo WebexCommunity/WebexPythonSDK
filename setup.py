@@ -9,11 +9,15 @@ from setuptools import setup
 import versioneer
 
 
-here = path.abspath(path.dirname(__file__))
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016 Cisco Systems, Inc."
+__license__ = "MIT"
 
 
 # Get the long description from the README file
-with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+current_path = path.abspath(path.dirname(__file__))
+with open(path.join(current_path, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 
@@ -28,11 +32,12 @@ setup(
     long_description=long_description,
 
     url='https://github.com/CiscoDevNet/ciscosparkapi',
+    download_url="https://pypi.python.org/pypi/ciscosparkapi",
 
-    author='Chris Lunsford',
-    author_email='chrlunsf@cisco.com',
+    author=__author__,
+    author_email=__author_email__,
 
-    license='MIT',
+    license=__license__+"; "+__copyright__,
 
     classifiers=[
         'Development Status :: 4 - Beta',

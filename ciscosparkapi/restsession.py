@@ -16,6 +16,12 @@ from .helper import ERC, validate_base_url, \
     raise_if_extra_kwargs, check_response_code, extract_and_parse_json
 
 
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016 Cisco Systems, Inc."
+__license__ = "MIT"
+
+
 def _fix_next_url(next_url):
     """Remove max=null parameter from URL.
 

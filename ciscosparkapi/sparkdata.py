@@ -30,6 +30,12 @@ from six import string_types
 import json as json_pkg
 
 
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016 Cisco Systems, Inc."
+__license__ = "MIT"
+
+
 def _json_dict(json):
     """Given a JSON dictionary or string; return a dictionary.
 

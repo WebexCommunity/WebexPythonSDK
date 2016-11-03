@@ -20,6 +20,12 @@ from .api.teammemberships import TeamMembership, TeamMembershipsAPI
 from .api.webhooks import Webhook, WebhooksAPI
 
 
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016 Cisco Systems, Inc."
+__license__ = "MIT"
+
+
 # Versioneer version control
 from ._version import get_versions
 __version__ = get_versions()['version']
