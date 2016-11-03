@@ -67,6 +67,10 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
+
+*Copyright (c) 2016 Cisco Systems, Inc.*
+
+
 .. _Cisco Spark: https://www.ciscospark.com/
 .. _Spark for Developers: https://developer.ciscospark.com/
 .. _contribution: https://github.com/CiscoDevNet/ciscosparkapi#contribution

@@ -123,3 +123,6 @@ Access Token
 ------------
 
 .. autoclass:: AccessToken()
+
+
+*Copyright (c) 2016 Cisco Systems, Inc.*
