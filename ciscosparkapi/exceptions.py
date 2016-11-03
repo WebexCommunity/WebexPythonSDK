@@ -2,6 +2,12 @@
 """ciscosparkapi exception classes."""
 
 
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016 Cisco Systems, Inc."
+__license__ = "MIT"
+
+
 SPARK_RESPONSE_CODES = {
     200: "OK",
     204: "Member deleted.",

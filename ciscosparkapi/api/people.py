@@ -18,6 +18,12 @@ from ciscosparkapi.restsession import RestSession
 from ciscosparkapi.sparkdata import SparkData
 
 
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016 Cisco Systems, Inc."
+__license__ = "MIT"
+
+
 class Person(SparkData):
     """Model a Spark 'person' JSON object as a native Python object."""
 

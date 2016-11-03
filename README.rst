@@ -185,6 +185,9 @@ Interested in contributing code?
 #. Submit a `pull request`_, and move your issue to the 'Code Review' column on the projects_ page.
 
 
+*Copyright (c) 2016 Cisco Systems, Inc.*
+
+
 .. _developer.ciscospark.com: https://developer.ciscospark.com
 .. _pagination: https://developer.ciscospark.com/pagination.html
 .. _PyCharm: https://www.jetbrains.com/pycharm/

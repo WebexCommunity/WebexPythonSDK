@@ -16,6 +16,12 @@ import urllib.parse
 from ciscosparkapi import ciscosparkapiException, SparkApiError
 
 
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016 Cisco Systems, Inc."
+__license__ = "MIT"
+
+
 # Cisco Spark cloud Expected Response Codes (HTTP Response Codes)
 ERC = {
     'GET': 200,
