@@ -58,10 +58,6 @@ class TeamsAPI(object):
     Wrappers the Cisco Spark Teams-API and exposes the API calls as Python
     method calls that return native Python objects.
 
-    Attributes:
-        session(RestSession): The RESTful session object to be used for API
-            calls to the Cisco Spark service.
-
     """
 
     def __init__(self, session):
@@ -77,7 +73,7 @@ class TeamsAPI(object):
         """
         assert isinstance(session, RestSession)
         super(TeamsAPI, self).__init__()
-        self.session = session
+        self._session = session
 
     @generator_container
     def list(self, max=None):
@@ -97,8 +93,9 @@ class TeamsAPI(object):
             max(int): Limits the maximum number of teams returned from the
                 Spark service per request.
 
-        Yields:
-            Team: The the next team from the Cisco Spark query.
+        Returns:
+            GeneratorContainer: When iterated, the GeneratorContainer, yields
+                the teams returned by the Cisco Spark query.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
@@ -111,7 +108,7 @@ class TeamsAPI(object):
         if max:
             params['max'] = max
         # API request - get items
-        items = self.session.get_items('teams', params=params)
+        items = self._session.get_items('teams', params=params)
         # Yield Team objects created from the returned items JSON objects
         for item in items:
             yield Team(item)
@@ -137,7 +134,7 @@ class TeamsAPI(object):
         post_data = {}
         post_data['name'] = name
         # API request
-        json_obj = self.session.post('teams', json=post_data)
+        json_obj = self._session.post('teams', json=post_data)
         # Return a Team object created from the response JSON data
         return Team(json_obj)
 
@@ -158,7 +155,7 @@ class TeamsAPI(object):
         # Process args
         assert isinstance(teamId, string_types)
         # API request
-        json_obj = self.session.get('teams/'+teamId)
+        json_obj = self._session.get('teams/' + teamId)
         # Return a Team object created from the response JSON data
         return Team(json_obj)
 
@@ -167,8 +164,6 @@ class TeamsAPI(object):
 
         Args:
             teamId(string_types): The teamId of the team to be updated.
-
-        **update_attributes:
             name(string_types): A user-friendly name for the team.
 
         Returns:
@@ -188,7 +183,7 @@ class TeamsAPI(object):
                             "argument must be specified."
             raise ciscosparkapiException(error_message)
         # API request
-        json_obj = self.session.post('teams/'+teamId, json=update_attributes)
+        json_obj = self._session.post('teams/' + teamId, json=update_attributes)
         # Return a Team object created from the response JSON data
         return Team(json_obj)
 
@@ -206,4 +201,4 @@ class TeamsAPI(object):
         # Process args
         assert isinstance(teamId, string_types)
         # API request
-        self.session.delete('teams/'+teamId)
+        self._session.delete('teams/' + teamId)

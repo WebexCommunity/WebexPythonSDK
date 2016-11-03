@@ -103,10 +103,6 @@ class WebhooksAPI(object):
     Wrappers the Cisco Spark Webhooks-API and exposes the API calls as Python
     method calls that return native Python objects.
 
-    Attributes:
-        session(RestSession): The RESTful session object to be used for API
-            calls to the Cisco Spark service.
-
     """
 
     def __init__(self, session):
@@ -122,7 +118,7 @@ class WebhooksAPI(object):
         """
         assert isinstance(session, RestSession)
         super(WebhooksAPI, self).__init__()
-        self.session = session
+        self._session = session
 
     @generator_container
     def list(self, max=None):
@@ -142,8 +138,9 @@ class WebhooksAPI(object):
             max(int): Limits the maximum number of webhooks returned from the
                 Spark service per request.
 
-        Yields:
-            Webhook: The the next webhook from the Cisco Spark query.
+        Returns:
+            GeneratorContainer: When iterated, the GeneratorContainer, yields
+                the webhooks returned by the Cisco Spark query.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
@@ -156,7 +153,7 @@ class WebhooksAPI(object):
         if max:
             params['max'] = max
         # API request - get items
-        items = self.session.get_items('webhooks', params=params)
+        items = self._session.get_items('webhooks', params=params)
         # Yield Webhook objects created from the returned items JSON objects
         for item in items:
             yield Webhook(item)
@@ -199,7 +196,7 @@ class WebhooksAPI(object):
         if secret:
             post_data['secret'] = secret
         # API request
-        json_obj = self.session.post('webhooks', json=post_data)
+        json_obj = self._session.post('webhooks', json=post_data)
         # Return a Webhook object created from the response JSON data
         return Webhook(json_obj)
 
@@ -220,7 +217,7 @@ class WebhooksAPI(object):
         # Process args
         assert isinstance(webhookId, string_types)
         # API request
-        json_obj = self.session.get('webhooks/' + webhookId)
+        json_obj = self._session.get('webhooks/' + webhookId)
         # Return a Webhook object created from the response JSON data
         return Webhook(json_obj)
 
@@ -230,11 +227,9 @@ class WebhooksAPI(object):
         Args:
             webhookId(string_types): The webhookId of the webhook to be
                 updated.
-
-            **update_attributes:
-                name(string_types): A user-friendly name for this webhook.
-                targetUrl(string_types): The URL that receives POST requests
-                    for each event.
+            name(string_types): A user-friendly name for this webhook.
+            targetUrl(string_types): The URL that receives POST requests for
+                each event.
 
         Returns:
             Webhook: With the updated Spark webhook details.
@@ -253,7 +248,7 @@ class WebhooksAPI(object):
                             "argument must be specified."
             raise ciscosparkapiException(error_message)
         # API request
-        json_obj = self.session.put('webhooks/' + webhookId,
+        json_obj = self._session.put('webhooks/' + webhookId,
                                      json=update_attributes)
         # Return a Webhook object created from the response JSON data
         return Webhook(json_obj)
@@ -273,4 +268,4 @@ class WebhooksAPI(object):
         # Process args
         assert isinstance(webhookId, string_types)
         # API request
-        self.session.delete('webhooks/' + webhookId)
+        self._session.delete('webhooks/' + webhookId)
