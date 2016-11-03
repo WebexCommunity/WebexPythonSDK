@@ -12,7 +12,7 @@ import urllib.parse
 import requests
 
 from .exceptions import ciscosparkapiException
-from .helper import ERC, validate_base_url, \
+from .utils import ERC, validate_base_url, \
     raise_if_extra_kwargs, check_response_code, extract_and_parse_json
 
 

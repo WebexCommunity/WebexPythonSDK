@@ -19,7 +19,7 @@ import urllib.parse
 
 import requests
 
-from ciscosparkapi.helper import ERC, validate_base_url, \
+from ciscosparkapi.utils import ERC, validate_base_url, \
     check_response_code, extract_and_parse_json
 from ciscosparkapi.sparkdata import SparkData
 
