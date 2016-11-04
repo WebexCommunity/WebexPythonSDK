@@ -58,7 +58,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'ciscosparkapi'
-copyright = u'2016, Cisco DevNet'
+copyright = u'2016 Cisco Systems, Inc.'
 author = u'Chris Lunsford'
 
 # The version info for the project you're documenting, acts as replacement for
