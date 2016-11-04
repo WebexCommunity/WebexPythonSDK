@@ -1,6 +1,8 @@
-============================================
-ciscosparkapi Package User-API Documentation
-============================================
+.. _User API Doc:
+
+============
+User API Doc
+============
 
 
 Main Interface
@@ -8,8 +10,8 @@ Main Interface
 
 .. module:: ciscosparkapi
 
-All of the API calls have been wrapped and hierarchally organized underneath a
-single ``CiscoSparkAPI`` class.
+All of the API calls have been wrapped and hierarchically organized underneath
+a single :class:`CiscoSparkAPI` class.
 
 .. autoclass:: CiscoSparkAPI()
     :members:
@@ -18,53 +20,71 @@ single ``CiscoSparkAPI`` class.
     .. automethod:: CiscoSparkAPI.__init__
 
 
-People API
-----------
+.. _people:
+
+people
+------
 
 .. autoclass:: PeopleAPI()
 
 
-Rooms API
----------
+.. _rooms:
+
+rooms
+-----
 
 .. autoclass:: RoomsAPI()
 
 
-Memberships API
----------------
+.. _memberships:
+
+memberships
+-----------
 
 .. autoclass:: MembershipsAPI()
 
 
-Messages API
-------------
+.. _messages:
+
+messages
+--------
 
 .. autoclass:: MessagesAPI()
 
 
-Teams API
----------
+.. _teams:
+
+teams
+-----
 
 .. autoclass:: TeamsAPI()
 
 
-Team Memberships API
---------------------
+.. _team_memberships:
+
+team_memberships
+----------------
 
 .. autoclass:: TeamMembershipsAPI()
 
 
-Webhooks API
-------------
+.. _webhooks:
+
+webhooks
+--------
 
 .. autoclass:: WebhooksAPI()
 
 
-Access Tokens API
------------------
+.. _access_tokens:
+
+access_tokens
+-------------
 
 .. autoclass:: AccessTokensAPI()
 
+
+.. _Exceptions:
 
 Exceptions
 ==========
@@ -74,8 +94,13 @@ Exceptions
 .. autoexception:: SparkApiError
 
 
+.. _Spark Data Objects:
+
 Spark Data Objects
 ==================
+
+
+.. _Person:
 
 Person
 ------
@@ -83,11 +108,15 @@ Person
 .. autoclass:: Person()
 
 
+.. _Room:
+
 Room
 ----
 
 .. autoclass:: Room()
 
+
+.. _Membership:
 
 Membership
 ----------
@@ -95,11 +124,15 @@ Membership
 .. autoclass:: Membership()
 
 
+.. _Message:
+
 Message
 -------
 
 .. autoclass:: Message()
 
+
+.. _Team:
 
 Team
 ----
@@ -107,17 +140,23 @@ Team
 .. autoclass:: Team()
 
 
+.. _Team Membership:
+
 Team Membership
 ---------------
 
 .. autoclass:: TeamMembership()
 
 
-Webhooks
---------
+.. _Webhook:
+
+Webhook
+-------
 
 .. autoclass:: Webhook()
 
+
+.. _Access Token:
 
 Access Token
 ------------
