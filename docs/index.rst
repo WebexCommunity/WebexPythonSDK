@@ -1,3 +1,5 @@
+.. currentmodule:: ciscosparkapi
+
 =============
 ciscosparkapi
 =============
@@ -77,14 +79,8 @@ With the ciscosparkapi package, you can easily:
 Getting Started
 ===============
 
-Install the ciscosparkapi package using ``pip``, and then check out the :ref:`Tutorial` page
-to get started.
-
-**Installation via PIP**
-
-.. code-block:: bash
-
-    $ pip install ciscosparkapi
+:ref:`Install ciscosparkapi <Installation>` , and then check out the
+:ref:`Quickstart` page to get started.
 
 
 General Information about the Cisco Spark Service
@@ -113,8 +109,9 @@ User Guides
 .. toctree::
     :maxdepth: 2
 
+    installation
     user/intro
-    user/tutorial
+    user/quickstart
     user/api
 
 

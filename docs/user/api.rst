@@ -1,5 +1,7 @@
 .. _User API Doc:
 
+.. currentmodule:: ciscosparkapi
+
 ============
 User API Doc
 ============
@@ -7,8 +9,6 @@ User API Doc
 
 Main Interface
 ==============
-
-.. module:: ciscosparkapi
 
 All of the API calls have been wrapped and hierarchically organized underneath
 a single :class:`CiscoSparkAPI` class.

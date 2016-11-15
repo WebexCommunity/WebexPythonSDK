@@ -107,11 +107,10 @@ class CiscoSparkAPI(object):
         spark_access_token = os.environ.get('SPARK_ACCESS_TOKEN', None)
         access_token = access_token if access_token else spark_access_token
         if not access_token:
-            error_message = "You must provide an access token to interact " \
-                            "with the Cisco Spark APIs, either via the " \
-                            "access_token argument or via a " \
-                            "SPARK_ACCESS_TOKEN environment variable.  " \
-                            "None provided."
+            error_message = "You must provide an Spark access token to " \
+                            "interact with the Cisco Spark APIs, either via " \
+                            "a SPARK_ACCESS_TOKEN environment variable " \
+                            "or via the access_token argument."
             raise ciscosparkapiException(error_message)
         session_args = {u'timeout': timeout}
 
