@@ -17,7 +17,6 @@ from ciscosparkapi import CiscoSparkAPI, Webhook
 def findwebhookidbyname(api, webhookname):
     webhooks = api.webhooks.list()
     for wh in webhooks:
-        # print (room['title'])
         if wh.name == webhookname:
             return wh.id
         else:
@@ -43,34 +42,33 @@ except:
     print ("no ngrok running - deleting webhook if it exists")
     whid=findwebhookidbyname(api, webhookname)
     if "not found" in whid:
-        #create
-        print "no webhook found"
+        print ("no webhook found")
         sys.exit()
     else:
-        #update
-        print whid
+        print (whid)
         dict=api.webhooks.delete(whid)
-        print dict
+        print (dict)
+        print ("Webhook deleted")
         sys.exit()
 
 for line in ngrokpage.split("\n"):
     if "window.common = " in line:
         ngrokjson = re.search('JSON.parse\(\"(.+)\"\)\;',line).group(1)
         ngrokjson = (ngrokjson.replace('\\',''))
-print ngrokjson
+print (ngrokjson)
 targetUrl = (json.loads(ngrokjson)["Session"]["Tunnels"]["command_line (http)"]["URL"])+url_suffix
-print targetUrl
+print (targetUrl)
 
 #check if the webhook exists by name and then create it if not
 whid=findwebhookidbyname(api, webhookname)
 
 if "not found" in whid:
     #create
-    print "not found"
+    print ("not found")
     dict=api.webhooks.create(webhookname, targetUrl, resource, event)
-    print dict
+    print (dict)
 else:
     #update
-    print whid
-    dict=api.webhooks.update(whid, webhookname, targetUrl)
-    print dict
+    print (whid)
+    dict=api.webhooks.update(whid, webhookname, targetUrl) #not working yet
+    print (dict)
