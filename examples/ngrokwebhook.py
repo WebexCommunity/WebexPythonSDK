@@ -65,7 +65,7 @@ whid=findwebhookidbyname(api, webhookname)
 if "not found" in whid:
     #create
     print ("not found")
-    dict=api.webhooks.create(webhookname, targetUrl, resource, event)
+    dict=api.webhooks.create(webhookname, Url, resource, event)
     print (dict)
 else:
     #update
