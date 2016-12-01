@@ -57,7 +57,7 @@ for line in ngrokpage.split("\n"):
         ngrokjson = (ngrokjson.replace('\\',''))
 print (ngrokjson)
 Url = (json.loads(ngrokjson)["Session"]["Tunnels"]["command_line (http)"]["URL"])+url_suffix
-print (targetUrl)
+print (Url)
 
 #check if the webhook exists by name and then create it if not
 whid=findwebhookidbyname(api, webhookname)
