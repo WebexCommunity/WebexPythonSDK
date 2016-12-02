@@ -148,7 +148,7 @@ the `https://api.ciscospark.com/v1/people/me
 <https://developer.ciscospark.com/endpoint-people-me-get.html>`_ API endpoint
 documentation.
 
-As you can see, we have tried to represent the API endpoints using simple terms
+As you can see, we have represented the API endpoints using simple terms
 that are aligned with the API docs; for example, representing the ``people/me``
 API endpoint as a ``people.me()`` method available underneath the
 :class:`CiscoSparkAPI` connection object.
@@ -490,7 +490,8 @@ and uses them to request data from Spark each time you iterate the container.
 
 Sometimes you really DO want a ``list`` of items.  Perhaps you want to work
 with the same static ``list`` of items to ensure you are looking at 'all of the
-items' so you can count them with ``len()`` or perform some other analysis...
+items' and to make sure that your list doesn't change while you are working
+with it...
 
 Whatever your reason for doing so, you can easily 'convert' an iterable
 object to a standard Python ``list`` with the ``list()`` function.  This may
