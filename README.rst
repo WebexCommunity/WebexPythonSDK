@@ -93,7 +93,8 @@ All of this, combined, lets you do powerful things simply:
         api.memberships.create(demo_room.id, personEmail=email)
 
     # Post a message to the new room, and upload a file
-    api.message.create(demo_room.id, text="Welcome to the room!", files=["welcome.jpg"])
+    api.messages.create(demo_room.id, text="Welcome to the room!",
+                        files=["https://developer.ciscospark.com/images/logo_spark_lg@256.png"])
 
 That's more than six Spark API calls in less than 23 lines of script code (with comments)!
 ...and likely more than that depending on how many rooms are returned by Spark (remember pagination is handled for you automatically)
