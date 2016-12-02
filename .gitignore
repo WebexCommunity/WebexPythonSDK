@@ -1,5 +1,14 @@
+# TODO:  Remove all unused entries
+
+# ciscosparkapi Project
+dist/
+docs/_build/
+*.egg-info/
+
+
 # Unversioned files
 basic-tests.py
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -14,7 +23,6 @@ __pycache__/
 env/
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -23,7 +31,6 @@ lib64/
 parts/
 sdist/
 var/
-*.egg-info/
 .installed.cfg
 *.egg
 
@@ -62,9 +69,6 @@ instance/
 
 # Scrapy stuff:
 .scrapy
-
-# Sphinx documentation
-docs/_build/
 
 # PyBuilder
 target/

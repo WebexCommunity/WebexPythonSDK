@@ -15,7 +15,7 @@ from six import string_types
 from requests_toolbelt import MultipartEncoder
 
 from ciscosparkapi.exceptions import ciscosparkapiException
-from ciscosparkapi.helper import generator_container, is_web_url, \
+from ciscosparkapi.utils import generator_container, is_web_url, \
     is_local_file, open_local_file
 from ciscosparkapi.restsession import RestSession
 from ciscosparkapi.sparkdata import SparkData
@@ -103,10 +103,6 @@ class MessagesAPI(object):
     Wrappers the Cisco Spark Messages-API and exposes the API calls as Python
     method calls that return native Python objects.
 
-    Attributes:
-        session(RestSession): The RESTful session object to be used for API
-            calls to the Cisco Spark service.
-
     """
 
     def __init__(self, session):
@@ -122,7 +118,7 @@ class MessagesAPI(object):
         """
         assert isinstance(session, RestSession)
         super(MessagesAPI, self).__init__()
-        self.session = session
+        self._session = session
 
     @generator_container
     def list(self, roomId, mentionedPeople=None, before=None,
@@ -154,8 +150,9 @@ class MessagesAPI(object):
             max(int): Limit the maximum number of messages returned from the
                 Spark service per request.
 
-        Yields:
-            Message: The the next message from the Cisco Spark query.
+        Returns:
+            GeneratorContainer: When iterated, the GeneratorContainer, yields
+                the messages returned by the Cisco Spark query.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
@@ -180,7 +177,7 @@ class MessagesAPI(object):
         if max:
             params['max'] = max
         # API request - get items
-        items = self.session.get_items('messages', params=params)
+        items = self._session.get_items('messages', params=params)
         # Yield Message objects created from the returned items JSON objects
         for item in items:
             yield Message(item)
@@ -273,13 +270,13 @@ class MessagesAPI(object):
             try:
                 multipart_data = MultipartEncoder(post_data)
                 headers = {'Content-type': multipart_data.content_type}
-                json_obj = self.session.post('messages',
-                                             data=multipart_data,
-                                             headers=headers)
+                json_obj = self._session.post('messages',
+                                              data=multipart_data,
+                                              headers=headers)
             finally:
                 post_data['files'].file_object.close()
         else:
-            json_obj = self.session.post('messages', json=post_data)
+            json_obj = self._session.post('messages', json=post_data)
         # Return a Message object created from the response JSON data
         return Message(json_obj)
 
@@ -300,7 +297,7 @@ class MessagesAPI(object):
         # Process args
         assert isinstance(messageId, string_types)
         # API request
-        json_obj = self.session.get('messages/'+messageId)
+        json_obj = self._session.get('messages/' + messageId)
         # Return a Message object created from the response JSON data
         return Message(json_obj)
 
@@ -319,4 +316,4 @@ class MessagesAPI(object):
         # Process args
         assert isinstance(messageId, string_types)
         # API request
-        self.session.delete('messages/'+messageId)
+        self._session.delete('messages/' + messageId)

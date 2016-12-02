@@ -14,7 +14,7 @@ from builtins import object
 from six import string_types
 
 from ciscosparkapi.exceptions import ciscosparkapiException
-from ciscosparkapi.helper import generator_container
+from ciscosparkapi.utils import generator_container
 from ciscosparkapi.restsession import RestSession
 from ciscosparkapi.sparkdata import SparkData
 
@@ -76,10 +76,6 @@ class TeamMembershipsAPI(object):
     Wrappers the Cisco Spark Team-Memberships-API and exposes the API calls as
     Python method calls that return native Python objects.
 
-    Attributes:
-        session(RestSession): The RESTful session object to be used for API
-            calls to the Cisco Spark service.
-
     """
 
     def __init__(self, session):
@@ -95,7 +91,7 @@ class TeamMembershipsAPI(object):
         """
         assert isinstance(session, RestSession)
         super(TeamMembershipsAPI, self).__init__()
-        self.session = session
+        self._session = session
 
     @generator_container
     def list(self, teamId=None, max=None):
@@ -122,9 +118,9 @@ class TeamMembershipsAPI(object):
                 the Spark service per request.
 
 
-        Yields:
-            TeamMembership: The the next team membership from the Cisco Spark
-                query.
+        Returns:
+            GeneratorContainer: When iterated, the GeneratorContainer, yields
+                the team memberships returned by the Cisco Spark query.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
@@ -140,7 +136,7 @@ class TeamMembershipsAPI(object):
         if max:
             params['max'] = max
         # API request - get items
-        items = self.session.get_items('team/memberships', params=params)
+        items = self._session.get_items('team/memberships', params=params)
         # Yield Person objects created from the returned items JSON objects
         for item in items:
             yield TeamMembership(item)
@@ -188,7 +184,7 @@ class TeamMembershipsAPI(object):
             raise ciscosparkapiException(error_message)
         post_data['isModerator'] = isModerator
         # API request
-        json_obj = self.session.post('team/memberships', json=post_data)
+        json_obj = self._session.post('team/memberships', json=post_data)
         # Return a TeamMembership object created from the response JSON data
         return TeamMembership(json_obj)
 
@@ -210,7 +206,7 @@ class TeamMembershipsAPI(object):
         # Process args
         assert isinstance(membershipId, string_types)
         # API request
-        json_obj = self.session.get('team/memberships/'+membershipId)
+        json_obj = self._session.get('team/memberships/' + membershipId)
         # Return a TeamMembership object created from the response JSON data
         return TeamMembership(json_obj)
 
@@ -220,8 +216,6 @@ class TeamMembershipsAPI(object):
         Args:
             membershipId(string_types): The membershipId of the team membership
                 to be updated.
-
-        **update_attributes:
             isModerator(bool): If True, sets the person as a moderator for the
                 team. If False, removes the person as a moderator for the team.
 
@@ -242,8 +236,8 @@ class TeamMembershipsAPI(object):
                             "argument must be specified."
             raise ciscosparkapiException(error_message)
         # API request
-        json_obj = self.session.post('team/memberships/'+membershipId,
-                                     json=update_attributes)
+        json_obj = self._session.post('team/memberships/' + membershipId,
+                                      json=update_attributes)
         # Return a TeamMembership object created from the response JSON data
         return TeamMembership(json_obj)
 
@@ -262,4 +256,4 @@ class TeamMembershipsAPI(object):
         # Process args
         assert isinstance(membershipId, string_types)
         # API request
-        self.session.delete('team/memberships/'+membershipId)
+        self._session.delete('team/memberships/' + membershipId)

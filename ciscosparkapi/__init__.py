@@ -33,14 +33,40 @@ del get_versions
 
 
 DEFAULT_BASE_URL = 'https://api.ciscospark.com/v1/'
+DEFAULT_TIMEOUT = 60
 
 
 class CiscoSparkAPI(object):
-    """Cisco Spark API wrapper class."""
+    """Cisco Spark API wrapper.
+
+    Creates a 'session' for all API calls through a created CiscoSparkAPI
+    object.  The 'session' handles authentication, provides the needed headers,
+    and checks all responses for error conditions.
+
+    CiscoSparkAPI wraps all of the individual Cisco Spark APIs and represents
+    them in a simple hierarchical structure.
+
+    :CiscoSparkAPI: :class:`people <PeopleAPI>`
+
+                    :class:`rooms <RoomsAPI>`
+
+                    :class:`memberships <MembershipsAPI>`
+
+                    :class:`messages <MessagesAPI>`
+
+                    :class:`teams <TeamsAPI>`
+
+                    :class:`team_memberships <TeamMembershipsAPI>`
+
+                    :class:`webhooks <WebhooksAPI>`
+
+                    :class:`access_tokens <AccessTokensAPI>`
+
+    """
 
     def __init__(self, access_token=None, base_url=DEFAULT_BASE_URL,
-                 timeout=60):
-        """Init a new CiscoSparkAPI object.
+                 timeout=DEFAULT_TIMEOUT):
+        """Create a new CiscoSparkAPI object.
 
         An access token must be used when interacting with the Cisco Spark API.
         This package supports two methods for you to provide that access token:
@@ -49,9 +75,7 @@ class CiscoSparkAPI(object):
              argument, when creating a new CiscoSparkAPI object.
 
           2. If an access_token argument is not supplied, the package checks
-             for a SPARK_ACCESS_TOKEN environment variable, and if available,
-             it uses the value of this environment variable as the access_token
-             when new CiscoSparkAPI objects are created.
+             for a SPARK_ACCESS_TOKEN environment variable.
 
         A ciscosparkapiException is raised if an access token is not provided
         via one of these two methods.
@@ -64,10 +88,10 @@ class CiscoSparkAPI(object):
                 individual API endpoint suffixes.
                 Defaults to ciscosparkapi.DEFAULT_BASE_URL.
             timeout(int): Timeout (in seconds) for RESTful HTTP requests.
-                Defaults to 60 seconds.
+                Defaults to ciscosparkapi.DEFAULT_TIMEOUT.
 
         Returns:
-            CiscoSparkAPI: A new CiscoSparkAPI connection object.
+            CiscoSparkAPI: A new CiscoSparkAPI object.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
@@ -83,11 +107,10 @@ class CiscoSparkAPI(object):
         spark_access_token = os.environ.get('SPARK_ACCESS_TOKEN', None)
         access_token = access_token if access_token else spark_access_token
         if not access_token:
-            error_message = "You must provide an access token to interact " \
-                            "with the Cisco Spark APIs, either via the " \
-                            "access_token argument or via a " \
-                            "SPARK_ACCESS_TOKEN environment variable.  " \
-                            "None provided."
+            error_message = "You must provide an Spark access token to " \
+                            "interact with the Cisco Spark APIs, either via " \
+                            "a SPARK_ACCESS_TOKEN environment variable " \
+                            "or via the access_token argument."
             raise ciscosparkapiException(error_message)
         session_args = {u'timeout': timeout}
 
@@ -95,26 +118,26 @@ class CiscoSparkAPI(object):
         # All of the API calls associated with a CiscoSparkAPI object will
         # leverage a single RESTful 'session' connecting to the Cisco Spark
         # cloud.
-        self.session = RestSession(access_token, base_url, **session_args)
+        self._session = RestSession(access_token, base_url, **session_args)
 
         # Spark API wrappers
+        self.people = PeopleAPI(self._session)
+        self.rooms = RoomsAPI(self._session)
+        self.memberships = MembershipsAPI(self._session)
+        self.messages = MessagesAPI(self._session)
+        self.teams = TeamsAPI(self._session)
+        self.team_memberships = TeamMembershipsAPI(self._session)
+        self.webhooks = WebhooksAPI(self._session)
         self.access_tokens = AccessTokensAPI(self.base_url, timeout=timeout)
-        self.people = PeopleAPI(self.session)
-        self.rooms = RoomsAPI(self.session)
-        self.memberships = MembershipsAPI(self.session)
-        self.messages = MessagesAPI(self.session)
-        self.teams = TeamsAPI(self.session)
-        self.team_memberships = TeamMembershipsAPI(self.session)
-        self.webhooks = WebhooksAPI(self.session)
 
     @property
     def access_token(self):
-        return self.session.access_token
+        return self._session.access_token
 
     @property
     def base_url(self):
-        return self.session.base_url
+        return self._session.base_url
 
     @property
     def timeout(self):
-        return self.session.timeout
+        return self._session.timeout

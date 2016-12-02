@@ -13,7 +13,7 @@ from builtins import object
 from six import string_types
 
 from ciscosparkapi.exceptions import ciscosparkapiException
-from ciscosparkapi.helper import generator_container
+from ciscosparkapi.utils import generator_container
 from ciscosparkapi.restsession import RestSession
 from ciscosparkapi.sparkdata import SparkData
 
@@ -85,10 +85,6 @@ class RoomsAPI(object):
     Wrappers the Cisco Spark Rooms-API and exposes the API calls as Python
     method calls that return native Python objects.
 
-    Attributes:
-        session(RestSession): The RESTful session object to be used for API
-            calls to the Cisco Spark service.
-
     """
 
     def __init__(self, session):
@@ -104,7 +100,7 @@ class RoomsAPI(object):
         """
         assert isinstance(session, RestSession)
         super(RoomsAPI, self).__init__()
-        self.session = session
+        self._session = session
 
     @generator_container
     def list(self, max=None, **query_params):
@@ -125,15 +121,15 @@ class RoomsAPI(object):
         Args:
             max(int): Limits the maximum number of rooms returned from the
                 Spark service per request.
-            **query_params:
-                teamId(string_types): Limit the rooms to those associated with
-                    a team.
-                type(string_types):
-                    'direct': returns all 1-to-1 rooms.
-                    'group': returns all group rooms.
+            teamId(string_types): Limit the rooms to those associated with a
+                team.
+            type(string_types):
+                'direct': returns all 1-to-1 rooms.
+                'group': returns all group rooms.
 
-        Yields:
-            Room: The the next room from the Cisco Spark query.
+        Returns:
+            GeneratorContainer: When iterated, the GeneratorContainer, yields
+                the rooms returned from the Cisco Spark query.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
@@ -149,7 +145,7 @@ class RoomsAPI(object):
         if query_params:
             params.update(query_params)
         # API request - get items
-        items = self.session.get_items('rooms', params=params)
+        items = self._session.get_items('rooms', params=params)
         # Yield Room objects created from the returned items JSON objects
         for item in items:
             yield Room(item)
@@ -180,7 +176,7 @@ class RoomsAPI(object):
         if teamId:
             post_data['teamId'] = teamId
         # API request
-        json_obj = self.session.post('rooms', json=post_data)
+        json_obj = self._session.post('rooms', json=post_data)
         # Return a Room object created from the response JSON data
         return Room(json_obj)
 
@@ -201,7 +197,7 @@ class RoomsAPI(object):
         # Process args
         assert isinstance(roomId, string_types)
         # API request
-        json_obj = self.session.get('rooms/'+roomId)
+        json_obj = self._session.get('rooms/' + roomId)
         # Return a Room object created from the response JSON data
         return Room(json_obj)
 
@@ -210,8 +206,6 @@ class RoomsAPI(object):
 
         Args:
             roomId(string_types): The roomId of the room to be updated.
-
-        **update_attributes:
             title(string_types): A user-friendly name for the room.
 
         Returns:
@@ -231,7 +225,7 @@ class RoomsAPI(object):
                             "argument must be specified."
             raise ciscosparkapiException(error_message)
         # API request
-        json_obj = self.session.post('rooms/'+roomId, json=update_attributes)
+        json_obj = self._session.post('rooms/' + roomId, json=update_attributes)
         # Return a Room object created from the response JSON data
         return Room(json_obj)
 
@@ -249,4 +243,4 @@ class RoomsAPI(object):
         # Process args
         assert isinstance(roomId, string_types)
         # API request
-        self.session.delete('rooms/'+roomId)
+        self._session.delete('rooms/' + roomId)

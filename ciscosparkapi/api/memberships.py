@@ -14,7 +14,7 @@ from builtins import object
 from six import string_types
 
 from ciscosparkapi.exceptions import ciscosparkapiException
-from ciscosparkapi.helper import generator_container
+from ciscosparkapi.utils import generator_container
 from ciscosparkapi.restsession import RestSession
 from ciscosparkapi.sparkdata import SparkData
 
@@ -79,10 +79,6 @@ class MembershipsAPI(object):
     Wrappers the Cisco Spark Memberships-API and exposes the API calls as
     Python method calls that return native Python objects.
 
-    Attributes:
-        session(RestSession): The RESTful session object to be used for API
-            calls to the Cisco Spark service.
-
     """
 
     def __init__(self, session):
@@ -98,7 +94,7 @@ class MembershipsAPI(object):
         """
         assert isinstance(session, RestSession)
         super(MembershipsAPI, self).__init__()
-        self.session = session
+        self._session = session
 
     @generator_container
     def list(self, roomId=None, personId=None, personEmail=None, max=None):
@@ -133,8 +129,9 @@ class MembershipsAPI(object):
                 the Spark service per request.
 
 
-        Yields:
-            Membership: The the next membership from the Cisco Spark query.
+        Returns:
+            GeneratorContainer: When iterated, the GeneratorContainer, yields
+                the memberships returned from the Cisco Spark query.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
@@ -164,7 +161,7 @@ class MembershipsAPI(object):
         if max:
             params['max'] = max
         # API request - get items
-        items = self.session.get_items('memberships', params=params)
+        items = self._session.get_items('memberships', params=params)
         # Yield Person objects created from the returned items JSON objects
         for item in items:
             yield Membership(item)
@@ -212,7 +209,7 @@ class MembershipsAPI(object):
             raise ciscosparkapiException(error_message)
         post_data['isModerator'] = isModerator
         # API request
-        json_obj = self.session.post('memberships', json=post_data)
+        json_obj = self._session.post('memberships', json=post_data)
         # Return a Membership object created from the response JSON data
         return Membership(json_obj)
 
@@ -233,7 +230,7 @@ class MembershipsAPI(object):
         # Process args
         assert isinstance(membershipId, string_types)
         # API request
-        json_obj = self.session.get('memberships/'+membershipId)
+        json_obj = self._session.get('memberships/' + membershipId)
         # Return a Membership object created from the response JSON data
         return Membership(json_obj)
 
@@ -243,8 +240,6 @@ class MembershipsAPI(object):
         Args:
             membershipId(string_types): The membershipId of the membership to
                 be updated.
-
-        **update_attributes:
             isModerator(bool): If True, sets the person as a moderator for the
                 room. If False, removes the person as a moderator for the room.
 
@@ -265,8 +260,8 @@ class MembershipsAPI(object):
                             "argument must be specified."
             raise ciscosparkapiException(error_message)
         # API request
-        json_obj = self.session.post('memberships/'+membershipId,
-                                     json=update_attributes)
+        json_obj = self._session.post('memberships/' + membershipId,
+                                      json=update_attributes)
         # Return a Membership object created from the response JSON data
         return Membership(json_obj)
 
@@ -285,4 +280,4 @@ class MembershipsAPI(object):
         # Process args
         assert isinstance(membershipId, string_types)
         # API request
-        self.session.delete('memberships/'+membershipId)
+        self._session.delete('memberships/' + membershipId)

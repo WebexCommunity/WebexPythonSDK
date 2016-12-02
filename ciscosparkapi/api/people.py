@@ -13,7 +13,7 @@ from builtins import object
 from six import string_types
 
 from ciscosparkapi.exceptions import ciscosparkapiException
-from ciscosparkapi.helper import generator_container
+from ciscosparkapi.utils import generator_container
 from ciscosparkapi.restsession import RestSession
 from ciscosparkapi.sparkdata import SparkData
 
@@ -74,10 +74,6 @@ class PeopleAPI(object):
     Wrappers the Cisco Spark People-API and exposes the API calls as Python
     method calls that return native Python objects.
 
-    Attributes:
-        session(RestSession): The RESTful session object to be used for API
-            calls to the Cisco Spark service.
-
     """
 
     def __init__(self, session):
@@ -93,7 +89,7 @@ class PeopleAPI(object):
         """
         assert isinstance(session, RestSession)
         super(PeopleAPI, self).__init__()
-        self.session = session
+        self._session = session
 
     @generator_container
     def list(self, email=None, displayName=None, max=None):
@@ -118,8 +114,9 @@ class PeopleAPI(object):
             max(int): Limits the maximum number of people returned from the
                 Spark service per request.
 
-        Yields:
-            Person: The the next person from the Cisco Spark query.
+        Returns:
+            GeneratorContainer: When iterated, the GeneratorContainer, yields
+                the people returned by the Cisco Spark query.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
@@ -144,7 +141,7 @@ class PeopleAPI(object):
         if max:
             params['max'] = max
         # API request - get items
-        items = self.session.get_items('people', params=params)
+        items = self._session.get_items('people', params=params)
         # Yield Person objects created from the returned items JSON objects
         for item in items:
             yield Person(item)
@@ -166,7 +163,7 @@ class PeopleAPI(object):
         # Process args
         assert isinstance(personId, string_types)
         # API request
-        json_obj = self.session.get('people/'+personId)
+        json_obj = self._session.get('people/' + personId)
         # Return a Person object created from the response JSON data
         return Person(json_obj)
 
@@ -178,6 +175,6 @@ class PeopleAPI(object):
 
         """
         # API request
-        json_obj = self.session.get('people/me')
+        json_obj = self._session.get('people/me')
         # Return a Person object created from the response JSON data
         return Person(json_obj)

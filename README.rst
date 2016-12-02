@@ -8,8 +8,21 @@ Simple, lightweight, scalable Python API wrapper for the Cisco Spark APIs
 
 .. image:: https://img.shields.io/pypi/v/ciscosparkapi.svg
     :target: https://pypi.python.org/pypi/ciscosparkapi
+.. image:: https://readthedocs.org/projects/ciscosparkapi/badge/?version=latest
+    :target: http://ciscosparkapi.readthedocs.io/en/latest/?badge=latest
 
-Sure, working with the Cisco Spark APIs is easy (see `developer.ciscospark.com`_).  They are *RESTful*,  *naturally structured*, require only a *simple Access Token for authentication*, and *the data is elegantly represented in intuitive JSON*.  What could be easier?
+**Important update!**
+Complete user documentation is now available on
+`ciscosparkapi.readthedocs.io`_ !
+
+Please use the issues_ page to report any issues or feedback regarding the
+documentation.
+
+
+Introduction
+------------
+
+Sure, working with the Cisco Spark APIs is easy (see `developer.ciscospark.com`_).  They are RESTful,  naturally structured, require only a simple Access Token for authentication, and the data is elegantly represented in intuitive JSON.  What could be easier?
 
 .. code-block:: python
 
@@ -28,14 +41,14 @@ Sure, working with the Cisco Spark APIs is easy (see `developer.ciscospark.com`_
     if response.status_code == 200:
         # Great your message was posted!
         message_id = response.json['id']
-        message_text = response.json['id']
+        message_text = response.json['text']
         print("New message created, with ID:", message_id)
         print(message_text)
     else:
         # Oops something went wrong...  Better do something about it.
         print(response.status_code, response.text)
 
-Like I said, *EASY*.  However, in use, the code can be rather repetitive...
+Like I said, EASY.  However, in use, the code can become rather repetitive...
 
 - You have to setup the environment every time
 - You have to remember URLs and request arguments (or reference the docs)
@@ -93,7 +106,8 @@ All of this, combined, lets you do powerful things simply:
         api.memberships.create(demo_room.id, personEmail=email)
 
     # Post a message to the new room, and upload a file
-    api.message.create(demo_room.id, text="Welcome to the room!", files=["welcome.jpg"])
+    api.messages.create(demo_room.id, text="Welcome to the room!",
+                        files=["https://developer.ciscospark.com/images/logo_spark_lg@256.png"])
 
 That's more than six Spark API calls in less than 23 lines of script code (with comments)!
 ...and likely more than that depending on how many rooms are returned by Spark (remember pagination is handled for you automatically)
@@ -138,6 +152,10 @@ Have a good example script you would like to share?  Please feel free to contrib
 Documentation
 -------------
 
+**Complete user documentation is now available!**
+
+Read the Docs at `ciscosparkapi.readthedocs.io`_ !!
+
 All of the user-facing methods have complete docstrings.  You can view the docstrings for any method either from the `source files`_, or by using the Python ``help()`` function.
 
 .. code-block:: python
@@ -159,8 +177,6 @@ All of the user-facing methods have complete docstrings.  You can view the docst
             toPersonId(string_types): The ID of the recipient when sending a
                 private 1:1 message.
      ...
-
-Full standalone online documentation is coming soon (it's on the backlog!).
 
 
 Contribution
@@ -193,6 +209,7 @@ Interested in contributing code?
 .. _PyCharm: https://www.jetbrains.com/pycharm/
 .. _examples: https://github.com/CiscoDevNet/ciscosparkapi/tree/master/examples
 .. _source files: https://github.com/CiscoDevNet/ciscosparkapi/tree/master/ciscosparkapi
+.. _ciscosparkapi.readthedocs.io: https://ciscosparkapi.readthedocs.io
 .. _ciscosparkapi: https://github.com/CiscoDevNet/ciscosparkapi
 .. _ciscosparksdk: https://github.com/CiscoDevNet/ciscosparksdk
 .. _issues: https://github.com/CiscoDevNet/ciscosparkapi/issues
