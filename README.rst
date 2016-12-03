@@ -54,7 +54,7 @@ __ Introduction_
 Features
 --------
 
-_ciscosparkapi does all of this for you..._
+ciscosparkapi does all of this for you...
 
 + Transparently sources your Spark credentials from your local environment
 
@@ -64,13 +64,13 @@ _ciscosparkapi does all of this for you..._
 
 + Represents all Cisco Spark API interactions using native Python tools
 
-    + Authentication and Connection to the Cisco Spark Cloud ==>
-      :class:`CiscoSparkAPI` 'Connection Object'
+  + Authentication and Connection to the Cisco Spark Cloud ==>
+    :class:`CiscoSparkAPI` 'Connection Object'
 
-    + API Calls ==> Hierarchically organized method calls underneath a
-      :class:`CiscoSparkAPI` 'Connection Object'
+  + API Calls ==> Hierarchically organized method calls underneath a
+    :class:`CiscoSparkAPI` 'Connection Object'
 
-    + Returned Data Objects ==> Native Python objects
+  + Returned Data Objects ==> Native Python objects
 
 + **Automatic and transparent pagination!**
 
@@ -112,7 +112,7 @@ Examples
 Looking for some examples or sample scripts?  Check out the examples_ folder!
 
 Have a good example script you would like to share?  Please feel free to
-`contribute`__ !
+`contribute`__!
 
 __ Contribution_
 
@@ -141,8 +141,6 @@ Contribution
 ciscosparkapi_ and it's sister project ciscosparksdk_ are community
 development projects.  Feedback, thoughts, ideas and code contributions are
 most welcome!
-
-To contribute to ciscosparkapi please use the following resources:
 
 **Feedback, issues, thoughts and ideas...**
 
