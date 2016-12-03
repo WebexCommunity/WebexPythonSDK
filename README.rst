@@ -65,10 +65,10 @@ ciscosparkapi does all of this for you...
 + Represents all Cisco Spark API interactions using native Python tools
 
   + Authentication and Connection to the Cisco Spark Cloud ==>
-    :class:`CiscoSparkAPI` 'Connection Object'
+    **CiscoSparkAPI** 'Connection Object'
 
   + API Calls ==> Hierarchically organized method calls underneath a
-    :class:`CiscoSparkAPI` 'Connection Object'
+    **CiscoSparkAPI** 'Connection Object'
 
   + Returned Data Objects ==> Native Python objects
 
@@ -102,8 +102,9 @@ Documentation
 -------------
 
 **Excellent documentation is now available at:**
-
 http://ciscosparkapi.readthedocs.io
+
+Check out the Quickstart_ to dive in and begin using ciscosparkapi.
 
 
 Examples
@@ -163,10 +164,10 @@ Please use the issues_ log.
 *Copyright (c) 2016 Cisco Systems, Inc.*
 
 .. _Introduction: http://ciscosparkapi.readthedocs.io/en/latest/user/intro.html
-
 .. _pagination: https://developer.ciscospark.com/pagination.html
-.. _examples: https://github.com/CiscoDevNet/ciscosparkapi/tree/master/examples
 .. _ciscosparkapi.readthedocs.io: https://ciscosparkapi.readthedocs.io
+.. _Quickstart: http://ciscosparkapi.readthedocs.io/en/latest/user/quickstart.html
+.. _examples: https://github.com/CiscoDevNet/ciscosparkapi/tree/master/examples
 .. _ciscosparkapi: https://github.com/CiscoDevNet/ciscosparkapi
 .. _ciscosparksdk: https://github.com/CiscoDevNet/ciscosparksdk
 .. _issues: https://github.com/CiscoDevNet/ciscosparkapi/issues
