@@ -2,86 +2,18 @@
 ciscosparkapi
 =============
 
--------------------------------------------------------------------------
-Simple, lightweight, scalable Python API wrapper for the Cisco Spark APIs
--------------------------------------------------------------------------
+*Simple, lightweight, scalable Python API wrapper for the Cisco Spark APIs*
 
 .. image:: https://img.shields.io/pypi/v/ciscosparkapi.svg
     :target: https://pypi.python.org/pypi/ciscosparkapi
 .. image:: https://readthedocs.org/projects/ciscosparkapi/badge/?version=latest
     :target: http://ciscosparkapi.readthedocs.io/en/latest/?badge=latest
 
-**Important update!**
-Complete user documentation is now available on
-`ciscosparkapi.readthedocs.io`_ !
+-------------------------------------------------------------------------------
 
-Please use the issues_ page to report any issues or feedback regarding the
-documentation.
-
-
-Introduction
-------------
-
-Sure, working with the Cisco Spark APIs is easy (see `developer.ciscospark.com`_).  They are RESTful,  naturally structured, require only a simple Access Token for authentication, and the data is elegantly represented in intuitive JSON.  What could be easier?
-
-.. code-block:: python
-
-    import requests
-
-    URL = 'https://api.ciscospark.com/v1/messages'
-    ACCESS_TOKEN = '<your_access_token>'
-    ROOM_ID = '<room_id>'
-    MESSAGE_TEXT = '<message_text>'
-
-    headers = {'Authorization': 'Bearer ' + ACCESS_TOKEN,
-               'Content-type': 'application/json;charset=utf-8'}
-    post_data = {'roomId': ROOM_ID,
-                 'text': MESSAGE_TEXT}
-    response = requests.post(URL, json=post_data, headers=headers)
-    if response.status_code == 200:
-        # Great your message was posted!
-        message_id = response.json['id']
-        message_text = response.json['text']
-        print("New message created, with ID:", message_id)
-        print(message_text)
-    else:
-        # Oops something went wrong...  Better do something about it.
-        print(response.status_code, response.text)
-
-Like I said, EASY.  However, in use, the code can become rather repetitive...
-
-- You have to setup the environment every time
-- You have to remember URLs and request arguments (or reference the docs)
-- You have to parse the returned JSON and setup variables to hold the attributes you need
-- When requesting lists of items, you have to deal with pagination_
-
-
-Enter **ciscosparkapi**, a simple API wrapper that wraps all of the Spark API calls and returned JSON objects within native Python objects and function calls.
-
-With ciscosparkapi, the above Python code can be consolidated to the following:
-
-.. code-block:: python
-
-    from ciscosparkapi import CiscoSparkAPI
-
-    api = CiscoSparkAPI()
-    try:
-        message = api.messages.create('<room_id>', text='<message_text>')
-        print("New message created, with ID:", message.id)
-        print(message.text)
-    except SparkApiError as e:
-        print(e)
-
-The ciscosparkapi package handles all of this for you:
-
-+ Reads your Spark access token from a ``SPARK_ACCESS_TOKEN`` environment variable
-+ Wraps and represents all Spark API calls as a simple hierarchical tree of native-Python methods (with default arguments provided everywhere possible!)
-+ If your Python IDE supports **auto-completion** (like PyCharm_), you can navigate the available methods and object attributes right within your IDE
-+ Represents all returned JSON objects as native Python objects - you can access all of the object's attributes using native *dot.syntax*
-+ **Automatic and Transparent Pagination!**  When requesting 'lists of objects' from Spark, requests for additional pages of responses are efficiently and automatically requested as needed
-+ Multipart encoding and uploading of local files, when creating messages with local file attachments
-
-All of this, combined, lets you do powerful things simply:
+**ciscosparkapi** is a *community developed* Pythonic wrapping of the Cisco
+Spark APIs, which makes working with Cisco Spark in Python a *native* and
+*natural* experience!
 
 .. code-block:: python
 
@@ -109,14 +41,49 @@ All of this, combined, lets you do powerful things simply:
     api.messages.create(demo_room.id, text="Welcome to the room!",
                         files=["https://developer.ciscospark.com/images/logo_spark_lg@256.png"])
 
-That's more than six Spark API calls in less than 23 lines of script code (with comments)!
-...and likely more than that depending on how many rooms are returned by Spark (remember pagination is handled for you automatically)
+
+That's more than 6 Spark API calls in less than 23 lines of code (with comments
+and whitespace), and likely more than that since ciscosparkapi handles
+pagination_ for you automatically!
+
+ciscosparkapi makes your life better...  `Learn how!`__
+
+__ Introduction_
+
+
+Features
+--------
+
+ciscosparkapi does all of this for you...
+
++ Transparently sources your Spark credentials from your local environment
+
++ Provides and uses default arguments and settings everywhere possible, so you
+  don't have to think about things like API endpoint URLs, HTTP headers and
+  JSON formats
+
++ Represents all Cisco Spark API interactions using native Python tools
+
+  + Authentication and Connection to the Cisco Spark Cloud ==>
+    **CiscoSparkAPI** 'Connection Object'
+
+  + API Calls ==> Hierarchically organized method calls underneath a
+    **CiscoSparkAPI** 'Connection Object'
+
+  + Returned Data Objects ==> Native Python objects
+
++ **Automatic and transparent pagination!**
+
++ Multipart encoding and uploading of local files
+
++ Auto-completion in your favorite IDE, descriptive exceptions, and so much
+  more...
 
 
 Installation
 ------------
 
-Installation and updating of ciscosparkapi is easy:
+Installing and upgrading ciscosparkapi is easy:
 
 **Install via PIP**
 
@@ -131,14 +98,13 @@ Installation and updating of ciscosparkapi is easy:
     $ pip install ciscosparkapi --upgrade
 
 
-Releases & Release Notes
-------------------------
+Documentation
+-------------
 
-Complete and usable *Beta* releases_ have been published for this package.
+**Excellent documentation is now available at:**
+http://ciscosparkapi.readthedocs.io
 
-While the package APIs may change (while the package is in beta), the package capabilities should all be functional.  If you experience any issues using this package, please report them using the issues_ log.
-
-Please see the releases_ page for release notes on the incremental functionality and bug fixes that have been incorporated into the published releases.
+Check out the Quickstart_ to dive in and begin using ciscosparkapi.
 
 
 Examples
@@ -146,70 +112,62 @@ Examples
 
 Looking for some examples or sample scripts?  Check out the examples_ folder!
 
-Have a good example script you would like to share?  Please feel free to contribute!
+Have a good example script you would like to share?  Please feel free to
+`contribute`__!
+
+__ Contribution_
 
 
-Documentation
+Release Notes
 -------------
 
-**Complete user documentation is now available!**
+Complete and fully functional *Beta* releases have been published.  Please
+see the releases_ page for release notes on the incremental functionality and
+bug fixes incorporated into the published releases.
 
-Read the Docs at `ciscosparkapi.readthedocs.io`_ !!
+**Note:**  The package APIs may change, while the package is in beta.
 
-All of the user-facing methods have complete docstrings.  You can view the docstrings for any method either from the `source files`_, or by using the Python ``help()`` function.
 
-.. code-block:: python
+Support
+-------
 
-    >>> from ciscosparkapi import CiscoSparkAPI
-    >>> api = CiscoSparkAPI()
-    >>> help(api.messages.create)
-    create(self, roomId=None, toPersonId=None, toPersonEmail=None, text=None, markdown=None, files=None) method of ciscosparkapi.api.messages.MessagesAPI instance
-        Posts a message to a room.
-
-        Posts a message, and optionally, a media content attachment, to a room.
-
-        You must specify either a roomId, toPersonId or toPersonEmail when
-        posting a message, and you must supply some message content (text,
-        markdown, files).
-
-        Args:
-            roomId(string_types): The room ID.
-            toPersonId(string_types): The ID of the recipient when sending a
-                private 1:1 message.
-     ...
+This is a *community developed* and *community supported* project.  If you
+experience any issues using this package, please report them using the
+issues_ log.
 
 
 Contribution
 ------------
 
-ciscosparkapi_ and it's sister project ciscosparksdk_ are community development projects.  Feedback, thoughts, ideas and code contributions are most welcome!
+ciscosparkapi_ and it's sister project ciscosparksdk_ are community
+development projects.  Feedback, thoughts, ideas and code contributions are
+most welcome!
 
-To contribute to ciscosparkapi please use the following resources:
+**Feedback, issues, thoughts and ideas...**
 
-Feedback, issues, thoughts and ideas... Please use the issues_ log.
+Please use the issues_ log.
 
-Interested in contributing code?
+**Interested in contributing code?**
 
-#. Check for open issues_ or create a new one.
+#. Check for open issues_ or create a new 'issue' for the item you want
+   to work on.
 
-   * Assign yourself to the issue you want to work on, and communicate with any others that may be working the issue.
-   * Project workflow is being managed via the GitHub projects_ feature.  Move your issue to the 'In Progress' column of the project being worked.
+   * Assign yourself to the issue, and communicate with any others that may be
+     working the issue.
 
 #. Review the project charter_ for coding standards and practices.
 #. Fork a copy of `the repository`_.
 #. Add your code to your forked repository.
-#. Submit a `pull request`_, and move your issue to the 'Code Review' column on the projects_ page.
+#. Submit a `pull request`_.
 
 
 *Copyright (c) 2016 Cisco Systems, Inc.*
 
-
-.. _developer.ciscospark.com: https://developer.ciscospark.com
+.. _Introduction: http://ciscosparkapi.readthedocs.io/en/latest/user/intro.html
 .. _pagination: https://developer.ciscospark.com/pagination.html
-.. _PyCharm: https://www.jetbrains.com/pycharm/
-.. _examples: https://github.com/CiscoDevNet/ciscosparkapi/tree/master/examples
-.. _source files: https://github.com/CiscoDevNet/ciscosparkapi/tree/master/ciscosparkapi
 .. _ciscosparkapi.readthedocs.io: https://ciscosparkapi.readthedocs.io
+.. _Quickstart: http://ciscosparkapi.readthedocs.io/en/latest/user/quickstart.html
+.. _examples: https://github.com/CiscoDevNet/ciscosparkapi/tree/master/examples
 .. _ciscosparkapi: https://github.com/CiscoDevNet/ciscosparkapi
 .. _ciscosparksdk: https://github.com/CiscoDevNet/ciscosparksdk
 .. _issues: https://github.com/CiscoDevNet/ciscosparkapi/issues
