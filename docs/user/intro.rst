@@ -4,34 +4,125 @@
 Introduction
 ============
 
-ciscosparkapi is a *community developed* Pythonic wrapping of the Cisco Spark
-APIs.
 
-*What do we mean by a 'Python wrapping' of the APIs?*
+Work with the Cisco Spark APIs in Native Python!
+------------------------------------------------
 
-===============================  ==============================================
-Cisco Spark API                  ciscosparkapi Package
-===============================  ==============================================
-Authentication, URLs, & headers  Wrapped in a simple :class:`CiscoSparkAPI`
-                                 "connection object"
--------------------------------  ----------------------------------------------
-API Endpoints & Calls            Wrapped and represented as native method /
-                                 function calls hierarchically structured
-                                 underneath the :class:`CiscoSparkAPI`
-                                 "connection object"
--------------------------------  ----------------------------------------------
-Returned Spark Data Objects      Wrapped and represented as native Python
-                                 objects
--------------------------------  ----------------------------------------------
-Returned Lists of Objects        Wrapped and represented as iterable sequences
-                                 that yield the native Spark Data Objects
-===============================  ==============================================
+Sure, working with the Cisco Spark APIs is easy (see
+`developer.ciscospark.com`_).  They are RESTful,  naturally structured,
+require only a simple Access Token for authentication, and the data is
+elegantly represented in intuitive JSON.  What could be easier?
 
-The idea is to enable you to work with the Cisco Spark APIs using native Python
-objects and tools, such that you can focus on your code and not have to write
-boiler-plate code to handle the API mechanics.
+.. code-block:: python
 
-Head over to the :ref:`Quickstart` page to get started.
+    import requests
+
+    URL = 'https://api.ciscospark.com/v1/messages'
+    ACCESS_TOKEN = '<your_access_token>'
+    ROOM_ID = '<room_id>'
+    MESSAGE_TEXT = '<message_text>'
+
+    headers = {'Authorization': 'Bearer ' + ACCESS_TOKEN,
+               'Content-type': 'application/json;charset=utf-8'}
+    post_data = {'roomId': ROOM_ID,
+                 'text': MESSAGE_TEXT}
+    response = requests.post(URL, json=post_data, headers=headers)
+    if response.status_code == 200:
+        # Great your message was posted!
+        message_id = response.json['id']
+        message_text = response.json['text']
+        print("New message created, with ID:", message_id)
+        print(message_text)
+    else:
+        # Oops something went wrong...  Better do something about it.
+        print(response.status_code, response.text)
+
+Like I said, EASY.  However, in use, the code can become rather repetitive...
+
+- You have to setup the environment every time
+- You have to remember URLs, request parameters and JSON formats
+  (or reference the docs)
+- You have to parse the returned JSON and work with multiple layers of list
+  and dictionary indexes
+- When requesting lists of items, you have to deal with pagination_
+
+
+Enter **ciscosparkapi**, a simple API wrapper that wraps all of the Spark API
+calls and returned JSON objects within native Python objects and methods.
+
+With ciscosparkapi, the above Python code can be consolidated to the following:
+
+.. code-block:: python
+
+    from ciscosparkapi import CiscoSparkAPI
+
+    api = CiscoSparkAPI()
+    try:
+        message = api.messages.create('<room_id>', text='<message_text>')
+        print("New message created, with ID:", message.id)
+        print(message.text)
+    except SparkApiError as e:
+        print(e)
+
+
+**ciscosparkapi handles all of this for you:**
+
++ Reads your Spark access token from a ``SPARK_ACCESS_TOKEN`` environment
+  variable
+
++ Wraps and represents all Spark API calls as a simple hierarchical tree of
+  native-Python methods (with default arguments provided everywhere possible!)
+
++ If your Python IDE supports **auto-completion** (like PyCharm_), you can
+  navigate the available methods and object attributes right within your IDE
+
++ Represents all returned JSON objects as native Python objects - you can
+  access all of the object's attributes using native *dot.syntax*
+
++ **Automatic and Transparent Pagination!**  When requesting 'lists of objects'
+  from Spark, requests for additional pages of responses are efficiently and
+  automatically requested as needed
+
++ Multipart encoding and uploading of local files, when creating messages with
+  local file attachments
+
+
+All of this, combined, lets you do powerful things simply:
+
+.. code-block:: python
+
+    from ciscosparkapi import CiscoSparkAPI
+
+    api = CiscoSparkAPI()
+
+    # Find all rooms that have 'ciscosparkapi Demo' in their title
+    all_rooms = api.rooms.list()
+    demo_rooms = [room for room in all_rooms if 'ciscosparkapi Demo' in room.title]
+
+    # Delete all of the demo rooms
+    for room in demo_rooms:
+        api.rooms.delete(room.id)
+
+    # Create a new demo room
+    demo_room = api.rooms.create('ciscosparkapi Demo')
+
+    # Add people to the new demo room
+    email_addresses = ["test01@cmlccie.com", "test02@cmlccie.com"]
+    for email in email_addresses:
+        api.memberships.create(demo_room.id, personEmail=email)
+
+    # Post a message to the new room, and upload a file
+    api.messages.create(demo_room.id, text="Welcome to the room!",
+                        files=["https://developer.ciscospark.com/images/logo_spark_lg@256.png"])
+
+
+That's more than 6 Spark API calls in less than 23 lines of code (with comments
+and whitespace), and likely more than that since ciscosparkapi handles
+pagination_ for you automatically!
+
+Head over to the :ref:`Quickstart` page to begin working with the
+**Cisco Spark APIs in native Python**!
+
 
 .. _License:
 
@@ -40,7 +131,7 @@ MIT License
 
 ciscosparkapi is currently licensed under the `MIT Open Source License`_, and
 distributed as a source distribution (no binaries) via :ref:`PyPI <Install>`,
-and the complete :ref:`Source Code` is available on GitHub.
+and the complete :ref:`source code <Source Code>` is available on GitHub.
 
 ciscosparkapi License
 ---------------------
@@ -48,6 +139,11 @@ ciscosparkapi License
 .. include:: ../../LICENSE
 
 
-.. _MIT Open Source License: https://opensource.org/licenses/MIT
 
 *Copyright (c) 2016 Cisco Systems, Inc.*
+
+.. _MIT Open Source License: https://opensource.org/licenses/MIT
+.. _developer.ciscospark.com: https://developer.ciscospark.com
+.. _pagination: https://developer.ciscospark.com/pagination.html
+.. _PyCharm: https://www.jetbrains.com/pycharm/
+
