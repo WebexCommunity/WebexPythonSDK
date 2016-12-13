@@ -34,6 +34,7 @@ del get_versions
 
 DEFAULT_BASE_URL = 'https://api.ciscospark.com/v1/'
 DEFAULT_TIMEOUT = 60
+ACCESS_TOKEN_ENVIRONMENT_VARIABLE = 'SPARK_ACCESS_TOKEN'
 
 
 class CiscoSparkAPI(object):
@@ -104,7 +105,7 @@ class CiscoSparkAPI(object):
         assert access_token is None or isinstance(access_token, string_types)
         assert isinstance(base_url, string_types)
         assert isinstance(timeout, int)
-        spark_access_token = os.environ.get('SPARK_ACCESS_TOKEN', None)
+        spark_access_token = os.environ.get(ACCESS_TOKEN_ENVIRONMENT_VARIABLE)
         access_token = access_token if access_token else spark_access_token
         if not access_token:
             error_message = "You must provide an Spark access token to " \
