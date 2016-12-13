@@ -2,11 +2,14 @@
 ciscosparkapi
 =============
 
+*Simple, lightweight, scalable Python API wrapper for the Cisco Spark APIs*
+
 .. image:: https://img.shields.io/pypi/v/ciscosparkapi.svg
     :target: https://pypi.python.org/pypi/ciscosparkapi
 .. image:: https://readthedocs.org/projects/ciscosparkapi/badge/?version=latest
     :target: http://ciscosparkapi.readthedocs.io/en/latest/?badge=latest
 
+-------------------------------------------------------------------------------
 
 **ciscosparkapi** is a *community developed* Pythonic wrapping of the Cisco
 Spark APIs, which makes working with Cisco Spark in Python a *native* and
@@ -150,7 +153,7 @@ Please use the issues_ log.
    to work on.
 
    * Assign yourself to the issue, and communicate with any others that may be
-     working it.
+     working the issue.
 
 #. Review the project charter_ for coding standards and practices.
 #. Fork a copy of `the repository`_.
