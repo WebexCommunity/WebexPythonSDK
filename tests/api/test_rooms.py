@@ -2,14 +2,12 @@
 
 """pytest Rooms functions, fixtures and tests."""
 
+import itertools
 
 import pytest
 
 import ciscosparkapi
 from tests.utils import create_string
-
-
-NUM_MULTIPLE_ROOMS = 10
 
 
 # Helper Functions
@@ -26,7 +24,30 @@ def delete_room(api, room):
     api.rooms.delete(room.id)
 
 
+def is_valid_room(room):
+    return isinstance(room, ciscosparkapi.Room) and room.id is not None
+
+
+def are_valid_rooms(rooms_iterable):
+    rooms_are_valid = (is_valid_room(room) for room in rooms_iterable)
+    return all(rooms_are_valid)
+
+
+def room_exists(api, room):
+    try:
+        api.rooms.get(room.id)
+    except ciscosparkapi.SparkApiError:
+        return False
+    else:
+        return True
+
+
 # pytest Fixtures
+
+@pytest.fixture(scope="session")
+def rooms_list(api):
+    return list(api.rooms.list())
+
 
 @pytest.fixture(scope="session")
 def direct_rooms(api, direct_messages):
@@ -42,24 +63,29 @@ def group_room(api):
 
 @pytest.fixture(scope="session")
 def team_room(api, team):
-    team_room =  create_team_room(api, team, create_string("Team Room"))
+    team_room = create_team_room(api, team, create_string("Team Room"))
     yield team_room
     delete_room(api, team_room)
 
 
-@pytest.fixture(scope="session")
-def ten_group_rooms(api):
-    rooms =  [create_room(api, create_string("Room")) for i in range(10)]
-    yield rooms
-    for room in rooms:
+@pytest.fixture
+def temp_group_room(api):
+    room = create_room(api, create_string("Room"))
+    yield room
+    if room_exists(api, room):
         delete_room(api, room)
 
 
 @pytest.fixture
-def temp_group_room(api):
-    room =  create_room(api, create_string("Room"))
-    yield room
-    delete_room(api, room)
+def add_rooms(api):
+    rooms = []
+    def inner(num_rooms):
+        for i in range(num_rooms):
+            rooms.append(create_room(api, create_string("Additional Room")))
+        return rooms
+    yield inner
+    for room in rooms:
+        delete_room(api, room)
 
 
 # Room Tests
@@ -67,31 +93,57 @@ def temp_group_room(api):
 class TestRoomsAPI(object):
     """Test RoomsAPI methods."""
 
-    @pytest.mark.usefixtures("group_room")
-    def test_list_all_rooms(self, api):
-        rooms_list = list(api.rooms.list())
-        assert len(rooms_list) > 0
+    def test_create_group_room(self, group_room):
+        assert is_valid_room(group_room)
 
-    @pytest.mark.usefixtures("ten_group_rooms")
-    def test_list_all_rooms_with_paging(self, api):
-        rooms_list = list(api.rooms.list(max=5))
-        assert len(rooms_list) >= 10
+    def test_create_team_room(self, team_room):
+        assert is_valid_room(team_room)
+
+    def test_get_room_details(self, api, group_room):
+        room = api.rooms.get(group_room.id)
+        assert is_valid_room(room)
+
+    def test_update_room_title(self, api, group_room):
+        new_title = create_string("Updated Room")
+        room = api.rooms.update(group_room.id, title=new_title)
+        assert is_valid_room(room)
+        assert room.title == new_title
+
+    def test_delete_room(self, api, temp_group_room):
+        api.rooms.delete(temp_group_room.id)
+        assert not room_exists(api, temp_group_room)
 
     @pytest.mark.usefixtures("group_room")
     def test_list_group_rooms(self, api):
         group_rooms_list = list(api.rooms.list(type='group'))
         assert len(group_rooms_list) > 0
-
-    @pytest.mark.usefixtures("direct_rooms")
-    def test_list_direct_rooms(self, api):
-        direct_rooms_list = list(api.rooms.list(type='direct'))
-        assert len(direct_rooms_list) > 0
+        assert are_valid_rooms(group_rooms_list)
 
     @pytest.mark.usefixtures("team_room")
     def test_list_team_rooms(self, api, team):
         team_rooms_list = list(api.rooms.list(teamId=team.id))
         assert len(team_rooms_list) > 0
+        assert are_valid_rooms(team_rooms_list)
 
-    def test_create_room(self, group_room):
-        assert isinstance(group_room, ciscosparkapi.Room) \
-               and group_room.id is not None
+    @pytest.mark.usefixtures("direct_rooms")
+    def test_list_direct_rooms(self, api):
+        direct_rooms_list = list(api.rooms.list(type='direct'))
+        assert len(direct_rooms_list) > 0
+        assert are_valid_rooms(direct_rooms_list)
+
+    @pytest.mark.usefixtures("group_room", "team_room", "direct_rooms")
+    def test_list_all_rooms(self, rooms_list):
+        assert len(rooms_list) > 0
+        assert are_valid_rooms(rooms_list)
+
+    @pytest.mark.usefixtures("group_room", "team_room", "direct_rooms")
+    def test_list_all_rooms_with_paging(self, api, rooms_list, add_rooms):
+        page_size = 2
+        pages = 3
+        num_rooms = pages * page_size
+        if len(rooms_list) < num_rooms:
+            add_rooms(num_rooms - len(rooms_list))
+        rooms = api.rooms.list(max=page_size)
+        rooms_list = list(itertools.islice(rooms, num_rooms))
+        assert len(rooms_list) == 6
+        assert are_valid_rooms(rooms_list)
