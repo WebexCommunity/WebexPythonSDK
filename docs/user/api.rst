@@ -76,6 +76,30 @@ webhooks
 .. autoclass:: WebhooksAPI()
 
 
+.. _organizations:
+
+organizations
+-------------
+
+.. autoclass:: OrganizationsAPI()
+
+
+.. _licenses:
+
+licenses
+--------
+
+.. autoclass:: LicensesAPI()
+
+
+.. _roles:
+
+roles
+-----
+
+.. autoclass:: RolesAPI()
+
+
 .. _access_tokens:
 
 access_tokens
@@ -154,6 +178,30 @@ Webhook
 -------
 
 .. autoclass:: Webhook()
+
+
+.. _Organization:
+
+Organization
+------------
+
+.. autoclass:: Organization()
+
+
+.. _License:
+
+License
+-------
+
+.. autoclass:: License()
+
+
+.. _Role:
+
+Role
+----
+
+.. autoclass:: Role()
 
 
 .. _Access Token:
