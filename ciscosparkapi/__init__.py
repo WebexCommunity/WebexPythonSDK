@@ -10,7 +10,6 @@ import os
 
 from .exceptions import ciscosparkapiException, SparkApiError
 from .restsession import RestSession
-from .api.accesstokens import AccessToken, AccessTokensAPI
 from .api.people import Person, PeopleAPI
 from .api.rooms import Room, RoomsAPI
 from .api.memberships import Membership, MembershipsAPI
@@ -18,6 +17,10 @@ from .api.messages import Message, MessagesAPI
 from .api.teams import Team, TeamsAPI
 from .api.teammemberships import TeamMembership, TeamMembershipsAPI
 from .api.webhooks import Webhook, WebhooksAPI
+from .api.organizations import Organization, OrganizationsAPI
+from .api.licenses import License, LicensesAPI
+from .api.roles import Role, RolesAPI
+from .api.accesstokens import AccessToken, AccessTokensAPI
 
 
 __author__ = "Chris Lunsford"
@@ -60,6 +63,12 @@ class CiscoSparkAPI(object):
                     :class:`team_memberships <TeamMembershipsAPI>`
 
                     :class:`webhooks <WebhooksAPI>`
+
+                    :class:`organizations <OrganizationsAPI>`
+
+                    :class:`licenses <LicensesAPI>`
+
+                    :class:`roles <RolesAPI>`
 
                     :class:`access_tokens <AccessTokensAPI>`
 
@@ -129,6 +138,9 @@ class CiscoSparkAPI(object):
         self.teams = TeamsAPI(self._session)
         self.team_memberships = TeamMembershipsAPI(self._session)
         self.webhooks = WebhooksAPI(self._session)
+        self.organizations = OrganizationsAPI(self._session)
+        self.licenses = LicensesAPI(self._session)
+        self.roles = RolesAPI(self._session)
         self.access_tokens = AccessTokensAPI(self.base_url, timeout=timeout)
 
     @property
