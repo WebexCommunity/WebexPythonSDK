@@ -236,7 +236,7 @@ class TeamMembershipsAPI(object):
                             "argument must be specified."
             raise ciscosparkapiException(error_message)
         # API request
-        json_obj = self._session.post('team/memberships/' + membershipId,
+        json_obj = self._session.put('team/memberships/' + membershipId,
                                       json=update_attributes)
         # Return a TeamMembership object created from the response JSON data
         return TeamMembership(json_obj)

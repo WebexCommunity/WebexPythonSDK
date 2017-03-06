@@ -41,31 +41,69 @@ class Person(SparkData):
 
     @property
     def id(self):
-        return self._json['id']
+        """The person's unique ID."""
+        return self._json.get('id')
 
     @property
     def emails(self):
+        """Email address(es) of the person.
+
+        CURRENT LIMITATION: Spark (today) only allows you to provide a single
+        email address for a person. The list data type was selected to enable
+        future support for providing multiple email address.
+
+        """
         return self._json['emails']
 
     @property
     def displayName(self):
-        return self._json['displayName']
+        """Full name of the person."""
+        return self._json.get('displayName')
+
+    @property
+    def firstName(self):
+        """First name of the person."""
+        return self._json.get('firstName')
+
+    @property
+    def lastName(self):
+        """Last name of the person."""
+        return self._json.get('lastName')
 
     @property
     def avatar(self):
-        return self._json['avatar']
+        """URL to the person's avatar in PNG format."""
+        return self._json.get('avatar')
+
+    @property
+    def orgId(self):
+        """ID of the organization to which this person belongs."""
+        return self._json.get('orgId')
+
+    @property
+    def roles(self):
+        """Roles of the person."""
+        return self._json.get('roles')
+
+    @property
+    def licenses(self):
+        """Licenses allocated to the person."""
+        return self._json.get('licenses')
 
     @property
     def created(self):
-        return self._json['created']
-
-    @property
-    def lastActivity(self):
-        return self._json['lastActivity']
+        """The date and time the person was created."""
+        return self._json.get('created')
 
     @property
     def status(self):
-        return self._json['status']
+        """The person's current status."""
+        return self._json.get('status')
+
+    @property
+    def lastActivity(self):
+        """The date and time of the person's last activity."""
+        return self._json.get('lastActivity')
 
 
 class PeopleAPI(object):
@@ -145,6 +183,103 @@ class PeopleAPI(object):
         # Yield Person objects created from the returned items JSON objects
         for item in items:
             yield Person(item)
+
+    def create(self, emails, **person_attributes):
+        """Create a new user account for a given organization
+
+        Only an admin can create a new user account.
+
+        You must specify displayName and/or firstName and lastName.
+
+        Args:
+            emails(list): Email address(es) of the person. (list of strings)
+                CURRENT LIMITATION: Spark (today) only allows you to provide a
+                single email address for a person. The list data type was
+                selected to enable future support for providing multiple email
+                address.
+            **person_attributes:
+                displayName(string_types): Full name of the person
+                firstName(string_types): First name of the person
+                lastName(string_types): Last name of the person
+                avatar(string_types): URL to the person's avatar in PNG format
+                orgId(string_types): ID of the organization to which this
+                    person belongs
+                roles(list): Roles of the person (list of strings containing
+                    the role IDs to be assigned to the person)
+                licenses(list): Licenses allocated to the person (list of
+                    strings containing the license IDs to be allocated to the
+                    person)
+
+        Returns:
+            Person: With the details of the created person.
+
+        Raises:
+            AssertionError: If the parameter types are incorrect.
+            ciscosparkapiException: If required parameters have been omitted.
+            SparkApiError: If the Cisco Spark cloud returns an error.
+
+        """
+        # Process args
+        assert isinstance(emails, string_types) and len(emails) == 1
+        post_data = {}
+        post_data['emails'] = emails
+        post_data.update(person_attributes)
+
+        # API request
+        json_obj = self._session.post('people', json=post_data)
+
+        # Return a Room object created from the returned JSON object
+        return Person(json_obj)
+
+    def update(self, personId, **person_attributes):
+        """Update details for a person, by ID.
+
+        Only an admin can update a person details.
+
+        Args:
+            personId(string_types): The ID of the person to be updated.
+            **person_attributes:
+                emails(list): Email address(es) of the person. (list of
+                    strings) CURRENT LIMITATION: Spark (today) only allows you
+                    to provide a single email address for a person. The list
+                    data type was selected to enable future support for
+                    providing multiple email address.
+                displayName(string_types): Full name of the person
+                firstName(string_types): First name of the person
+                lastName(string_types): Last name of the person
+                avatar(string_types): URL to the person's avatar in PNG format
+                orgId(string_types): ID of the organization to which this
+                    person belongs
+                roles(list): Roles of the person (list of strings containing
+                    the role IDs to be assigned to the person)
+                licenses(list): Licenses allocated to the person (list of
+                    strings containing the license IDs to be allocated to the
+                    person)
+
+        Returns:
+            Person: With the updated person details.
+
+        Raises:
+            AssertionError: If the parameter types are incorrect.
+            ciscosparkapiException: If an update attribute is not provided.
+            SparkApiError: If the Cisco Spark cloud returns an error.
+
+        """
+        # Process args
+        assert isinstance(personId, string_types)
+
+        # Process update_attributes keyword arguments
+        if not person_attributes:
+            error_message = "At least one **update_attributes keyword " \
+                            "argument must be specified."
+            raise ciscosparkapiException(error_message)
+
+        # API request
+        json_obj = self._session.put('people/' + personId,
+                                     json=person_attributes)
+
+        # Return a Person object created from the returned JSON object
+        return Person(json_obj)
 
     def get(self, personId):
         """Get person details, by personId.

@@ -225,7 +225,7 @@ class RoomsAPI(object):
                             "argument must be specified."
             raise ciscosparkapiException(error_message)
         # API request
-        json_obj = self._session.post('rooms/' + roomId, json=update_attributes)
+        json_obj = self._session.put('rooms/' + roomId, json=update_attributes)
         # Return a Room object created from the response JSON data
         return Room(json_obj)
 
