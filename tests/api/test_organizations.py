@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""pytest Licenses functions, fixtures and tests."""
+"""pytest Organizations API wrapper tests and fixtures."""
 
 
 import pytest
@@ -10,8 +10,8 @@ import ciscosparkapi
 
 # Helper Functions
 
-def list_organizations(api, max=None):
-    return list(api.organizations.list(max=max))
+def get_list_of_organizations(api, max=None):
+    return api.organizations.list(max=max)
 
 
 def get_organization_by_id(api, orgId):
@@ -29,7 +29,7 @@ def are_valid_organizations(iterable):
 
 @pytest.fixture(scope="session")
 def organizations_list(api):
-    return list_organizations(api)
+    return list(get_list_of_organizations(api))
 
 
 # Tests
@@ -42,6 +42,6 @@ class TestOrganizationsAPI(object):
 
     def test_get_organization_by_id(self, api, organizations_list):
         assert len(organizations_list) >= 1
-        org_id = organizations_list[0].id
-        org = get_organization_by_id(api, orgId=org_id)
-        assert is_valid_organization(org)
+        organization_id = organizations_list[0].id
+        organization = get_organization_by_id(api, orgId=organization_id)
+        assert is_valid_organization(organization)
