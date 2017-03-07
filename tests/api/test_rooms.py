@@ -24,13 +24,12 @@ def delete_room(api, room):
     api.rooms.delete(room.id)
 
 
-def is_valid_room(room):
-    return isinstance(room, ciscosparkapi.Room) and room.id is not None
+def is_valid_room(obj):
+    return isinstance(obj, ciscosparkapi.Room) and obj.id is not None
 
 
-def are_valid_rooms(rooms_iterable):
-    rooms_are_valid = (is_valid_room(room) for room in rooms_iterable)
-    return all(rooms_are_valid)
+def are_valid_rooms(iterable):
+    return all([is_valid_room(obj) for obj in iterable])
 
 
 def room_exists(api, room):
@@ -113,31 +112,28 @@ class TestRoomsAPI(object):
         api.rooms.delete(temp_group_room.id)
         assert not room_exists(api, temp_group_room)
 
-    @pytest.mark.usefixtures("group_room")
-    def test_list_group_rooms(self, api):
+    def test_list_group_rooms(self, api, group_room):
         group_rooms_list = list(api.rooms.list(type='group'))
         assert len(group_rooms_list) > 0
         assert are_valid_rooms(group_rooms_list)
 
-    @pytest.mark.usefixtures("team_room")
-    def test_list_team_rooms(self, api, team):
+    def test_list_team_rooms(self, api, team, team_room):
         team_rooms_list = list(api.rooms.list(teamId=team.id))
         assert len(team_rooms_list) > 0
         assert are_valid_rooms(team_rooms_list)
 
-    @pytest.mark.usefixtures("direct_rooms")
-    def test_list_direct_rooms(self, api):
+    def test_list_direct_rooms(self, api, direct_rooms):
         direct_rooms_list = list(api.rooms.list(type='direct'))
         assert len(direct_rooms_list) > 0
         assert are_valid_rooms(direct_rooms_list)
 
-    @pytest.mark.usefixtures("group_room", "team_room", "direct_rooms")
-    def test_list_all_rooms(self, rooms_list):
+    def test_list_all_rooms(self, rooms_list, group_room, team_room,
+                            direct_rooms):
         assert len(rooms_list) > 0
         assert are_valid_rooms(rooms_list)
 
-    @pytest.mark.usefixtures("group_room", "team_room", "direct_rooms")
-    def test_list_all_rooms_with_paging(self, api, rooms_list, add_rooms):
+    def test_list_rooms_with_paging(self, api, rooms_list, add_rooms,
+                                    group_room, team_room, direct_rooms):
         page_size = 2
         pages = 3
         num_rooms = pages * page_size
@@ -145,5 +141,5 @@ class TestRoomsAPI(object):
             add_rooms(num_rooms - len(rooms_list))
         rooms = api.rooms.list(max=page_size)
         rooms_list = list(itertools.islice(rooms, num_rooms))
-        assert len(rooms_list) == 6
+        assert len(rooms_list) == num_rooms
         assert are_valid_rooms(rooms_list)
