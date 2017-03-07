@@ -220,7 +220,7 @@ class PeopleAPI(object):
 
         """
         # Process args
-        assert isinstance(emails, string_types) and len(emails) == 1
+        assert isinstance(emails, list) and len(emails) == 1
         post_data = {}
         post_data['emails'] = emails
         post_data.update(person_attributes)
