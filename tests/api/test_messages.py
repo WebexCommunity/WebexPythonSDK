@@ -28,41 +28,24 @@ def delete_messages(api, messages):
 # pytest Fixtures
 
 @pytest.fixture(scope="session")
-def direct_message_person_1(api, get_new_email_address):
-    message = send_direct_message_to_email(api, get_new_email_address())
-    yield message
-    delete_message(api, message)
+def direct_messages(api, additional_group_room_memberships, test_people):
+    # Using additional_group_room_memberships to ensure some test_people
+    # have been created
+    direct_messages = []
+    for person in test_people:
+        message = send_direct_message_to_email(api, person.emails[0])
+        direct_messages.append(message)
 
+    yield direct_messages
 
-@pytest.fixture(scope="session")
-def direct_message_person_2(api, get_new_email_address):
-    message = send_direct_message_to_email(api, get_new_email_address())
-    yield message
-    delete_message(api, message)
+    for message in direct_messages:
+        delete_message(api, message)
 
-
-@pytest.fixture(scope="session")
-def direct_message_person_3(api, get_new_email_address):
-    message = send_direct_message_to_email(api, get_new_email_address())
-    yield message
-    delete_message(api, message)
-
-
-@pytest.fixture(scope="session")
-def direct_message_person_4(api, get_new_email_address):
-    message = send_direct_message_to_email(api, get_new_email_address())
-    yield message
-    delete_message(api, message)
-
-
-@pytest.fixture(scope="session")
-def direct_messages(direct_message_person_1, direct_message_person_2,
-                    direct_message_person_3, direct_message_person_4):
-    return [direct_message_person_1, direct_message_person_2,
-            direct_message_person_3, direct_message_person_4]
 
 @pytest.fixture(scope="session")
 def send_direct_message(api):
+
     def inner_function(email_address, message=None):
         send_direct_message_to_email(api, email_address, message=message)
+
     return inner_function

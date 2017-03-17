@@ -37,6 +37,10 @@ def create_person(api, emails, **person_attributes):
     return api.people.create(emails, **person_attributes)
 
 
+def delete_person(api, person):
+    api.people.delete(person.id)
+
+
 def get_new_test_person(api, get_new_email_address, licenses_dict):
     person_email = get_new_email_address()
     person = get_person_by_email(api, person_email)
@@ -44,7 +48,7 @@ def get_new_test_person(api, get_new_email_address, licenses_dict):
         return person
     else:
         emails = [person_email]
-        display_name = person_email
+        display_name = "ciscosparkapi"
         first_name = "ciscosparkapi"
         last_name = "ciscosparkapi"
         licenses = [licenses_dict["Messaging"].id]
@@ -57,38 +61,62 @@ def get_new_test_person(api, get_new_email_address, licenses_dict):
         return person
 
 
+# Helper Classes
+
+class TestPeople(object):
+    """Creates, tracks and manages test accounts 'people' used by the tests."""
+
+    def __init__(self, api, get_new_email_address, licenses_dict):
+        super(object, TestPeople).__init__()
+        self._api = api
+        self._get_new_email_address = get_new_email_address
+        self._licenses_dict = licenses_dict
+        self.test_people = {}
+
+    def __getitem__(self, item):
+        if self.test_people.get(item):
+            return self.test_people[item]
+        else:
+            new_test_person = get_new_test_person(self._api,
+                                                  self._get_new_email_address,
+                                                  self._licenses_dict)
+            self.test_people[item] = new_test_person
+            return new_test_person
+
+    def list(self):
+        return self.test_people.values()
+
+    def __iter__(self):
+        return iter(self.list())
+
+    def __del__(self):
+        for person in self.test_people.values():
+            delete_person(self._api, person)
+        super(object, TestPeople).__del__()
+
+
 # pytest Fixtures
 
 @pytest.fixture(scope="session")
 def me(api):
     return api.people.me()
 
-@pytest.fixture(scope="session")
-def person_1(api, get_new_email_address, licenses_dict):
-    return get_new_test_person(api, get_new_email_address, licenses_dict)
-
 
 @pytest.fixture(scope="session")
-def person_2(api, get_new_email_address, licenses_dict):
-    return get_new_test_person(api, get_new_email_address, licenses_dict)
-
-
-@pytest.fixture(scope="session")
-def person_3(api, get_new_email_address, licenses_dict):
-    return get_new_test_person(api, get_new_email_address, licenses_dict)
-
-
-@pytest.fixture(scope="session")
-def person_4(api, get_new_email_address, licenses_dict):
-    return get_new_test_person(api, get_new_email_address, licenses_dict)
+def test_people(api, get_new_email_address, licenses_dict):
+    test_people = TestPeople()
+    yield test_people
+    del(test_people)
 
 
 @pytest.fixture()
 def temp_person(api, get_new_email_address, licenses_dict):
-    return get_new_test_person(api, get_new_email_address, licenses_dict)
+    person =  get_new_test_person(api, get_new_email_address, licenses_dict)
+    yield person
+    delete_person(api, person)
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture()
 def people_in_group_room(api, group_room_memberships):
     return [get_person_by_id(api, membership.personId)
             for membership in group_room_memberships]
