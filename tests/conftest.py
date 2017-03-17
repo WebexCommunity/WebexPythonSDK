@@ -45,6 +45,24 @@ def new_email_generator():
 
 # pytest Fixtures
 
+@pytest.fixture("session")
+def temp_directory():
+    directory_abs_path = tempfile.mkdtemp()
+
+    yield directory_abs_path
+
+    os.rmdir(directory_abs_path)
+
+
+@pytest.fixture("session")
+def local_file(temp_directory):
+        file = download_file(TEST_FILE_URL, temp_directory)
+
+        yield file
+
+        os.remove(file)
+
+
 @pytest.fixture(scope="session")
 def get_new_email_address():
     generator = new_email_generator()
