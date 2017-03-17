@@ -38,6 +38,13 @@ def get_room_membership_list(api, room, **kwargs):
     return list(api.memberships.list(roomId=room.id, **kwargs))
 
 
+def get_my_membership(api, room, me):
+    memberships = get_room_membership_list(api, room, personId=me.id)
+    assert len(memberships) == 1
+    membership = memberships[0]
+    return membership
+
+
 def get_membership_by_id(api, id):
     return api.memberships.get(id)
 
@@ -79,26 +86,19 @@ def membership_exists(api, membership):
 
 # pytest Fixtures
 
-@pytest.fixture()
-def my_group_room_membership(api, me, group_room):
-    memberships = get_room_membership_list(api, group_room, personId=me.id)
-    assert len(memberships) == 1
-    membership = memberships[0]
-    return membership
-
-
 @pytest.fixture(scope="session")
 def authenticated_user_memberships(api, group_room, team_room, direct_rooms):
     return list(api.memberships.list())
 
 
 @pytest.fixture(scope="session")
-def make_me_group_room_moderator(api, my_group_room_membership):
-    return make_moderator(api, my_group_room_membership)
+def me_group_room_moderator(api, group_room, me):
+    membership_id = get_my_membership(api, group_room, me)
+    return make_moderator(api, membership_id)
 
 
 @pytest.fixture(scope="session")
-def group_room_member_added_by_email(api, make_me_group_room_moderator,
+def group_room_member_added_by_email(api, me_group_room_moderator,
                                      group_room, test_people):
     person = test_people["member_added_by_email"]
     membership = add_person_to_room_by_email(api, group_room, person)
@@ -109,7 +109,7 @@ def group_room_member_added_by_email(api, make_me_group_room_moderator,
 
 
 @pytest.fixture(scope="session")
-def group_room_member_added_by_id(api, make_me_group_room_moderator,
+def group_room_member_added_by_id(api, me_group_room_moderator,
                                   group_room, test_people):
     person = test_people["member_added_by_id"]
     membership = add_person_to_room_by_id(api, group_room, person)
@@ -120,7 +120,7 @@ def group_room_member_added_by_id(api, make_me_group_room_moderator,
 
 
 @pytest.fixture(scope="session")
-def group_room_moderator_added_by_email(api, make_me_group_room_moderator,
+def group_room_moderator_added_by_email(api, me_group_room_moderator,
                                         group_room, test_people):
     person = test_people["moderator_added_by_email"]
     membership = add_person_to_room_by_email(api, group_room, person,
@@ -132,7 +132,7 @@ def group_room_moderator_added_by_email(api, make_me_group_room_moderator,
 
 
 @pytest.fixture(scope="session")
-def group_room_moderator_added_by_id(api, make_me_group_room_moderator,
+def group_room_moderator_added_by_id(api, me_group_room_moderator,
                                      group_room, test_people):
     person = test_people["moderator_added_by_id"]
     membership = add_person_to_room_by_id(api, group_room, person,
@@ -164,8 +164,9 @@ def group_room_with_members(group_room, additional_group_room_memberships):
 class TestMembershipsAPI(object):
     """Test MembershipsAPI methods."""
 
-    def test_get_membership_details(self, api, my_group_room_membership):
-        membership = get_membership_by_id(api, my_group_room_membership.id)
+    def test_get_membership_details(self, api, me_group_room_moderator):
+        membership_id = me_group_room_moderator.id
+        membership = get_membership_by_id(api, membership_id)
         assert is_valid_membership(membership)
 
     def test_list_user_memberships(self, authenticated_user_memberships):
@@ -201,9 +202,9 @@ class TestMembershipsAPI(object):
         assert is_valid_membership(group_room_moderator_added_by_id)
 
     def test_update_membership_make_moderator(self,
-                                              make_me_group_room_moderator):
-        assert is_valid_membership(make_me_group_room_moderator)
-        assert make_me_group_room_moderator.isModerator
+                                              me_group_room_moderator):
+        assert is_valid_membership(me_group_room_moderator)
+        assert me_group_room_moderator.isModerator
 
     def test_delete_membership(self, api, group_room, test_people):
         person = test_people["not_a_member"]
