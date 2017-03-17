@@ -151,7 +151,7 @@ def group_room_with_members(group_room, additional_group_room_memberships):
     return group_room
 
 
-# Room Tests
+# Tests
 
 class TestMembershipsAPI(object):
     """Test MembershipsAPI methods."""

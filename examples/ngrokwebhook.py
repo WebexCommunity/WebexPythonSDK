@@ -19,8 +19,7 @@ def findwebhookidbyname(api, webhookname):
     for wh in webhooks:
         if wh.name == webhookname:
             return wh.id
-        else:
-            return "not found"
+    return "not found"
 
 #Webhook attributes
 webhookname="testwebhook"

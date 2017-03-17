@@ -197,18 +197,18 @@ class PeopleAPI(object):
                 single email address for a person. The list data type was
                 selected to enable future support for providing multiple email
                 address.
-            **person_attributes:
-                displayName(string_types): Full name of the person
-                firstName(string_types): First name of the person
-                lastName(string_types): Last name of the person
-                avatar(string_types): URL to the person's avatar in PNG format
-                orgId(string_types): ID of the organization to which this
-                    person belongs
-                roles(list): Roles of the person (list of strings containing
-                    the role IDs to be assigned to the person)
-                licenses(list): Licenses allocated to the person (list of
-                    strings containing the license IDs to be allocated to the
-                    person)
+            **person_attributes
+            displayName(string_types): Full name of the person
+            firstName(string_types): First name of the person
+            lastName(string_types): Last name of the person
+            avatar(string_types): URL to the person's avatar in PNG format
+            orgId(string_types): ID of the organization to which this
+                person belongs
+            roles(list): Roles of the person (list of strings containing
+                the role IDs to be assigned to the person)
+            licenses(list): Licenses allocated to the person (list of
+                strings containing the license IDs to be allocated to the
+                person)
 
         Returns:
             Person: With the details of the created person.
@@ -238,23 +238,23 @@ class PeopleAPI(object):
 
         Args:
             personId(string_types): The ID of the person to be updated.
-            **person_attributes:
-                emails(list): Email address(es) of the person. (list of
-                    strings) CURRENT LIMITATION: Spark (today) only allows you
-                    to provide a single email address for a person. The list
-                    data type was selected to enable future support for
-                    providing multiple email address.
-                displayName(string_types): Full name of the person
-                firstName(string_types): First name of the person
-                lastName(string_types): Last name of the person
-                avatar(string_types): URL to the person's avatar in PNG format
-                orgId(string_types): ID of the organization to which this
-                    person belongs
-                roles(list): Roles of the person (list of strings containing
-                    the role IDs to be assigned to the person)
-                licenses(list): Licenses allocated to the person (list of
-                    strings containing the license IDs to be allocated to the
-                    person)
+            **person_attributes
+            emails(list): Email address(es) of the person. (list of
+                strings) CURRENT LIMITATION: Spark (today) only allows you
+                to provide a single email address for a person. The list
+                data type was selected to enable future support for
+                providing multiple email address.
+            displayName(string_types): Full name of the person
+            firstName(string_types): First name of the person
+            lastName(string_types): Last name of the person
+            avatar(string_types): URL to the person's avatar in PNG format
+            orgId(string_types): ID of the organization to which this
+                person belongs
+            roles(list): Roles of the person (list of strings containing
+                the role IDs to be assigned to the person)
+            licenses(list): Licenses allocated to the person (list of
+                strings containing the license IDs to be allocated to the
+                person)
 
         Returns:
             Person: With the updated person details.

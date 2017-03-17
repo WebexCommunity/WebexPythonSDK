@@ -63,7 +63,6 @@ def get_new_test_person(api, get_new_email_address, licenses_dict):
 def me(api):
     return api.people.me()
 
-
 @pytest.fixture(scope="session")
 def person_1(api, get_new_email_address, licenses_dict):
     return get_new_test_person(api, get_new_email_address, licenses_dict)
@@ -93,4 +92,3 @@ def temp_person(api, get_new_email_address, licenses_dict):
 def people_in_group_room(api, group_room_memberships):
     return [get_person_by_id(api, membership.personId)
             for membership in group_room_memberships]
-

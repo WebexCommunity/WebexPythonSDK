@@ -1,10 +1,23 @@
 # -*- coding: utf-8 -*-
+<<<<<<< HEAD
 """pytest configuration and top-level fixtures."""
 
 
 import string
 
 import pytest
+=======
+
+"""pytest configuration and top-level fixtures."""
+
+import pytest
+
+
+EMAIL_ADDRESSES = [
+    'test98@cmlccie.com',
+    'test99@cmlccie.com',
+]
+>>>>>>> master
 
 
 pytest_plugins = [
