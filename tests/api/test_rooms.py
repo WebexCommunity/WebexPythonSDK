@@ -44,8 +44,10 @@ def room_exists(api, room):
 # pytest Fixtures
 
 @pytest.fixture(scope="session")
-def rooms_list(api):
-    return list(api.rooms.list())
+def group_room(api):
+    room = create_room(api, create_string("Room"))
+    yield room
+    delete_room(api, room)
 
 
 @pytest.fixture(scope="session")
@@ -54,17 +56,15 @@ def direct_rooms(api, direct_messages):
 
 
 @pytest.fixture(scope="session")
-def group_room(api):
-    room = create_room(api, create_string("Room"))
-    yield room
-    delete_room(api, room)
-
-
-@pytest.fixture(scope="session")
 def team_room(api, team):
     team_room = create_team_room(api, team, create_string("Team Room"))
     yield team_room
     delete_room(api, team_room)
+
+
+@pytest.fixture(scope="session")
+def rooms_list(api, group_room, direct_rooms, team_room):
+    return list(api.rooms.list())
 
 
 @pytest.fixture
@@ -87,7 +87,7 @@ def add_rooms(api):
         delete_room(api, room)
 
 
-# Room Tests
+# Tests
 
 class TestRoomsAPI(object):
     """Test RoomsAPI methods."""
@@ -127,13 +127,11 @@ class TestRoomsAPI(object):
         assert len(direct_rooms_list) > 0
         assert are_valid_rooms(direct_rooms_list)
 
-    def test_list_all_rooms(self, rooms_list, group_room, team_room,
-                            direct_rooms):
+    def test_list_all_rooms(self, rooms_list):
         assert len(rooms_list) > 0
         assert are_valid_rooms(rooms_list)
 
-    def test_list_rooms_with_paging(self, api, rooms_list, add_rooms,
-                                    group_room, team_room, direct_rooms):
+    def test_list_rooms_with_paging(self, api, rooms_list, add_rooms):
         page_size = 2
         pages = 3
         num_rooms = pages * page_size
