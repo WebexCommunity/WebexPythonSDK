@@ -2,9 +2,13 @@
 """pytest configuration and top-level fixtures."""
 
 
+import os
 import string
+import tempfile
 
 import pytest
+
+from tests.utils import download_file
 
 
 pytest_plugins = [
@@ -24,13 +28,15 @@ pytest_plugins = [
 
 
 TEST_DOMAIN = "cmlccie.com"
+TEST_FILE_URL = "https://developer.ciscospark.com/images/logo_spark_lg@256.png"
+
 
 email_template = string.Template("test${number}@" + TEST_DOMAIN)
 
 
 # Helper Functions
 def new_email_generator():
-    i = 0
+    i = 50
     while True:
         email_address = email_template.substitute(number=i)
         i += 1

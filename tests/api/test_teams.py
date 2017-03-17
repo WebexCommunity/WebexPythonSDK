@@ -17,7 +17,7 @@ def create_team(api, name):
     return api.teams.create(name)
 
 
-def get_team_details_by_id(self, api, team_id):
+def get_team_details_by_id(api, team_id):
     team = api.teams.get(team_id)
     return team
 
@@ -92,7 +92,7 @@ class TestTeamsAPI(object):
         assert is_valid_team(team)
 
     def test_get_team_details(self, api, team):
-        team = get_team_details_by_id(team.id)
+        team = get_team_details_by_id(api, team.id)
         assert is_valid_team(team)
 
     def test_update_team_name(self, api, team):
@@ -105,7 +105,7 @@ class TestTeamsAPI(object):
         api.teams.delete(temp_team.id)
         assert not team_exists(api, temp_team)
 
-    def test_list_teams(self, api, teams_list):
+    def test_list_teams(self, teams_list):
         assert len(teams_list) > 0
         assert are_valid_teams(teams_list)
 

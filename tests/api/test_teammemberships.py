@@ -48,13 +48,13 @@ def empty_team(api, me, team):
             delete_membership(api, membership)
 
 
-def is_valid_membership(membership):
+def is_valid_team_membership(membership):
     return isinstance(membership, ciscosparkapi.TeamMembership) \
            and membership.id is not None
 
 
-def are_valid_memberships(iterable):
-    are_valid = (is_valid_membership(item) for item in iterable)
+def are_valid_team_memberships(iterable):
+    are_valid = (is_valid_team_membership(item) for item in iterable)
     return all(are_valid)
 
 
@@ -69,17 +69,21 @@ def membership_exists(api, membership):
 
 # pytest Fixtures
 
-@pytest.fixture()
-def my_team_team_membership(api, me, team):
+@pytest.fixture(scope="session")
+def my_team_membership(api, me, team):
     team_memberships = get_team_membership_list(api, team)
     for membership in team_memberships:
         if membership.personId == me.id:
             return membership
 
-
-@pytest.fixture(scope="session")
-def authenticated_user_team_memberships(api, team):
-    return list(api.team_memberships.list())
+# Cisco Spark API Documentation says that you should be able to retrieve a list
+# of all of your team memberships; however, calling the API endpoint without
+# specifying a teamId returns an error (and the docs say that a teamId is
+# required).  #DocumentationBug
+# TODO: Report documentation / API bug on retrieving a user's team memberships
+# @pytest.fixture(scope="session")
+# def authenticated_user_team_memberships(api, team):
+#     return list(api.team_memberships.list())
 
 
 @pytest.fixture(scope="session")
@@ -173,33 +177,33 @@ class TestTeamMembershipsAPI(object):
         assert are_valid_memberships(memberships_list)
 
     def test_create_team_membership_by_email(self, team_member_added_by_email):
-        assert is_valid_membership(team_member_added_by_email)
+        assert is_valid_team_membership(team_member_added_by_email)
 
     def test_create_team_membership_by_person_id(self,
                                                  team_member_added_by_id):
-        assert is_valid_membership(team_member_added_by_id)
+        assert is_valid_team_membership(team_member_added_by_id)
 
     def test_create_team_moderator_by_email(self,
                                             team_moderator_added_by_email):
-        assert is_valid_membership(team_moderator_added_by_email)
+        assert is_valid_team_membership(team_moderator_added_by_email)
 
     def test_create_team_moderator_by_person_id(self,
                                                 team_moderator_added_by_id):
-        assert is_valid_membership(team_moderator_added_by_id)
+        assert is_valid_team_membership(team_moderator_added_by_id)
 
     def test_update_membership_make_moderator(self,
                                               make_me_team_moderator):
-        assert is_valid_membership(make_me_team_moderator)
+        assert is_valid_team_membership(make_me_team_moderator)
         assert make_me_team_moderator.isModerator
 
     def test_delete_membership(self, api, team, test_people):
         person = test_people["not_a_member"]
         membership = add_person_to_team_by_id(api, team, person)
-        assert is_valid_membership(membership)
+        assert is_valid_team_membership(membership)
         delete_membership(api, membership)
         assert not membership_exists(api, membership)
 
     def test_list_team_memberships(self, api, team_with_members):
         team_memberships = get_team_membership_list(api, team_with_members)
         assert len(team_memberships) > 1
-        assert are_valid_memberships(team_memberships)
+        assert are_valid_team_memberships(team_memberships)

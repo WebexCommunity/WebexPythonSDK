@@ -8,6 +8,7 @@ import itertools
 import pytest
 
 import ciscosparkapi
+from tests.conftest import TEST_FILE_URL
 
 
 # Helper Functions
@@ -77,7 +78,7 @@ class TestPeople(object):
     """Creates, tracks and manages test accounts 'people' used by the tests."""
 
     def __init__(self, api, get_new_email_address, licenses_dict):
-        super(object, TestPeople).__init__()
+        super(TestPeople, self).__init__()
         self._api = api
         self._get_new_email_address = get_new_email_address
         self._licenses_dict = licenses_dict
@@ -106,7 +107,7 @@ class TestPeople(object):
     def __del__(self):
         for person in self.test_people.values():
             delete_person(self._api, person)
-        super(object, TestPeople).__del__()
+            pass
 
 
 # pytest Fixtures
@@ -183,7 +184,7 @@ class TestPeopleAPI(object):
         page_size = 1
         pages = 3
         num_people = pages * page_size
-        assert len(test_people) >= num_people
+        assert test_people.len() >= num_people
         display_name = test_people["not_a_member"].displayName
         people = api.people.list(displayName=display_name, max=page_size)
         people_list = list(itertools.islice(people, num_people))
