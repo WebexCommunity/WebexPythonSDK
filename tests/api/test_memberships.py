@@ -205,8 +205,9 @@ class TestMembershipsAPI(object):
         assert is_valid_membership(make_me_group_room_moderator)
         assert make_me_group_room_moderator.isModerator
 
-    def test_delete_membership(self, api, group_room, temp_person):
-        membership = add_person_to_room_by_id(api, group_room, temp_person)
+    def test_delete_membership(self, api, group_room, test_people):
+        person = test_people["delete_membership_test_person"]
+        membership = add_person_to_room_by_id(api, group_room, person)
         assert is_valid_membership(membership)
         delete_membership(api, membership)
         assert not membership_exists(api, membership)
