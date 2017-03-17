@@ -173,8 +173,8 @@ class TestMembershipsAPI(object):
         assert are_valid_memberships(authenticated_user_memberships)
 
     def test_list_user_memberships_with_paging(self, api, add_rooms,
-        page_size = 2
                                                authenticated_user_memberships):
+        page_size = 1
         pages = 3
         num_memberships = pages * page_size
         if len(authenticated_user_memberships) < num_memberships:
