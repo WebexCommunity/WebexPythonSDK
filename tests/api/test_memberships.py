@@ -100,38 +100,46 @@ def make_me_group_room_moderator(api, my_group_room_membership):
 @pytest.fixture(scope="session")
 def group_room_member_added_by_email(api, make_me_group_room_moderator,
                                      group_room, test_people):
-    person = test_people["group_room_member_added_by_email"]
+    person = test_people["member_added_by_email"]
     membership = add_person_to_room_by_email(api, group_room, person)
+
     yield membership
+
     delete_membership(api, membership)
 
 
 @pytest.fixture(scope="session")
 def group_room_member_added_by_id(api, make_me_group_room_moderator,
                                   group_room, test_people):
-    person = test_people["group_room_member_added_by_id"]
+    person = test_people["member_added_by_id"]
     membership = add_person_to_room_by_id(api, group_room, person)
+
     yield membership
+
     delete_membership(api, membership)
 
 
 @pytest.fixture(scope="session")
 def group_room_moderator_added_by_email(api, make_me_group_room_moderator,
                                         group_room, test_people):
-    person = test_people["group_room_moderator_added_by_email"]
+    person = test_people["moderator_added_by_email"]
     membership = add_person_to_room_by_email(api, group_room, person,
                                              isModerator=True)
+
     yield membership
+
     delete_membership(api, membership)
 
 
 @pytest.fixture(scope="session")
 def group_room_moderator_added_by_id(api, make_me_group_room_moderator,
                                      group_room, test_people):
-    person = test_people["group_room_moderator_added_by_id"]
+    person = test_people["moderator_added_by_id"]
     membership = add_person_to_room_by_id(api, group_room, person,
                                           isModerator=True)
+
     yield membership
+
     delete_membership(api, membership)
 
 
@@ -213,7 +221,7 @@ class TestMembershipsAPI(object):
 
     def test_filter_room_memberships_by_personEmail(self, api, test_people,
                                                     group_room_with_members):
-        email = test_people["group_room_member_added_by_email"].emails[0]
+        email = test_people["member_added_by_email"].emails[0]
         memberships = get_room_membership_list(api, group_room_with_members,
                                                personEmail=email)
         assert len(memberships) == 1
@@ -223,7 +231,7 @@ class TestMembershipsAPI(object):
 
     def test_filter_room_memberships_by_personId(self, api, test_people,
                                                  group_room_with_members):
-        id = test_people["group_room_member_added_by_id"].id
+        id = test_people["member_added_by_id"].id
         memberships = get_room_membership_list(api, group_room_with_members,
                                                personId=id)
         assert len(memberships) == 1
