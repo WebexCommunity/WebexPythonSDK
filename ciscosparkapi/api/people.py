@@ -302,6 +302,24 @@ class PeopleAPI(object):
         # Return a Person object created from the response JSON data
         return Person(json_obj)
 
+    def delete(self, personId):
+        """Remove a person from the system.
+
+        Only an admin can remove a person.
+
+        Args:
+            personId(string_types): The personID of the person.
+
+        Raises:
+            AssertionError: If the parameter types are incorrect.
+            SparkApiError: If the Cisco Spark cloud returns an error.
+
+        """
+        # Process args
+        assert isinstance(personId, string_types)
+        # API request
+        self._session.delete('people/' + personId)
+
     def me(self):
         """Get the person details of the account accessing the API 'me'.
 
