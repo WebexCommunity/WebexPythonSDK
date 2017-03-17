@@ -78,11 +78,14 @@ def temp_group_room(api):
 @pytest.fixture
 def add_rooms(api):
     rooms = []
+
     def inner(num_rooms):
         for i in range(num_rooms):
             rooms.append(create_room(api, create_string("Additional Room")))
         return rooms
+
     yield inner
+
     for room in rooms:
         delete_room(api, room)
 
@@ -132,7 +135,7 @@ class TestRoomsAPI(object):
         assert are_valid_rooms(rooms_list)
 
     def test_list_rooms_with_paging(self, api, rooms_list, add_rooms):
-        page_size = 2
+        page_size = 1
         pages = 3
         num_rooms = pages * page_size
         if len(rooms_list) < num_rooms:
