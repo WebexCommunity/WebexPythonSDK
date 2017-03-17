@@ -193,7 +193,7 @@ class TestTeamMembershipsAPI(object):
         assert make_me_team_moderator.isModerator
 
     def test_delete_membership(self, api, team, test_people):
-        person = test_people["delete_membership_test_person"]
+        person = test_people["not_a_member"]
         membership = add_person_to_team_by_id(api, team, person)
         assert is_valid_membership(membership)
         delete_membership(api, membership)
