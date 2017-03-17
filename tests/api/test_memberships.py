@@ -51,7 +51,7 @@ def delete_membership(api, membership):
 
 
 def empty_room(api, me, room):
-    """Remove all memberships from a room (except the caller's membership)."""
+    """Remove all memberships from a room (except me)."""
     memberships = api.memberships.list(room.id)
     for membership in memberships:
         if membership.personId != me.id:
@@ -88,7 +88,7 @@ def my_group_room_membership(api, me, group_room):
 
 
 @pytest.fixture(scope="session")
-def authenticated_user_memberships(api):
+def authenticated_user_memberships(api, group_room, team_room, direct_rooms):
     return list(api.memberships.list())
 
 
@@ -168,16 +168,13 @@ class TestMembershipsAPI(object):
         membership = get_membership_by_id(api, my_group_room_membership.id)
         assert is_valid_membership(membership)
 
-    def test_list_user_memberships(self, group_room, team_room, direct_rooms,
-                                   authenticated_user_memberships):
+    def test_list_user_memberships(self, authenticated_user_memberships):
         assert len(authenticated_user_memberships) >= 3
         assert are_valid_memberships(authenticated_user_memberships)
 
     def test_list_user_memberships_with_paging(self, api, add_rooms,
-                                               authenticated_user_memberships,
-                                               group_room, team_room,
-                                               direct_rooms):
         page_size = 2
+                                               authenticated_user_memberships):
         pages = 3
         num_memberships = pages * page_size
         if len(authenticated_user_memberships) < num_memberships:
