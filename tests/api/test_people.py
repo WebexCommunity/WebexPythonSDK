@@ -49,7 +49,11 @@ def update_person(api, person, **person_attributes):
 
 
 def delete_person(api, person):
-    api.people.delete(person.id)
+    # Temporarily disabling test account deletion to workon account
+    # capabilities issues.
+    # TODO: Enable test account clean-up.
+    # api.people.delete(person.id)
+    pass
 
 
 def get_new_test_person(api, get_new_email_address, licenses_dict):
