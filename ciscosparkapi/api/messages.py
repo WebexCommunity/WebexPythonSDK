@@ -161,8 +161,7 @@ class MessagesAPI(object):
         """
         # Process args
         assert isinstance(roomId, string_types)
-        assert mentionedPeople is None or \
-               isinstance(mentionedPeople, string_types)
+        assert mentionedPeople is None or isinstance(mentionedPeople, list)
         assert before is None or isinstance(before, string_types)
         assert beforeMessage is None or isinstance(beforeMessage, string_types)
         assert max is None or isinstance(max, int)
