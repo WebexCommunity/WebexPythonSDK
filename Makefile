@@ -8,6 +8,7 @@ build : tests docs buildpackage ;
 buildpackage : setup.py
 	python setup.py sdist
 
+.PHONY : docs
 docs : docs/Makefile
 	cd docs/
 	make html
