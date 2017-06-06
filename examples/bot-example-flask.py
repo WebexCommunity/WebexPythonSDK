@@ -2,11 +2,11 @@
 #  -*- coding: utf-8 -*-
 """A simple bot script, built on Flask.
 
-This sample script leverages the Flask web service micro-framework 
-(see http://flask.pocoo.org/).  By default the web server will be reachable at 
-port 5000 you can change this default if desired (see `flask_app.run(...)`).  
+This sample script leverages the Flask web service micro-framework
+(see http://flask.pocoo.org/).  By default the web server will be reachable at
+port 5000 you can change this default if desired (see `flask_app.run(...)`).
 
-ngrok (https://ngrok.com/) can be used to tunnel traffic back to your server 
+ngrok (https://ngrok.com/) can be used to tunnel traffic back to your server
 if your machine sits behind a firewall.
 
 You must create a Spark webhook that points to the URL where this script is
@@ -88,7 +88,7 @@ def sparkwebhook():
     elif request.method == 'POST':
         """Respond to inbound webhook JSON HTTP POST from Cisco Spark."""
 
-        json_data = request.data                                               # Get the POST data sent from Cisco Spark
+        json_data = request.json                                               # Get the POST data sent from Cisco Spark
         print("\n")
         print("WEBHOOK POST RECEIVED:")
         print(json_data)
