@@ -37,7 +37,7 @@ log = logging.getLogger(__name__)
 
 
 # Module constants
-CHUCK_NORRIS_JOKES_URL = 'http://api.icndb.com/jokes/random'
+CAT_FACT_URL = 'http://catfacts-api.appspot.com/api/facts?number=1'
 
 
 # Initialize the environment
@@ -45,14 +45,14 @@ spark_api = CiscoSparkAPI()             # Create the Cisco Spark API connection 
 
 
 # Helper functions
-def get_chuck_norris_joke():
-    """Get a Chuck Norris Joke from api.icndb.com and return it as a string.
+def get_catfact():
+    """Get a cat fact from catfacts-api.appspot.com and return it as a string.
     Functions for Soundhound, Google, IBM Watson, or other APIs can be added
     to create the desired functionality into this bot.
     """
-    response = requests.get(CHUCK_NORRIS_JOKES_URL, verify=False)
+    response = requests.get(CAT_FACT_URL, verify=False)
     response_dict = json.loads(response.text)
-    return response_dict['value']['joke']
+    return response_dict['facts'][0]
 
 
 sparkwebhook = Service(name='sparkwebhook', path='/sparkwebhook', description="Spark Webhook")
@@ -60,11 +60,11 @@ sparkwebhook = Service(name='sparkwebhook', path='/sparkwebhook', description="S
 
 @sparkwebhook.get()
 def get_sparkwebhook(request):
-    log.info(get_chuck_norris_joke())
-    return {"joke": get_chuck_norris_joke()}
+    log.info(get_catfact())
+    return {"fact": get_catfact()}
 
 @sparkwebhook.post()
-# Your Spark webhook should point to http://<serverip>:5000/sparkwebhook
+# Your Spark webhook should point to http://<serverip>:6543/sparkwebhook
 def post_sparkwebhook(request):
     """Respond to inbound webhook JSON HTTP POST from Cisco Spark."""
 
@@ -93,10 +93,10 @@ def post_sparkwebhook(request):
 
     else:
         # Message was sent by someone else; parse message and respond.
-        if "/CHUCKNORRIS" in message.text:
-            log.info("FOUND '/CHUCKNORRIS'")
-            chuck_norris_joke = get_chuck_norris_joke()                                       # Get a Chuck Norris Joke
-            log.info("SENDING CHUCK NORRIS JOKE '{}'".format(chuck_norris_joke))
-            spark_api.messages.create(room.id, text=chuck_norris_joke)              # Post the fact to the room where the request was received
+        if "/CAT" in message.text:
+            log.info("FOUND '/CAT'")
+            catfact = get_catfact()                                       # Get a cat fact
+            log.info("SENDING CAT FACT'{}'".format(catfact))
+            spark_api.messages.create(room.id, text=catfact)              # Post the fact to the room where the request was received
         return {'Message': 'OK'}
 
