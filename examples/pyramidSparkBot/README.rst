@@ -28,7 +28,5 @@ Running the bot
 
 In order to execute the bot, you need to
 
-``
-python setup.py develop
-pserve --reload pyramidSparkBot
-``
+``python setup.py develop``
+``pserve --reload pyramidSparkBot``
