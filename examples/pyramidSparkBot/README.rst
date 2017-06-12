@@ -23,11 +23,12 @@ script.
 
 This script supports Python versions 2 and 3.
 
-# Running the bot
+Running the bot
+-------------------
 
 In order to execute the bot, you need to
 
-```
+``
 python setup.py develop
 pserve --reload pyramidSparkBot
-```
+``
