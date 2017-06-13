@@ -131,9 +131,7 @@ class PeopleAPI(object):
 
     @generator_container
     def list(self, email=None, displayName=None, max=None):
-        """List people by email or displayName.
-
-        An email address or displayName must be provided.
+        """List people
 
         This method supports Cisco Spark's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
@@ -158,8 +156,6 @@ class PeopleAPI(object):
 
         Raises:
             AssertionError: If the parameter types are incorrect.
-            ciscosparkapiException: If neither an email or displayName argument
-                is specified.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
@@ -172,10 +168,6 @@ class PeopleAPI(object):
             params['email'] = email
         elif displayName:
             params['displayName'] = displayName
-        else:
-            error_message = "An email or displayName argument must be " \
-                            "specified."
-            raise ciscosparkapiException(error_message)
         if max:
             params['max'] = max
         # API request - get items
