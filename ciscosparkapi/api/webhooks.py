@@ -9,8 +9,14 @@ Classes:
 """
 
 
-from builtins import object
-from six import string_types
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
+from builtins import *
 
 from ciscosparkapi.exceptions import ciscosparkapiException
 from ciscosparkapi.utils import generator_container
@@ -31,7 +37,7 @@ class Webhook(SparkData):
         """Init a new Webhook data object from a JSON dictionary or string.
 
         Args:
-            json(dict, string_types): Input JSON object.
+            json(dict, str): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -163,13 +169,13 @@ class WebhooksAPI(object):
         """Create a webhook.
 
         Args:
-            name(string_types): A user-friendly name for this webhook.
-            targetUrl(string_types): The URL that receives POST requests for
+            name(str): A user-friendly name for this webhook.
+            targetUrl(str): The URL that receives POST requests for
                 each event.
-            resource(string_types): The resource type for the webhook.
-            event(string_types): The event type for the webhook.
-            filter(string_types): The filter that defines the webhook scope.
-            secret(string_types): secret used to generate payload signature.
+            resource(str): The resource type for the webhook.
+            event(str): The event type for the webhook.
+            filter(str): The filter that defines the webhook scope.
+            secret(str): secret used to generate payload signature.
 
         Returns:
             Webhook: With the details of the created webhook.
@@ -180,12 +186,12 @@ class WebhooksAPI(object):
 
         """
         # Process args
-        assert isinstance(name, string_types)
-        assert isinstance(targetUrl, string_types)
-        assert isinstance(resource, string_types)
-        assert isinstance(event, string_types)
-        assert filter is None or isinstance(filter, string_types)
-        assert secret is None or isinstance(secret, string_types)
+        assert isinstance(name, str)
+        assert isinstance(targetUrl, str)
+        assert isinstance(resource, str)
+        assert isinstance(event, str)
+        assert filter is None or isinstance(filter, str)
+        assert secret is None or isinstance(secret, str)
         post_data = {}
         post_data['name'] = name
         post_data['targetUrl'] = targetUrl
@@ -204,7 +210,7 @@ class WebhooksAPI(object):
         """Get the details of a webhook, by ID.
 
         Args:
-            webhookId(string_types): The webhookId of the webhook.
+            webhookId(str): The webhookId of the webhook.
 
         Returns:
             Webhook: With the details of the requested webhook.
@@ -215,7 +221,7 @@ class WebhooksAPI(object):
 
         """
         # Process args
-        assert isinstance(webhookId, string_types)
+        assert isinstance(webhookId, str)
         # API request
         json_obj = self._session.get('webhooks/' + webhookId)
         # Return a Webhook object created from the response JSON data
@@ -225,10 +231,10 @@ class WebhooksAPI(object):
         """Update details for a webhook.
 
         Args:
-            webhookId(string_types): The webhookId of the webhook to be
+            webhookId(str): The webhookId of the webhook to be
                 updated.
-            name(string_types): A user-friendly name for this webhook.
-            targetUrl(string_types): The URL that receives POST requests for
+            name(str): A user-friendly name for this webhook.
+            targetUrl(str): The URL that receives POST requests for
                 each event.
 
         Returns:
@@ -241,7 +247,7 @@ class WebhooksAPI(object):
 
         """
         # Process args
-        assert isinstance(webhookId, string_types)
+        assert isinstance(webhookId, str)
         # Process update_attributes keyword arguments
         if not update_attributes:
             error_message = "At least one **update_attributes keyword " \
@@ -257,7 +263,7 @@ class WebhooksAPI(object):
         """Delete a webhook.
 
         Args:
-            webhookId(string_types): The webhookId of the webhook to be
+            webhookId(str): The webhookId of the webhook to be
                 deleted.
 
         Raises:
@@ -266,6 +272,6 @@ class WebhooksAPI(object):
 
         """
         # Process args
-        assert isinstance(webhookId, string_types)
+        assert isinstance(webhookId, str)
         # API request
         self._session.delete('webhooks/' + webhookId)

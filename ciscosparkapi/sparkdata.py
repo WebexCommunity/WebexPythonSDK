@@ -24,8 +24,14 @@ Example:
 """
 
 
-from builtins import object
-from six import string_types
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
+from builtins import *
 
 import json as json_pkg
 
@@ -40,7 +46,7 @@ def _json_dict(json):
     """Given a JSON dictionary or string; return a dictionary.
 
     Args:
-        json(dict, string_types): Input JSON object.
+        json(dict, str): Input JSON object.
 
     Returns:
         A Python dictionary with the contents of the JSON object.
@@ -51,7 +57,7 @@ def _json_dict(json):
     """
     if isinstance(json, dict):
         return json
-    elif isinstance(json, string_types):
+    elif isinstance(json, str):
         return json_pkg.loads(json)
     else:
         error = "'json' must be a dictionary or JSON string; " \
@@ -66,7 +72,7 @@ class SparkData(object):
         """Init a new SparkData object from a JSON dictionary or string.
 
         Args:
-            json(dict, string_types): Input JSON object.
+            json(dict, str): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -88,7 +94,7 @@ class SparkData(object):
         the JSON object's attributes.
 
         Args:
-            item(string_types): Name of the Attribute being accessed.
+            item(str): Name of the Attribute being accessed.
 
         Raises:
             AttributeError:  If the JSON object does not contain the attribute

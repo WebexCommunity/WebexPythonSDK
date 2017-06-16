@@ -9,8 +9,14 @@ Classes:
 """
 
 
-from builtins import object
-from six import string_types
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
+from builtins import *
 
 from requests_toolbelt import MultipartEncoder
 
@@ -38,7 +44,7 @@ class Message(SparkData):
         """Init a new Message data object from a JSON dictionary or string.
 
         Args:
-            json(dict, string_types): Input JSON object.
+            json(dict, str): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -144,12 +150,12 @@ class MessagesAPI(object):
         container.
 
         Args:
-            roomId(string_types): List messages for the room with roomId.
-            mentionedPeople(string_types): List messages for a person, by
+            roomId(str): List messages for the room with roomId.
+            mentionedPeople(str): List messages for a person, by
                 personId or me.
-            before(string_types): List messages sent before a date and time,
+            before(str): List messages sent before a date and time,
                 in ISO8601 format
-            beforeMessage(string_types): List messages sent before a message,
+            beforeMessage(str): List messages sent before a message,
                 by message ID
             max(int): Limit the maximum number of messages returned from the
                 Spark service per request.
@@ -164,10 +170,10 @@ class MessagesAPI(object):
 
         """
         # Process args
-        assert isinstance(roomId, string_types)
+        assert isinstance(roomId, str)
         assert mentionedPeople is None or isinstance(mentionedPeople, list)
-        assert before is None or isinstance(before, string_types)
-        assert beforeMessage is None or isinstance(beforeMessage, string_types)
+        assert before is None or isinstance(before, str)
+        assert beforeMessage is None or isinstance(beforeMessage, str)
         assert max is None or isinstance(max, int)
         params = {}
         params['roomId'] = roomId
@@ -196,15 +202,15 @@ class MessagesAPI(object):
         markdown, files).
 
         Args:
-            roomId(string_types): The room ID.
-            toPersonId(string_types): The ID of the recipient when sending a
+            roomId(str): The room ID.
+            toPersonId(str): The ID of the recipient when sending a
                 private 1:1 message.
-            toPersonEmail(string_types): The email address of the recipient
+            toPersonEmail(str): The email address of the recipient
                 when sending a private 1:1 message.
-            text(string_types): The message, in plain text. If markdown is
+            text(str): The message, in plain text. If markdown is
                 specified this parameter may be optionally used to provide
                 alternate text forUI clients that do not support rich text.
-            markdown(string_types): The message, in markdown format.
+            markdown(str): The message, in markdown format.
             files(list): A list containing local paths or URL references for
                 the message attachment(s).  The files attribute currently only
                 takes a list containing one (1) filename or URL as an input.
@@ -222,11 +228,11 @@ class MessagesAPI(object):
 
         """
         # Process args
-        assert roomId is None or isinstance(roomId, string_types)
-        assert toPersonId is None or isinstance(toPersonId, string_types)
-        assert toPersonEmail is None or isinstance(toPersonEmail, string_types)
-        assert text is None or isinstance(text, string_types)
-        assert markdown is None or isinstance(markdown, string_types)
+        assert roomId is None or isinstance(roomId, str)
+        assert toPersonId is None or isinstance(toPersonId, str)
+        assert toPersonEmail is None or isinstance(toPersonEmail, str)
+        assert text is None or isinstance(text, str)
+        assert markdown is None or isinstance(markdown, str)
         assert files is None or isinstance(files, list)
         post_data = {}
         # Where is message to be posted?
@@ -287,7 +293,7 @@ class MessagesAPI(object):
         """Get the details of a message, by ID.
 
         Args:
-            messageId(string_types): The messageId of the message.
+            messageId(str): The messageId of the message.
 
         Returns:
             Message: With the details of the requested message.
@@ -298,7 +304,7 @@ class MessagesAPI(object):
 
         """
         # Process args
-        assert isinstance(messageId, string_types)
+        assert isinstance(messageId, str)
         # API request
         json_obj = self._session.get('messages/' + messageId)
         # Return a Message object created from the response JSON data
@@ -308,7 +314,7 @@ class MessagesAPI(object):
         """Delete a message.
 
         Args:
-            messageId(string_types): The messageId of the message to be
+            messageId(str): The messageId of the message to be
                 deleted.
 
         Raises:
@@ -317,6 +323,6 @@ class MessagesAPI(object):
 
         """
         # Process args
-        assert isinstance(messageId, string_types)
+        assert isinstance(messageId, str)
         # API request
         self._session.delete('messages/' + messageId)
