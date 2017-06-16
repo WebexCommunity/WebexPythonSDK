@@ -68,6 +68,6 @@ def get_new_email_address():
     generator = new_email_generator()
 
     def inner_function():
-        return generator.next()
+        return next(generator)
 
     return inner_function

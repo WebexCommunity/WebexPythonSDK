@@ -49,7 +49,7 @@ class TestRolesAPI(object):
     def test_list_roles_with_paging(self, api):
         paging_generator = get_list_of_roles(api, max=1)
         roles = list(paging_generator)
-        assert roles > 1
+        assert len(roles) > 1
         assert are_valid_roles(roles)
 
     def test_get_role_by_id(self, api, roles_list):
