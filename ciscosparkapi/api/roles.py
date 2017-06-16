@@ -9,8 +9,14 @@ Classes:
 """
 
 
-from builtins import object
-from six import string_types
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
+from builtins import *
 
 from ciscosparkapi.utils import generator_container
 from ciscosparkapi.restsession import RestSession
@@ -30,7 +36,7 @@ class Role(SparkData):
         """Init a new Role data object from a dict or JSON string.
 
         Args:
-            json(dict, string_types): Input JSON object.
+            json(dict, str): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -115,7 +121,7 @@ class RolesAPI(object):
         """Get the details of a Role, by id.
 
         Args:
-            roleId(string_types): The id of the Role.
+            roleId(str): The id of the Role.
 
         Returns:
             Role: With the details of the requested Role.
@@ -126,7 +132,7 @@ class RolesAPI(object):
 
         """
         # Process args
-        assert isinstance(roleId, string_types)
+        assert isinstance(roleId, str)
         # API request
         json_obj = self._session.get('roles/' + roleId)
         # Return a Role object created from the returned JSON object

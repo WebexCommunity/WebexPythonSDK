@@ -10,18 +10,28 @@ Classes:
 """
 
 
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
+from builtins import *
 from future import standard_library
 standard_library.install_aliases()
-from builtins import object
-from six import string_types
 
 import urllib.parse
 
 import requests
 
-from ciscosparkapi.utils import ERC, validate_base_url, \
-    check_response_code, extract_and_parse_json
 from ciscosparkapi.sparkdata import SparkData
+from ciscosparkapi.utils import (
+    ERC,
+    validate_base_url,
+    check_response_code,
+    extract_and_parse_json,
+)
 
 
 __author__ = "Chris Lunsford"
@@ -40,7 +50,7 @@ class AccessToken(SparkData):
         """Init a new AccessToken data object from a JSON dictionary or string.
 
         Args:
-            json(dict, string_types): Input JSON object.
+            json(dict, str): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -81,14 +91,14 @@ class AccessTokensAPI(object):
         """Init a new AccessTokensAPI object with the provided RestSession.
 
         Args:
-            base_url(string_types): The base URL the API endpoints.
+            base_url(str): The base URL the API endpoints.
             timeout(int): Timeout in seconds for the API requests.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
 
         """
-        assert isinstance(base_url, string_types)
+        assert isinstance(base_url, str)
         assert timeout is None or isinstance(timeout, int)
         super(AccessTokensAPI, self).__init__()
         self._base_url = str(validate_base_url(base_url))
@@ -112,13 +122,13 @@ class AccessTokensAPI(object):
         invoke the APIs.
 
         Args:
-            client_id(string_types): Provided when you created your
+            client_id(str): Provided when you created your
                 integration.
-            client_secret(string_types): Provided when you created your
+            client_secret(str): Provided when you created your
                 integration.
-            code(string_types): The Authorization Code provided by the user
+            code(str): The Authorization Code provided by the user
                 OAuth process.
-            redirect_uri(string_types): The redirect URI used in the user OAuth
+            redirect_uri(str): The redirect URI used in the user OAuth
                 process.
 
         Returns:
@@ -131,10 +141,10 @@ class AccessTokensAPI(object):
 
         """
         # Process args
-        assert isinstance(client_id, string_types)
-        assert isinstance(client_secret, string_types)
-        assert isinstance(code, string_types)
-        assert isinstance(redirect_uri, string_types)
+        assert isinstance(client_id, str)
+        assert isinstance(client_secret, str)
+        assert isinstance(code, str)
+        assert isinstance(redirect_uri, str)
         # Build request parameters
         data = {}
         data["grant_type"] = "authorization_code"
@@ -154,11 +164,11 @@ class AccessTokensAPI(object):
         """Return a refreshed Access Token via the provided refresh_token.
 
         Args:
-            client_id(string_types): Provided when you created your
+            client_id(str): Provided when you created your
                 integration.
-            client_secret(string_types): Provided when you created your
+            client_secret(str): Provided when you created your
                 integration.
-            refresh_token(string_types): Provided when you requested the Access
+            refresh_token(str): Provided when you requested the Access
                 Token.
 
         Returns:
@@ -171,9 +181,9 @@ class AccessTokensAPI(object):
 
         """
         # Process args
-        assert isinstance(client_id, string_types)
-        assert isinstance(client_secret, string_types)
-        assert isinstance(refresh_token, string_types)
+        assert isinstance(client_id, str)
+        assert isinstance(client_secret, str)
+        assert isinstance(refresh_token, str)
         # Build request parameters
         data = {}
         data["grant_type"] = "refresh_token"

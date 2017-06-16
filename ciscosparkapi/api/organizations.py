@@ -10,8 +10,14 @@ Classes:
 """
 
 
-from builtins import object
-from six import string_types
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
+from builtins import *
 
 from ciscosparkapi.utils import generator_container
 from ciscosparkapi.restsession import RestSession
@@ -31,7 +37,7 @@ class Organization(SparkData):
         """Init a new Organization data object from a dict or JSON string.
 
         Args:
-            json(dict, string_types): Input JSON object.
+            json(dict, str): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -121,7 +127,7 @@ class OrganizationsAPI(object):
         """Get the details of an Organization, by id.
 
         Args:
-            orgId(string_types): The id of the Organization.
+            orgId(str): The id of the Organization.
 
         Returns:
             Organization: With the details of the requested Organization.
@@ -132,7 +138,7 @@ class OrganizationsAPI(object):
 
         """
         # Process args
-        assert isinstance(orgId, string_types)
+        assert isinstance(orgId, str)
         # API request
         json_obj = self._session.get('organizations/' + orgId)
         # Return a Organization object created from the returned JSON object

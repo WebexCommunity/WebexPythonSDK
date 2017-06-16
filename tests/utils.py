@@ -3,6 +3,15 @@
 """Tests helper functions and classes."""
 
 
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
+from builtins import *
+
 import datetime
 import os
 import string

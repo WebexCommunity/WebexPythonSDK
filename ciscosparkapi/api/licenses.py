@@ -9,8 +9,14 @@ Classes:
 """
 
 
-from builtins import object
-from six import string_types
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
+from builtins import *
 
 from ciscosparkapi.utils import generator_container
 from ciscosparkapi.restsession import RestSession
@@ -30,7 +36,7 @@ class License(SparkData):
         """Init a new License data object from a dict or JSON string.
 
         Args:
-            json(dict, string_types): Input JSON object.
+            json(dict, str): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -99,7 +105,7 @@ class LicensesAPI(object):
         container.
 
         Args:
-            orgId(string_types): Filters the returned licenses to only include
+            orgId(str): Filters the returned licenses to only include
                 those liceses associated with the specified Organization
                 (orgId).
             max(int): Limits the maximum number of entries returned from the
@@ -116,7 +122,7 @@ class LicensesAPI(object):
 
         """
         # Process args
-        assert orgId is None or isinstance(orgId, string_types)
+        assert orgId is None or isinstance(orgId, str)
         assert max is None or isinstance(max, int)
         params = {}
         if orgId:
@@ -133,7 +139,7 @@ class LicensesAPI(object):
         """Get the details of a License, by id.
 
         Args:
-            licenseId(string_types): The id of the License.
+            licenseId(str): The id of the License.
 
         Returns:
             License: With the details of the requested License.
@@ -144,7 +150,7 @@ class LicensesAPI(object):
 
         """
         # Process args
-        assert isinstance(licenseId, string_types)
+        assert isinstance(licenseId, str)
         # API request
         json_obj = self._session.get('licenses/' + licenseId)
         # Return a License object created from the returned JSON object

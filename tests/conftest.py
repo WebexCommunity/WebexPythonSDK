@@ -2,6 +2,15 @@
 """pytest configuration and top-level fixtures."""
 
 
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
+from builtins import *
+
 import os
 import string
 import tempfile
@@ -68,6 +77,6 @@ def get_new_email_address():
     generator = new_email_generator()
 
     def inner_function():
-        return generator.next()
+        return next(generator)
 
     return inner_function

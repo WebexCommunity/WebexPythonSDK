@@ -9,8 +9,14 @@ Classes:
 """
 
 
-from builtins import object
-from six import string_types
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
+from builtins import *
 
 from ciscosparkapi.exceptions import ciscosparkapiException
 from ciscosparkapi.utils import generator_container
@@ -31,7 +37,7 @@ class Room(SparkData):
         """Init a new Room data object from a JSON dictionary or string.
 
         Args:
-            json(dict, string_types): Input JSON object.
+            json(dict, str): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -121,9 +127,9 @@ class RoomsAPI(object):
         Args:
             max(int): Limits the maximum number of rooms returned from the
                 Spark service per request.
-            teamId(string_types): Limit the rooms to those associated with a
+            teamId(str): Limit the rooms to those associated with a
                 team.
-            type(string_types):
+            type(str):
                 'direct': returns all 1-to-1 rooms.
                 'group': returns all group rooms.
 
@@ -141,7 +147,7 @@ class RoomsAPI(object):
         params = {}
         if max:
             params['max'] = max
-        # Process query_param keyword arguments 
+        # Process query_param keyword arguments
         if query_params:
             params.update(query_params)
         # API request - get items
@@ -156,8 +162,8 @@ class RoomsAPI(object):
         The authenticated user is automatically added as a member of the room.
 
         Args:
-            title(string_types): A user-friendly name for the room.
-            teamId(string_types): The team ID with which this room is
+            title(str): A user-friendly name for the room.
+            teamId(str): The team ID with which this room is
                 associated.
 
         Returns:
@@ -169,8 +175,8 @@ class RoomsAPI(object):
 
         """
         # Process args
-        assert isinstance(title, string_types)
-        assert teamId is None or isinstance(teamId, string_types)
+        assert isinstance(title, str)
+        assert teamId is None or isinstance(teamId, str)
         post_data = {}
         post_data['title'] = title
         if teamId:
@@ -184,7 +190,7 @@ class RoomsAPI(object):
         """Get the details of a room, by ID.
 
         Args:
-            roomId(string_types): The roomId of the room.
+            roomId(str): The roomId of the room.
 
         Returns:
             Room: With the details of the requested room.
@@ -195,7 +201,7 @@ class RoomsAPI(object):
 
         """
         # Process args
-        assert isinstance(roomId, string_types)
+        assert isinstance(roomId, str)
         # API request
         json_obj = self._session.get('rooms/' + roomId)
         # Return a Room object created from the response JSON data
@@ -205,8 +211,8 @@ class RoomsAPI(object):
         """Update details for a room.
 
         Args:
-            roomId(string_types): The roomId of the room to be updated.
-            title(string_types): A user-friendly name for the room.
+            roomId(str): The roomId of the room to be updated.
+            title(str): A user-friendly name for the room.
 
         Returns:
             Room: With the updated Spark room details.
@@ -218,7 +224,7 @@ class RoomsAPI(object):
 
         """
         # Process args
-        assert isinstance(roomId, string_types)
+        assert isinstance(roomId, str)
         # Process update_attributes keyword arguments
         if not update_attributes:
             error_message = "At least one **update_attributes keyword " \
@@ -233,7 +239,7 @@ class RoomsAPI(object):
         """Delete a room.
 
         Args:
-            roomId(string_types): The roomId of the room to be deleted.
+            roomId(str): The roomId of the room to be deleted.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
@@ -241,6 +247,6 @@ class RoomsAPI(object):
 
         """
         # Process args
-        assert isinstance(roomId, string_types)
+        assert isinstance(roomId, str)
         # API request
         self._session.delete('rooms/' + roomId)

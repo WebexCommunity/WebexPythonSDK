@@ -9,8 +9,14 @@ Classes:
 """
 
 
-from builtins import object
-from six import string_types
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
+from builtins import *
 
 from ciscosparkapi.exceptions import ciscosparkapiException
 from ciscosparkapi.utils import generator_container
@@ -31,7 +37,7 @@ class Team(SparkData):
         """Init a new Team data object from a JSON dictionary or string.
 
         Args:
-            json(dict, string_types): Input JSON object.
+            json(dict, str): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -119,7 +125,7 @@ class TeamsAPI(object):
         The authenticated user is automatically added as a member of the team.
 
         Args:
-            name(string_types): A user-friendly name for the team.
+            name(str): A user-friendly name for the team.
 
         Returns:
             Team: With the details of the created team.
@@ -130,7 +136,7 @@ class TeamsAPI(object):
 
         """
         # Process args
-        assert isinstance(name, string_types)
+        assert isinstance(name, str)
         post_data = {}
         post_data['name'] = name
         # API request
@@ -142,7 +148,7 @@ class TeamsAPI(object):
         """Get the details of a team, by ID.
 
         Args:
-            teamId(string_types): The teamId of the team.
+            teamId(str): The teamId of the team.
 
         Returns:
             Team: With the details of the requested team.
@@ -153,7 +159,7 @@ class TeamsAPI(object):
 
         """
         # Process args
-        assert isinstance(teamId, string_types)
+        assert isinstance(teamId, str)
         # API request
         json_obj = self._session.get('teams/' + teamId)
         # Return a Team object created from the response JSON data
@@ -163,8 +169,8 @@ class TeamsAPI(object):
         """Update details for a team.
 
         Args:
-            teamId(string_types): The teamId of the team to be updated.
-            name(string_types): A user-friendly name for the team.
+            teamId(str): The teamId of the team to be updated.
+            name(str): A user-friendly name for the team.
 
         Returns:
             Team: With the updated Spark team details.
@@ -176,14 +182,15 @@ class TeamsAPI(object):
 
         """
         # Process args
-        assert isinstance(teamId, string_types)
+        assert isinstance(teamId, str)
         # Process update_attributes keyword arguments
         if not update_attributes:
             error_message = "At least one **update_attributes keyword " \
                             "argument must be specified."
             raise ciscosparkapiException(error_message)
         # API request
-        json_obj = self._session.post('teams/' + teamId, json=update_attributes)
+        json_obj = self._session.post('teams/' + teamId,
+                                      json=update_attributes)
         # Return a Team object created from the response JSON data
         return Team(json_obj)
 
@@ -191,7 +198,7 @@ class TeamsAPI(object):
         """Delete a team.
 
         Args:
-            teamId(string_types): The teamId of the team to be deleted.
+            teamId(str): The teamId of the team to be deleted.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
@@ -199,6 +206,6 @@ class TeamsAPI(object):
 
         """
         # Process args
-        assert isinstance(teamId, string_types)
+        assert isinstance(teamId, str)
         # API request
         self._session.delete('teams/' + teamId)

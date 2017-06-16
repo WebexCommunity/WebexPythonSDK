@@ -2,10 +2,14 @@
 """Package helper functions and classes."""
 
 
-from future import standard_library
-standard_library.install_aliases()
-from builtins import object
-from six import string_types
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
+from builtins import *
 
 from collections import namedtuple
 import functools
@@ -13,7 +17,7 @@ import mimetypes
 import os
 import urllib.parse
 
-from ciscosparkapi import ciscosparkapiException, SparkApiError
+from ciscosparkapi.exceptions import ciscosparkapiException, SparkApiError
 
 
 __author__ = "Chris Lunsford"
@@ -48,25 +52,22 @@ def validate_base_url(base_url):
 
 def is_web_url(string):
     """Check to see if string is an validly-formatted web url."""
-    assert isinstance(string, string_types)
+    assert isinstance(string, str)
     parsed_url = urllib.parse.urlparse(string)
-    if (parsed_url.scheme.lower() == 'http' \
-        or parsed_url.scheme.lower() == 'https') \
-        and parsed_url.netloc:
-        return True
-    else:
-        return False
+    return ((parsed_url.scheme.lower() == 'http' or
+             parsed_url.scheme.lower() == 'https') and
+            parsed_url.netloc)
 
 
 def is_local_file(string):
     """Check to see if string is a valid local file path."""
-    assert isinstance(string, string_types)
+    assert isinstance(string, str)
     return os.path.isfile(string)
 
 
 def open_local_file(file_path):
     """Open the file and return an EncodableFile tuple."""
-    assert isinstance(file_path, string_types)
+    assert isinstance(file_path, str)
     assert is_local_file(file_path)
     file_name = os.path.basename(file_path)
     file_object = open(file_path, 'rb')

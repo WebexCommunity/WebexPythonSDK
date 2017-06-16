@@ -14,7 +14,11 @@ provides a measure of future-proofing when additional data attributes are added
 to objects by the Cisco Spark cloud.
 
 Example:
-    >>> json_obj = '{"created": "2012-06-15T20:36:48.914Z", "displayName": "Chris Lunsford (chrlunsf)", "id": "Y2lzY29zcGFyazovL3VzL1BFT1BMRS9mZjhlZTZmYi1hZmVmLTRhNGQtOTJiMS1kNmIyMTZiNTg5NDk", "avatar": "https://1efa7a94ed216783e352-c62266528714497a17239ececf39e9e2.ssl.cf1.rackcdn.com/V1~ba1ecf557a7e0b7cc3081998df965aad~cNFKqEjAQ5aQkyt_l1zsCQ==~1600", "emails": ["chrlunsf@cisco.com"]}'
+    >>> json_obj = '{"created": "2012-06-15T20:36:48.914Z",
+                     "displayName": "Chris Lunsford (chrlunsf)",
+                     "id": "Y2lzY29zcGFyazovL3VzL1BFT1BMRS9mZjhlZTZmYi1hZm...",
+                     "avatar": "https://1efa7a94ed216783e352-c622665287144...",
+                     "emails": ["chrlunsf@cisco.com"]}'
     >>> python_obj = SparkData(json_obj)
     >>> python_obj.displayName
     u'Chris Lunsford (chrlunsf)'
@@ -24,8 +28,14 @@ Example:
 """
 
 
-from builtins import object
-from six import string_types
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
+from builtins import *
 
 import json as json_pkg
 
@@ -40,7 +50,7 @@ def _json_dict(json):
     """Given a JSON dictionary or string; return a dictionary.
 
     Args:
-        json(dict, string_types): Input JSON object.
+        json(dict, str): Input JSON object.
 
     Returns:
         A Python dictionary with the contents of the JSON object.
@@ -51,7 +61,7 @@ def _json_dict(json):
     """
     if isinstance(json, dict):
         return json
-    elif isinstance(json, string_types):
+    elif isinstance(json, str):
         return json_pkg.loads(json)
     else:
         error = "'json' must be a dictionary or JSON string; " \
@@ -66,7 +76,7 @@ class SparkData(object):
         """Init a new SparkData object from a JSON dictionary or string.
 
         Args:
-            json(dict, string_types): Input JSON object.
+            json(dict, str): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -88,7 +98,7 @@ class SparkData(object):
         the JSON object's attributes.
 
         Args:
-            item(string_types): Name of the Attribute being accessed.
+            item(str): Name of the Attribute being accessed.
 
         Raises:
             AttributeError:  If the JSON object does not contain the attribute

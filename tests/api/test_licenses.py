@@ -3,6 +3,15 @@
 """pytest Licenses API wrapper tests and fixtures."""
 
 
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
+from builtins import *
+
 import pytest
 
 import ciscosparkapi
@@ -49,7 +58,7 @@ class TestLicensesAPI(object):
     def test_list_licenses_with_paging(self, api):
         paging_generator = get_list_of_licenses(api, max=1)
         licenses = list(paging_generator)
-        assert licenses > 1
+        assert len(licenses) > 1
         assert are_valid_licenses(licenses)
 
     def test_get_licenses_for_organization(self, api, me):

@@ -2,6 +2,16 @@
 """ciscosparkapi exception classes."""
 
 
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
+from builtins import *
+
+
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
 __copyright__ = "Copyright (c) 2016 Cisco Systems, Inc."

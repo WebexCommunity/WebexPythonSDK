@@ -2,25 +2,35 @@
 """Python API wrapper for the Cisco Spark APIs."""
 
 
-from __future__ import absolute_import
-from builtins import object
-from six import string_types
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
+from builtins import *
+
+from past.builtins import basestring
 
 import os
 
-from .exceptions import ciscosparkapiException, SparkApiError
-from .restsession import RestSession
-from .api.people import Person, PeopleAPI
-from .api.rooms import Room, RoomsAPI
-from .api.memberships import Membership, MembershipsAPI
-from .api.messages import Message, MessagesAPI
-from .api.teams import Team, TeamsAPI
-from .api.teammemberships import TeamMembership, TeamMembershipsAPI
-from .api.webhooks import Webhook, WebhooksAPI
-from .api.organizations import Organization, OrganizationsAPI
-from .api.licenses import License, LicensesAPI
-from .api.roles import Role, RolesAPI
-from .api.accesstokens import AccessToken, AccessTokensAPI
+from ciscosparkapi.exceptions import ciscosparkapiException, SparkApiError
+from ciscosparkapi.restsession import RestSession
+from ciscosparkapi.api.people import Person, PeopleAPI
+from ciscosparkapi.api.rooms import Room, RoomsAPI
+from ciscosparkapi.api.memberships import Membership, MembershipsAPI
+from ciscosparkapi.api.messages import Message, MessagesAPI
+from ciscosparkapi.api.teams import Team, TeamsAPI
+from ciscosparkapi.api.teammemberships import (
+    TeamMembership,
+    TeamMembershipsAPI
+)
+from ciscosparkapi.api.webhooks import Webhook, WebhooksAPI
+from ciscosparkapi.api.organizations import Organization, OrganizationsAPI
+from ciscosparkapi.api.licenses import License, LicensesAPI
+from ciscosparkapi.api.roles import Role, RolesAPI
+from ciscosparkapi.api.accesstokens import AccessToken, AccessTokensAPI
 
 
 __author__ = "Chris Lunsford"
@@ -91,10 +101,10 @@ class CiscoSparkAPI(object):
         via one of these two methods.
 
         Args:
-            access_token(string_types): The access token to be used for API
+            access_token(str): The access token to be used for API
                 calls to the Cisco Spark service.  Defaults to checking for a
                 SPARK_ACCESS_TOKEN environment variable.
-            base_url(string_types): The base URL to be prefixed to the
+            base_url(str): The base URL to be prefixed to the
                 individual API endpoint suffixes.
                 Defaults to ciscosparkapi.DEFAULT_BASE_URL.
             timeout(int): Timeout (in seconds) for RESTful HTTP requests.
@@ -111,8 +121,8 @@ class CiscoSparkAPI(object):
 
         """
         # Process args
-        assert access_token is None or isinstance(access_token, string_types)
-        assert isinstance(base_url, string_types)
+        assert access_token is None or isinstance(access_token, basestring)
+        assert isinstance(base_url, str)
         assert isinstance(timeout, int)
         spark_access_token = os.environ.get(ACCESS_TOKEN_ENVIRONMENT_VARIABLE)
         access_token = access_token if access_token else spark_access_token

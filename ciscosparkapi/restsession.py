@@ -2,18 +2,30 @@
 """RestSession class for creating 'connections' to the Cisco Spark APIs."""
 
 
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
+from builtins import *
 from future import standard_library
 standard_library.install_aliases()
-from builtins import object
-from six import string_types
+
 
 import urllib.parse
 
 import requests
 
-from .exceptions import ciscosparkapiException
-from .utils import ERC, validate_base_url, \
-    raise_if_extra_kwargs, check_response_code, extract_and_parse_json
+from ciscosparkapi.exceptions import ciscosparkapiException
+from ciscosparkapi.utils import (
+    ERC,
+    validate_base_url,
+    raise_if_extra_kwargs,
+    check_response_code,
+    extract_and_parse_json,
+)
 
 
 __author__ = "Chris Lunsford"
@@ -32,7 +44,7 @@ def _fix_next_url(next_url):
     This patch parses the next_url to remove the max=null parameter.
 
     Args:
-        next_url(string_types): The 'next' URL to be parsed and cleaned.
+        next_url(str): The 'next' URL to be parsed and cleaned.
 
     Returns:
         str: The clean URL to be used for the 'next' request.
@@ -43,7 +55,6 @@ def _fix_next_url(next_url):
             endpoint URL (scheme, netloc and path).
 
     """
-    assert isinstance(next_url, string_types)
     next_url = str(next_url)
     parsed_url = urllib.parse.urlparse(next_url)
     if not parsed_url.scheme or not parsed_url.netloc or not parsed_url.path:
@@ -101,7 +112,7 @@ class RestSession(object):
 
     def get(self, url, params=None, **kwargs):
         # Process args
-        assert isinstance(url, string_types)
+        assert isinstance(url, str)
         assert params is None or isinstance(params, dict)
         abs_url = self.urljoin(url)
         # Process kwargs
@@ -117,7 +128,7 @@ class RestSession(object):
 
     def get_pages(self, url, params=None, **kwargs):
         # Process args
-        assert isinstance(url, string_types)
+        assert isinstance(url, str)
         assert params is None or isinstance(params, dict)
         abs_url = self.urljoin(url)
         # Process kwargs
@@ -160,7 +171,7 @@ class RestSession(object):
 
     def post(self, url, json=None, data=None, headers=None, **kwargs):
         # Process args
-        assert isinstance(url, string_types)
+        assert isinstance(url, str)
         abs_url = self.urljoin(url)
         # Process listed kwargs
         request_args = {}
@@ -189,7 +200,7 @@ class RestSession(object):
 
     def put(self, url, json, **kwargs):
         # Process args
-        assert isinstance(url, string_types)
+        assert isinstance(url, str)
         assert isinstance(json, dict)
         abs_url = self.urljoin(url)
         # Process kwargs
@@ -204,7 +215,7 @@ class RestSession(object):
 
     def delete(self, url, **kwargs):
         # Process args
-        assert isinstance(url, string_types)
+        assert isinstance(url, str)
         abs_url = self.urljoin(url)
         # Process kwargs
         timeout = kwargs.pop('timeout', self.timeout)

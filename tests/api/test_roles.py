@@ -3,6 +3,15 @@
 """pytest Roles API wrapper tests and fixtures."""
 
 
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
+from builtins import *
+
 import pytest
 
 import ciscosparkapi
@@ -49,7 +58,7 @@ class TestRolesAPI(object):
     def test_list_roles_with_paging(self, api):
         paging_generator = get_list_of_roles(api, max=1)
         roles = list(paging_generator)
-        assert roles > 1
+        assert len(roles) > 1
         assert are_valid_roles(roles)
 
     def test_get_role_by_id(self, api, roles_list):
