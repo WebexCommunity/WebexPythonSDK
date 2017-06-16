@@ -15,10 +15,14 @@ from six import string_types
 from requests_toolbelt import MultipartEncoder
 
 from ciscosparkapi.exceptions import ciscosparkapiException
-from ciscosparkapi.utils import generator_container, is_web_url, \
-    is_local_file, open_local_file
 from ciscosparkapi.restsession import RestSession
 from ciscosparkapi.sparkdata import SparkData
+from ciscosparkapi.utils import (
+    generator_container,
+    is_web_url,
+    is_local_file,
+    open_local_file,
+)
 
 
 __author__ = "Chris Lunsford"

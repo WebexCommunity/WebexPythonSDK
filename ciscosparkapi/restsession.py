@@ -3,7 +3,6 @@
 
 
 from future import standard_library
-standard_library.install_aliases()
 from builtins import object
 from six import string_types
 
@@ -11,10 +10,17 @@ import urllib.parse
 
 import requests
 
-from .exceptions import ciscosparkapiException
-from .utils import ERC, validate_base_url, \
-    raise_if_extra_kwargs, check_response_code, extract_and_parse_json
+from ciscosparkapi.exceptions import ciscosparkapiException
+from ciscosparkapi.utils import (
+    ERC,
+    validate_base_url,
+    raise_if_extra_kwargs,
+    check_response_code,
+    extract_and_parse_json,
+)
 
+# TODO: See if there is a better way to do this:
+standard_library.install_aliases()
 
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"

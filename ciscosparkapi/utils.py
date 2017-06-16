@@ -3,7 +3,6 @@
 
 
 from future import standard_library
-standard_library.install_aliases()
 from builtins import object
 from six import string_types
 
@@ -13,7 +12,11 @@ import mimetypes
 import os
 import urllib.parse
 
-from ciscosparkapi import ciscosparkapiException, SparkApiError
+from ciscosparkapi.exceptions import ciscosparkapiException, SparkApiError
+
+
+# TODO: See if there is a better way to do this:
+standard_library.install_aliases()
 
 
 __author__ = "Chris Lunsford"

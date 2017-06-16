@@ -8,19 +8,19 @@ from six import string_types
 
 import os
 
-from .exceptions import ciscosparkapiException, SparkApiError
-from .restsession import RestSession
-from .api.people import Person, PeopleAPI
-from .api.rooms import Room, RoomsAPI
-from .api.memberships import Membership, MembershipsAPI
-from .api.messages import Message, MessagesAPI
-from .api.teams import Team, TeamsAPI
-from .api.teammemberships import TeamMembership, TeamMembershipsAPI
-from .api.webhooks import Webhook, WebhooksAPI
-from .api.organizations import Organization, OrganizationsAPI
-from .api.licenses import License, LicensesAPI
-from .api.roles import Role, RolesAPI
-from .api.accesstokens import AccessToken, AccessTokensAPI
+from ciscosparkapi.exceptions import ciscosparkapiException, SparkApiError
+from ciscosparkapi.restsession import RestSession
+from ciscosparkapi.api.people import Person, PeopleAPI
+from ciscosparkapi.api.rooms import Room, RoomsAPI
+from ciscosparkapi.api.memberships import Membership, MembershipsAPI
+from ciscosparkapi.api.messages import Message, MessagesAPI
+from ciscosparkapi.api.teams import Team, TeamsAPI
+from ciscosparkapi.api.teammemberships import TeamMembership, TeamMembershipsAPI
+from ciscosparkapi.api.webhooks import Webhook, WebhooksAPI
+from ciscosparkapi.api.organizations import Organization, OrganizationsAPI
+from ciscosparkapi.api.licenses import License, LicensesAPI
+from ciscosparkapi.api.roles import Role, RolesAPI
+from ciscosparkapi.api.accesstokens import AccessToken, AccessTokensAPI
 
 
 __author__ = "Chris Lunsford"
