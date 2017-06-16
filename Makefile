@@ -39,6 +39,12 @@ lint :
 	flake8 ciscosparkapi
 
 
+# Git recipes
+.PHONY : push
+push :
+	git push origin --tags
+
+
 # Cleaning recipes
 .PHONY : clean
 clean : cleanbuild cleandocs cleanpytest cleantox ;
