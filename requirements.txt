@@ -1,22 +1,8 @@
-alabaster==0.7.9
-Babel==2.3.4
--e git+https://github.com/CiscoDevNet/ciscosparkapi.git@c76abbd3826fbf36134d331e430e0ae28399ea91#egg=ciscosparkapi
-docutils==0.12
-future==0.16.0
-imagesize==0.7.1
-Jinja2==2.8
-MarkupSafe==0.23
-pluggy==0.4.0
-py==1.4.31
-Pygments==2.1.3
-pytest==3.0.5
-pytz==2016.7
-requests==2.12.1
-requests-toolbelt==0.7.0
-six==1.10.0
-snowballstemmer==1.2.1
-Sphinx==1.4.9
-sphinx-rtd-theme==0.1.9
-tox==2.5.0
-versioneer==0.17
-virtualenv==15.1.0
+-e .
+versioneer
+Sphinx
+sphinx-rtd-theme
+pytest
+tox
+virtualenv
+flake8
