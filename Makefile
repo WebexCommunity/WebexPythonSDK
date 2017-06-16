@@ -2,7 +2,8 @@ SHELL=/bin/bash
 
 # Build recipes
 .PHONY : build
-build : tests docs buildpackage ;
+build : tests docs buildpackage
+	$(MAKE) clean
 
 .PHONY : buildpackage
 buildpackage : setup.py
@@ -10,14 +11,18 @@ buildpackage : setup.py
 
 .PHONY : docs
 docs : docs/Makefile
-	cd docs/
-	make html
+	cd docs/ && $(MAKE) html
 
 
 # Local project directory and environment management recipes
 .PHONY : init
 init : requirements.txt
 	pip install -r requirements.txt
+
+.PHONY : update
+update : clean-venv init versioneer.py
+	rm versioneer.py
+	versioneer install
 
 
 # Local testing recipes
