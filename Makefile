@@ -47,6 +47,7 @@ lint :
 # Git recipes
 .PHONY : push
 push :
+	git push origin
 	git push origin --tags
 
 
