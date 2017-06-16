@@ -54,12 +54,9 @@ def is_web_url(string):
     """Check to see if string is an validly-formatted web url."""
     assert isinstance(string, str)
     parsed_url = urllib.parse.urlparse(string)
-    if (parsed_url.scheme.lower() == 'http' \
-        or parsed_url.scheme.lower() == 'https') \
-        and parsed_url.netloc:
-        return True
-    else:
-        return False
+    return ((parsed_url.scheme.lower() == 'http' or
+             parsed_url.scheme.lower() == 'https') and
+            parsed_url.netloc)
 
 
 def is_local_file(string):

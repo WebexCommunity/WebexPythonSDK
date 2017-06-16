@@ -22,7 +22,10 @@ from ciscosparkapi.api.rooms import Room, RoomsAPI
 from ciscosparkapi.api.memberships import Membership, MembershipsAPI
 from ciscosparkapi.api.messages import Message, MessagesAPI
 from ciscosparkapi.api.teams import Team, TeamsAPI
-from ciscosparkapi.api.teammemberships import TeamMembership, TeamMembershipsAPI
+from ciscosparkapi.api.teammemberships import (
+    TeamMembership,
+    TeamMembershipsAPI
+)
 from ciscosparkapi.api.webhooks import Webhook, WebhooksAPI
 from ciscosparkapi.api.organizations import Organization, OrganizationsAPI
 from ciscosparkapi.api.licenses import License, LicensesAPI

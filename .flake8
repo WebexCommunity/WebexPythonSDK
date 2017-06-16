@@ -1,0 +1,9 @@
+[flake8]
+ignore = E402,F401,F403
+exclude =
+    .git,
+    __pycache__,
+    ciscosparkapi/_version.py,
+    docs/source/conf.py,
+    build,
+    dist,

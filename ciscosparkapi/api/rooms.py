@@ -147,7 +147,7 @@ class RoomsAPI(object):
         params = {}
         if max:
             params['max'] = max
-        # Process query_param keyword arguments 
+        # Process query_param keyword arguments
         if query_params:
             params.update(query_params)
         # API request - get items

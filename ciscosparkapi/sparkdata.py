@@ -14,7 +14,11 @@ provides a measure of future-proofing when additional data attributes are added
 to objects by the Cisco Spark cloud.
 
 Example:
-    >>> json_obj = '{"created": "2012-06-15T20:36:48.914Z", "displayName": "Chris Lunsford (chrlunsf)", "id": "Y2lzY29zcGFyazovL3VzL1BFT1BMRS9mZjhlZTZmYi1hZmVmLTRhNGQtOTJiMS1kNmIyMTZiNTg5NDk", "avatar": "https://1efa7a94ed216783e352-c62266528714497a17239ececf39e9e2.ssl.cf1.rackcdn.com/V1~ba1ecf557a7e0b7cc3081998df965aad~cNFKqEjAQ5aQkyt_l1zsCQ==~1600", "emails": ["chrlunsf@cisco.com"]}'
+    >>> json_obj = '{"created": "2012-06-15T20:36:48.914Z",
+                     "displayName": "Chris Lunsford (chrlunsf)",
+                     "id": "Y2lzY29zcGFyazovL3VzL1BFT1BMRS9mZjhlZTZmYi1hZm...",
+                     "avatar": "https://1efa7a94ed216783e352-c622665287144...",
+                     "emails": ["chrlunsf@cisco.com"]}'
     >>> python_obj = SparkData(json_obj)
     >>> python_obj.displayName
     u'Chris Lunsford (chrlunsf)'
