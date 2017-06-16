@@ -14,6 +14,12 @@ docs : docs/Makefile
 	make html
 
 
+# Local project directory and environment management recipes
+.PHONY : init
+init : requirements.txt
+	pip install -r requirements.txt
+
+
 # Local testing recipes
 .PHONY : tests
 tests: toxtest lint ;
@@ -35,11 +41,7 @@ lint :
 
 # Cleaning recipes
 .PHONY : clean
-clean : cleanbuild cleandocs cleanpytest cleantox cleandist ;
-
-.PHONY : cleandist
-cleandist :
-	rm -rf ./dist/*
+clean : cleanbuild cleandocs cleanpytest cleantox ;
 
 .PHONY : cleanbuild
 cleanbuild :
@@ -56,3 +58,14 @@ cleantox : cleanpytest
 .PHONY : cleanpytest
 cleanpytest :
 	rm -rf ./.cache/
+
+.PHONY : clean-all
+clean-all : clean clean-dist ;
+
+.PHONY : clean-dist
+cleandist :
+	rm -rf ./dist/*
+
+.PHONY : clean-venv
+clean-venv :
+	pip freeze | grep -v "^-e" | xargs pip uninstall -y
