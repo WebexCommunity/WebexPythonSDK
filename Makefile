@@ -75,7 +75,7 @@ cleanpytest :
 clean-all : clean clean-dist ;
 
 .PHONY : clean-dist
-cleandist :
+clean-dist :
 	rm -rf ./dist/*
 
 .PHONY : clean-venv
