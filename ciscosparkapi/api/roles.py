@@ -17,6 +17,7 @@ from __future__ import (
     unicode_literals,
 )
 from builtins import *
+from past.builtins import basestring
 
 from ciscosparkapi.utils import generator_container
 from ciscosparkapi.restsession import RestSession
@@ -36,7 +37,7 @@ class Role(SparkData):
         """Init a new Role data object from a dict or JSON string.
 
         Args:
-            json(dict, str): Input JSON object.
+            json(dict, basestring): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -121,7 +122,7 @@ class RolesAPI(object):
         """Get the details of a Role, by id.
 
         Args:
-            roleId(str): The id of the Role.
+            roleId(basestring): The id of the Role.
 
         Returns:
             Role: With the details of the requested Role.
@@ -132,7 +133,7 @@ class RolesAPI(object):
 
         """
         # Process args
-        assert isinstance(roleId, str)
+        assert isinstance(roleId, basestring)
         # API request
         json_obj = self._session.get('roles/' + roleId)
         # Return a Role object created from the returned JSON object

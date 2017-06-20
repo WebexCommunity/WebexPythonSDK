@@ -10,6 +10,7 @@ from __future__ import (
     unicode_literals,
 )
 from builtins import *
+from past.builtins import basestring
 
 
 __author__ = "Chris Lunsford"

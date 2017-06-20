@@ -18,6 +18,7 @@ from __future__ import (
     unicode_literals,
 )
 from builtins import *
+from past.builtins import basestring
 
 from ciscosparkapi.utils import generator_container
 from ciscosparkapi.restsession import RestSession
@@ -37,7 +38,7 @@ class Organization(SparkData):
         """Init a new Organization data object from a dict or JSON string.
 
         Args:
-            json(dict, str): Input JSON object.
+            json(dict, basestring): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -127,7 +128,7 @@ class OrganizationsAPI(object):
         """Get the details of an Organization, by id.
 
         Args:
-            orgId(str): The id of the Organization.
+            orgId(basestring): The id of the Organization.
 
         Returns:
             Organization: With the details of the requested Organization.
@@ -138,7 +139,7 @@ class OrganizationsAPI(object):
 
         """
         # Process args
-        assert isinstance(orgId, str)
+        assert isinstance(orgId, basestring)
         # API request
         json_obj = self._session.get('organizations/' + orgId)
         # Return a Organization object created from the returned JSON object

@@ -18,6 +18,7 @@ from __future__ import (
     unicode_literals,
 )
 from builtins import *
+from past.builtins import basestring
 
 from ciscosparkapi.exceptions import ciscosparkapiException
 from ciscosparkapi.utils import generator_container
@@ -38,7 +39,7 @@ class Membership(SparkData):
         """Init a new Membership data object from a JSON dictionary or string.
 
         Args:
-            json(dict, str): Input JSON object.
+            json(dict, basestring): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -126,10 +127,10 @@ class MembershipsAPI(object):
         container.
 
         Args:
-            roomId(str): List memberships for the room with roomId.
-            personId(str): Filter results to include only those with
+            roomId(basestring): List memberships for the room with roomId.
+            personId(basestring): Filter results to include only those with
                 personId.
-            personEmail(str): Filter results to include only those
+            personEmail(basestring): Filter results to include only those
                 with personEmail.
             max(int): Limits the maximum number of memberships returned from
                 the Spark service per request.
@@ -147,9 +148,9 @@ class MembershipsAPI(object):
 
         """
         # Process args
-        assert roomId is None or isinstance(roomId, str)
-        assert personId is None or isinstance(personId, str)
-        assert personEmail is None or isinstance(personEmail, str)
+        assert roomId is None or isinstance(roomId, basestring)
+        assert personId is None or isinstance(personId, basestring)
+        assert personEmail is None or isinstance(personEmail, basestring)
         assert max is None or isinstance(max, int)
         params = {}
         if roomId:
@@ -180,10 +181,10 @@ class MembershipsAPI(object):
         making them a moderator.
 
         Args:
-            roomId(str): ID of the room to which the person will be
+            roomId(basestring): ID of the room to which the person will be
                 added.
-            personId(str): ID of the person to be added to the room.
-            personEmail(str): Email address of the person to be added
+            personId(basestring): ID of the person to be added to the room.
+            personEmail(basestring): Email address of the person to be added
                 to the room.
             isModerator(bool): If True, adds the person as a moderator for the
                 room. If False, adds the person as normal member of the room.
@@ -199,9 +200,9 @@ class MembershipsAPI(object):
 
         """
         # Process args
-        assert isinstance(roomId, str)
-        assert personId is None or isinstance(personId, str)
-        assert personEmail is None or isinstance(personEmail, str)
+        assert isinstance(roomId, basestring)
+        assert personId is None or isinstance(personId, basestring)
+        assert personEmail is None or isinstance(personEmail, basestring)
         assert isModerator is None or isinstance(isModerator, bool)
         post_data = {}
         post_data['roomId'] = roomId
@@ -223,7 +224,7 @@ class MembershipsAPI(object):
         """Get details for a membership by ID.
 
         Args:
-            membershipId(str): The membershipId of the membership.
+            membershipId(basestring): The membershipId of the membership.
 
         Returns:
             Membership: With the details of the requested membership.
@@ -234,7 +235,7 @@ class MembershipsAPI(object):
 
         """
         # Process args
-        assert isinstance(membershipId, str)
+        assert isinstance(membershipId, basestring)
         # API request
         json_obj = self._session.get('memberships/' + membershipId)
         # Return a Membership object created from the response JSON data
@@ -244,7 +245,7 @@ class MembershipsAPI(object):
         """Update details for a membership.
 
         Args:
-            membershipId(str): The membershipId of the membership to
+            membershipId(basestring): The membershipId of the membership to
                 be updated.
             isModerator(bool): If True, sets the person as a moderator for the
                 room. If False, removes the person as a moderator for the room.
@@ -259,7 +260,7 @@ class MembershipsAPI(object):
 
         """
         # Process args
-        assert isinstance(membershipId, str)
+        assert isinstance(membershipId, basestring)
         # Process update_attributes keyword arguments
         if not update_attributes:
             error_message = "At least one **update_attributes keyword " \
@@ -275,7 +276,7 @@ class MembershipsAPI(object):
         """Delete a membership, by ID.
 
         Args:
-            membershipId(str): The membershipId of the membership to
+            membershipId(basestring): The membershipId of the membership to
                 be deleted.
 
         Raises:
@@ -284,6 +285,6 @@ class MembershipsAPI(object):
 
         """
         # Process args
-        assert isinstance(membershipId, str)
+        assert isinstance(membershipId, basestring)
         # API request
         self._session.delete('memberships/' + membershipId)

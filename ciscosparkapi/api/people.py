@@ -17,6 +17,7 @@ from __future__ import (
     unicode_literals,
 )
 from builtins import *
+from past.builtins import basestring
 
 from ciscosparkapi.exceptions import ciscosparkapiException
 from ciscosparkapi.utils import generator_container
@@ -37,7 +38,7 @@ class Person(SparkData):
         """Init a new Person data object from a JSON dictionary or string.
 
         Args:
-            json(dict, str): Input JSON object.
+            json(dict, basestring): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -150,8 +151,8 @@ class PeopleAPI(object):
         container.
 
         Args:
-            email(str): The e-mail address of the person to be found.
-            displayName(str): The complete or beginning portion of
+            email(basestring): The e-mail address of the person to be found.
+            displayName(basestring): The complete or beginning portion of
                 the displayName to be searched.
             max(int): Limits the maximum number of people returned from the
                 Spark service per request.
@@ -166,8 +167,8 @@ class PeopleAPI(object):
 
         """
         # Process args
-        assert email is None or isinstance(email, str)
-        assert displayName is None or isinstance(displayName, str)
+        assert email is None or isinstance(email, basestring)
+        assert displayName is None or isinstance(displayName, basestring)
         assert max is None or isinstance(max, int)
         params = {}
         if email:
@@ -196,11 +197,11 @@ class PeopleAPI(object):
                 selected to enable future support for providing multiple email
                 address.
             **person_attributes
-            displayName(str): Full name of the person
-            firstName(str): First name of the person
-            lastName(str): Last name of the person
-            avatar(str): URL to the person's avatar in PNG format
-            orgId(str): ID of the organization to which this
+            displayName(basestring): Full name of the person
+            firstName(basestring): First name of the person
+            lastName(basestring): Last name of the person
+            avatar(basestring): URL to the person's avatar in PNG format
+            orgId(basestring): ID of the organization to which this
                 person belongs
             roles(list): Roles of the person (list of strings containing
                 the role IDs to be assigned to the person)
@@ -235,18 +236,18 @@ class PeopleAPI(object):
         Only an admin can update a person details.
 
         Args:
-            personId(str): The ID of the person to be updated.
+            personId(basestring): The ID of the person to be updated.
             **person_attributes
             emails(list): Email address(es) of the person. (list of
                 strings) CURRENT LIMITATION: Spark (today) only allows you
                 to provide a single email address for a person. The list
                 data type was selected to enable future support for
                 providing multiple email address.
-            displayName(str): Full name of the person
-            firstName(str): First name of the person
-            lastName(str): Last name of the person
-            avatar(str): URL to the person's avatar in PNG format
-            orgId(str): ID of the organization to which this
+            displayName(basestring): Full name of the person
+            firstName(basestring): First name of the person
+            lastName(basestring): Last name of the person
+            avatar(basestring): URL to the person's avatar in PNG format
+            orgId(basestring): ID of the organization to which this
                 person belongs
             roles(list): Roles of the person (list of strings containing
                 the role IDs to be assigned to the person)
@@ -264,7 +265,7 @@ class PeopleAPI(object):
 
         """
         # Process args
-        assert isinstance(personId, str)
+        assert isinstance(personId, basestring)
 
         # Process update_attributes keyword arguments
         if not person_attributes:
@@ -283,7 +284,7 @@ class PeopleAPI(object):
         """Get person details, by personId.
 
         Args:
-            personId(str): The personID of the person.
+            personId(basestring): The personID of the person.
 
         Returns:
             Person: With the details of the requested person.
@@ -294,7 +295,7 @@ class PeopleAPI(object):
 
         """
         # Process args
-        assert isinstance(personId, str)
+        assert isinstance(personId, basestring)
         # API request
         json_obj = self._session.get('people/' + personId)
         # Return a Person object created from the response JSON data
@@ -306,7 +307,7 @@ class PeopleAPI(object):
         Only an admin can remove a person.
 
         Args:
-            personId(str): The personID of the person.
+            personId(basestring): The personID of the person.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
@@ -314,7 +315,7 @@ class PeopleAPI(object):
 
         """
         # Process args
-        assert isinstance(personId, str)
+        assert isinstance(personId, basestring)
         # API request
         self._session.delete('people/' + personId)
 

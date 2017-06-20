@@ -36,6 +36,7 @@ from __future__ import (
     unicode_literals,
 )
 from builtins import *
+from past.builtins import basestring
 
 import json as json_pkg
 

@@ -17,6 +17,7 @@ from __future__ import (
     unicode_literals,
 )
 from builtins import *
+from past.builtins import basestring
 
 from ciscosparkapi.exceptions import ciscosparkapiException
 from ciscosparkapi.utils import generator_container
@@ -37,7 +38,7 @@ class Team(SparkData):
         """Init a new Team data object from a JSON dictionary or string.
 
         Args:
-            json(dict, str): Input JSON object.
+            json(dict, basestring): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -125,7 +126,7 @@ class TeamsAPI(object):
         The authenticated user is automatically added as a member of the team.
 
         Args:
-            name(str): A user-friendly name for the team.
+            name(basestring): A user-friendly name for the team.
 
         Returns:
             Team: With the details of the created team.
@@ -136,7 +137,7 @@ class TeamsAPI(object):
 
         """
         # Process args
-        assert isinstance(name, str)
+        assert isinstance(name, basestring)
         post_data = {}
         post_data['name'] = name
         # API request
@@ -148,7 +149,7 @@ class TeamsAPI(object):
         """Get the details of a team, by ID.
 
         Args:
-            teamId(str): The teamId of the team.
+            teamId(basestring): The teamId of the team.
 
         Returns:
             Team: With the details of the requested team.
@@ -159,7 +160,7 @@ class TeamsAPI(object):
 
         """
         # Process args
-        assert isinstance(teamId, str)
+        assert isinstance(teamId, basestring)
         # API request
         json_obj = self._session.get('teams/' + teamId)
         # Return a Team object created from the response JSON data
@@ -169,8 +170,8 @@ class TeamsAPI(object):
         """Update details for a team.
 
         Args:
-            teamId(str): The teamId of the team to be updated.
-            name(str): A user-friendly name for the team.
+            teamId(basestring): The teamId of the team to be updated.
+            name(basestring): A user-friendly name for the team.
 
         Returns:
             Team: With the updated Spark team details.
@@ -182,7 +183,7 @@ class TeamsAPI(object):
 
         """
         # Process args
-        assert isinstance(teamId, str)
+        assert isinstance(teamId, basestring)
         # Process update_attributes keyword arguments
         if not update_attributes:
             error_message = "At least one **update_attributes keyword " \
@@ -198,7 +199,7 @@ class TeamsAPI(object):
         """Delete a team.
 
         Args:
-            teamId(str): The teamId of the team to be deleted.
+            teamId(basestring): The teamId of the team to be deleted.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
@@ -206,6 +207,6 @@ class TeamsAPI(object):
 
         """
         # Process args
-        assert isinstance(teamId, str)
+        assert isinstance(teamId, basestring)
         # API request
         self._session.delete('teams/' + teamId)

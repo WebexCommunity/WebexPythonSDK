@@ -10,6 +10,7 @@ from __future__ import (
     unicode_literals,
 )
 from builtins import *
+from past.builtins import basestring
 from future import standard_library
 standard_library.install_aliases()
 
@@ -44,10 +45,10 @@ def _fix_next_url(next_url):
     This patch parses the next_url to remove the max=null parameter.
 
     Args:
-        next_url(str): The 'next' URL to be parsed and cleaned.
+        next_url(basestring): The 'next' URL to be parsed and cleaned.
 
     Returns:
-        str: The clean URL to be used for the 'next' request.
+        basestring: The clean URL to be used for the 'next' request.
 
     Raises:
         AssertionError: If the parameter types are incorrect.
@@ -112,7 +113,7 @@ class RestSession(object):
 
     def get(self, url, params=None, **kwargs):
         # Process args
-        assert isinstance(url, str)
+        assert isinstance(url, basestring)
         assert params is None or isinstance(params, dict)
         abs_url = self.urljoin(url)
         # Process kwargs
@@ -128,7 +129,7 @@ class RestSession(object):
 
     def get_pages(self, url, params=None, **kwargs):
         # Process args
-        assert isinstance(url, str)
+        assert isinstance(url, basestring)
         assert params is None or isinstance(params, dict)
         abs_url = self.urljoin(url)
         # Process kwargs
@@ -171,7 +172,7 @@ class RestSession(object):
 
     def post(self, url, json=None, data=None, headers=None, **kwargs):
         # Process args
-        assert isinstance(url, str)
+        assert isinstance(url, basestring)
         abs_url = self.urljoin(url)
         # Process listed kwargs
         request_args = {}
@@ -200,7 +201,7 @@ class RestSession(object):
 
     def put(self, url, json, **kwargs):
         # Process args
-        assert isinstance(url, str)
+        assert isinstance(url, basestring)
         assert isinstance(json, dict)
         abs_url = self.urljoin(url)
         # Process kwargs
@@ -215,7 +216,7 @@ class RestSession(object):
 
     def delete(self, url, **kwargs):
         # Process args
-        assert isinstance(url, str)
+        assert isinstance(url, basestring)
         abs_url = self.urljoin(url)
         # Process kwargs
         timeout = kwargs.pop('timeout', self.timeout)

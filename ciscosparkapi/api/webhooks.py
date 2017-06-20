@@ -17,6 +17,7 @@ from __future__ import (
     unicode_literals,
 )
 from builtins import *
+from past.builtins import basestring
 
 from ciscosparkapi.exceptions import ciscosparkapiException
 from ciscosparkapi.utils import generator_container
@@ -37,7 +38,7 @@ class Webhook(SparkData):
         """Init a new Webhook data object from a JSON dictionary or string.
 
         Args:
-            json(dict, str): Input JSON object.
+            json(dict, basestring): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -169,13 +170,13 @@ class WebhooksAPI(object):
         """Create a webhook.
 
         Args:
-            name(str): A user-friendly name for this webhook.
-            targetUrl(str): The URL that receives POST requests for
+            name(basestring): A user-friendly name for this webhook.
+            targetUrl(basestring): The URL that receives POST requests for
                 each event.
-            resource(str): The resource type for the webhook.
-            event(str): The event type for the webhook.
-            filter(str): The filter that defines the webhook scope.
-            secret(str): secret used to generate payload signature.
+            resource(basestring): The resource type for the webhook.
+            event(basestring): The event type for the webhook.
+            filter(basestring): The filter that defines the webhook scope.
+            secret(basestring): secret used to generate payload signature.
 
         Returns:
             Webhook: With the details of the created webhook.
@@ -186,12 +187,12 @@ class WebhooksAPI(object):
 
         """
         # Process args
-        assert isinstance(name, str)
-        assert isinstance(targetUrl, str)
-        assert isinstance(resource, str)
-        assert isinstance(event, str)
-        assert filter is None or isinstance(filter, str)
-        assert secret is None or isinstance(secret, str)
+        assert isinstance(name, basestring)
+        assert isinstance(targetUrl, basestring)
+        assert isinstance(resource, basestring)
+        assert isinstance(event, basestring)
+        assert filter is None or isinstance(filter, basestring)
+        assert secret is None or isinstance(secret, basestring)
         post_data = {}
         post_data['name'] = name
         post_data['targetUrl'] = targetUrl
@@ -210,7 +211,7 @@ class WebhooksAPI(object):
         """Get the details of a webhook, by ID.
 
         Args:
-            webhookId(str): The webhookId of the webhook.
+            webhookId(basestring): The webhookId of the webhook.
 
         Returns:
             Webhook: With the details of the requested webhook.
@@ -221,7 +222,7 @@ class WebhooksAPI(object):
 
         """
         # Process args
-        assert isinstance(webhookId, str)
+        assert isinstance(webhookId, basestring)
         # API request
         json_obj = self._session.get('webhooks/' + webhookId)
         # Return a Webhook object created from the response JSON data
@@ -231,10 +232,10 @@ class WebhooksAPI(object):
         """Update details for a webhook.
 
         Args:
-            webhookId(str): The webhookId of the webhook to be
+            webhookId(basestring): The webhookId of the webhook to be
                 updated.
-            name(str): A user-friendly name for this webhook.
-            targetUrl(str): The URL that receives POST requests for
+            name(basestring): A user-friendly name for this webhook.
+            targetUrl(basestring): The URL that receives POST requests for
                 each event.
 
         Returns:
@@ -247,7 +248,7 @@ class WebhooksAPI(object):
 
         """
         # Process args
-        assert isinstance(webhookId, str)
+        assert isinstance(webhookId, basestring)
         # Process update_attributes keyword arguments
         if not update_attributes:
             error_message = "At least one **update_attributes keyword " \
@@ -263,7 +264,7 @@ class WebhooksAPI(object):
         """Delete a webhook.
 
         Args:
-            webhookId(str): The webhookId of the webhook to be
+            webhookId(basestring): The webhookId of the webhook to be
                 deleted.
 
         Raises:
@@ -272,6 +273,6 @@ class WebhooksAPI(object):
 
         """
         # Process args
-        assert isinstance(webhookId, str)
+        assert isinstance(webhookId, basestring)
         # API request
         self._session.delete('webhooks/' + webhookId)
