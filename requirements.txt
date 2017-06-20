@@ -6,3 +6,4 @@ pytest
 tox
 virtualenv
 flake8
+twine

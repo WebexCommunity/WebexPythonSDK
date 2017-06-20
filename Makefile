@@ -47,6 +47,7 @@ lint :
 # Git recipes
 .PHONY : push
 push :
+	git push origin
 	git push origin --tags
 
 
@@ -74,7 +75,7 @@ cleanpytest :
 clean-all : clean clean-dist ;
 
 .PHONY : clean-dist
-cleandist :
+clean-dist :
 	rm -rf ./dist/*
 
 .PHONY : clean-venv
