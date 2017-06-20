@@ -18,6 +18,7 @@ from __future__ import (
     unicode_literals,
 )
 from builtins import *
+from past.builtins import basestring
 from future import standard_library
 standard_library.install_aliases()
 
@@ -50,7 +51,7 @@ class AccessToken(SparkData):
         """Init a new AccessToken data object from a JSON dictionary or string.
 
         Args:
-            json(dict, str): Input JSON object.
+            json(dict, basestring): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -91,14 +92,14 @@ class AccessTokensAPI(object):
         """Init a new AccessTokensAPI object with the provided RestSession.
 
         Args:
-            base_url(str): The base URL the API endpoints.
+            base_url(basestring): The base URL the API endpoints.
             timeout(int): Timeout in seconds for the API requests.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
 
         """
-        assert isinstance(base_url, str)
+        assert isinstance(base_url, basestring)
         assert timeout is None or isinstance(timeout, int)
         super(AccessTokensAPI, self).__init__()
         self._base_url = str(validate_base_url(base_url))
@@ -122,13 +123,13 @@ class AccessTokensAPI(object):
         invoke the APIs.
 
         Args:
-            client_id(str): Provided when you created your
+            client_id(basestring): Provided when you created your
                 integration.
-            client_secret(str): Provided when you created your
+            client_secret(basestring): Provided when you created your
                 integration.
-            code(str): The Authorization Code provided by the user
+            code(basestring): The Authorization Code provided by the user
                 OAuth process.
-            redirect_uri(str): The redirect URI used in the user OAuth
+            redirect_uri(basestring): The redirect URI used in the user OAuth
                 process.
 
         Returns:
@@ -141,10 +142,10 @@ class AccessTokensAPI(object):
 
         """
         # Process args
-        assert isinstance(client_id, str)
-        assert isinstance(client_secret, str)
-        assert isinstance(code, str)
-        assert isinstance(redirect_uri, str)
+        assert isinstance(client_id, basestring)
+        assert isinstance(client_secret, basestring)
+        assert isinstance(code, basestring)
+        assert isinstance(redirect_uri, basestring)
         # Build request parameters
         data = {}
         data["grant_type"] = "authorization_code"
@@ -164,11 +165,11 @@ class AccessTokensAPI(object):
         """Return a refreshed Access Token via the provided refresh_token.
 
         Args:
-            client_id(str): Provided when you created your
+            client_id(basestring): Provided when you created your
                 integration.
-            client_secret(str): Provided when you created your
+            client_secret(basestring): Provided when you created your
                 integration.
-            refresh_token(str): Provided when you requested the Access
+            refresh_token(basestring): Provided when you requested the Access
                 Token.
 
         Returns:
@@ -181,9 +182,9 @@ class AccessTokensAPI(object):
 
         """
         # Process args
-        assert isinstance(client_id, str)
-        assert isinstance(client_secret, str)
-        assert isinstance(refresh_token, str)
+        assert isinstance(client_id, basestring)
+        assert isinstance(client_secret, basestring)
+        assert isinstance(refresh_token, basestring)
         # Build request parameters
         data = {}
         data["grant_type"] = "refresh_token"

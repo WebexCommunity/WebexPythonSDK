@@ -17,6 +17,7 @@ from __future__ import (
     unicode_literals,
 )
 from builtins import *
+from past.builtins import basestring
 
 from requests_toolbelt import MultipartEncoder
 
@@ -44,7 +45,7 @@ class Message(SparkData):
         """Init a new Message data object from a JSON dictionary or string.
 
         Args:
-            json(dict, str): Input JSON object.
+            json(dict, basestring): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -150,12 +151,12 @@ class MessagesAPI(object):
         container.
 
         Args:
-            roomId(str): List messages for the room with roomId.
-            mentionedPeople(str): List messages for a person, by
+            roomId(basestring): List messages for the room with roomId.
+            mentionedPeople(basestring): List messages for a person, by
                 personId or me.
-            before(str): List messages sent before a date and time,
+            before(basestring): List messages sent before a date and time,
                 in ISO8601 format
-            beforeMessage(str): List messages sent before a message,
+            beforeMessage(basestring): List messages sent before a message,
                 by message ID
             max(int): Limit the maximum number of messages returned from the
                 Spark service per request.
@@ -170,10 +171,10 @@ class MessagesAPI(object):
 
         """
         # Process args
-        assert isinstance(roomId, str)
+        assert isinstance(roomId, basestring)
         assert mentionedPeople is None or isinstance(mentionedPeople, list)
-        assert before is None or isinstance(before, str)
-        assert beforeMessage is None or isinstance(beforeMessage, str)
+        assert before is None or isinstance(before, basestring)
+        assert beforeMessage is None or isinstance(beforeMessage, basestring)
         assert max is None or isinstance(max, int)
         params = {}
         params['roomId'] = roomId
@@ -202,15 +203,15 @@ class MessagesAPI(object):
         markdown, files).
 
         Args:
-            roomId(str): The room ID.
-            toPersonId(str): The ID of the recipient when sending a
+            roomId(basestring): The room ID.
+            toPersonId(basestring): The ID of the recipient when sending a
                 private 1:1 message.
-            toPersonEmail(str): The email address of the recipient
+            toPersonEmail(basestring): The email address of the recipient
                 when sending a private 1:1 message.
-            text(str): The message, in plain text. If markdown is
+            text(basestring): The message, in plain text. If markdown is
                 specified this parameter may be optionally used to provide
                 alternate text forUI clients that do not support rich text.
-            markdown(str): The message, in markdown format.
+            markdown(basestring): The message, in markdown format.
             files(list): A list containing local paths or URL references for
                 the message attachment(s).  The files attribute currently only
                 takes a list containing one (1) filename or URL as an input.
@@ -228,11 +229,11 @@ class MessagesAPI(object):
 
         """
         # Process args
-        assert roomId is None or isinstance(roomId, str)
-        assert toPersonId is None or isinstance(toPersonId, str)
-        assert toPersonEmail is None or isinstance(toPersonEmail, str)
-        assert text is None or isinstance(text, str)
-        assert markdown is None or isinstance(markdown, str)
+        assert roomId is None or isinstance(roomId, basestring)
+        assert toPersonId is None or isinstance(toPersonId, basestring)
+        assert toPersonEmail is None or isinstance(toPersonEmail, basestring)
+        assert text is None or isinstance(text, basestring)
+        assert markdown is None or isinstance(markdown, basestring)
         assert files is None or isinstance(files, list)
         post_data = {}
         # Where is message to be posted?
@@ -293,7 +294,7 @@ class MessagesAPI(object):
         """Get the details of a message, by ID.
 
         Args:
-            messageId(str): The messageId of the message.
+            messageId(basestring): The messageId of the message.
 
         Returns:
             Message: With the details of the requested message.
@@ -304,7 +305,7 @@ class MessagesAPI(object):
 
         """
         # Process args
-        assert isinstance(messageId, str)
+        assert isinstance(messageId, basestring)
         # API request
         json_obj = self._session.get('messages/' + messageId)
         # Return a Message object created from the response JSON data
@@ -314,7 +315,7 @@ class MessagesAPI(object):
         """Delete a message.
 
         Args:
-            messageId(str): The messageId of the message to be
+            messageId(basestring): The messageId of the message to be
                 deleted.
 
         Raises:
@@ -323,6 +324,6 @@ class MessagesAPI(object):
 
         """
         # Process args
-        assert isinstance(messageId, str)
+        assert isinstance(messageId, basestring)
         # API request
         self._session.delete('messages/' + messageId)

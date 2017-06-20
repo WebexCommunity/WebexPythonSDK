@@ -18,6 +18,7 @@ from __future__ import (
     unicode_literals,
 )
 from builtins import *
+from past.builtins import basestring
 
 from ciscosparkapi.exceptions import ciscosparkapiException
 from ciscosparkapi.utils import generator_container
@@ -39,7 +40,7 @@ class TeamMembership(SparkData):
         """Init a new TeamMembership object from a JSON dictionary or string.
 
         Args:
-            json(dict, str): Input JSON object.
+            json(dict, basestring): Input JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -119,7 +120,7 @@ class TeamMembershipsAPI(object):
         container.
 
         Args:
-            teamId(str): List memberships for the team with teamId.
+            teamId(basestring): List memberships for the team with teamId.
             max(int): Limits the maximum number of memberships returned from
                 the Spark service per request.
 
@@ -134,7 +135,7 @@ class TeamMembershipsAPI(object):
 
         """
         # Process args
-        assert teamId is None or isinstance(teamId, str)
+        assert teamId is None or isinstance(teamId, basestring)
         assert max is None or isinstance(max, int)
         params = {}
         if teamId:
@@ -155,10 +156,10 @@ class TeamMembershipsAPI(object):
         them a moderator.
 
         Args:
-            teamId(str): ID of the team to which the person will be
+            teamId(basestring): ID of the team to which the person will be
                 added.
-            personId(str): ID of the person to be added to the team.
-            personEmail(str): Email address of the person to be added
+            personId(basestring): ID of the person to be added to the team.
+            personEmail(basestring): Email address of the person to be added
                 to the team.
             isModerator(bool): If True, adds the person as a moderator for the
                 team. If False, adds the person as normal member of the team.
@@ -174,9 +175,9 @@ class TeamMembershipsAPI(object):
 
         """
         # Process args
-        assert isinstance(teamId, str)
-        assert personId is None or isinstance(personId, str)
-        assert personEmail is None or isinstance(personEmail, str)
+        assert isinstance(teamId, basestring)
+        assert personId is None or isinstance(personId, basestring)
+        assert personEmail is None or isinstance(personEmail, basestring)
         assert isModerator is None or isinstance(isModerator, bool)
         post_data = {}
         post_data['teamId'] = teamId
@@ -198,7 +199,7 @@ class TeamMembershipsAPI(object):
         """Get details for a team membership by ID.
 
         Args:
-            membershipId(str): The membershipId of the team
+            membershipId(basestring): The membershipId of the team
                 membership.
 
         Returns:
@@ -210,7 +211,7 @@ class TeamMembershipsAPI(object):
 
         """
         # Process args
-        assert isinstance(membershipId, str)
+        assert isinstance(membershipId, basestring)
         # API request
         json_obj = self._session.get('team/memberships/' + membershipId)
         # Return a TeamMembership object created from the response JSON data
@@ -220,7 +221,7 @@ class TeamMembershipsAPI(object):
         """Update details for a team membership.
 
         Args:
-            membershipId(str): The membershipId of the team membership
+            membershipId(basestring): The membershipId of the team membership
                 to be updated.
             isModerator(bool): If True, sets the person as a moderator for the
                 team. If False, removes the person as a moderator for the team.
@@ -235,7 +236,7 @@ class TeamMembershipsAPI(object):
 
         """
         # Process args
-        assert isinstance(membershipId, str)
+        assert isinstance(membershipId, basestring)
         # Process update_attributes keyword arguments
         if not update_attributes:
             error_message = "At least one **update_attributes keyword " \
@@ -251,7 +252,7 @@ class TeamMembershipsAPI(object):
         """Delete a team membership, by ID.
 
         Args:
-            membershipId(str): The membershipId of the team membership
+            membershipId(basestring): The membershipId of the team membership
                 to be deleted.
 
         Raises:
@@ -260,6 +261,6 @@ class TeamMembershipsAPI(object):
 
         """
         # Process args
-        assert isinstance(membershipId, str)
+        assert isinstance(membershipId, basestring)
         # API request
         self._session.delete('team/memberships/' + membershipId)

@@ -10,6 +10,7 @@ from __future__ import (
     unicode_literals,
 )
 from builtins import *
+from past.builtins import basestring
 
 from collections import namedtuple
 import functools
@@ -52,7 +53,7 @@ def validate_base_url(base_url):
 
 def is_web_url(string):
     """Check to see if string is an validly-formatted web url."""
-    assert isinstance(string, str)
+    assert isinstance(string, basestring)
     parsed_url = urllib.parse.urlparse(string)
     return ((parsed_url.scheme.lower() == 'http' or
              parsed_url.scheme.lower() == 'https') and
@@ -61,13 +62,13 @@ def is_web_url(string):
 
 def is_local_file(string):
     """Check to see if string is a valid local file path."""
-    assert isinstance(string, str)
+    assert isinstance(string, basestring)
     return os.path.isfile(string)
 
 
 def open_local_file(file_path):
     """Open the file and return an EncodableFile tuple."""
-    assert isinstance(file_path, str)
+    assert isinstance(file_path, basestring)
     assert is_local_file(file_path)
     file_name = os.path.basename(file_path)
     file_object = open(file_path, 'rb')
