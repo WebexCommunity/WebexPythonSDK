@@ -58,6 +58,7 @@ clean : cleanbuild cleandocs cleanpytest cleantox ;
 .PHONY : cleanbuild
 cleanbuild :
 	rm -rf ./ciscosparkapi.egg-info/
+	rm -rf ./__pycache__/
 
 .PHONY : cleandocs
 cleandocs :
