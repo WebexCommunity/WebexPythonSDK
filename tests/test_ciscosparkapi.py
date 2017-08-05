@@ -60,12 +60,37 @@ class TestCiscoSparkAPI:
 
     def test_default_timeout(self):
         connection_object = ciscosparkapi.CiscoSparkAPI()
-        assert connection_object.timeout == ciscosparkapi.DEFAULT_TIMEOUT
+        assert connection_object.timeout == \
+               ciscosparkapi.DEFAULT_SINGLE_REQUEST_TIMEOUT
 
     def test_custom_timeout(self):
         custom_timeout = 10
         connection_object = ciscosparkapi.CiscoSparkAPI(timeout=custom_timeout)
         assert connection_object.timeout == custom_timeout
+
+    def test_default_single_request_timeout(self):
+        connection_object = ciscosparkapi.CiscoSparkAPI()
+        assert connection_object.single_request_timeout == \
+               ciscosparkapi.DEFAULT_SINGLE_REQUEST_TIMEOUT
+
+    def test_custom_single_request_timeout(self):
+        custom_timeout = 10
+        connection_object = ciscosparkapi.CiscoSparkAPI(
+                single_request_timeout=custom_timeout
+        )
+        assert connection_object.single_request_timeout == custom_timeout
+
+    def test_default_rate_limit_timeout(self):
+        connection_object = ciscosparkapi.CiscoSparkAPI()
+        assert connection_object.rate_limit_timeout == \
+               ciscosparkapi.DEFAULT_RATE_LIMIT_TIMEOUT
+
+    def test_custom_rate_limit_timeout(self):
+        custom_timeout = 10
+        connection_object = ciscosparkapi.CiscoSparkAPI(
+                rate_limit_timeout=custom_timeout
+        )
+        assert connection_object.rate_limit_timeout == custom_timeout
 
     # Test creation of component API objects
 

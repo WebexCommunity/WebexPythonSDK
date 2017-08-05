@@ -33,6 +33,7 @@ SPARK_RESPONSE_CODES = {
     409: "The request could not be processed because it conflicts with some "
          "established rule of the system. For example, a person may not be "
          "added to a room more than once.",
+    429: "Rate limit exceeded.",
     500: "Something went wrong on the server.",
     503: "Server is overloaded with requests. Try again later."
 }
