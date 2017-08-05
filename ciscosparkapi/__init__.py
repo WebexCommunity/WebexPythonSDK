@@ -12,6 +12,7 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
+import logging
 import os
 
 from ciscosparkapi.exceptions import ciscosparkapiException, SparkApiError
@@ -49,6 +50,12 @@ DEFAULT_TIMEOUT = 60
 ACCESS_TOKEN_ENVIRONMENT_VARIABLE = 'SPARK_ACCESS_TOKEN'
 
 
+# Initialize Package Logging
+logger = logging.getLogger(__name__)
+logger.addHandler(logging.NullHandler())
+
+
+# Main Package Interface
 class CiscoSparkAPI(object):
     """Cisco Spark API wrapper.
 
