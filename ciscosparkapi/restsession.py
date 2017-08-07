@@ -267,8 +267,8 @@ class RestSession(object):
                 if e.response_code == RATE_LIMIT_EXCEEDED_RESPONSE_CODE \
                         and response.headers.get('Retry-After'):
 
-                    logger.debug("Received a [{}] {} response."
-                                 "".format(e.response_code, e.response_text))
+                    logger.debug("Received a [%s] rate limit response. "
+                                 "Attempting to retry.", e.response_code)
 
                     rate_limit_wait = response.headers['Retry-After']
 
