@@ -184,18 +184,23 @@ class RestSession(object):
         assert isinstance(headers, dict)
         self._req_session.headers.update(headers)
 
-    def abs_url(self, relative_url):
+    def abs_url(self, url):
         """Convert a relative URL to an absolute URL.
 
         Args:
-            relative_url(basestring): A relative URL.
+            url(basestring): A relative URL.
 
         Returns:
             str: An absolute URL.
 
         """
-        return urllib.parse.urljoin(str(self.base_url),
-                                    str(relative_url))
+        parsed_url = urllib.parse.urlparse(url)
+        if not parsed_url.scheme and not parsed_url.netloc:
+            # url is a relative URL; combine with base_url
+            return urllib.parse.urljoin(str(self.base_url), str(url))
+        else:
+            # url is already an absolute URL; return as is
+            return url
 
     def request(self, method, relative_url, erc, **kwargs):
         """Abstract base method for making requests to the Cisco Spark APIs.
