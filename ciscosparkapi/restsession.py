@@ -66,17 +66,22 @@ def _fix_next_url(next_url):
     """
     next_url = str(next_url)
     parsed_url = urllib.parse.urlparse(next_url)
+
     if not parsed_url.scheme or not parsed_url.netloc or not parsed_url.path:
         error_message = "'next_url' must be a valid API endpoint URL, " \
                         "minimally containing a scheme, netloc and path."
         raise ciscosparkapiException(error_message)
+
     if parsed_url.query:
         query_list = parsed_url.query.split('&')
         if 'max=null' in query_list:
             query_list.remove('max=null')
+            warnings.warn("`max=null` still present in next-URL returned "
+                          "from Cisco Spark", ResourceWarning)
         new_query = '&'.join(query_list)
         parsed_url = list(parsed_url)
         parsed_url[4] = new_query
+
     return urllib.parse.urlunparse(parsed_url)
 
 
@@ -340,9 +345,11 @@ class RestSession(object):
             if response.links.get('next'):
                 next_url = response.links.get('next').get('url')
 
-                # TODO: Test to see if fix is still needed.
                 # Patch for Cisco Spark 'max=null' in next URL bug.
-                # url = _fix_next_url(next_url)
+                # Testing shows that patch is no longer needed; raising a
+                # warnning if it is still taking effect;
+                # considering for future removal
+                url = _fix_next_url(next_url)
 
                 # Subsequent requests
                 response = self.request('GET', next_url, erc, **kwargs)
