@@ -147,11 +147,11 @@ class CiscoSparkAPI(object):
         # leverage a single RESTful 'session' connecting to the Cisco Spark
         # cloud.
         self._session = RestSession(
-                access_token,
-                base_url,
-                timeout=timeout,
-                single_request_timeout=single_request_timeout,
-                rate_limit_timeout=rate_limit_timeout,
+            access_token,
+            base_url,
+            timeout=timeout,
+            single_request_timeout=single_request_timeout,
+            rate_limit_timeout=rate_limit_timeout,
         )
 
         # Spark API wrappers
