@@ -37,8 +37,8 @@ __license__ = "MIT"
 
 
 # Module Constants
-DEFAULT_SINGLE_REQUEST_TIMEOUT = 20
-DEFAULT_RATE_LIMIT_TIMEOUT = 60
+DEFAULT_SINGLE_REQUEST_TIMEOUT = 20.0
+DEFAULT_RATE_LIMIT_TIMEOUT = 60.0
 RATE_LIMIT_EXCEEDED_RESPONSE_CODE = 429
 
 
@@ -96,9 +96,9 @@ class RestSession(object):
 
         # Initialize attributes and properties
         self._base_url = str(validate_base_url(base_url))
-        self._access_token = access_token
-        self._single_request_timeout = single_request_timeout
-        self._rate_limit_timeout = rate_limit_timeout
+        self._access_token = str(access_token)
+        self._single_request_timeout = float(single_request_timeout)
+        self._rate_limit_timeout = float(rate_limit_timeout)
         if timeout:
             self.timeout = timeout
 
@@ -144,7 +144,7 @@ class RestSession(object):
                       "the 'single_request_timeout' instead.",
                       DeprecationWarning)
         assert value is None or value > 0
-        self._single_request_timeout = value
+        self._single_request_timeout = float(value)
 
     @property
     def single_request_timeout(self):
