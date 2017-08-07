@@ -85,13 +85,27 @@ def _fix_next_url(next_url):
     return urllib.parse.urlunparse(parsed_url)
 
 
+# Main module interface
 class RestSession(object):
     """RESTful HTTP session class for making calls to the Cisco Spark APIs."""
 
     def __init__(self, access_token, base_url, timeout=None,
                  single_request_timeout=DEFAULT_SINGLE_REQUEST_TIMEOUT,
                  rate_limit_timeout=DEFAULT_RATE_LIMIT_TIMEOUT):
-        """Initialize a new RestSession object."""
+        """Initialize a new RestSession object.
+
+        Args:
+            access_token(basestring): The Spark access token to be used for
+                this session.
+            base_url(basestring): The base URL that will be suffixed onto the
+                API endpoint relative URLs to produce a callable absolute URL.
+            timeout: [Deprecated] The timeout (seconds) for an API request.
+            single_request_timeout(float): The timeout (seconds) for a single
+                HTTP REST API request.
+            rate_limit_timeout(float): Maximum time (seconds) to wait for a
+                response with rate-limit handling.
+
+        """
         super(RestSession, self).__init__()
 
         # Initialize attributes and properties
