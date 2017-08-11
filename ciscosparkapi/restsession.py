@@ -39,7 +39,8 @@ __license__ = "MIT"
 # Module Constants
 DEFAULT_SINGLE_REQUEST_TIMEOUT = 20.0
 DEFAULT_RATE_LIMIT_TIMEOUT = 60.0
-RATE_LIMIT_EXCEEDED_RESPONSE_CODE = 429
+RATE_LIMIT_RESPONSE_CODE = 429
+RATE_LIMIT_LOG_MESSAGE = "Received a [%s] rate-limit response code."
 
 
 # Helper Functions
@@ -251,7 +252,6 @@ class RestSession(object):
         kwargs.setdefault('timeout', self.single_request_timeout)
 
         start_time = time.time()
-        finish_time = start_time + self.rate_limit_timeout
 
         while True:
             # Make the HTTP request to the API endpoint
@@ -264,23 +264,25 @@ class RestSession(object):
             except SparkApiError as e:
 
                 # Catch rate-limit errors
-                if e.response_code == RATE_LIMIT_EXCEEDED_RESPONSE_CODE \
+                if e.response_code == RATE_LIMIT_RESPONSE_CODE \
                         and response.headers.get('Retry-After'):
 
-                    logger.debug("Received a [%s] rate limit response. "
-                                 "Attempting to retry.", e.response_code)
+                    logger.debug(RATE_LIMIT_LOG_MESSAGE,
+                                 e.response_code)
 
-                    rate_limit_wait = response.headers['Retry-After']
+                    rate_limit_wait = float(response.headers['Retry-After'])
 
                     if self.rate_limit_timeout is None:
                         # Retry indefinitely
-                        logger.debug("Waiting {:0.3f} seconds. "
-                                     "rate_limit_timeout is None; "
+                        logger.debug("Rate-limiting; waiting {:0.3f} seconds. "
+                                     "rate_limit_timeout is None. "
                                      "will retry indefinitely."
                                      "".format(rate_limit_wait))
                         time.sleep(rate_limit_wait)
                         continue
-                    elif time.time() + rate_limit_wait < finish_time:
+
+                    elif (time.time() + rate_limit_wait
+                            < start_time + self.rate_limit_timeout):
                         # Retry if doing so will not exceed the finish time
                         logger.debug("Waiting {:0.3f} seconds. "
                                      "rate_limit_timeout is {:0.3f} seconds, "
@@ -291,6 +293,7 @@ class RestSession(object):
                                                finish_time - time.time()))
                         time.sleep(rate_limit_wait)
                         continue
+
                     else:
                         # Time exceeded re-raise the rate limit SparkApiError
                         raise
@@ -301,6 +304,8 @@ class RestSession(object):
 
             else:
                 # No errors - return the response object
+                logger.debug("Response Code [%s]: %s",
+                             response.status_code, response.url)
                 return response
 
     def get(self, url, params=None, **kwargs):

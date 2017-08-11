@@ -6,13 +6,10 @@ import logging
 
 import pytest
 
-from ciscosparkapi.exceptions import SPARK_RESPONSE_CODES
-
-# Constants
-RATE_LIMIT_RESPONSE_CODE = 429
-RATE_LIMIT_RESPONSE_TEXT = SPARK_RESPONSE_CODES[RATE_LIMIT_RESPONSE_CODE]
-RATE_LIMIT_LOG_MESSAGE = ("Received a [%s] rate limit response. "
-                          "Attempting to retry.")
+from ciscosparkapi.restsession import (
+    RATE_LIMIT_RESPONSE_CODE,
+    RATE_LIMIT_LOG_MESSAGE
+)
 
 
 # Helper Classes
@@ -39,7 +36,13 @@ class TestRestSession:
     """Test edge cases of core RestSession functionality."""
 
     @pytest.mark.ratelimit
-    def test_rate_limit_support(self, api, rooms_list, add_rooms):
+    def test_rate_limit_retry_indefinitely(self, api, rooms_list, add_rooms):
+        logger = logging.getLogger(__name__)
+
+        # Save state and initialize test setup
+        original_rate_limit_timer = api._session.rate_limit_timeout
+        api._session.rate_limit_timeout = None
+
         # Add log handler
         root_logger = logging.getLogger()
         rate_limit_detector = RateLimitDetector()
@@ -48,13 +51,19 @@ class TestRestSession:
         try:
             # Try and trigger a rate-limit
             rooms = api.rooms.list(max=1)
+            request_count = 0
             while not rate_limit_detector.rate_limit_detected:
                 for room in rooms:
-                    # Do nothing
-                    pass
+                    request_count += 1
+                    if rate_limit_detector.rate_limit_detected:
+                        break
 
         finally:
-            # Remove the log handler
+            logger.info("Rate-limit reached with approximately %s requests.",
+                        request_count)
+            # Remove the log handler and restore the pre-test state
             root_logger.removeHandler(rate_limit_detector)
+            api._session.rate_limit_timeout = original_rate_limit_timer
 
+        # Assert test condition
         assert rate_limit_detector.rate_limit_detected == True
