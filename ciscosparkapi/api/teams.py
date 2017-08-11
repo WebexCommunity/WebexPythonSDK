@@ -191,7 +191,7 @@ class TeamsAPI(object):
             raise ciscosparkapiException(error_message)
         # API request
         json_obj = self._session.put('teams/' + teamId,
-                                      json=update_attributes)
+                                     json=update_attributes)
         # Return a Team object created from the response JSON data
         return Team(json_obj)
 
