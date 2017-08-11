@@ -56,52 +56,52 @@ def update_person(api, person, **person_attributes):
 
 
 def delete_person(api, person):
-    # Temporarily disabling test account deletion to workon account
-    # capabilities issues.
-    # TODO: Enable test account clean-up.
-    # api.people.delete(person.id)
-    pass
+    api.people.delete(person.id)
 
 
-def get_new_test_person(api, get_new_email_address, licenses_dict):
-    person_email = get_new_email_address()
-    person = get_person_by_email(api, person_email)
-    if person:
-        return person
-    else:
-        emails = [person_email]
-        display_name = "ciscosparkapi"
-        first_name = "ciscosparkapi"
-        last_name = "ciscosparkapi"
-        licenses = [licenses_dict["Messaging"].id]
-        person = create_person(api, emails,
-                               displayName=display_name,
-                               firstName=first_name,
-                               lastName=last_name,
-                               licenses=licenses)
-        assert is_valid_person(person)
-        return person
+# pytest Fixtures
+
+@pytest.fixture(scope="session")
+def me(api):
+    return api.people.me()
+
+@pytest.fixture(scope="session")
+def get_new_test_person(api, get_new_email_address, me, licenses_dict):
+
+    def inner_function():
+        person_email = get_new_email_address()
+        person = get_person_by_email(api, person_email)
+        if person:
+            return person
+        else:
+            person = create_person(api,
+                                   emails=[person_email],
+                                   displayName="ciscosparkapi",
+                                   firstName="ciscosparkapi",
+                                   lastName="ciscosparkapi",
+                                   orgId=me.orgId,
+                                   licenses=[licenses_dict["Messaging"].id],
+                                   )
+            assert is_valid_person(person)
+            return person
+
+    return inner_function
 
 
-# Helper Classes
-
-class TestPeople(object):
+class PeopleManager(object):
     """Creates, tracks and manages test accounts 'people' used by the tests."""
 
-    def __init__(self, api, get_new_email_address, licenses_dict):
-        super(TestPeople, self).__init__()
+    def __init__(self, api, get_new_test_person):
+        super(PeopleManager, self).__init__()
         self._api = api
-        self._get_new_email_address = get_new_email_address
-        self._licenses_dict = licenses_dict
+        self._get_new_test_person = get_new_test_person
         self.test_people = {}
 
     def __getitem__(self, item):
         if self.test_people.get(item):
             return self.test_people[item]
         else:
-            new_test_person = get_new_test_person(self._api,
-                                                  self._get_new_email_address,
-                                                  self._licenses_dict)
+            new_test_person = self._get_new_test_person()
             self.test_people[item] = new_test_person
             return new_test_person
 
@@ -118,26 +118,18 @@ class TestPeople(object):
     def __del__(self):
         for person in self.test_people.values():
             delete_person(self._api, person)
-            pass
-
-
-# pytest Fixtures
-
-@pytest.fixture(scope="session")
-def me(api):
-    return api.people.me()
 
 
 @pytest.fixture(scope="session")
-def test_people(api, get_new_email_address, licenses_dict):
-    test_people = TestPeople(api, get_new_email_address, licenses_dict)
+def test_people(api, get_new_test_person):
+    test_people = PeopleManager(api, get_new_test_person)
     yield test_people
     del test_people
 
 
 @pytest.fixture()
-def temp_person(api, get_new_email_address, licenses_dict):
-    person = get_new_test_person(api, get_new_email_address, licenses_dict)
+def temp_person(api, get_new_test_person):
+    person = get_new_test_person()
     yield person
     delete_person(api, person)
 
