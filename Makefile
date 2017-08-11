@@ -31,13 +31,11 @@ tests: toxtest lint ;
 
 .PHONY : toxtest
 toxtest : local/environment.sh tox.ini
-	source local/environment.sh
-	tox
+	source local/environment.sh && tox
 
 .PHONY : pytest
 pytest : local/environment.sh
-	source local/environment.sh
-	pytest
+	source local/environment.sh && pytest
 
 .PHONY : lint
 lint :
