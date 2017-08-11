@@ -101,13 +101,8 @@ class TeamMembershipsAPI(object):
         self._session = session
 
     @generator_container
-    def list(self, teamId=None, max=None):
-        """Lists all team memberships.
-
-        By default, lists memberships for teams to which the authenticated user
-        belongs.
-
-        Use teamId to list memberships for a team, by ID.
+    def list(self, teamId, max=None):
+        """List team memberships for a team, by ID.
 
         This method supports Cisco Spark's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
@@ -135,11 +130,10 @@ class TeamMembershipsAPI(object):
 
         """
         # Process args
-        assert teamId is None or isinstance(teamId, basestring)
+        assert isinstance(teamId, basestring)
         assert max is None or isinstance(max, int)
         params = {}
-        if teamId:
-            params['teamId'] = teamId
+        params['teamId'] = teamId
         if max:
             params['max'] = max
         # API request - get items

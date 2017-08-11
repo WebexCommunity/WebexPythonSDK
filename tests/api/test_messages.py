@@ -106,9 +106,10 @@ def group_room_markdown_message(group_room, send_group_room_message, me,
     # Uses / depends on group_room_text_message to ensure this message is
     # created after group_room_text_message, so that we can be sure that a
     # message exists 'before' this one - used to test 'before' list filters.
-    mention_email = me.emails[0]
-    markdown = create_string("<personEmail:{}>, This is **markdown** with a "
-                             "mention.".format(mention_email))
+    markdown = create_string("<@personEmail:{email}|{name}>, This is "
+                             "**markdown** with a mention."
+                             "".format(email=me.emails[0],
+                                       name=me.displayName))
     return send_group_room_message(group_room.id, markdown=markdown)
 
 
@@ -204,9 +205,9 @@ class TestMessagesAPI(object):
         assert len(messages_list) == num_messages
         assert are_valid_messages(messages_list)
 
-    # TODO: Investigate API list messages with 'me' mentions not working
-    # def test_list_messages_with_me_mention(self, api, group_room, me):
-    #     messages = list_messages(api, group_room.id, mentionedPeople=["me"])
-    #     messages_list = list(messages)
-    #     assert len(messages_list) >= 1
-    #     assert are_valid_messages(messages_list)
+    def test_list_messages_mentioning_me(self, api, group_room,
+                                         group_room_markdown_message):
+        messages = list_messages(api, group_room.id, mentionedPeople=["me"])
+        messages_list = list(messages)
+        assert len(messages_list) >= 1
+        assert are_valid_messages(messages_list)

@@ -76,15 +76,6 @@ def my_team_membership(api, me, team):
         if membership.personId == me.id:
             return membership
 
-# Cisco Spark API Documentation says that you should be able to retrieve a list
-# of all of your team memberships; however, calling the API endpoint without
-# specifying a teamId returns an error (and the docs say that a teamId is
-# required).  #DocumentationBug
-# TODO: Report documentation / API bug on retrieving a user's team memberships
-# @pytest.fixture(scope="session")
-# def authenticated_user_team_memberships(api, team):
-#     return list(api.team_memberships.list())
-
 
 @pytest.fixture(scope="session")
 def make_me_team_moderator(api, my_team_membership):
