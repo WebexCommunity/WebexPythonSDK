@@ -6,11 +6,6 @@ import logging
 
 import pytest
 
-from ciscosparkapi.restsession import (
-    RATE_LIMIT_RESPONSE_CODE,
-    RATE_LIMIT_LOG_MESSAGE
-)
-
 
 # Helper Classes
 class RateLimitDetector(logging.Handler):
@@ -25,9 +20,7 @@ class RateLimitDetector(logging.Handler):
         """Check record to see if it is a rate-limit message."""
         assert isinstance(record, logging.LogRecord)
 
-        if (RATE_LIMIT_RESPONSE_CODE in record.args
-                and record.msg == RATE_LIMIT_LOG_MESSAGE):
-
+        if record.msg.startswith("Received rate-limit message"):
             self.rate_limit_detected = True
 
 

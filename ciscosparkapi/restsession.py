@@ -21,9 +21,13 @@ import warnings
 
 import requests
 
-from ciscosparkapi.exceptions import ciscosparkapiException, SparkApiError
+from ciscosparkapi.exceptions import (
+    ciscosparkapiException,
+    SparkApiError,
+    SparkRateLimitError,
+)
+from ciscosparkapi.responsecodes import EXPECTED_RESPONSE_CODE
 from ciscosparkapi.utils import (
-    ERC,
     validate_base_url,
     check_response_code,
     extract_and_parse_json,
@@ -37,10 +41,8 @@ __license__ = "MIT"
 
 
 # Module Constants
-DEFAULT_SINGLE_REQUEST_TIMEOUT = 20.0
-DEFAULT_RATE_LIMIT_TIMEOUT = 60.0
-RATE_LIMIT_RESPONSE_CODE = 429
-RATE_LIMIT_LOG_MESSAGE = "Received a [%s] rate-limit response code."
+DEFAULT_SINGLE_REQUEST_TIMEOUT = 60.0
+DEFAULT_WAIT_ON_RATE_LIMIT = True
 
 
 # Helper Functions
@@ -78,7 +80,7 @@ def _fix_next_url(next_url):
         if 'max=null' in query_list:
             query_list.remove('max=null')
             warnings.warn("`max=null` still present in next-URL returned "
-                          "from Cisco Spark", ResourceWarning)
+                          "from Cisco Spark", Warning)
         new_query = '&'.join(query_list)
         parsed_url = list(parsed_url)
         parsed_url[4] = new_query
@@ -92,28 +94,35 @@ class RestSession(object):
 
     def __init__(self, access_token, base_url, timeout=None,
                  single_request_timeout=DEFAULT_SINGLE_REQUEST_TIMEOUT,
-                 rate_limit_timeout=DEFAULT_RATE_LIMIT_TIMEOUT):
+                 wait_on_rate_limit=DEFAULT_WAIT_ON_RATE_LIMIT):
         """Initialize a new RestSession object.
 
         Args:
             access_token(basestring): The Spark access token to be used for
                 this session.
-            base_url(basestring): The base URL that will be suffixed onto the
-                API endpoint relative URLs to produce a callable absolute URL.
+            base_url(basestring): The base URL that will be suffixed onto API
+                endpoint relative URLs to produce a callable absolute URL.
             timeout: [Deprecated] The timeout (seconds) for an API request.
             single_request_timeout(float): The timeout (seconds) for a single
                 HTTP REST API request.
-            rate_limit_timeout(float): Maximum time (seconds) to wait for a
-                response with rate-limit handling.
+            wait_on_rate_limit(bool): Enable or disable automatic rate-limit
+                handling.
 
         """
+        assert isinstance(access_token, basestring)
+        assert isinstance(base_url, basestring)
+        assert timeout is None or isinstance(timeout, (int, float))
+        assert (single_request_timeout is None or
+                isinstance(single_request_timeout, (int, float)))
+        assert isinstance(wait_on_rate_limit, bool)
+
         super(RestSession, self).__init__()
 
         # Initialize attributes and properties
         self._base_url = str(validate_base_url(base_url))
         self._access_token = str(access_token)
-        self._single_request_timeout = float(single_request_timeout)
-        self._rate_limit_timeout = float(rate_limit_timeout)
+        self._single_request_timeout = single_request_timeout
+        self._wait_on_rate_limit = wait_on_rate_limit
         if timeout:
             self.timeout = timeout
 
@@ -169,19 +178,27 @@ class RestSession(object):
     @single_request_timeout.setter
     def single_request_timeout(self, value):
         """The timeout (seconds) for a single HTTP REST API request."""
-        assert value is None or value > 0
-        self._single_request_timeout = value
+        assert (value is None or
+                (isinstance(value, (int, float)) and value > 0.0))
+        self._single_request_timeout = float(value)
 
     @property
-    def rate_limit_timeout(self):
-        """Maximum time (s) to wait for a response with rate-limit handling."""
-        return self._rate_limit_timeout
+    def wait_on_rate_limit(self):
+        """Automatic rate-limit handling.
 
-    @rate_limit_timeout.setter
-    def rate_limit_timeout(self, value):
-        """Maximum time (s) to wait for a response with rate-limit handling."""
-        assert value is None or value > 0
-        self._rate_limit_timeout = value
+        This setting enables or disables automatic rate-limit handling.  When
+        enabled, rate-limited requests will be automatically be retried after
+        waiting `Retry-After` seconds (provided by Cisco Spark in the
+        rate-limit response header).
+
+        """
+        return self._wait_on_rate_limit
+
+    @wait_on_rate_limit.setter
+    def wait_on_rate_limit(self, value):
+        """Enable or disable automatic rate-limit handling."""
+        assert isinstance(value, bool)
+        self._wait_on_rate_limit = value
 
     @property
     def headers(self):
@@ -204,10 +221,10 @@ class RestSession(object):
         self._req_session.headers.update(headers)
 
     def abs_url(self, url):
-        """Convert a relative URL to an absolute URL.
+        """Given a relative or absolute URL; return an absolute URL.
 
         Args:
-            url(basestring): A relative URL.
+            url(basestring): A relative or absolute URL.
 
         Returns:
             str: An absolute URL.
@@ -221,19 +238,18 @@ class RestSession(object):
             # url is already an absolute URL; return as is
             return url
 
-    def request(self, method, relative_url, erc, **kwargs):
+    def request(self, method, url, erc, **kwargs):
         """Abstract base method for making requests to the Cisco Spark APIs.
 
         This base method:
-            * Expands the relative API endpoint URL to an absolute URL
+            * Expands the API endpoint URL to an absolute URL
             * Makes the actual HTTP request to the API endpoint
             * Provides support for Spark rate-limiting
             * Inspects response codes and raises exceptions as appropriate
 
         Args:
             method(basestring): The request-method type ('GET', 'POST', etc.).
-            relative_url(basestring): The relative URL of the API endpoint to
-                be called.
+            url(basestring): The URL of the API endpoint to be called.
             erc(int): The expected response code that should be returned by the
                 Cisco Spark API endpoint to indicate success.
             **kwargs: Passed on to the requests package.
@@ -245,13 +261,11 @@ class RestSession(object):
         """
         logger = logging.getLogger(__name__)
 
-        # Expand the relative API endpoint URL to an absolute URL
-        abs_url = self.abs_url(relative_url)
+        # Ensure the url is an absolute URL
+        abs_url = self.abs_url(url)
 
         # Update request kwargs with session defaults
         kwargs.setdefault('timeout', self.single_request_timeout)
-
-        start_time = time.time()
 
         while True:
             # Make the HTTP request to the API endpoint
@@ -261,58 +275,29 @@ class RestSession(object):
                 # Check the response code for error conditions
                 check_response_code(response, erc)
 
-            except SparkApiError as e:
-
+            except SparkRateLimitError as e:
                 # Catch rate-limit errors
-                if e.response_code == RATE_LIMIT_RESPONSE_CODE \
-                        and response.headers.get('Retry-After'):
 
-                    logger.debug(RATE_LIMIT_LOG_MESSAGE,
-                                 e.response_code)
-
-                    rate_limit_wait = float(response.headers['Retry-After'])
-
-                    if self.rate_limit_timeout is None:
-                        # Retry indefinitely
-                        logger.debug("Rate-limiting; waiting {:0.3f} seconds. "
-                                     "rate_limit_timeout is None. "
-                                     "will retry indefinitely."
-                                     "".format(rate_limit_wait))
-                        time.sleep(rate_limit_wait)
-                        continue
-
-                    elif (time.time() + rate_limit_wait
-                            < start_time + self.rate_limit_timeout):
-                        # Retry if doing so will not exceed the finish time
-                        logger.debug("Waiting {:0.3f} seconds. "
-                                     "rate_limit_timeout is {:0.3f} seconds, "
-                                     "maximum time remaining for this request "
-                                     "is {:0.3f} seconds."
-                                     "".format(rate_limit_wait,
-                                               self.rate_limit_timeout,
-                                               finish_time - time.time()))
-                        time.sleep(rate_limit_wait)
-                        continue
-
-                    else:
-                        # Time exceeded re-raise the rate limit SparkApiError
-                        raise
+                # Wait and retry if automatic rate-limit handling is enabled
+                if self.wait_on_rate_limit and e.retry_after:
+                    logger.info("Received rate-limit message; "
+                                "waiting {:0.0f} seconds."
+                                "".format(e.retry_after))
+                    time.sleep(e.retry_after)
+                    continue
 
                 else:
-                    # Some other SparkApiError (re-raise)
+                    # Re-raise the SparkRateLimitError
                     raise
 
             else:
-                # No errors - return the response object
-                logger.debug("Response Code [%s]: %s",
-                             response.status_code, response.url)
                 return response
 
     def get(self, url, params=None, **kwargs):
         """Sends a GET request.
 
         Args:
-            url(basestring): The relative URL of the API endpoint.
+            url(basestring): The URL of the API endpoint.
             params(dict): The parameters for the HTTP GET request.
             **kwargs:
                 erc(int): The expected (success) response code for the request.
@@ -327,7 +312,7 @@ class RestSession(object):
         assert params is None or isinstance(params, dict)
 
         # Expected response code
-        erc = kwargs.pop('erc', ERC['GET'])
+        erc = kwargs.pop('erc', EXPECTED_RESPONSE_CODE['GET'])
 
         response = self.request('GET', url, erc, params=params, **kwargs)
         return extract_and_parse_json(response)
@@ -338,7 +323,7 @@ class RestSession(object):
         Provides native support for RFC5988 Web Linking.
 
         Args:
-            url(basestring): The relative URL of the API endpoint.
+            url(basestring): The URL of the API endpoint.
             params(dict): The parameters for the HTTP GET request.
             **kwargs:
                 erc(int): The expected (success) response code for the request.
@@ -353,7 +338,7 @@ class RestSession(object):
         assert params is None or isinstance(params, dict)
 
         # Expected response code
-        erc = kwargs.pop('erc', ERC['GET'])
+        erc = kwargs.pop('erc', EXPECTED_RESPONSE_CODE['GET'])
 
         # First request
         response = self.request('GET', url, erc, params=params, **kwargs)
@@ -368,7 +353,7 @@ class RestSession(object):
                 # Testing shows that patch is no longer needed; raising a
                 # warnning if it is still taking effect;
                 # considering for future removal
-                url = _fix_next_url(next_url)
+                next_url = _fix_next_url(next_url)
 
                 # Subsequent requests
                 response = self.request('GET', next_url, erc, **kwargs)
@@ -385,7 +370,7 @@ class RestSession(object):
         been returned.
 
         Args:
-            url(basestring): The relative URL of the API endpoint.
+            url(basestring): The URL of the API endpoint.
             params(dict): The parameters for the HTTP GET request.
             **kwargs:
                 erc(int): The expected (success) response code for the request.
@@ -419,7 +404,7 @@ class RestSession(object):
         """Sends a POST request.
 
         Args:
-            url(basestring): The relative URL of the API endpoint.
+            url(basestring): The URL of the API endpoint.
             json: Data to be sent in JSON format in tbe body of the request.
             data: Data to be sent in the body of the request.
             **kwargs:
@@ -434,7 +419,7 @@ class RestSession(object):
         assert isinstance(url, basestring)
 
         # Expected response code
-        erc = kwargs.pop('erc', ERC['POST'])
+        erc = kwargs.pop('erc', EXPECTED_RESPONSE_CODE['POST'])
 
         response = self.request('POST', url, erc, json=json, data=data,
                                 **kwargs)
@@ -444,7 +429,7 @@ class RestSession(object):
         """Sends a PUT request.
 
         Args:
-            url(basestring): The relative URL of the API endpoint.
+            url(basestring): The URL of the API endpoint.
             json: Data to be sent in JSON format in tbe body of the request.
             data: Data to be sent in the body of the request.
             **kwargs:
@@ -459,7 +444,7 @@ class RestSession(object):
         assert isinstance(url, basestring)
 
         # Expected response code
-        erc = kwargs.pop('erc', ERC['PUT'])
+        erc = kwargs.pop('erc', EXPECTED_RESPONSE_CODE['PUT'])
 
         response = self.request('PUT', url, erc, json=json, data=data,
                                 **kwargs)
@@ -469,7 +454,7 @@ class RestSession(object):
         """Sends a DELETE request.
 
         Args:
-            url(basestring): The relative URL of the API endpoint.
+            url(basestring): The URL of the API endpoint.
             **kwargs:
                 erc(int): The expected (success) response code for the request.
                 others: Passed on to the requests package.
@@ -482,6 +467,6 @@ class RestSession(object):
         assert isinstance(url, basestring)
 
         # Expected response code
-        erc = kwargs.pop('erc', ERC['DELETE'])
+        erc = kwargs.pop('erc', EXPECTED_RESPONSE_CODE['DELETE'])
 
         self.request('DELETE', url, erc, **kwargs)
