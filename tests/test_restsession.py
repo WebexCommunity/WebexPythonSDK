@@ -20,7 +20,7 @@ class RateLimitDetector(logging.Handler):
         """Check record to see if it is a rate-limit message."""
         assert isinstance(record, logging.LogRecord)
 
-        if record.msg.startswith("Received rate-limit message"):
+        if "Received rate-limit message" in record.msg:
             self.rate_limit_detected = True
 
 
@@ -29,17 +29,19 @@ class TestRestSession:
     """Test edge cases of core RestSession functionality."""
 
     @pytest.mark.ratelimit
-    def test_rate_limit_retry_indefinitely(self, api, rooms_list, add_rooms):
+    def test_rate_limit_retry(self, api, rooms_list, add_rooms):
         logger = logging.getLogger(__name__)
 
         # Save state and initialize test setup
-        original_rate_limit_timer = api._session.rate_limit_timeout
-        api._session.rate_limit_timeout = None
+        original_wait_on_rate_limit = api._session.wait_on_rate_limit
+        api._session.wait_on_rate_limit = True
 
         # Add log handler
         root_logger = logging.getLogger()
         rate_limit_detector = RateLimitDetector()
         root_logger.addHandler(rate_limit_detector)
+        logger = logging.getLogger(__name__)
+        logger.info("Starting Rate Limit Testing")
 
         try:
             # Try and trigger a rate-limit
@@ -56,7 +58,7 @@ class TestRestSession:
                         request_count)
             # Remove the log handler and restore the pre-test state
             root_logger.removeHandler(rate_limit_detector)
-            api._session.rate_limit_timeout = original_rate_limit_timer
+            api._session.wait_on_rate_limit = original_wait_on_rate_limit
 
         # Assert test condition
         assert rate_limit_detector.rate_limit_detected == True
