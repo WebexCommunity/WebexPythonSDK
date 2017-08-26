@@ -45,56 +45,63 @@ def create_person(api, emails, **person_attributes):
 
 
 def update_person(api, person, **person_attributes):
-    return api.people.update(person.id, **person_attributes)
+    # Get a copy of the person's current attributes
+    new_attributes = person._json.copy()
+
+    # Merge in attribute updates
+    for attribute, value in person_attributes.items():
+        new_attributes[attribute] = value
+
+    return api.people.update(person.id, **new_attributes)
 
 
 def delete_person(api, person):
-    # Temporarily disabling test account deletion to workon account
-    # capabilities issues.
-    # TODO: Enable test account clean-up.
-    # api.people.delete(person.id)
-    pass
+    api.people.delete(person.id)
 
 
-def get_new_test_person(api, get_new_email_address, licenses_dict):
-    person_email = get_new_email_address()
-    person = get_person_by_email(api, person_email)
-    if person:
-        return person
-    else:
-        emails = [person_email]
-        display_name = "ciscosparkapi"
-        first_name = "ciscosparkapi"
-        last_name = "ciscosparkapi"
-        licenses = [licenses_dict["Messaging"].id]
-        person = create_person(api, emails,
-                               displayName=display_name,
-                               firstName=first_name,
-                               lastName=last_name,
-                               licenses=licenses)
-        assert is_valid_person(person)
-        return person
+# pytest Fixtures
+
+@pytest.fixture(scope="session")
+def me(api):
+    return api.people.me()
+
+@pytest.fixture(scope="session")
+def get_new_test_person(api, get_new_email_address, me, licenses_dict):
+
+    def inner_function():
+        person_email = get_new_email_address()
+        person = get_person_by_email(api, person_email)
+        if person:
+            return person
+        else:
+            person = create_person(api,
+                                   emails=[person_email],
+                                   displayName="ciscosparkapi",
+                                   firstName="ciscosparkapi",
+                                   lastName="ciscosparkapi",
+                                   orgId=me.orgId,
+                                   licenses=[licenses_dict["Messaging"].id],
+                                   )
+            assert is_valid_person(person)
+            return person
+
+    return inner_function
 
 
-# Helper Classes
-
-class TestPeople(object):
+class PeopleManager(object):
     """Creates, tracks and manages test accounts 'people' used by the tests."""
 
-    def __init__(self, api, get_new_email_address, licenses_dict):
-        super(TestPeople, self).__init__()
+    def __init__(self, api, get_new_test_person):
+        super(PeopleManager, self).__init__()
         self._api = api
-        self._get_new_email_address = get_new_email_address
-        self._licenses_dict = licenses_dict
+        self._get_new_test_person = get_new_test_person
         self.test_people = {}
 
     def __getitem__(self, item):
         if self.test_people.get(item):
             return self.test_people[item]
         else:
-            new_test_person = get_new_test_person(self._api,
-                                                  self._get_new_email_address,
-                                                  self._licenses_dict)
+            new_test_person = self._get_new_test_person()
             self.test_people[item] = new_test_person
             return new_test_person
 
@@ -111,26 +118,18 @@ class TestPeople(object):
     def __del__(self):
         for person in self.test_people.values():
             delete_person(self._api, person)
-            pass
-
-
-# pytest Fixtures
-
-@pytest.fixture(scope="session")
-def me(api):
-    return api.people.me()
 
 
 @pytest.fixture(scope="session")
-def test_people(api, get_new_email_address, licenses_dict):
-    test_people = TestPeople(api, get_new_email_address, licenses_dict)
+def test_people(api, get_new_test_person):
+    test_people = PeopleManager(api, get_new_test_person)
     yield test_people
     del test_people
 
 
 @pytest.fixture()
-def temp_person(api, get_new_email_address, licenses_dict):
-    person = get_new_test_person(api, get_new_email_address, licenses_dict)
+def temp_person(api, get_new_test_person):
+    person = get_new_test_person()
     yield person
     delete_person(api, person)
 
@@ -150,24 +149,16 @@ class TestPeopleAPI(object):
         person = test_people["not_a_member"]
         assert is_valid_person(person)
 
-    # TODO: Investigate update person API not working
-    # def test_update_person(self, api, temp_person, roles_dict, licenses_dict,
-    #                        get_new_email_address):
-    #     # Note:  Not testing updating orgId
-    #     updated_attributes = {
-    #         "emails": [get_new_email_address()],
-    #         "displayName": temp_person.displayName + " Updated",
-    #         "firstName": temp_person.firstName + " Updated",
-    #         "lastName": temp_person.lastName + " Updated",
-    #         "avatar": TEST_FILE_URL,
-    #         "roles": [roles_dict["Read-only administrator"].id],
-    #         "licenses": [licenses_dict["Messaging"].id,
-    #                      licenses_dict["Meeting 25 party"].id],
-    #     }
-    #     updated_person = update_person(api, temp_person, **updated_attributes)
-    #     assert is_valid_person(updated_person)
-    #     for attribute, value in updated_attributes:
-    #         assert getattr(updated_person, attribute, default=None) == value
+    def test_update_person(self, api, temp_person):
+        update_attributes = {
+            "displayName": temp_person.displayName + " Updated",
+            "firstName": temp_person.firstName + " Updated",
+            "lastName": temp_person.lastName + " Updated",
+        }
+        updated_person = update_person(api, temp_person, **update_attributes)
+        assert is_valid_person(updated_person)
+        for attribute, value in update_attributes.items():
+            assert getattr(updated_person, attribute) == value
 
     def test_get_my_details(self, me):
         assert is_valid_person(me)

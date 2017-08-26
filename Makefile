@@ -29,10 +29,13 @@ update : clean-venv init versioneer.py
 .PHONY : tests
 tests: toxtest lint ;
 
+.PHONY : ci
+ci :
+	pytest
+
 .PHONY : toxtest
 toxtest : local/environment.sh tox.ini
-	source local/environment.sh
-	tox
+	source local/environment.sh && tox
 
 .PHONY : pytest
 pytest : local/environment.sh
