@@ -83,6 +83,18 @@ With ciscosparkapi, the above Python code can be consolidated to the following:
   from Spark, requests for additional pages of responses are efficiently and
   automatically requested as needed
 
++ **Automatic Rate-Limit Handling**  Sending a lot of requests to Cisco Spark?
+  Don't worry; we have you covered.  Spark will respond with a rate-limit
+  response, which will automatically be caught and "handled" for you.  Your
+  requests and script will automatically be "paused" for the amount of time
+  specified by Spark, while we wait for the Spark rate-limit timer to cool
+  down.  After the cool-down, your request will automatically be retried, and
+  your script will continue to run as normal.  Handling all of this requires
+  zero (0) changes to your code - you're welcome.  😎
+
+  Just know that if you are are sending a lot of requests, your script might
+  take longer to run if your requests are getting rate limited.
+
 + Multipart encoding and uploading of local files, when creating messages with
   local file attachments
 
