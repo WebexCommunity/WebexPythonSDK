@@ -31,7 +31,7 @@ tests: toxtest lint ;
 
 .PHONY : ci
 ci :
-	pytest
+	pytest -m "not ratelimit"
 
 .PHONY : toxtest
 toxtest : local/environment.sh tox.ini
