@@ -28,11 +28,11 @@ import requests
 
 from ciscosparkapi.sparkdata import SparkData
 from ciscosparkapi.utils import (
-    ERC,
     validate_base_url,
     check_response_code,
     extract_and_parse_json,
 )
+from ciscosparkapi.responsecodes import EXPECTED_RESPONSE_CODE
 
 
 __author__ = "Chris Lunsford"
@@ -156,7 +156,7 @@ class AccessTokensAPI(object):
         # API request
         response = requests.post(self._endpoint_url, data=data,
                                  **self._request_kwargs)
-        check_response_code(response, ERC['POST'])
+        check_response_code(response, EXPECTED_RESPONSE_CODE['POST'])
         json_data = extract_and_parse_json(response)
         # Return a AccessToken object created from the response JSON data
         return AccessToken(json_data)
@@ -194,7 +194,7 @@ class AccessTokensAPI(object):
         # API request
         response = requests.post(self._endpoint_url, data=data,
                                  **self._request_kwargs)
-        check_response_code(response, ERC['POST'])
+        check_response_code(response, EXPECTED_RESPONSE_CODE['POST'])
         json_data = extract_and_parse_json(response)
         # Return a AccessToken object created from the response JSON data
         return AccessToken(json_data)

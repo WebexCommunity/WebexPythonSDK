@@ -4,8 +4,12 @@ ciscosparkapi
 
 *Simple, lightweight, scalable Python API wrapper for the Cisco Spark APIs*
 
+.. image:: https://img.shields.io/badge/license-MIT-blue.svg
+    :target: https://github.com/CiscoDevNet/ciscosparkapi/blob/master/LICENSE
 .. image:: https://img.shields.io/pypi/v/ciscosparkapi.svg
     :target: https://pypi.python.org/pypi/ciscosparkapi
+.. image:: https://travis-ci.org/CiscoDevNet/ciscosparkapi.svg?branch=master
+    :target: https://travis-ci.org/CiscoDevNet/ciscosparkapi
 .. image:: https://readthedocs.org/projects/ciscosparkapi/badge/?version=latest
     :target: http://ciscosparkapi.readthedocs.io/en/latest/?badge=latest
 
@@ -73,6 +77,8 @@ ciscosparkapi does all of this for you...
   + Returned Data Objects ==> Native Python objects
 
 + **Automatic and transparent pagination!**
+
++ **Automatic rate-limit handling!** *(wait|retry)*
 
 + Multipart encoding and uploading of local files
 

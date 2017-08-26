@@ -12,10 +12,15 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
+import logging
 import os
 
 from ciscosparkapi.exceptions import ciscosparkapiException, SparkApiError
-from ciscosparkapi.restsession import RestSession
+from ciscosparkapi.restsession import (
+    DEFAULT_SINGLE_REQUEST_TIMEOUT,
+    DEFAULT_WAIT_ON_RATE_LIMIT,
+    RestSession,
+)
 from ciscosparkapi.api.people import Person, PeopleAPI
 from ciscosparkapi.api.rooms import Room, RoomsAPI
 from ciscosparkapi.api.memberships import Membership, MembershipsAPI
@@ -44,11 +49,17 @@ __version__ = get_versions()['version']
 del get_versions
 
 
+# Package Constants
 DEFAULT_BASE_URL = 'https://api.ciscospark.com/v1/'
-DEFAULT_TIMEOUT = 60
 ACCESS_TOKEN_ENVIRONMENT_VARIABLE = 'SPARK_ACCESS_TOKEN'
 
 
+# Initialize Package Logging
+logger = logging.getLogger(__name__)
+logger.addHandler(logging.NullHandler())
+
+
+# Main Package Interface
 class CiscoSparkAPI(object):
     """Cisco Spark API wrapper.
 
@@ -84,7 +95,9 @@ class CiscoSparkAPI(object):
     """
 
     def __init__(self, access_token=None, base_url=DEFAULT_BASE_URL,
-                 timeout=DEFAULT_TIMEOUT):
+                 timeout=None,
+                 single_request_timeout=DEFAULT_SINGLE_REQUEST_TIMEOUT,
+                 wait_on_rate_limit=DEFAULT_WAIT_ON_RATE_LIMIT):
         """Create a new CiscoSparkAPI object.
 
         An access token must be used when interacting with the Cisco Spark API.
@@ -106,8 +119,13 @@ class CiscoSparkAPI(object):
             base_url(basestring): The base URL to be prefixed to the
                 individual API endpoint suffixes.
                 Defaults to ciscosparkapi.DEFAULT_BASE_URL.
-            timeout(int): Timeout (in seconds) for RESTful HTTP requests.
-                Defaults to ciscosparkapi.DEFAULT_TIMEOUT.
+            timeout(int): [deprecated] Timeout (in seconds) for RESTful HTTP
+                requests. Defaults to ciscosparkapi.DEFAULT_TIMEOUT.
+            single_request_timeout(int): Timeout (in seconds) for RESTful HTTP
+                requests. Defaults to
+                ciscosparkapi.DEFAULT_SINGLE_REQUEST_TIMEOUT.
+            wait_on_rate_limit(bool): Enables or disables automatic rate-limit
+                handling. Defaults to ciscosparkapi.DEFAULT_WAIT_ON_RATE_LIMIT.
 
         Returns:
             CiscoSparkAPI: A new CiscoSparkAPI object.
@@ -119,25 +137,27 @@ class CiscoSparkAPI(object):
                 variable.
 
         """
-        # Process args
         assert access_token is None or isinstance(access_token, basestring)
-        assert isinstance(base_url, basestring)
-        assert isinstance(timeout, int)
-        spark_access_token = os.environ.get(ACCESS_TOKEN_ENVIRONMENT_VARIABLE)
-        access_token = access_token if access_token else spark_access_token
+        env_access_token = os.environ.get(ACCESS_TOKEN_ENVIRONMENT_VARIABLE)
+        access_token = access_token if access_token else env_access_token
         if not access_token:
             error_message = "You must provide an Spark access token to " \
                             "interact with the Cisco Spark APIs, either via " \
                             "a SPARK_ACCESS_TOKEN environment variable " \
                             "or via the access_token argument."
             raise ciscosparkapiException(error_message)
-        session_args = {u'timeout': timeout}
 
         # Create the API session
         # All of the API calls associated with a CiscoSparkAPI object will
         # leverage a single RESTful 'session' connecting to the Cisco Spark
         # cloud.
-        self._session = RestSession(access_token, base_url, **session_args)
+        self._session = RestSession(
+            access_token,
+            base_url,
+            timeout=timeout,
+            single_request_timeout=single_request_timeout,
+            wait_on_rate_limit=wait_on_rate_limit
+        )
 
         # Spark API wrappers
         self.people = PeopleAPI(self._session)
@@ -163,3 +183,11 @@ class CiscoSparkAPI(object):
     @property
     def timeout(self):
         return self._session.timeout
+
+    @property
+    def single_request_timeout(self):
+        return self._session.single_request_timeout
+
+    @property
+    def wait_on_rate_limit(self):
+        return self._session.wait_on_rate_limit

@@ -12,28 +12,25 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
-from collections import namedtuple
 import functools
 import mimetypes
 import os
 import urllib.parse
 
-from ciscosparkapi.exceptions import ciscosparkapiException, SparkApiError
+from collections import namedtuple
+
+from ciscosparkapi.exceptions import (
+    ciscosparkapiException,
+    SparkApiError,
+    SparkRateLimitError,
+)
+from ciscosparkapi.responsecodes import RATE_LIMIT_RESPONSE_CODE
 
 
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
 __copyright__ = "Copyright (c) 2016 Cisco Systems, Inc."
 __license__ = "MIT"
-
-
-# Cisco Spark cloud Expected Response Codes (HTTP Response Codes)
-ERC = {
-    'GET': 200,
-    'POST': 200,
-    'PUT': 200,
-    'DELETE': 204
-}
 
 
 EncodableFile = namedtuple('EncodableFile',
@@ -84,7 +81,7 @@ def raise_if_extra_kwargs(kwargs):
         raise TypeError("Unexpected **kwargs: {!r}".format(kwargs))
 
 
-def check_response_code(response, erc):
+def check_response_code(response, expected_response_code):
     """Check response code against the expected code; raise SparkApiError.
 
     Checks the requests.response.status_code against the provided expected
@@ -93,17 +90,20 @@ def check_response_code(response, erc):
     Args:
         response(requests.response): The response object returned by a request
             using the requests package.
-        erc(int): The expected response code (HTTP response code).
+        expected_response_code(int): The expected response code (HTTP response
+            code).
 
     Raises:
         SparkApiError: If the requests.response.status_code does not match the
             provided expected response code (erc).
 
      """
-    if response.status_code != erc:
-        raise SparkApiError(response.status_code,
-                            request=response.request,
-                            response=response)
+    if response.status_code == expected_response_code:
+        pass
+    elif response.status_code == RATE_LIMIT_RESPONSE_CODE:
+        raise SparkRateLimitError(response)
+    else:
+        raise SparkApiError(response)
 
 
 def extract_and_parse_json(response):
