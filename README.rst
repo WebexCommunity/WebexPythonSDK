@@ -134,12 +134,17 @@ bug fixes incorporated into the published releases.
 **Note:**  The package APIs may change, while the package is in beta.
 
 
-Support
--------
+Questions, Support & Discussion
+-------------------------------
 
 This is a *community developed* and *community supported* project.  If you
 experience any issues using this package, please report them using the
 issues_ log.
+
+Please join the `Python Spark Devs`__ community Spark room to ask questions,
+join the discussion and share your projects and creations.
+
+__ Community_
 
 
 Contribution
@@ -177,6 +182,7 @@ Please use the issues_ log.
 .. _ciscosparkapi: https://github.com/CiscoDevNet/ciscosparkapi
 .. _ciscosparksdk: https://github.com/CiscoDevNet/ciscosparksdk
 .. _issues: https://github.com/CiscoDevNet/ciscosparkapi/issues
+.. _Community: https://eurl.io/#HkMxO-_9-
 .. _projects: https://github.com/CiscoDevNet/ciscosparkapi/projects
 .. _pull requests: https://github.com/CiscoDevNet/ciscosparkapi/pulls
 .. _releases: https://github.com/CiscoDevNet/ciscosparkapi/releases
