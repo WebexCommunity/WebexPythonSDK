@@ -137,7 +137,7 @@ class PeopleAPI(object):
         self._session = session
 
     @generator_container
-    def list(self, email=None, displayName=None, max=None):
+    def list(self, email=None, displayName=None, orgId=None, max=None):
         """List people
 
         This method supports Cisco Spark's implementation of RFC5988 Web
@@ -154,6 +154,7 @@ class PeopleAPI(object):
             email(basestring): The e-mail address of the person to be found.
             displayName(basestring): The complete or beginning portion of
                 the displayName to be searched.
+            orgId(basestring): The organization id.
             max(int): Limits the maximum number of people returned from the
                 Spark service per request.
 
@@ -169,12 +170,15 @@ class PeopleAPI(object):
         # Process args
         assert email is None or isinstance(email, basestring)
         assert displayName is None or isinstance(displayName, basestring)
+        assert orgId is None or isinstance(orgId, basestring)
         assert max is None or isinstance(max, int)
         params = {}
         if email:
             params['email'] = email
         elif displayName:
             params['displayName'] = displayName
+        if orgId:
+            params["orgId"] = orgId
         if max:
             params['max'] = max
         # API request - get items
