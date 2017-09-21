@@ -137,7 +137,7 @@ class PeopleAPI(object):
         self._session = session
 
     @generator_container
-    def list(self, email=None, displayName=None, orgId=None, id=None, max=None):
+    def list(self, email=None, displayName=None, orgId=None, id=None, max=None, **query_params):
         """List people
 
         This method supports Cisco Spark's implementation of RFC5988 Web
@@ -186,6 +186,9 @@ class PeopleAPI(object):
                 params["orgId"] = orgId
             if max:
                 params['max'] = max
+        # Process query_param keyword arguments
+        if query_params:
+            params.update(query_params)
         # API request - get items
         items = self._session.get_items('people', params=params)
         # Yield Person objects created from the returned items JSON objects
