@@ -180,6 +180,12 @@ class TestPeopleAPI(object):
         assert len(list_of_people) >= 1
         assert are_valid_people(list_of_people)
 
+    def test_list_people_by_id(self, api, test_people):
+        id = test_people["not_a_member"].id
+        list_of_people = list_people(api, id=id)
+        assert len(list_of_people) >= 1
+        assert are_valid_people(list_of_people)
+
     def test_list_people_with_paging(self, api, test_people,
                                      additional_group_room_memberships):
         page_size = 1

@@ -177,15 +177,14 @@ class PeopleAPI(object):
         params = {}
         if id:
             params["id"] = id
-        else:
-            if email:
+        elif email:
                 params['email'] = email
-            elif displayName:
-                params['displayName'] = displayName
-            if orgId:
-                params["orgId"] = orgId
-            if max:
-                params['max'] = max
+        elif displayName:
+            params['displayName'] = displayName
+        if orgId:
+            params["orgId"] = orgId
+        if max:
+            params['max'] = max
         # Process query_param keyword arguments
         if query_params:
             params.update(query_params)
