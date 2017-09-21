@@ -35,16 +35,21 @@ class Person(SparkData):
     """Model a Spark 'person' JSON object as a native Python object."""
 
     def __init__(self, json):
-        """Init a new Person data object from a JSON dictionary or string.
+        """Initialize a Person data object from a dictionary or JSON string.
 
         Args:
-            json(dict, basestring): Input JSON object.
+            json(dict, basestring): Input dictionary or JSON string.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
 
         """
         super(Person, self).__init__(json)
+
+    @property
+    def type(self):
+        """The type of object returned by Cisco Spark (should be `person`)."""
+        return self._json.get('type')
 
     @property
     def id(self):
@@ -66,6 +71,11 @@ class Person(SparkData):
     def displayName(self):
         """Full name of the person."""
         return self._json.get('displayName')
+
+    @property
+    def nickName(self):
+        """'Nick name' or preferred short name of the person."""
+        return self._json.get('nickName')
 
     @property
     def firstName(self):
@@ -112,17 +122,27 @@ class Person(SparkData):
         """The date and time of the person's last activity."""
         return self._json.get('lastActivity')
 
+    @property
+    def invitePending(self):
+        """Person has been sent an invite, but hasn't responded."""
+        return self._json.get('invitePending')
+
+    @property
+    def loginEnabled(self):
+        """Person is allowed to login."""
+        return self._json.get('loginEnabled')
+
 
 class PeopleAPI(object):
     """Cisco Spark People-API wrapper class.
 
-    Wrappers the Cisco Spark People-API and exposes the API calls as Python
-    method calls that return native Python objects.
+    Wraps the Cisco Spark People-API and exposes the APIs as native Python
+    methods that return native Python objects.
 
     """
 
     def __init__(self, session):
-        """Init a new PeopleAPI object with the provided RestSession.
+        """Initialize a new PeopleAPI object with the provided RestSession.
 
         Args:
             session(RestSession): The RESTful session object to be used for
