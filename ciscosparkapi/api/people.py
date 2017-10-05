@@ -268,7 +268,7 @@ class PeopleAPI(object):
         # API request
         json_data = self._session.post('people', json=post_data)
 
-        # Return a Room object created from the returned JSON object
+        # Return a Person object created from the returned JSON object
         return Person(json_data)
 
     def update(self, personId, emails=None, displayName=None, firstName=None,
