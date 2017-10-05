@@ -3,8 +3,8 @@
 
 Classes:
     Person: Models a Spark 'person' JSON object as a native Python object.
-    PeopleAPI: Wrappers the Cisco Spark People-API and exposes the API calls as
-        Python method calls that return native Python objects.
+    PeopleAPI: Wraps the Cisco Spark People-API and exposes the APIs as native
+        Python methods that return native Python objects.
 
 """
 
@@ -19,8 +19,11 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
-from ciscosparkapi.exceptions import ciscosparkapiException
-from ciscosparkapi.utils import generator_container
+from ciscosparkapi.utils import (
+    check_type,
+    dict_from_items_with_values,
+    generator_container,
+)
 from ciscosparkapi.restsession import RestSession
 from ciscosparkapi.sparkdata import SparkData
 
@@ -32,7 +35,7 @@ __license__ = "MIT"
 
 
 class Person(SparkData):
-    """Model a Spark 'person' JSON object as a native Python object."""
+    """Model a Spark person JSON object as a native Python object."""
 
     def __init__(self, json):
         """Initialize a Person data object from a dictionary or JSON string.
@@ -58,13 +61,7 @@ class Person(SparkData):
 
     @property
     def emails(self):
-        """Email address(es) of the person.
-
-        CURRENT LIMITATION: Spark (today) only allows you to provide a single
-        email address for a person. The list data type was selected to enable
-        future support for providing multiple email address.
-
-        """
+        """Email address(es) of the person."""
         return self._json['emails']
 
     @property
@@ -149,20 +146,23 @@ class PeopleAPI(object):
                 API calls to the Cisco Spark service.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
 
         """
-        assert isinstance(session, RestSession)
+        check_type(session, RestSession)
+
         super(PeopleAPI, self).__init__()
+
         self._session = session
 
     @generator_container
-    def list(self, email=None, displayName=None, orgId=None, id=None, max=None, **query_params):
+    def list(self, email=None, displayName=None, id=None, orgId=None, max=None,
+             **query_params):
         """List people
 
         This method supports Cisco Spark's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
-        container that incrementally yield all people returned by the
+        container that incrementally yields all people returned by the
         query.  The generator will automatically request additional 'pages' of
         responses from Spark as needed until all responses have been returned.
         The container makes the generator safe for reuse.  A new API call will
@@ -174,163 +174,190 @@ class PeopleAPI(object):
             email(basestring): The e-mail address of the person to be found.
             displayName(basestring): The complete or beginning portion of
                 the displayName to be searched.
-            id(basestring): List people by ID. Accepts up to 85 person IDs separated by commas.
+            id(basestring): List people by ID. Accepts up to 85 person IDs
+                separated by commas.
             orgId(basestring): The organization id.
             max(int): Limits the maximum number of people returned from the
                 Spark service per request.
+            **query_params: Additional query parameters (provides support for
+                query parameters that may be added in the future).
 
         Returns:
-            GeneratorContainer: When iterated, the GeneratorContainer, yields
-                the people returned by the Cisco Spark query.
+            GeneratorContainer: A GeneratorContainer which, when iterated,
+                yields the people returned by the Cisco Spark query.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert email is None or isinstance(email, basestring)
-        assert displayName is None or isinstance(displayName, basestring)
-        assert orgId is None or isinstance(orgId, basestring)
-        assert id is None or isinstance(id, basestring)
-        assert max is None or isinstance(max, int)
-        params = {}
-        if id:
-            params["id"] = id
-        elif email:
-                params['email'] = email
-        elif displayName:
-            params['displayName'] = displayName
-        if orgId:
-            params["orgId"] = orgId
-        if max:
-            params['max'] = max
-        # Process query_param keyword arguments
-        if query_params:
-            params.update(query_params)
+        check_type(id, basestring)
+        check_type(email, basestring)
+        check_type(displayName, basestring)
+        check_type(orgId, basestring)
+        check_type(max, int)
+
+        params = dict_from_items_with_values(
+                query_params,
+                id=id,
+                email=email,
+                displayName=displayName,
+                orgId=orgId,
+                max=max,
+        )
+
         # API request - get items
         items = self._session.get_items('people', params=params)
+
         # Yield Person objects created from the returned items JSON objects
         for item in items:
             yield Person(item)
 
-    def create(self, emails, **person_attributes):
+    def create(self, emails, displayName=None, firstName=None, lastName=None,
+               avatar=None, orgId=None, roles=None, licenses=None,
+               **person_attributes):
         """Create a new user account for a given organization
 
         Only an admin can create a new user account.
 
-        You must specify displayName and/or firstName and lastName.
-
         Args:
-            emails(list): Email address(es) of the person. (list of strings)
-                CURRENT LIMITATION: Spark (today) only allows you to provide a
-                single email address for a person. The list data type was
-                selected to enable future support for providing multiple email
-                address.
-            **person_attributes
-            displayName(basestring): Full name of the person
-            firstName(basestring): First name of the person
-            lastName(basestring): Last name of the person
-            avatar(basestring): URL to the person's avatar in PNG format
+            emails(list): Email address(es) of the person (list of strings).
+            displayName(basestring): Full name of the person.
+            firstName(basestring): First name of the person.
+            lastName(basestring): Last name of the person.
+            avatar(basestring): URL to the person's avatar in PNG format.
             orgId(basestring): ID of the organization to which this
-                person belongs
+                person belongs.
             roles(list): Roles of the person (list of strings containing
-                the role IDs to be assigned to the person)
+                the role IDs to be assigned to the person).
             licenses(list): Licenses allocated to the person (list of
-                strings containing the license IDs to be allocated to the
-                person)
+                strings - containing the license IDs to be allocated to the
+                person).
+            **person_attributes: Additional person attributes (provides support
+                for attributes that may be added in the future).
 
         Returns:
-            Person: With the details of the created person.
+            Person: A Person object with the details of the created person.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
-            ciscosparkapiException: If required parameters have been omitted.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert isinstance(emails, list) and len(emails) == 1
-        post_data = {}
-        post_data['emails'] = emails
-        post_data.update(person_attributes)
+        check_type(emails, list, may_be_none=False)
+        check_type(displayName, basestring)
+        check_type(firstName, basestring)
+        check_type(lastName, basestring)
+        check_type(avatar, basestring)
+        check_type(orgId, basestring)
+        check_type(roles, list)
+        check_type(licenses, list)
+
+        post_data = dict_from_items_with_values(
+                person_attributes,
+                emails=emails,
+                displayName=displayName,
+                firstName=firstName,
+                lastName=lastName,
+                avatar=avatar,
+                orgId=orgId,
+                roles=roles,
+                licenses=licenses,
+        )
 
         # API request
-        json_obj = self._session.post('people', json=post_data)
+        json_data = self._session.post('people', json=post_data)
 
         # Return a Room object created from the returned JSON object
-        return Person(json_obj)
+        return Person(json_data)
 
-    def update(self, personId, **person_attributes):
+    def update(self, personId, emails=None, displayName=None, firstName=None,
+               lastName=None, avatar=None, orgId=None, roles=None,
+               licenses=None, **person_attributes):
         """Update details for a person, by ID.
 
-        Only an admin can update a person details.
+        Only an admin can update a person's details.
+
+        Email addresses for a person cannot be changed via the Spark API.
+
+        Include all details for the person. This action expects all user
+        details to be present in the request. A common approach is to first GET
+        the person's details, make changes, then PUT both the changed and
+        unchanged values.
 
         Args:
-            personId(basestring): The ID of the person to be updated.
-            **person_attributes
-            emails(list): Email address(es) of the person. (list of
-                strings) CURRENT LIMITATION: Spark (today) only allows you
-                to provide a single email address for a person. The list
-                data type was selected to enable future support for
-                providing multiple email address.
-            displayName(basestring): Full name of the person
-            firstName(basestring): First name of the person
-            lastName(basestring): Last name of the person
-            avatar(basestring): URL to the person's avatar in PNG format
+            personId(basestring): The 'id' of the person to be updated.
+            emails(list): Email address(es) of the person (list of strings).
+            displayName(basestring): Full name of the person.
+            firstName(basestring): First name of the person.
+            lastName(basestring): Last name of the person.
+            avatar(basestring): URL to the person's avatar in PNG format.
             orgId(basestring): ID of the organization to which this
-                person belongs
+                person belongs.
             roles(list): Roles of the person (list of strings containing
-                the role IDs to be assigned to the person)
+                the role IDs to be assigned to the person).
             licenses(list): Licenses allocated to the person (list of
-                strings containing the license IDs to be allocated to the
-                person)
+                strings - containing the license IDs to be allocated to the
+                person).
+            **person_attributes: Additional person attributes (provides support
+                for attributes that may be added in the future).
 
         Returns:
-            Person: With the updated person details.
+            Person: A Person object with the updated details.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
-            ciscosparkapiException: If an update attribute is not provided.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert isinstance(personId, basestring)
+        check_type(emails, list)
+        check_type(displayName, basestring)
+        check_type(firstName, basestring)
+        check_type(lastName, basestring)
+        check_type(avatar, basestring)
+        check_type(orgId, basestring)
+        check_type(roles, list)
+        check_type(licenses, list)
 
-        # Process update_attributes keyword arguments
-        if not person_attributes:
-            error_message = "At least one **update_attributes keyword " \
-                            "argument must be specified."
-            raise ciscosparkapiException(error_message)
+        put_data = dict_from_items_with_values(
+                person_attributes,
+                emails=emails,
+                displayName=displayName,
+                firstName=firstName,
+                lastName=lastName,
+                avatar=avatar,
+                orgId=orgId,
+                roles=roles,
+                licenses=licenses,
+        )
 
         # API request
-        json_obj = self._session.put('people/' + personId,
-                                     json=person_attributes)
+        json_data = self._session.put('people/' + personId, json=put_data)
 
         # Return a Person object created from the returned JSON object
-        return Person(json_obj)
+        return Person(json_data)
 
     def get(self, personId):
         """Get person details, by personId.
 
         Args:
-            personId(basestring): The personID of the person.
+            personId(basestring): The 'id' of the person to be retrieved.
 
         Returns:
-            Person: With the details of the requested person.
+            Person: A Person object with the details of the requested person.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert isinstance(personId, basestring)
+        check_type(personId, basestring, may_be_none=False)
+
         # API request
-        json_obj = self._session.get('people/' + personId)
+        json_data = self._session.get('people/' + personId)
+
         # Return a Person object created from the response JSON data
-        return Person(json_obj)
+        return Person(json_data)
 
     def delete(self, personId):
         """Remove a person from the system.
@@ -338,26 +365,27 @@ class PeopleAPI(object):
         Only an admin can remove a person.
 
         Args:
-            personId(basestring): The personID of the person.
+            personId(basestring): The 'id' of the person to be deleted.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert isinstance(personId, basestring)
+        check_type(personId, basestring, may_be_none=False)
+
         # API request
         self._session.delete('people/' + personId)
 
     def me(self):
-        """Get the person details of the account accessing the API 'me'.
+        """Get the details of the person accessing the API.
 
         Raises:
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
         # API request
-        json_obj = self._session.get('people/me')
+        json_data = self._session.get('people/me')
+
         # Return a Person object created from the response JSON data
-        return Person(json_obj)
+        return Person(json_data)
