@@ -116,8 +116,16 @@ class PeopleManager(object):
         return iter(self.list)
 
     def __del__(self):
-        for person in self.test_people.values():
-            delete_person(self._api, person)
+        # TODO: Enable test account clean-up.
+        # Licensed privileges aren't taking effect for accounts that have
+        # just been created and this is causing some tests to fail.
+        # I am temporarily disabling test account clean-up to enable the
+        # accounts (with their privileges) to persist.  It would be good to
+        # find a way around this.
+
+        # for person in self.test_people.values():
+        #     delete_person(self._api, person)
+        pass
 
 
 @pytest.fixture(scope="session")
