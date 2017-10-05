@@ -2,8 +2,8 @@
 """SparkData base-class; models Spark JSON objects as native Python objects.
 
 The SparkData class models any JSON object passed to it as a string or Python
-dictionary as a native Python object; providing attribute access access using
-native object.attribute syntax.
+dictionary as a native Python object; providing attribute access using native
+dot-syntax (`object.attribute`).
 
 SparkData is intended to serve as a base-class, which provides inheritable
 functionality, for concrete sub-classes that model specific Cisco Spark data
@@ -14,11 +14,11 @@ provides a measure of future-proofing when additional data attributes are added
 to objects by the Cisco Spark cloud.
 
 Example:
-    >>> json_obj = '{"created": "2012-06-15T20:36:48.914Z",
-                     "displayName": "Chris Lunsford (chrlunsf)",
-                     "id": "Y2lzY29zcGFyazovL3VzL1BFT1BMRS9mZjhlZTZmYi1hZm...",
-                     "avatar": "https://1efa7a94ed216783e352-c622665287144...",
-                     "emails": ["chrlunsf@cisco.com"]}'
+    >>> json_obj = '''{"created": "2012-06-15T20:36:48.914Z",
+                       "displayName": "Chris Lunsford (chrlunsf)",
+                       "id": "Y2lzY29zcGFyazovL3VzL1BFT1BMRS9mZjhlZTZmYi1h...",
+                       "avatar": "https://1efa7a94ed216783e352-c6226652871...",
+                       "emails": ["chrlunsf@cisco.com"]}'''
     >>> python_obj = SparkData(json_obj)
     >>> python_obj.displayName
     u'Chris Lunsford (chrlunsf)'
@@ -48,7 +48,7 @@ __license__ = "MIT"
 
 
 def _json_dict(json):
-    """Given a JSON dictionary or string; return a dictionary.
+    """Given a dictionary or JSON string; return a dictionary.
 
     Args:
         json(dict, str): Input JSON object.
@@ -74,7 +74,7 @@ class SparkData(object):
     """Model Spark JSON objects as native Python objects."""
 
     def __init__(self, json):
-        """Init a new SparkData object from a JSON dictionary or string.
+        """Init a new SparkData object from a dictionary or JSON string.
 
         Args:
             json(dict, str): Input JSON object.
@@ -87,7 +87,7 @@ class SparkData(object):
         self._json = _json_dict(json)
 
     def __getattr__(self, item):
-        """Provide native attribute access to the JSON object's attributes.
+        """Provide native attribute access to the JSON object attributes.
 
         This method is called when attempting to access a object attribute that
         hasn't been defined for the object.  For example trying to access
