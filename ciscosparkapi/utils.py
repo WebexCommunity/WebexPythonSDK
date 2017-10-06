@@ -15,6 +15,7 @@ from past.builtins import basestring
 import functools
 import mimetypes
 import os
+import sys
 import urllib.parse
 
 from collections import namedtuple
@@ -35,6 +36,36 @@ __license__ = "MIT"
 
 EncodableFile = namedtuple('EncodableFile',
                            ['file_name', 'file_object', 'content_type'])
+
+
+def to_unicode(string):
+    """Convert a string (bytes, str or unicode) to unicode."""
+    assert isinstance(string, basestring)
+    if sys.version_info[0] >= 3:
+        if isinstance(string, bytes):
+            return string.decode('utf-8')
+        else:
+            return string
+    else:
+        if isinstance(string, str):
+            return string.decode('utf-8')
+        else:
+            return string
+
+
+def to_bytes(string):
+    """Convert a string (bytes, str or unicode) to bytes."""
+    assert isinstance(string, basestring)
+    if sys.version_info[0] >= 3:
+        if isinstance(string, str):
+            return string.encode('utf-8')
+        else:
+            return string
+    else:
+        if isinstance(string, unicode):
+            return string.encode('utf-8')
+        else:
+            return string
 
 
 def validate_base_url(base_url):
