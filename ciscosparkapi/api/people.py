@@ -157,7 +157,7 @@ class PeopleAPI(object):
 
     @generator_container
     def list(self, email=None, displayName=None, id=None, orgId=None, max=None,
-             **query_params):
+             **request_parameters):
         """List people
 
         This method supports Cisco Spark's implementation of RFC5988 Web
@@ -179,8 +179,8 @@ class PeopleAPI(object):
             orgId(basestring): The organization id.
             max(int): Limits the maximum number of people returned from the
                 Spark service per request.
-            **query_params: Additional query parameters (provides support for
-                query parameters that may be added in the future).
+            **request_parameters: Additional request parameters (provides
+                support for parameters that may be added in the future).
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
@@ -198,7 +198,7 @@ class PeopleAPI(object):
         check_type(max, int)
 
         params = dict_from_items_with_values(
-                query_params,
+                request_parameters,
                 id=id,
                 email=email,
                 displayName=displayName,
@@ -215,7 +215,7 @@ class PeopleAPI(object):
 
     def create(self, emails, displayName=None, firstName=None, lastName=None,
                avatar=None, orgId=None, roles=None, licenses=None,
-               **person_attributes):
+               **request_parameters):
         """Create a new user account for a given organization
 
         Only an admin can create a new user account.
@@ -233,8 +233,8 @@ class PeopleAPI(object):
             licenses(list): Licenses allocated to the person (list of
                 strings - containing the license IDs to be allocated to the
                 person).
-            **person_attributes: Additional person attributes (provides support
-                for attributes that may be added in the future).
+            **request_parameters: Additional request parameters (provides
+                support for parameters that may be added in the future).
 
         Returns:
             Person: A Person object with the details of the created person.
@@ -254,7 +254,7 @@ class PeopleAPI(object):
         check_type(licenses, list)
 
         post_data = dict_from_items_with_values(
-                person_attributes,
+                request_parameters,
                 emails=emails,
                 displayName=displayName,
                 firstName=firstName,
@@ -273,7 +273,7 @@ class PeopleAPI(object):
 
     def update(self, personId, emails=None, displayName=None, firstName=None,
                lastName=None, avatar=None, orgId=None, roles=None,
-               licenses=None, **person_attributes):
+               licenses=None, **request_parameters):
         """Update details for a person, by ID.
 
         Only an admin can update a person's details.
@@ -299,8 +299,8 @@ class PeopleAPI(object):
             licenses(list): Licenses allocated to the person (list of
                 strings - containing the license IDs to be allocated to the
                 person).
-            **person_attributes: Additional person attributes (provides support
-                for attributes that may be added in the future).
+            **request_parameters: Additional request parameters (provides
+                support for parameters that may be added in the future).
 
         Returns:
             Person: A Person object with the updated details.
@@ -320,7 +320,7 @@ class PeopleAPI(object):
         check_type(licenses, list)
 
         put_data = dict_from_items_with_values(
-                person_attributes,
+                request_parameters,
                 emails=emails,
                 displayName=displayName,
                 firstName=firstName,
