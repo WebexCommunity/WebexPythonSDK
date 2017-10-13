@@ -338,10 +338,10 @@ class PeopleAPI(object):
         return Person(json_data)
 
     def get(self, personId):
-        """Get person details, by personId.
+        """Get a person's details, by ID.
 
         Args:
-            personId(basestring): The 'id' of the person to be retrieved.
+            personId(basestring): The ID of the person to be retrieved.
 
         Returns:
             Person: A Person object with the details of the requested person.
