@@ -3,8 +3,8 @@
 
 Classes:
     Room: Models a Spark 'room' JSON object as a native Python object.
-    RoomsAPI: Wrappers the Cisco Spark Rooms-API and exposes the API calls as
-        Python method calls that return native Python objects.
+    RoomsAPI: Wraps the Cisco Spark Rooms-API and exposes the APIs as native
+        Python methods that return native Python objects.
 
 """
 
@@ -35,10 +35,10 @@ class Room(SparkData):
     """Model a Spark 'room' JSON object as a native Python object."""
 
     def __init__(self, json):
-        """Init a new Room data object from a JSON dictionary or string.
+        """Initialize a Room data object from a dictionary or JSON string.
 
         Args:
-            json(dict, basestring): Input JSON object.
+            json(dict, basestring): Input dictionary or JSON string.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -48,42 +48,43 @@ class Room(SparkData):
 
     @property
     def id(self):
-        return self._json['id']
+        """The rooms's unique ID."""
+        return self._json.get('id')
 
     @property
     def title(self):
-        return self._json['title']
+        """A user-friendly name for the room."""
+        return self._json.get('title')
 
     @property
     def type(self):
-        return self._json['type']
+        """The type of room (i.e. 'group', 'direct' etc.)."""
+        return self._json.get('type')
 
     @property
     def isLocked(self):
-        return self._json['isLocked']
+        """Whether or not the room is locked and controled by moderator(s)."""
+        return self._json.get('isLocked')
 
     @property
     def lastActivity(self):
-        return self._json['lastActivity']
+        """The date and time when the room was last active."""
+        return self._json.get('lastActivity')
 
     @property
     def created(self):
-        return self._json['created']
+        """The date and time when the room was created."""
+        return self._json.get('created')
 
     @property
     def creatorId(self):
-        return self._json['creatorId']
+        """The ID of the person who created the room."""
+        return self._json.get('creatorId')
 
     @property
     def teamId(self):
-        """Return the room teamId, if it exists, otherwise return None.
-
-        teamId is an 'optional' attribute that only exists for Spark rooms that
-        are associated with a Spark Team.  To simplify use, rather than
-        requiring use of try/catch statements or hasattr() calls, we simply
-        return None if a room does not have a teamId attribute.
-        """
-        return self._json.get('teamId', None)
+        """The ID for the team with which this room is associated."""
+        return self._json.get('teamId')
 
 
 class RoomsAPI(object):
