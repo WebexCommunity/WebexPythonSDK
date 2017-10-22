@@ -19,13 +19,13 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
+from ciscosparkapi.restsession import RestSession
+from ciscosparkapi.sparkdata import SparkData
 from ciscosparkapi.utils import (
     check_type,
     dict_from_items_with_values,
     generator_container,
 )
-from ciscosparkapi.restsession import RestSession
-from ciscosparkapi.sparkdata import SparkData
 
 
 __author__ = "Chris Lunsford"
@@ -177,8 +177,8 @@ class PeopleAPI(object):
             id(basestring): List people by ID. Accepts up to 85 person IDs
                 separated by commas.
             orgId(basestring): The organization id.
-            max(int): Limits the maximum number of people returned from the
-                Spark service per request.
+            max(int): Limit the maximum number of items returned from the Spark
+                service per request.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
@@ -271,6 +271,28 @@ class PeopleAPI(object):
         # Return a Person object created from the returned JSON object
         return Person(json_data)
 
+    def get(self, personId):
+        """Get a person's details, by ID.
+
+        Args:
+            personId(basestring): The ID of the person to be retrieved.
+
+        Returns:
+            Person: A Person object with the details of the requested person.
+
+        Raises:
+            TypeError: If the parameter types are incorrect.
+            SparkApiError: If the Cisco Spark cloud returns an error.
+
+        """
+        check_type(personId, basestring, may_be_none=False)
+
+        # API request
+        json_data = self._session.get('people/' + personId)
+
+        # Return a Person object created from the response JSON data
+        return Person(json_data)
+
     def update(self, personId, emails=None, displayName=None, firstName=None,
                lastName=None, avatar=None, orgId=None, roles=None,
                licenses=None, **request_parameters):
@@ -286,7 +308,7 @@ class PeopleAPI(object):
         unchanged values.
 
         Args:
-            personId(basestring): The 'id' of the person to be updated.
+            personId(basestring): The person ID.
             emails(list): Email address(es) of the person (list of strings).
             displayName(basestring): Full name of the person.
             firstName(basestring): First name of the person.
@@ -335,28 +357,6 @@ class PeopleAPI(object):
         json_data = self._session.put('people/' + personId, json=put_data)
 
         # Return a Person object created from the returned JSON object
-        return Person(json_data)
-
-    def get(self, personId):
-        """Get a person's details, by ID.
-
-        Args:
-            personId(basestring): The ID of the person to be retrieved.
-
-        Returns:
-            Person: A Person object with the details of the requested person.
-
-        Raises:
-            TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
-
-        """
-        check_type(personId, basestring, may_be_none=False)
-
-        # API request
-        json_data = self._session.get('people/' + personId)
-
-        # Return a Person object created from the response JSON data
         return Person(json_data)
 
     def delete(self, personId):
