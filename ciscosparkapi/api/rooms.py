@@ -19,14 +19,13 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
-from ciscosparkapi.exceptions import ciscosparkapiException
+from ciscosparkapi.restsession import RestSession
+from ciscosparkapi.sparkdata import SparkData
 from ciscosparkapi.utils import (
     check_type,
     dict_from_items_with_values,
     generator_container,
 )
-from ciscosparkapi.restsession import RestSession
-from ciscosparkapi.sparkdata import SparkData
 
 
 __author__ = "Chris Lunsford"
@@ -142,8 +141,8 @@ class RoomsAPI(object):
             sortBy(basestring): Sort results by room ID (`id`), most recent
                 activity (`lastactivity`), or most recently created
                 (`created`).
-            max(int): Limit the maximum number of rooms in the response from
-                the Spark service.
+            max(int): Limit the maximum number of items returned from the Spark
+                service per request.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
@@ -211,11 +210,33 @@ class RoomsAPI(object):
         # Return a Room object created from the response JSON data
         return Room(json_data)
 
+    def get(self, roomId):
+        """Get the details of a room, by ID.
+
+        Args:
+            roomId(basestring): The ID of the room to be retrieved.
+
+        Returns:
+            Room: A Room object with the details of the requested room.
+
+        Raises:
+            TypeError: If the parameter types are incorrect.
+            SparkApiError: If the Cisco Spark cloud returns an error.
+
+        """
+        check_type(roomId, basestring, may_be_none=False)
+
+        # API request
+        json_data = self._session.get('rooms/' + roomId)
+
+        # Return a Room object created from the response JSON data
+        return Room(json_data)
+
     def update(self, roomId, title=None, **request_parameters):
         """Update details for a room, by ID.
 
         Args:
-            roomId(basestring): The ID of the room to be updated.
+            roomId(basestring): The room ID.
             title(basestring): A user-friendly name for the room.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
@@ -238,28 +259,6 @@ class RoomsAPI(object):
 
         # API request
         json_data = self._session.put('rooms/' + roomId, json=put_data)
-
-        # Return a Room object created from the response JSON data
-        return Room(json_data)
-
-    def get(self, roomId):
-        """Get the details of a room, by ID.
-
-        Args:
-            roomId(basestring): The ID of the room to be retrieved.
-
-        Returns:
-            Room: A Room object with the details of the requested room.
-
-        Raises:
-            TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
-
-        """
-        check_type(roomId, basestring, may_be_none=False)
-
-        # API request
-        json_data = self._session.get('rooms/' + roomId)
 
         # Return a Room object created from the response JSON data
         return Room(json_data)
