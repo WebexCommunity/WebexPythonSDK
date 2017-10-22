@@ -151,9 +151,10 @@ def dict_from_items_with_values(*dictionaries, **items):
         dict: A dictionary containing all of the items with a 'non-None' value.
 
     """
-    dictionaries.append(items)
+    dict_list = list(dictionaries)
+    dict_list.append(items)
     result = {}
-    for d in dictionaries:
+    for d in dict_list:
         for key, value in d.items():
             if value is not None:
                 result[key] = value
