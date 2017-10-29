@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark Roles API wrapper.
+"""Cisco Spark Roles-API wrapper.
 
 Classes:
     Role: Models a Spark Role JSON object as a native Python object.
-    RolesAPI: Wraps the Cisco Spark Roles API and exposes the
-        API calls as Python method calls that return native Python objects.
+    RolesAPI: Wraps the Cisco Spark Roles-API and exposes the APIs as native
+        Python methods that return native Python objects.
 
 """
 
@@ -19,9 +19,13 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
-from ciscosparkapi.utils import generator_container
 from ciscosparkapi.restsession import RestSession
 from ciscosparkapi.sparkdata import SparkData
+from ciscosparkapi.utils import (
+    check_type,
+    dict_from_items_with_values,
+    generator_container,
+)
 
 
 __author__ = "Chris Lunsford"
@@ -34,10 +38,10 @@ class Role(SparkData):
     """Model a Spark Role JSON object as a native Python object."""
 
     def __init__(self, json):
-        """Init a new Role data object from a dict or JSON string.
+        """Initialize a new Role data object from a dictionary or JSON string.
 
         Args:
-            json(dict, basestring): Input JSON object.
+            json(dict, basestring): Input dictionary or JSON string.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -57,31 +61,33 @@ class Role(SparkData):
 
 
 class RolesAPI(object):
-    """Cisco Spark Roles API wrapper.
+    """Cisco Spark Roles-API wrapper.
 
-    Wraps the Cisco Spark Roles API and exposes the API calls as Python
-    method calls that return native Python objects.
+    Wraps the Cisco Spark Roles-API and exposes the APIs as native Python
+    methods that return native Python objects.
 
     """
 
     def __init__(self, session):
-        """Init a new RolesAPI object with the provided RestSession.
+        """Initialize a new RolesAPI object with the provided RestSession.
 
         Args:
             session(RestSession): The RESTful session object to be used for
                 API calls to the Cisco Spark service.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
 
         """
-        assert isinstance(session, RestSession)
+        check_type(session, RestSession, may_be_none=False)
+
         super(RolesAPI, self).__init__()
+
         self._session = session
 
     @generator_container
-    def list(self, max=None):
-        """List Roles.
+    def list(self, max=None, **request_parameters):
+        """List all roles.
 
         This method supports Cisco Spark's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
@@ -94,47 +100,52 @@ class RolesAPI(object):
         container.
 
         Args:
-            max(int): Limits the maximum number of entries returned from the
-                Spark service per request (page size; requesting additional
-                pages is handled automatically).
+            max(int): Limit the maximum number of items returned from the Spark
+                service per request.
+            **request_parameters: Additional request parameters (provides
+                support for parameters that may be added in the future).
 
         Returns:
-            GeneratorContainer: When iterated, the GeneratorContainer, yields
-                the objects returned from the Cisco Spark query.
+            GeneratorContainer: A GeneratorContainer which, when iterated,
+                yields the roles returned by the Cisco Spark query.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert max is None or isinstance(max, int)
-        params = {}
-        if max:
-            params['max'] = max
+        check_type(max, int)
+
+        params = dict_from_items_with_values(
+            request_parameters,
+            max=max,
+        )
+
         # API request - get items
         items = self._session.get_items('roles', params=params)
+
         # Yield Role objects created from the returned JSON objects
         for item in items:
             yield Role(item)
 
     def get(self, roleId):
-        """Get the details of a Role, by id.
+        """Get the details of a Role, by ID.
 
         Args:
-            roleId(basestring): The id of the Role.
+            roleId(basestring): The ID of the Role to be retrieved.
 
         Returns:
-            Role: With the details of the requested Role.
+            Role: A Role object with the details of the requested Role.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert isinstance(roleId, basestring)
+        check_type(roleId, basestring, may_be_none=False)
+
         # API request
-        json_obj = self._session.get('roles/' + roleId)
+        json_data = self._session.get('roles/' + roleId)
+
         # Return a Role object created from the returned JSON object
-        return Role(json_obj)
+        return Role(json_data)
