@@ -124,7 +124,7 @@ class RoomsAPI(object):
 
         This method supports Cisco Spark's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
-        container that incrementally yield all rooms returned by the
+        container that incrementally yields all rooms returned by the
         query.  The generator will automatically request additional 'pages' of
         responses from Spark as needed until all responses have been returned.
         The container makes the generator safe for reuse.  A new API call will
@@ -161,11 +161,11 @@ class RoomsAPI(object):
         check_type(max, int)
 
         params = dict_from_items_with_values(
-                request_parameters,
-                teamId=teamId,
-                type=type,
-                sortBy=sortBy,
-                max=max,
+            request_parameters,
+            teamId=teamId,
+            type=type,
+            sortBy=sortBy,
+            max=max,
         )
 
         # API request - get items

@@ -198,12 +198,12 @@ class PeopleAPI(object):
         check_type(max, int)
 
         params = dict_from_items_with_values(
-                request_parameters,
-                id=id,
-                email=email,
-                displayName=displayName,
-                orgId=orgId,
-                max=max,
+            request_parameters,
+            id=id,
+            email=email,
+            displayName=displayName,
+            orgId=orgId,
+            max=max,
         )
 
         # API request - get items
