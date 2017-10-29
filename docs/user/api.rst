@@ -117,6 +117,8 @@ Exceptions
 
 .. autoexception:: SparkApiError
 
+.. autoexception:: SparkRateLimitError
+
 
 .. _Spark Data Objects:
 
@@ -178,6 +180,14 @@ Webhook
 -------
 
 .. autoclass:: Webhook()
+
+
+.. _WebhookEvent:
+
+Webhook Event
+-------------
+
+.. autoclass:: WebhookEvent()
 
 
 .. _Organization:
