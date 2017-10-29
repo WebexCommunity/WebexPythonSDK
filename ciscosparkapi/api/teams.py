@@ -3,8 +3,8 @@
 
 Classes:
     Team: Models a Spark 'team' JSON object as a native Python object.
-    TeamsAPI: Wrappers the Cisco Spark Teams-API and exposes the API calls as
-        Python method calls that return native Python objects.
+    TeamsAPI: Wraps the Cisco Spark Teams-API and exposes the APIs as native
+        Python methods that return native Python objects.
 
 """
 
@@ -19,10 +19,13 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
-from ciscosparkapi.exceptions import ciscosparkapiException
-from ciscosparkapi.utils import generator_container
 from ciscosparkapi.restsession import RestSession
 from ciscosparkapi.sparkdata import SparkData
+from ciscosparkapi.utils import (
+    check_type,
+    dict_from_items_with_values,
+    generator_container,
+)
 
 
 __author__ = "Chris Lunsford"
@@ -35,10 +38,10 @@ class Team(SparkData):
     """Model a Spark 'team' JSON object as a native Python object."""
 
     def __init__(self, json):
-        """Init a new Team data object from a JSON dictionary or string.
+        """Initialize a new Team data object from a dictionary or JSON string.
 
         Args:
-            json(dict, basestring): Input JSON object.
+            json(dict, basestring): Input dictionary or JSON object.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -48,47 +51,57 @@ class Team(SparkData):
 
     @property
     def id(self):
-        return self._json['id']
+        """The team's unique ID."""
+        return self._json.get('id')
 
     @property
     def name(self):
-        return self._json['name']
+        """A user-friendly name for the team."""
+        return self._json.get('name')
 
     @property
     def created(self):
-        return self._json['created']
+        """The date and time the team was created."""
+        return self._json.get('created')
+
+    @property
+    def creatorId(self):
+        """The ID of the person who created the team."""
+        return self._json.get('creatorId')
 
 
 class TeamsAPI(object):
     """Cisco Spark Teams-API wrapper class.
 
-    Wrappers the Cisco Spark Teams-API and exposes the API calls as Python
-    method calls that return native Python objects.
+    Wraps the Cisco Spark Teams-API and exposes the APIs as native Python
+    methods that return native Python objects.
 
     """
 
     def __init__(self, session):
-        """Init a new TeamsAPI object with the provided RestSession.
+        """Initialize a new TeamsAPI object with the provided RestSession.
 
         Args:
             session(RestSession): The RESTful session object to be used for
                 API calls to the Cisco Spark service.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
 
         """
-        assert isinstance(session, RestSession)
+        check_type(session, RestSession, may_be_none=False)
+
         super(TeamsAPI, self).__init__()
+
         self._session = session
 
     @generator_container
-    def list(self, max=None):
+    def list(self, max=None, **request_parameters):
         """List teams to which the authenticated user belongs.
 
         This method supports Cisco Spark's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
-        container that incrementally yield all teams returned by the
+        container that incrementally yields all teams returned by the
         query.  The generator will automatically request additional 'pages' of
         responses from Spark as needed until all responses have been returned.
         The container makes the generator safe for reuse.  A new API call will
@@ -97,116 +110,130 @@ class TeamsAPI(object):
         container.
 
         Args:
-            max(int): Limits the maximum number of teams returned from the
-                Spark service per request.
+            max(int): Limit the maximum number of items returned from the Spark
+                service per request.
+            **request_parameters: Additional request parameters (provides
+                support for parameters that may be added in the future).
 
         Returns:
-            GeneratorContainer: When iterated, the GeneratorContainer, yields
-                the teams returned by the Cisco Spark query.
+            GeneratorContainer: A GeneratorContainer which, when iterated,
+                yields the teams returned by the Cisco Spark query.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert max is None or isinstance(max, int)
-        params = {}
-        if max:
-            params['max'] = max
+        check_type(max, int)
+
+        params = dict_from_items_with_values(
+            request_parameters,
+            max=max,
+        )
+
         # API request - get items
         items = self._session.get_items('teams', params=params)
+
         # Yield Team objects created from the returned items JSON objects
         for item in items:
             yield Team(item)
 
-    def create(self, name):
+    def create(self, name,  **request_parameters):
         """Create a team.
 
         The authenticated user is automatically added as a member of the team.
 
         Args:
             name(basestring): A user-friendly name for the team.
+            **request_parameters: Additional request parameters (provides
+                support for parameters that may be added in the future).
 
         Returns:
-            Team: With the details of the created team.
+            Team: A Team object with the details of the created team.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert isinstance(name, basestring)
-        post_data = {}
-        post_data['name'] = name
+        check_type(name, basestring, may_be_none=False)
+
+        post_data = dict_from_items_with_values(
+            request_parameters,
+            name=name,
+        )
+
         # API request
-        json_obj = self._session.post('teams', json=post_data)
+        json_data = self._session.post('teams', json=post_data)
+
         # Return a Team object created from the response JSON data
-        return Team(json_obj)
+        return Team(json_data)
 
     def get(self, teamId):
         """Get the details of a team, by ID.
 
         Args:
-            teamId(basestring): The teamId of the team.
+            teamId(basestring): The ID of the team to be retrieved.
 
         Returns:
-            Team: With the details of the requested team.
+            Team: A Team object with the details of the requested team.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert isinstance(teamId, basestring)
-        # API request
-        json_obj = self._session.get('teams/' + teamId)
-        # Return a Team object created from the response JSON data
-        return Team(json_obj)
+        check_type(teamId, basestring, may_be_none=False)
 
-    def update(self, teamId, **update_attributes):
-        """Update details for a team.
+        # API request
+        json_data = self._session.get('teams/' + teamId)
+
+        # Return a Team object created from the response JSON data
+        return Team(json_data)
+
+    def update(self, teamId, name=None, **request_parameters):
+        """Update details for a team, by ID.
 
         Args:
-            teamId(basestring): The teamId of the team to be updated.
+            teamId(basestring): The team ID.
             name(basestring): A user-friendly name for the team.
+            **request_parameters: Additional request parameters (provides
+                support for parameters that may be added in the future).
 
         Returns:
-            Team: With the updated Spark team details.
+            Team: A Team object with the updated Spark team details.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
-            ciscosparkapiException: If an update attribute is not provided.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert isinstance(teamId, basestring)
-        # Process update_attributes keyword arguments
-        if not update_attributes:
-            error_message = "At least one **update_attributes keyword " \
-                            "argument must be specified."
-            raise ciscosparkapiException(error_message)
+        check_type(teamId, basestring, may_be_none=False)
+        check_type(name, basestring)
+
+        put_data = dict_from_items_with_values(
+            request_parameters,
+            name=name,
+        )
+
         # API request
-        json_obj = self._session.put('teams/' + teamId,
-                                     json=update_attributes)
+        json_data = self._session.put('teams/' + teamId, json=put_data)
+
         # Return a Team object created from the response JSON data
-        return Team(json_obj)
+        return Team(json_data)
 
     def delete(self, teamId):
         """Delete a team.
 
         Args:
-            teamId(basestring): The teamId of the team to be deleted.
+            teamId(basestring): The ID of the team to be deleted.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert isinstance(teamId, basestring)
+        check_type(teamId, basestring, may_be_none=False)
+
         # API request
         self._session.delete('teams/' + teamId)
