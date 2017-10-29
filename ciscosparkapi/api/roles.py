@@ -51,7 +51,7 @@ class Role(SparkData):
 
     @property
     def id(self):
-        """The unique id for the Role."""
+        """The unique ID for the Role."""
         return self._json.get('id')
 
     @property

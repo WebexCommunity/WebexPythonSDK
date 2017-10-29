@@ -52,7 +52,7 @@ class Organization(SparkData):
 
     @property
     def id(self):
-        """The unique id for the Organization."""
+        """The unique ID for the Organization."""
         return self._json.get('id')
 
     @property
@@ -135,7 +135,7 @@ class OrganizationsAPI(object):
             yield Organization(item)
 
     def get(self, orgId):
-        """Get the details of an Organization, by id.
+        """Get the details of an Organization, by ID.
 
         Args:
             orgId(basestring): The ID of the Organization to be retrieved.

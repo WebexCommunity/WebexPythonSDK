@@ -51,7 +51,7 @@ class License(SparkData):
 
     @property
     def id(self):
-        """The unique id for the License."""
+        """The unique ID for the License."""
         return self._json.get('id')
 
     @property

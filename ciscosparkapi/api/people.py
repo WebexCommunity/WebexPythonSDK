@@ -176,7 +176,7 @@ class PeopleAPI(object):
                 the displayName to be searched.
             id(basestring): List people by ID. Accepts up to 85 person IDs
                 separated by commas.
-            orgId(basestring): The organization id.
+            orgId(basestring): The organization ID.
             max(int): Limit the maximum number of items returned from the Spark
                 service per request.
             **request_parameters: Additional request parameters (provides
@@ -365,7 +365,7 @@ class PeopleAPI(object):
         Only an admin can remove a person.
 
         Args:
-            personId(basestring): The 'id' of the person to be deleted.
+            personId(basestring): The ID of the person to be deleted.
 
         Raises:
             AssertionError: If the parameter types are incorrect.
