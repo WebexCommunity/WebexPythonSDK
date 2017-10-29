@@ -207,7 +207,7 @@ class TestMessagesAPI(object):
 
     def test_list_messages_mentioning_me(self, api, group_room,
                                          group_room_markdown_message):
-        messages = list_messages(api, group_room.id, mentionedPeople=["me"])
+        messages = list_messages(api, group_room.id, mentionedPeople="me")
         messages_list = list(messages)
         assert len(messages_list) >= 1
         assert are_valid_messages(messages_list)
