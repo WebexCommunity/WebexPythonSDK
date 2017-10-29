@@ -3,8 +3,8 @@
 
 Classes:
     Webhook: Models a Spark 'webhook' JSON object as a native Python object.
-    WebhooksAPI: Wrappers the Cisco Spark Webhooks-API and exposes the API
-        calls as Python method calls that return native Python objects.
+    WebhooksAPI: Wraps the Cisco Spark Webhooks-API and exposes the APIs as
+        native Python methods that return native Python objects.
 
 """
 
@@ -19,10 +19,16 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
-from ciscosparkapi.exceptions import ciscosparkapiException
-from ciscosparkapi.utils import generator_container
+from ciscosparkapi.api.memberships import Membership
+from ciscosparkapi.api.messages import Message
+from ciscosparkapi.api.rooms import Room
 from ciscosparkapi.restsession import RestSession
 from ciscosparkapi.sparkdata import SparkData
+from ciscosparkapi.utils import (
+    check_type,
+    dict_from_items_with_values,
+    generator_container,
+)
 
 
 __author__ = "Chris Lunsford"
@@ -35,10 +41,10 @@ class Webhook(SparkData):
     """Model a Spark 'webhook' JSON object as a native Python object."""
 
     def __init__(self, json):
-        """Init a new Webhook data object from a JSON dictionary or string.
+        """Init a new Webhook data object from a dictionary or JSON string.
 
         Args:
-            json(dict, basestring): Input JSON object.
+            json(dict, basestring): Input dictionary or JSON string.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -82,53 +88,188 @@ class Webhook(SparkData):
         return self._json.get('secret')
 
     @property
+    def orgId(self):
+        """The ID of the organization that owns the webhook."""
+        return self._json.get('orgId')
+
+    @property
+    def createdBy(self):
+        """The ID of the person that added the webhook."""
+        return self._json.get('createdBy')
+
+    @property
+    def appId(self):
+        """Identifies the application that added the webhook."""
+        return self._json.get('appId')
+
+    @property
+    def ownedBy(self):
+        """Indicates if the webhook is owned by the `org` or the `creator`.
+
+        Webhooks owned by the creator can only receive events that are
+        accessible to the creator of the webhook. Those owned by the
+        organization will receive events that are visible to anyone in the
+        organization.
+
+        """
+        return self._json.get('ownedBy')
+
+    @property
+    def status(self):
+        """Indicates if the webhook is active.
+
+        A webhook that cannot reach your URL is disabled.
+
+        """
+        return self._json.get('status')
+
+    @property
     def created(self):
         """Creation date and time in ISO8601 format."""
         return self._json.get('created')
 
-    @property
-    def data(self):
-        """The object representation of the resource triggering the webhook.
 
-        The data property contains the object representation of the resource
-        that triggered the webhook. For example, if you registered a webhook
-        that triggers when messages are created (i.e. posted into a room) then
-        the data property will contain the representation for a message
-        resource, as specified in the Messages API documentation.
+class WebhookEvent(SparkData):
+    """Model a Spark webhook event JSON object as a native Python object."""
+
+    def __init__(self, json):
+        """Init a WebhookEvent data object from a JSON dictionary or string.
+
+        Args:
+            json(dict, basestring): Input dictionary or JSON string.
+
+        Raises:
+            TypeError: If the input object is not a dictionary or string.
 
         """
-        object_data = self._json.get('data', None)
-        if object_data:
-            return SparkData(object_data)
-        else:
-            return None
+        super(WebhookEvent, self).__init__(json)
+
+        self._data = None
+
+    @property
+    def id(self):
+        """Webhook ID."""
+        return self._json.get('id')
+
+    @property
+    def name(self):
+        """A user-friendly name for this webhook."""
+        return self._json.get('name')
+
+    @property
+    def resource(self):
+        """The resource type for the webhook."""
+        return self._json.get('resource')
+
+    @property
+    def event(self):
+        """The event type for the webhook."""
+        return self._json.get('event')
+
+    @property
+    def filter(self):
+        """The filter that defines the webhook scope."""
+        return self._json.get('filter')
+
+    @property
+    def orgId(self):
+        """The ID of the organization that owns the webhook."""
+        return self._json.get('orgId')
+
+    @property
+    def createdBy(self):
+        """The ID of the person that added the webhook."""
+        return self._json.get('createdBy')
+
+    @property
+    def appId(self):
+        """Identifies the application that added the webhook."""
+        return self._json.get('appId')
+
+    @property
+    def ownedBy(self):
+        """Indicates if the webhook is owned by the `org` or the `creator`.
+
+        Webhooks owned by the creator can only receive events that are
+        accessible to the creator of the webhook. Those owned by the
+        organization will receive events that are visible to anyone in the
+        organization.
+
+        """
+        return self._json.get('ownedBy')
+
+    @property
+    def status(self):
+        """Indicates if the webhook is active.
+
+        A webhook that cannot reach your URL is disabled.
+
+        """
+        return self._json.get('status')
+
+    @property
+    def actorId(self):
+        """The ID of the person that caused the webhook to be sent."""
+        return self._json.get('actorId')
+
+    @property
+    def data(self):
+        """The data for the resource that triggered the webhook.
+
+        For example, if you registered a webhook that triggers when messages
+        are created (i.e. posted into a room) then the data property will
+        contain the JSON representation for a message resource.
+
+        Note:  That not all of the details of the resource are included in the
+        data object.  For example, the contents of a message are not included.
+        You would need to request the details for the message using the message
+        'id' (which is in the data object) and the
+        `CiscoSparkAPI.messages.get()` method.
+
+        """
+        if self._data is None and self._json.get('data'):
+            if self.resource == "memberships":
+                self._data = Membership(self._json.get('data'))
+
+            elif self.resource == "messages":
+                self._data = Message(self._json.get('data'))
+
+            elif self.resource == "rooms":
+                self._data = Room(self._json.get('data'))
+
+            else:
+                self._data = SparkData(self._json.get('data'))
+
+        return self._data
 
 
 class WebhooksAPI(object):
     """Cisco Spark Webhooks-API wrapper class.
 
-    Wrappers the Cisco Spark Webhooks-API and exposes the API calls as Python
-    method calls that return native Python objects.
+    Wraps the Cisco Spark Webhooks-API and exposes the APIs as native Python
+    methods that return native Python objects.
 
     """
 
     def __init__(self, session):
-        """Init a new WebhooksAPI object with the provided RestSession.
+        """Initialize a new WebhooksAPI object with the provided RestSession.
 
         Args:
             session(RestSession): The RESTful session object to be used for
                 API calls to the Cisco Spark service.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
 
         """
-        assert isinstance(session, RestSession)
+        check_type(session, RestSession)
+
         super(WebhooksAPI, self).__init__()
+
         self._session = session
 
     @generator_container
-    def list(self, max=None):
+    def list(self, max=None, **request_parameters):
         """List all of the authenticated user's webhooks.
 
         This method supports Cisco Spark's implementation of RFC5988 Web
@@ -142,31 +283,36 @@ class WebhooksAPI(object):
         container.
 
         Args:
-            max(int): Limits the maximum number of webhooks returned from the
-                Spark service per request.
+            max(int): Limit the maximum number of items returned from the Spark
+                service per request.
+            **request_parameters: Additional request parameters (provides
+                support for parameters that may be added in the future).
 
         Returns:
-            GeneratorContainer: When iterated, the GeneratorContainer, yields
-                the webhooks returned by the Cisco Spark query.
+            GeneratorContainer: A GeneratorContainer which, when iterated,
+                yields the webhooks returned by the Cisco Spark query.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert max is None or isinstance(max, int)
-        params = {}
-        if max:
-            params['max'] = max
+        check_type(max, int)
+
+        params = dict_from_items_with_values(
+            request_parameters,
+            max=max,
+        )
+
         # API request - get items
         items = self._session.get_items('webhooks', params=params)
+
         # Yield Webhook objects created from the returned items JSON objects
         for item in items:
             yield Webhook(item)
 
     def create(self, name, targetUrl, resource, event,
-               filter=None, secret=None):
+               filter=None, secret=None, **request_parameters):
         """Create a webhook.
 
         Args:
@@ -176,103 +322,112 @@ class WebhooksAPI(object):
             resource(basestring): The resource type for the webhook.
             event(basestring): The event type for the webhook.
             filter(basestring): The filter that defines the webhook scope.
-            secret(basestring): secret used to generate payload signature.
+            secret(basestring): The secret used to generate payload signature.
+            **request_parameters: Additional request parameters (provides
+                support for parameters that may be added in the future).
 
         Returns:
-            Webhook: With the details of the created webhook.
+            Webhook: A Webhook object with the details of the created webhook.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert isinstance(name, basestring)
-        assert isinstance(targetUrl, basestring)
-        assert isinstance(resource, basestring)
-        assert isinstance(event, basestring)
-        assert filter is None or isinstance(filter, basestring)
-        assert secret is None or isinstance(secret, basestring)
-        post_data = {}
-        post_data['name'] = name
-        post_data['targetUrl'] = targetUrl
-        post_data['resource'] = resource
-        post_data['event'] = event
-        if filter:
-            post_data['filter'] = filter
-        if secret:
-            post_data['secret'] = secret
+        check_type(name, basestring, may_be_none=False)
+        check_type(targetUrl, basestring, may_be_none=False)
+        check_type(resource, basestring, may_be_none=False)
+        check_type(event, basestring, may_be_none=False)
+        check_type(filter, basestring)
+        check_type(secret, basestring)
+
+        post_data = dict_from_items_with_values(
+            request_parameters,
+            name=name,
+            targetUrl=targetUrl,
+            resource=resource,
+            event=event,
+            filter=filter,
+            secret=secret,
+        )
+
         # API request
-        json_obj = self._session.post('webhooks', json=post_data)
+        json_data = self._session.post('webhooks', json=post_data)
+
         # Return a Webhook object created from the response JSON data
-        return Webhook(json_obj)
+        return Webhook(json_data)
 
     def get(self, webhookId):
         """Get the details of a webhook, by ID.
 
         Args:
-            webhookId(basestring): The webhookId of the webhook.
+            webhookId(basestring): The ID of the webhook to be retrieved.
 
         Returns:
-            Webhook: With the details of the requested webhook.
+            Webhook: A Webhook object with the details of the requested
+                webhook.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert isinstance(webhookId, basestring)
-        # API request
-        json_obj = self._session.get('webhooks/' + webhookId)
-        # Return a Webhook object created from the response JSON data
-        return Webhook(json_obj)
+        check_type(webhookId, basestring, may_be_none=False)
 
-    def update(self, webhookId, **update_attributes):
-        """Update details for a webhook.
+        # API request
+        json_data = self._session.get('webhooks/' + webhookId)
+
+        # Return a Webhook object created from the response JSON data
+        return Webhook(json_data)
+
+    def update(self, webhookId, name=None, targetUrl=None,
+               **request_parameters):
+        """Update a webhook, by ID.
 
         Args:
-            webhookId(basestring): The webhookId of the webhook to be
-                updated.
+            webhookId(basestring): The webhook ID.
             name(basestring): A user-friendly name for this webhook.
             targetUrl(basestring): The URL that receives POST requests for
                 each event.
+            **request_parameters: Additional request parameters (provides
+                support for parameters that may be added in the future).
 
         Returns:
-            Webhook: With the updated Spark webhook details.
+            Webhook: A Webhook object with the updated Spark webhook details.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
-            ciscosparkapiException: If an update attribute is not provided.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert isinstance(webhookId, basestring)
-        # Process update_attributes keyword arguments
-        if not update_attributes:
-            error_message = "At least one **update_attributes keyword " \
-                            "argument must be specified."
-            raise ciscosparkapiException(error_message)
+        check_type(webhookId, basestring, may_be_none=False)
+        check_type(name, basestring)
+        check_type(targetUrl, basestring)
+
+        put_data = dict_from_items_with_values(
+            request_parameters,
+            name=name,
+            targetUrl=targetUrl,
+        )
+
         # API request
-        json_obj = self._session.put('webhooks/' + webhookId,
-                                     json=update_attributes)
+        json_data = self._session.put('webhooks/' + webhookId, json=put_data)
+
         # Return a Webhook object created from the response JSON data
-        return Webhook(json_obj)
+        return Webhook(json_data)
 
     def delete(self, webhookId):
-        """Delete a webhook.
+        """Delete a webhook, by ID.
 
         Args:
-            webhookId(basestring): The webhookId of the webhook to be
-                deleted.
+            webhookId(basestring): The ID of the webhook to be deleted.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert isinstance(webhookId, basestring)
+        check_type(webhookId, basestring, may_be_none=False)
+
         # API request
         self._session.delete('webhooks/' + webhookId)
