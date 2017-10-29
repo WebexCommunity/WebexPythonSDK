@@ -30,7 +30,7 @@ from ciscosparkapi.api.teammemberships import (
     TeamMembership,
     TeamMembershipsAPI
 )
-from ciscosparkapi.api.webhooks import Webhook, WebhooksAPI
+from ciscosparkapi.api.webhooks import Webhook, WebhookEvent, WebhooksAPI
 from ciscosparkapi.api.organizations import Organization, OrganizationsAPI
 from ciscosparkapi.api.licenses import License, LicensesAPI
 from ciscosparkapi.api.roles import Role, RolesAPI

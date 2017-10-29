@@ -303,10 +303,9 @@ You can catch any errors returned by the Cisco Spark cloud by catching
     >>>
 
 ciscosparkapi will also raise a number of other standard errors
-(:exc:`AssertionError`, :exc:`TypeError`, etc.) and other package errors like
-:exc:`ciscosparkapiException`; however, these errors are usually caused by
-incorrect use of the package or methods and should be sorted while debugging
-your app.
+(:exc:`TypeError`, :exc:`ValueError`, etc.); however, these errors are usually
+caused by incorrect use of the package or methods and should be sorted while
+debugging your app.
 
 
 Working with Returned Objects

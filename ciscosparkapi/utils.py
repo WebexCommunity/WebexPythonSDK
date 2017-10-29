@@ -106,6 +106,61 @@ def open_local_file(file_path):
                          content_type=content_type)
 
 
+def check_type(o, acceptable_types, may_be_none=True):
+    """Object is an instance of one of the acceptable types or None.
+
+    Args:
+        o: The object to be inspected.
+        acceptable_types: A type or tuple of acceptable types.
+        may_be_none(bool): Whether or not the object may be None.
+
+    Raises:
+        TypeError: If the object is None and may_be_none=False, or if the
+            object is not an instance of one of the acceptable types.
+
+    """
+    if may_be_none and o is None:
+        # Object is None, and that is OK!
+        pass
+    elif isinstance(o, acceptable_types):
+        # Object is an instance of an acceptable type.
+        pass
+    else:
+        # Object is something else.
+        error_message = (
+            "We were expecting to receive an instance of one of the following "
+            "types: {types}{none}; but instead we received {o} which is a "
+            "{o_type}.".format(
+                types=", ".join([repr(t.__name__) for t in acceptable_types]),
+                none="or 'None'" if may_be_none else "",
+                o=o,
+                o_type=repr(type(o).__name__)
+            )
+        )
+        raise TypeError(error_message)
+
+
+def dict_from_items_with_values(*dictionaries, **items):
+    """Creates a dict with the inputted items; pruning any that are `None`.
+
+    Args:
+        *dictionaries(dict): Dictionaries of items to be pruned and included.
+        **items: Items to be pruned and included.
+
+    Returns:
+        dict: A dictionary containing all of the items with a 'non-None' value.
+
+    """
+    dict_list = list(dictionaries)
+    dict_list.append(items)
+    result = {}
+    for d in dict_list:
+        for key, value in d.items():
+            if value is not None:
+                result[key] = value
+    return result
+
+
 def raise_if_extra_kwargs(kwargs):
     """Raise a TypeError if kwargs is not empty."""
     if kwargs:

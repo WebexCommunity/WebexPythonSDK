@@ -4,8 +4,8 @@
 Classes:
     AccessToken: Models a Spark 'access token' JSON object as a native Python
         object.
-    AccessTokensAPI: Wrappers the Cisco Spark AccessTokens-API and exposes the
-        API calls as Python method calls that return native Python objects.
+    AccessTokensAPI: Wraps the Cisco Spark Access-Tokens-API and exposes the
+        APIs as native Python methods that return native Python objects.
 
 """
 
@@ -26,13 +26,15 @@ import urllib.parse
 
 import requests
 
+from ciscosparkapi.responsecodes import EXPECTED_RESPONSE_CODE
 from ciscosparkapi.sparkdata import SparkData
 from ciscosparkapi.utils import (
-    validate_base_url,
     check_response_code,
+    check_type,
+    dict_from_items_with_values,
     extract_and_parse_json,
+    validate_base_url,
 )
-from ciscosparkapi.responsecodes import EXPECTED_RESPONSE_CODE
 
 
 __author__ = "Chris Lunsford"
@@ -48,10 +50,10 @@ class AccessToken(SparkData):
     """Model a Spark 'access token' JSON object as a native Python object."""
 
     def __init__(self, json):
-        """Init a new AccessToken data object from a JSON dictionary or string.
+        """Init a new AccessToken data object from a dictionary or JSON string.
 
         Args:
-            json(dict, basestring): Input JSON object.
+            json(dict, basestring): Input dictionary or JSON string.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -61,59 +63,62 @@ class AccessToken(SparkData):
 
     @property
     def access_token(self):
-        """Cisco Spark access_token."""
+        """Cisco Spark access token."""
         return self._json.get('access_token')
 
     @property
     def expires_in(self):
-        """Access token expires_in number of seconds."""
+        """Access token expiry time (in seconds)."""
         return self._json.get('expires_in')
 
     @property
     def refresh_token(self):
-        """refresh_token used to request a new/refreshed access_token."""
+        """Refresh token used to request a new/refreshed access token."""
         return self._json.get('refresh_token')
 
     @property
     def refresh_token_expires_in(self):
-        """refresh_token_expires_in number of seconds."""
+        """Refresh token expiry time (in seconds)."""
         return self._json.get('refresh_token_expires_in')
 
 
 class AccessTokensAPI(object):
     """Cisco Spark Access-Tokens-API wrapper class.
 
-    Wrappers the Cisco Spark Access-Tokens-API and exposes the API calls as
-    Python method calls that return native Python objects.
+    Wraps the Cisco Spark Access-Tokens-API and exposes the APIs as native
+    Python methods that return native Python objects.
 
     """
 
     def __init__(self, base_url, timeout=None):
-        """Init a new AccessTokensAPI object with the provided RestSession.
+        """Initialize an AccessTokensAPI object with the provided RestSession.
 
         Args:
             base_url(basestring): The base URL the API endpoints.
             timeout(int): Timeout in seconds for the API requests.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
 
         """
-        assert isinstance(base_url, basestring)
-        assert timeout is None or isinstance(timeout, int)
+        check_type(base_url, basestring, may_be_none=False)
+        check_type(timeout, int)
+
         super(AccessTokensAPI, self).__init__()
+
         self._base_url = str(validate_base_url(base_url))
         self._timeout = timeout
         self._endpoint_url = urllib.parse.urljoin(self.base_url, API_ENDPOINT)
-        self._request_kwargs = {}
-        self._request_kwargs["timeout"] = timeout
+        self._request_kwargs = {"timeout": timeout}
 
     @property
     def base_url(self):
+        """The base URL the API endpoints."""
         return self._base_url
 
     @property
     def timeout(self):
+        """Timeout in seconds for the API requests."""
         return self._timeout
 
     def get(self, client_id, client_secret, code, redirect_uri):
@@ -123,8 +128,7 @@ class AccessTokensAPI(object):
         invoke the APIs.
 
         Args:
-            client_id(basestring): Provided when you created your
-                integration.
+            client_id(basestring): Provided when you created your integration.
             client_secret(basestring): Provided when you created your
                 integration.
             code(basestring): The Authorization Code provided by the user
@@ -133,40 +137,41 @@ class AccessTokensAPI(object):
                 process.
 
         Returns:
-            AccessToken: With the access token provided by the Cisco Spark
-                cloud.
+            AccessToken: An AccessToken object with the access token provided
+                by the Cisco Spark cloud.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert isinstance(client_id, basestring)
-        assert isinstance(client_secret, basestring)
-        assert isinstance(code, basestring)
-        assert isinstance(redirect_uri, basestring)
-        # Build request parameters
-        data = {}
-        data["grant_type"] = "authorization_code"
-        data["client_id"] = client_id
-        data["client_secret"] = client_secret
-        data["code"] = code
-        data["redirect_uri"] = redirect_uri
+        check_type(client_id, basestring, may_be_none=False)
+        check_type(client_secret, basestring, may_be_none=False)
+        check_type(code, basestring, may_be_none=False)
+        check_type(redirect_uri, basestring, may_be_none=False)
+
+        post_data = dict_from_items_with_values(
+            grant_type="authorization_code",
+            client_id=client_id,
+            client_secret=client_secret,
+            code=code,
+            redirect_uri=redirect_uri,
+        )
+
         # API request
-        response = requests.post(self._endpoint_url, data=data,
+        response = requests.post(self._endpoint_url, data=post_data,
                                  **self._request_kwargs)
         check_response_code(response, EXPECTED_RESPONSE_CODE['POST'])
         json_data = extract_and_parse_json(response)
+
         # Return a AccessToken object created from the response JSON data
         return AccessToken(json_data)
 
     def refresh(self, client_id, client_secret, refresh_token):
-        """Return a refreshed Access Token via the provided refresh_token.
+        """Return a refreshed Access Token from the provided refresh_token.
 
         Args:
-            client_id(basestring): Provided when you created your
-                integration.
+            client_id(basestring): Provided when you created your integration.
             client_secret(basestring): Provided when you created your
                 integration.
             refresh_token(basestring): Provided when you requested the Access
@@ -177,24 +182,26 @@ class AccessTokensAPI(object):
                 cloud.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert isinstance(client_id, basestring)
-        assert isinstance(client_secret, basestring)
-        assert isinstance(refresh_token, basestring)
-        # Build request parameters
-        data = {}
-        data["grant_type"] = "refresh_token"
-        data["client_id"] = client_id
-        data["client_secret"] = client_secret
-        data["refresh_token"] = refresh_token
+        check_type(client_id, basestring, may_be_none=False)
+        check_type(client_secret, basestring, may_be_none=False)
+        check_type(refresh_token, basestring, may_be_none=False)
+
+        post_data = dict_from_items_with_values(
+            grant_type="refresh_token",
+            client_id=client_id,
+            client_secret=client_secret,
+            refresh_token=refresh_token,
+        )
+
         # API request
-        response = requests.post(self._endpoint_url, data=data,
+        response = requests.post(self._endpoint_url, data=post_data,
                                  **self._request_kwargs)
         check_response_code(response, EXPECTED_RESPONSE_CODE['POST'])
         json_data = extract_and_parse_json(response)
+
         # Return a AccessToken object created from the response JSON data
         return AccessToken(json_data)
