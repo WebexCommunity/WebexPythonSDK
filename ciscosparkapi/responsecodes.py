@@ -34,7 +34,7 @@ SPARK_RESPONSE_CODES = {
          "present that specifies how many seconds you need to wait before a "
          "successful request can be made.",
     500: "Something went wrong on the server.",
-    503: "The server received an invalid response from an upstream server "
+    502: "The server received an invalid response from an upstream server "
          "while processing the request. Try again later.",
     503: "Server is overloaded with requests. Try again later."
 }

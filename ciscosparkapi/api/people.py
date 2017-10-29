@@ -254,15 +254,15 @@ class PeopleAPI(object):
         check_type(licenses, list)
 
         post_data = dict_from_items_with_values(
-                request_parameters,
-                emails=emails,
-                displayName=displayName,
-                firstName=firstName,
-                lastName=lastName,
-                avatar=avatar,
-                orgId=orgId,
-                roles=roles,
-                licenses=licenses,
+            request_parameters,
+            emails=emails,
+            displayName=displayName,
+            firstName=firstName,
+            lastName=lastName,
+            avatar=avatar,
+            orgId=orgId,
+            roles=roles,
+            licenses=licenses,
         )
 
         # API request
@@ -342,15 +342,15 @@ class PeopleAPI(object):
         check_type(licenses, list)
 
         put_data = dict_from_items_with_values(
-                request_parameters,
-                emails=emails,
-                displayName=displayName,
-                firstName=firstName,
-                lastName=lastName,
-                avatar=avatar,
-                orgId=orgId,
-                roles=roles,
-                licenses=licenses,
+            request_parameters,
+            emails=emails,
+            displayName=displayName,
+            firstName=firstName,
+            lastName=lastName,
+            avatar=avatar,
+            orgId=orgId,
+            roles=roles,
+            licenses=licenses,
         )
 
         # API request

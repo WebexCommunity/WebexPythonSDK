@@ -92,7 +92,7 @@ class OrganizationsAPI(object):
         self._session = session
 
     @generator_container
-    def list(self, max=None,  **request_parameters):
+    def list(self, max=None, **request_parameters):
         """List Organizations.
 
         This method supports Cisco Spark's implementation of RFC5988 Web

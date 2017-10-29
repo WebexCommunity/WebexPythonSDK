@@ -68,11 +68,11 @@ def response_to_string(response):
     # Prepare request components
     req = textwrap.fill("{} {}".format(request.method, request.url),
                         width=79,
-                        subsequent_indent=' ' * (len(request.method)+1))
+                        subsequent_indent=' ' * (len(request.method) + 1))
     req_headers = [
         textwrap.fill("{}: {}".format(*sanitize(header)),
                       width=79,
-                      subsequent_indent=' '*4)
+                      subsequent_indent=' ' * 4)
         for header in request.headers.items()
     ]
     req_body = (textwrap.fill(to_unicode(request.body), width=79)
@@ -83,10 +83,10 @@ def response_to_string(response):
                                         response.reason
                                         if response.reason else ""),
                          width=79,
-                         subsequent_indent=' ' * (len(request.method)+1))
+                         subsequent_indent=' ' * (len(request.method) + 1))
     resp_headers = [
         textwrap.fill("{}: {}".format(*header), width=79,
-                      subsequent_indent=' '*4)
+                      subsequent_indent=' ' * 4)
         for header in response.headers.items()
     ]
     resp_body = textwrap.fill(response.text, width=79) if response.text else ""

@@ -199,9 +199,9 @@ class RoomsAPI(object):
         check_type(teamId, basestring)
 
         post_data = dict_from_items_with_values(
-                request_parameters,
-                title=title,
-                teamId=teamId,
+            request_parameters,
+            title=title,
+            teamId=teamId,
         )
 
         # API request
@@ -253,8 +253,8 @@ class RoomsAPI(object):
         check_type(roomId, basestring)
 
         put_data = dict_from_items_with_values(
-                request_parameters,
-                title=title,
+            request_parameters,
+            title=title,
         )
 
         # API request

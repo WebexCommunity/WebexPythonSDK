@@ -138,7 +138,7 @@ class TeamsAPI(object):
         for item in items:
             yield Team(item)
 
-    def create(self, name,  **request_parameters):
+    def create(self, name, **request_parameters):
         """Create a team.
 
         The authenticated user is automatically added as a member of the team.
