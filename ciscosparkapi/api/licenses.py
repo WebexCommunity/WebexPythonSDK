@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark Licenses API wrapper.
+"""Cisco Spark Licenses-API wrapper.
 
 Classes:
     License: Models a Spark License JSON object as a native Python object.
-    LicensesAPI: Wraps the Cisco Spark Licenses API and exposes the
-        API calls as Python method calls that return native Python objects.
+    LicensesAPI: Wraps the Cisco Spark Licenses-API and exposes the APIs as
+        native Python methods that return native Python objects.
 
 """
 
@@ -19,9 +19,13 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
-from ciscosparkapi.utils import generator_container
 from ciscosparkapi.restsession import RestSession
 from ciscosparkapi.sparkdata import SparkData
+from ciscosparkapi.utils import (
+    check_type,
+    dict_from_items_with_values,
+    generator_container,
+)
 
 
 __author__ = "Chris Lunsford"
@@ -34,10 +38,10 @@ class License(SparkData):
     """Model a Spark License JSON object as a native Python object."""
 
     def __init__(self, json):
-        """Init a new License data object from a dict or JSON string.
+        """Initialize a License data object from a dictionary or JSON string.
 
         Args:
-            json(dict, basestring): Input JSON object.
+            json(dict, basestring): Input dictionary or JSON string.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -67,33 +71,36 @@ class License(SparkData):
 
 
 class LicensesAPI(object):
-    """Cisco Spark Licenses API wrapper.
+    """Cisco Spark Licenses-API wrapper.
 
-    Wraps the Cisco Spark Licenses API and exposes the API calls as Python
-    method calls that return native Python objects.
+    Wraps the Cisco Spark Licenses-API and exposes the APIs as native Python
+    methods that return native Python objects.
 
     """
 
     def __init__(self, session):
-        """Init a new LicensesAPI object with the provided RestSession.
+        """Initialize a new LicensesAPI object with the provided RestSession.
 
         Args:
             session(RestSession): The RESTful session object to be used for
                 API calls to the Cisco Spark service.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the input object is not a dictionary or string.
 
         """
-        assert isinstance(session, RestSession)
+        check_type(session, RestSession, may_be_none=False)
+
         super(LicensesAPI, self).__init__()
+
         self._session = session
 
     @generator_container
-    def list(self, orgId=None, max=None):
-        """List Licenses.
+    def list(self, orgId=None, max=None, **request_parameters):
+        """List all licenses for a given organization.
 
-        Optionally filtered by Organization (orgId parameter).
+        If no orgId is specified, the default is the organization of the
+        authenticated user.
 
         This method supports Cisco Spark's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
@@ -106,53 +113,56 @@ class LicensesAPI(object):
         container.
 
         Args:
-            orgId(basestring): Filters the returned licenses to only include
-                those liceses associated with the specified Organization
-                (orgId).
-            max(int): Limits the maximum number of entries returned from the
-                Spark service per request (page size; requesting additional
-                pages is handled automatically).
+            orgId(basestring): Specify the organization, by ID.
+            max(int): Limit the maximum number of items returned from the Spark
+                service per request.
+            **request_parameters: Additional request parameters (provides
+                support for parameters that may be added in the future).
 
         Returns:
-            GeneratorContainer: When iterated, the GeneratorContainer, yields
-                the objects returned from the Cisco Spark query.
+            GeneratorContainer: A GeneratorContainer which, when iterated,
+                yields the licenses returned by the Cisco Spark query.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert orgId is None or isinstance(orgId, basestring)
-        assert max is None or isinstance(max, int)
-        params = {}
-        if orgId:
-            params['orgId'] = orgId
-        if max:
-            params['max'] = max
+        check_type(orgId, basestring)
+        check_type(max, int)
+
+        params = dict_from_items_with_values(
+            request_parameters,
+            orgId=orgId,
+            max=max,
+        )
+
         # API request - get items
         items = self._session.get_items('licenses', params=params)
+
         # Yield License objects created from the returned JSON objects
         for item in items:
             yield License(item)
 
     def get(self, licenseId):
-        """Get the details of a License, by id.
+        """Get the details of a License, by ID.
 
         Args:
-            licenseId(basestring): The id of the License.
+            licenseId(basestring): The ID of the License to be retrieved.
 
         Returns:
-            License: With the details of the requested License.
+            License: A License object with the details of the requested
+                License.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert isinstance(licenseId, basestring)
+        check_type(licenseId, basestring, may_be_none=False)
+
         # API request
-        json_obj = self._session.get('licenses/' + licenseId)
+        json_data = self._session.get('licenses/' + licenseId)
+
         # Return a License object created from the returned JSON object
-        return License(json_obj)
+        return License(json_data)
