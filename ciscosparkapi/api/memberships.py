@@ -251,11 +251,13 @@ class MembershipsAPI(object):
         return Membership(json_data)
 
     def update(self, membershipId, isModerator=None, **request_parameters):
-        """Updates properties for a membership, by ID.
+        """Update properties for a membership, by ID.
 
         Args:
             membershipId(basestring): The membership ID.
             isModerator(bool): Set to True to make the person a room moderator.
+            **request_parameters: Additional request parameters (provides
+                support for parameters that may be added in the future).
 
         Returns:
             Membership: A Membership object with the updated Spark membership
@@ -276,7 +278,7 @@ class MembershipsAPI(object):
 
         # API request
         json_data = self._session.put('memberships/' + membershipId,
-                                     json=put_data)
+                                      json=put_data)
 
         # Return a Membership object created from the response JSON data
         return Membership(json_data)
