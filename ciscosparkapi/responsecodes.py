@@ -24,6 +24,8 @@ SPARK_RESPONSE_CODES = {
     404: "The URI requested is invalid or the resource requested, such as a "
          "user, does not exist. Also returned when the requested format is "
          "not supported by the requested method.",
+    405: "The request was made to a resource using an HTTP request method "
+         "that is not supported.",
     409: "The request could not be processed because it conflicts with some "
          "established rule of the system. For example, a person may not be "
          "added to a room more than once.",
@@ -32,6 +34,8 @@ SPARK_RESPONSE_CODES = {
          "present that specifies how many seconds you need to wait before a "
          "successful request can be made.",
     500: "Something went wrong on the server.",
+    503: "The server received an invalid response from an upstream server "
+         "while processing the request. Try again later.",
     503: "Server is overloaded with requests. Try again later."
 }
 
