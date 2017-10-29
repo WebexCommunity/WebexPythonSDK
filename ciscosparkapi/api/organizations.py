@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark Organizations API wrapper.
+"""Cisco Spark Organizations-API wrapper.
 
 Classes:
     Organization: Models a Spark Organization JSON object as a native Python
         object.
-    OrganizationsAPI: Wraps the Cisco Spark Organizations API and exposes the
-        API calls as Python method calls that return native Python objects.
+    OrganizationsAPI: Wraps the Cisco Spark Organizations-API and exposes the
+        APIs as native Python methods that return native Python objects.
 
 """
 
@@ -20,9 +20,13 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
-from ciscosparkapi.utils import generator_container
 from ciscosparkapi.restsession import RestSession
 from ciscosparkapi.sparkdata import SparkData
+from ciscosparkapi.utils import (
+    check_type,
+    dict_from_items_with_values,
+    generator_container,
+)
 
 
 __author__ = "Chris Lunsford"
@@ -35,10 +39,10 @@ class Organization(SparkData):
     """Model a Spark Organization JSON object as a native Python object."""
 
     def __init__(self, json):
-        """Init a new Organization data object from a dict or JSON string.
+        """Init a Organization data object from a dictionary or JSON string.
 
         Args:
-            json(dict, basestring): Input JSON object.
+            json(dict, basestring): Input dictionary or JSON string.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -58,15 +62,15 @@ class Organization(SparkData):
 
     @property
     def created(self):
-        """The date and time the Organization was created."""
+        """Creation date and time in ISO8601 format."""
         return self._json.get('created')
 
 
 class OrganizationsAPI(object):
-    """Cisco Spark Organizations API wrapper.
+    """Cisco Spark Organizations-API wrapper.
 
-    Wraps the Cisco Spark Organizations API and exposes the API calls as Python
-    method calls that return native Python objects.
+    Wraps the Cisco Spark Organizations-API and exposes the APIs as native
+    Python methods that return native Python objects.
 
     """
 
@@ -78,15 +82,17 @@ class OrganizationsAPI(object):
                 API calls to the Cisco Spark service.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
 
         """
-        assert isinstance(session, RestSession)
+        check_type(session, RestSession, may_be_none=False)
+
         super(OrganizationsAPI, self).__init__()
+
         self._session = session
 
     @generator_container
-    def list(self, max=None):
+    def list(self, max=None,  **request_parameters):
         """List Organizations.
 
         This method supports Cisco Spark's implementation of RFC5988 Web
@@ -100,26 +106,30 @@ class OrganizationsAPI(object):
         container.
 
         Args:
-            max(int): Limits the maximum number of entries returned from the
-                Spark service per request (page size; requesting additional
-                pages is handled automatically).
+            max(int): Limit the maximum number of items returned from the Spark
+                service per request.
+            **request_parameters: Additional request parameters (provides
+                support for parameters that may be added in the future).
 
         Returns:
-            GeneratorContainer: When iterated, the GeneratorContainer, yields
-                the objects returned from the Cisco Spark query.
+            GeneratorContainer: A GeneratorContainer which, when iterated,
+                yields the organizations returned by the Cisco Spark query.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert max is None or isinstance(max, int)
-        params = {}
-        if max:
-            params['max'] = max
+        check_type(max, int)
+
+        params = dict_from_items_with_values(
+            request_parameters,
+            max=max,
+        )
+
         # API request - get items
         items = self._session.get_items('organizations', params=params)
+
         # Yield Organization objects created from the returned JSON objects
         for item in items:
             yield Organization(item)
@@ -128,19 +138,21 @@ class OrganizationsAPI(object):
         """Get the details of an Organization, by id.
 
         Args:
-            orgId(basestring): The id of the Organization.
+            orgId(basestring): The ID of the Organization to be retrieved.
 
         Returns:
-            Organization: With the details of the requested Organization.
+            Organization: An Organization object with the details of the
+                requested organization.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
-        # Process args
-        assert isinstance(orgId, basestring)
+        check_type(orgId, basestring, may_be_none=False)
+
         # API request
-        json_obj = self._session.get('organizations/' + orgId)
+        json_data = self._session.get('organizations/' + orgId)
+
         # Return a Organization object created from the returned JSON object
-        return Organization(json_obj)
+        return Organization(json_data)
