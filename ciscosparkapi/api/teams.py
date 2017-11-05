@@ -52,22 +52,22 @@ class Team(SparkData):
     @property
     def id(self):
         """The team's unique ID."""
-        return self._json.get('id')
+        return self._json_data.get('id')
 
     @property
     def name(self):
         """A user-friendly name for the team."""
-        return self._json.get('name')
+        return self._json_data.get('name')
 
     @property
     def created(self):
         """The date and time the team was created."""
-        return self._json.get('created')
+        return self._json_data.get('created')
 
     @property
     def creatorId(self):
         """The ID of the person who created the team."""
-        return self._json.get('creatorId')
+        return self._json_data.get('creatorId')
 
 
 class TeamsAPI(object):

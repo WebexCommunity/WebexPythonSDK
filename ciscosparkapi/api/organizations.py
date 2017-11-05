@@ -53,17 +53,17 @@ class Organization(SparkData):
     @property
     def id(self):
         """The unique ID for the Organization."""
-        return self._json.get('id')
+        return self._json_data.get('id')
 
     @property
     def displayName(self):
         """The human-friendly display name of the Organization."""
-        return self._json.get('displayName')
+        return self._json_data.get('displayName')
 
     @property
     def created(self):
         """Creation date and time in ISO8601 format."""
-        return self._json.get('created')
+        return self._json_data.get('created')
 
 
 class OrganizationsAPI(object):

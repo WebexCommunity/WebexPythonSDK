@@ -40,6 +40,8 @@ from past.builtins import basestring
 
 import json as json_pkg
 
+from collections import OrderedDict
+
 
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
@@ -63,9 +65,9 @@ def _json_dict(json):
     if isinstance(json, dict):
         return json
     elif isinstance(json, str):
-        return json_pkg.loads(json)
+        return json_pkg.loads(json, object_hook=OrderedDict)
     else:
-        error = "'json' must be a dictionary or JSON string; " \
+        error = "'json' must be a dictionary or valid JSON string; " \
                 "received: {!r}".format(json)
         raise TypeError(error)
 
@@ -84,7 +86,7 @@ class SparkData(object):
 
         """
         super(SparkData, self).__init__()
-        self._json = _json_dict(json)
+        self._json_data = _json_dict(json)
 
     def __getattr__(self, item):
         """Provide native attribute access to the JSON object attributes.
@@ -106,8 +108,8 @@ class SparkData(object):
                 requested.
 
         """
-        if item in list(self._json.keys()):
-            item_data = self._json[item]
+        if item in list(self._json_data.keys()):
+            item_data = self._json_data[item]
             if isinstance(item_data, dict):
                 return SparkData(item_data)
             else:
@@ -120,12 +122,30 @@ class SparkData(object):
     def __str__(self):
         """Return a human-readable string representation of this object."""
         class_str = self.__class__.__name__
-        json_str = json_pkg.dumps(self._json, indent=2)
+        json_str = json_pkg.dumps(self._json_data, indent=2)
         return "{}:\n{}".format(class_str, json_str)
 
     def __repr__(self):
         """Return a string representing this object as valid Python expression.
         """
         class_str = self.__class__.__name__
-        json_str = json_pkg.dumps(self._json, ensure_ascii=False)
+        json_str = json_pkg.dumps(self._json_data, ensure_ascii=False)
         return "{}({})".format(class_str, json_str)
+
+    @property
+    def json_data(self):
+        """A copy of the Spark data object's JSON data (OrderedDict)."""
+        return self._json_data.copy()
+
+    def to_dict(self):
+        """Convert the Spark data to a dictionary."""
+        return dict(self._json_data)
+
+    def to_json(self, **kwargs):
+        """Convert the Spark data to JSON.
+
+        Any keyword arguments provided are passed through the Python JSON
+        encoder.
+
+        """
+        return json_pkg.dumps(self._json_data, **kwargs)

@@ -55,52 +55,52 @@ class Webhook(SparkData):
     @property
     def id(self):
         """Webhook ID."""
-        return self._json.get('id')
+        return self._json_data.get('id')
 
     @property
     def name(self):
         """A user-friendly name for this webhook."""
-        return self._json.get('name')
+        return self._json_data.get('name')
 
     @property
     def targetUrl(self):
         """The URL that receives POST requests for each event."""
-        return self._json.get('targetUrl')
+        return self._json_data.get('targetUrl')
 
     @property
     def resource(self):
         """The resource type for the webhook."""
-        return self._json.get('resource')
+        return self._json_data.get('resource')
 
     @property
     def event(self):
         """The event type for the webhook."""
-        return self._json.get('event')
+        return self._json_data.get('event')
 
     @property
     def filter(self):
         """The filter that defines the webhook scope."""
-        return self._json.get('filter')
+        return self._json_data.get('filter')
 
     @property
     def secret(self):
         """Secret used to generate payload signature."""
-        return self._json.get('secret')
+        return self._json_data.get('secret')
 
     @property
     def orgId(self):
         """The ID of the organization that owns the webhook."""
-        return self._json.get('orgId')
+        return self._json_data.get('orgId')
 
     @property
     def createdBy(self):
         """The ID of the person that added the webhook."""
-        return self._json.get('createdBy')
+        return self._json_data.get('createdBy')
 
     @property
     def appId(self):
         """Identifies the application that added the webhook."""
-        return self._json.get('appId')
+        return self._json_data.get('appId')
 
     @property
     def ownedBy(self):
@@ -112,7 +112,7 @@ class Webhook(SparkData):
         organization.
 
         """
-        return self._json.get('ownedBy')
+        return self._json_data.get('ownedBy')
 
     @property
     def status(self):
@@ -121,12 +121,12 @@ class Webhook(SparkData):
         A webhook that cannot reach your URL is disabled.
 
         """
-        return self._json.get('status')
+        return self._json_data.get('status')
 
     @property
     def created(self):
         """Creation date and time in ISO8601 format."""
-        return self._json.get('created')
+        return self._json_data.get('created')
 
 
 class WebhookEvent(SparkData):
@@ -149,42 +149,42 @@ class WebhookEvent(SparkData):
     @property
     def id(self):
         """Webhook ID."""
-        return self._json.get('id')
+        return self._json_data.get('id')
 
     @property
     def name(self):
         """A user-friendly name for this webhook."""
-        return self._json.get('name')
+        return self._json_data.get('name')
 
     @property
     def resource(self):
         """The resource type for the webhook."""
-        return self._json.get('resource')
+        return self._json_data.get('resource')
 
     @property
     def event(self):
         """The event type for the webhook."""
-        return self._json.get('event')
+        return self._json_data.get('event')
 
     @property
     def filter(self):
         """The filter that defines the webhook scope."""
-        return self._json.get('filter')
+        return self._json_data.get('filter')
 
     @property
     def orgId(self):
         """The ID of the organization that owns the webhook."""
-        return self._json.get('orgId')
+        return self._json_data.get('orgId')
 
     @property
     def createdBy(self):
         """The ID of the person that added the webhook."""
-        return self._json.get('createdBy')
+        return self._json_data.get('createdBy')
 
     @property
     def appId(self):
         """Identifies the application that added the webhook."""
-        return self._json.get('appId')
+        return self._json_data.get('appId')
 
     @property
     def ownedBy(self):
@@ -196,7 +196,7 @@ class WebhookEvent(SparkData):
         organization.
 
         """
-        return self._json.get('ownedBy')
+        return self._json_data.get('ownedBy')
 
     @property
     def status(self):
@@ -205,12 +205,12 @@ class WebhookEvent(SparkData):
         A webhook that cannot reach your URL is disabled.
 
         """
-        return self._json.get('status')
+        return self._json_data.get('status')
 
     @property
     def actorId(self):
         """The ID of the person that caused the webhook to be sent."""
-        return self._json.get('actorId')
+        return self._json_data.get('actorId')
 
     @property
     def data(self):
@@ -227,18 +227,18 @@ class WebhookEvent(SparkData):
         `CiscoSparkAPI.messages.get()` method.
 
         """
-        if self._data is None and self._json.get('data'):
+        if self._data is None and self._json_data.get('data'):
             if self.resource == "memberships":
-                self._data = Membership(self._json.get('data'))
+                self._data = Membership(self._json_data.get('data'))
 
             elif self.resource == "messages":
-                self._data = Message(self._json.get('data'))
+                self._data = Message(self._json_data.get('data'))
 
             elif self.resource == "rooms":
-                self._data = Room(self._json.get('data'))
+                self._data = Room(self._json_data.get('data'))
 
             else:
-                self._data = SparkData(self._json.get('data'))
+                self._data = SparkData(self._json_data.get('data'))
 
         return self._data
 

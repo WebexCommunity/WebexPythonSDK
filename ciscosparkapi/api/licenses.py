@@ -52,22 +52,22 @@ class License(SparkData):
     @property
     def id(self):
         """The unique ID for the License."""
-        return self._json.get('id')
+        return self._json_data.get('id')
 
     @property
     def name(self):
         """The name of the License."""
-        return self._json.get('name')
+        return self._json_data.get('name')
 
     @property
     def totalUnits(self):
         """The total number of license units."""
-        return self._json.get('totalUnits')
+        return self._json_data.get('totalUnits')
 
     @property
     def consumedUnits(self):
         """The total number of license units consumed."""
-        return self._json.get('consumedUnits')
+        return self._json_data.get('consumedUnits')
 
 
 class LicensesAPI(object):

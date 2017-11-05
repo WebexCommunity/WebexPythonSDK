@@ -52,12 +52,12 @@ class Role(SparkData):
     @property
     def id(self):
         """The unique ID for the Role."""
-        return self._json.get('id')
+        return self._json_data.get('id')
 
     @property
     def name(self):
         """The name of the Role."""
-        return self._json.get('name')
+        return self._json_data.get('name')
 
 
 class RolesAPI(object):

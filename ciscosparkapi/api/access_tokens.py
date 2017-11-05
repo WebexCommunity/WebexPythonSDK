@@ -64,22 +64,22 @@ class AccessToken(SparkData):
     @property
     def access_token(self):
         """Cisco Spark access token."""
-        return self._json.get('access_token')
+        return self._json_data.get('access_token')
 
     @property
     def expires_in(self):
         """Access token expiry time (in seconds)."""
-        return self._json.get('expires_in')
+        return self._json_data.get('expires_in')
 
     @property
     def refresh_token(self):
         """Refresh token used to request a new/refreshed access token."""
-        return self._json.get('refresh_token')
+        return self._json_data.get('refresh_token')
 
     @property
     def refresh_token_expires_in(self):
         """Refresh token expiry time (in seconds)."""
-        return self._json.get('refresh_token_expires_in')
+        return self._json_data.get('refresh_token_expires_in')
 
 
 class AccessTokensAPI(object):

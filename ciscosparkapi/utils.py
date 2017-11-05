@@ -13,12 +13,13 @@ from builtins import *
 from past.builtins import basestring
 
 import functools
+import json
 import mimetypes
 import os
 import sys
 import urllib.parse
 
-from collections import namedtuple
+from collections import namedtuple, OrderedDict
 
 from .exceptions import (
     ciscosparkapiException,
@@ -203,7 +204,7 @@ def extract_and_parse_json(response):
         The parsed JSON data as the appropriate native Python data type.
 
     """
-    return response.json()
+    return json.loads(response.text, object_hook=OrderedDict)
 
 
 class GeneratorContainer(object):

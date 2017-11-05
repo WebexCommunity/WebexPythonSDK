@@ -53,47 +53,47 @@ class Membership(SparkData):
     @property
     def id(self):
         """The membership's unique ID."""
-        return self._json.get('id')
+        return self._json_data.get('id')
 
     @property
     def roomId(self):
         """The ID of the room."""
-        return self._json.get('roomId')
+        return self._json_data.get('roomId')
 
     @property
     def personId(self):
         """The ID of the person."""
-        return self._json.get('personId')
+        return self._json_data.get('personId')
 
     @property
     def personEmail(self):
         """The email address of the person."""
-        return self._json.get('personEmail')
+        return self._json_data.get('personEmail')
 
     @property
     def personDisplayName(self):
         """The display name of the person."""
-        return self._json.get('personDisplayName')
+        return self._json_data.get('personDisplayName')
 
     @property
     def personOrgId(self):
         """The ID of the organization that the person is associated with."""
-        return self._json.get('personOrgId')
+        return self._json_data.get('personOrgId')
 
     @property
     def isModerator(self):
         """Person is a moderator for the room."""
-        return self._json.get('isModerator')
+        return self._json_data.get('isModerator')
 
     @property
     def isMonitor(self):
         """Person is a monitor for the room."""
-        return self._json.get('isMonitor')
+        return self._json_data.get('isMonitor')
 
     @property
     def created(self):
         """The date and time the membership was created."""
-        return self._json.get('created')
+        return self._json_data.get('created')
 
 
 class MembershipsAPI(object):

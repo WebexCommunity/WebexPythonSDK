@@ -139,6 +139,7 @@ Person
 ------
 
 .. autoclass:: Person()
+    :inherited-members:
 
 
 .. _Room:
@@ -147,6 +148,7 @@ Room
 ----
 
 .. autoclass:: Room()
+    :inherited-members:
 
 
 .. _Membership:
@@ -155,6 +157,7 @@ Membership
 ----------
 
 .. autoclass:: Membership()
+    :inherited-members:
 
 
 .. _Message:
@@ -163,6 +166,7 @@ Message
 -------
 
 .. autoclass:: Message()
+    :inherited-members:
 
 
 .. _Team:
@@ -171,6 +175,7 @@ Team
 ----
 
 .. autoclass:: Team()
+    :inherited-members:
 
 
 .. _Team Membership:
@@ -179,6 +184,7 @@ Team Membership
 ---------------
 
 .. autoclass:: TeamMembership()
+    :inherited-members:
 
 
 .. _Webhook:
@@ -187,6 +193,7 @@ Webhook
 -------
 
 .. autoclass:: Webhook()
+    :inherited-members:
 
 
 .. _WebhookEvent:
@@ -195,6 +202,7 @@ Webhook Event
 -------------
 
 .. autoclass:: WebhookEvent()
+    :inherited-members:
 
 
 .. _Organization:
@@ -203,6 +211,7 @@ Organization
 ------------
 
 .. autoclass:: Organization()
+    :inherited-members:
 
 
 .. _License:
@@ -211,6 +220,7 @@ License
 -------
 
 .. autoclass:: License()
+    :inherited-members:
 
 
 .. _Role:
@@ -219,6 +229,7 @@ Role
 ----
 
 .. autoclass:: Role()
+    :inherited-members:
 
 
 .. _Access Token:
@@ -227,6 +238,7 @@ Access Token
 ------------
 
 .. autoclass:: AccessToken()
+    :inherited-members:
 
 
 *Copyright (c) 2016 Cisco Systems, Inc.*

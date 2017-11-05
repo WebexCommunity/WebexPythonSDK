@@ -46,7 +46,7 @@ def create_person(api, emails, **person_attributes):
 
 def update_person(api, person, **person_attributes):
     # Get a copy of the person's current attributes
-    new_attributes = person._json.copy()
+    new_attributes = person.json_data
 
     # Merge in attribute updates
     for attribute, value in person_attributes.items():
