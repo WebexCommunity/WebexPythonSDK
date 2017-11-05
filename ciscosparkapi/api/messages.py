@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark Messages-API wrapper classes.
+"""Cisco Spark Messages API wrapper.
 
 Classes:
     Message: Models a Spark 'message' JSON object as a native Python object.
-    MessagesAPI: Wraps the Cisco Spark Messages-API and exposes the APIs as
+    MessagesAPI: Wraps the Cisco Spark Messages API and exposes the API as
         native Python methods that return native Python objects.
 
 """
@@ -21,9 +21,9 @@ from past.builtins import basestring
 
 from requests_toolbelt import MultipartEncoder
 
-from ciscosparkapi.restsession import RestSession
-from ciscosparkapi.sparkdata import SparkData
-from ciscosparkapi.utils import (
+from ..restsession import RestSession
+from ..sparkdata import SparkData
+from ..utils import (
     check_type,
     dict_from_items_with_values,
     generator_container,
@@ -111,9 +111,9 @@ class Message(SparkData):
 
 
 class MessagesAPI(object):
-    """Cisco Spark Messages-API wrapper class.
+    """Cisco Spark Messages API wrapper.
 
-    Wraps the Cisco Spark Messages-API and exposes the APIs as native Python
+    Wraps the Cisco Spark Messages API and exposes the API as native Python
     methods that return native Python objects.
 
     """

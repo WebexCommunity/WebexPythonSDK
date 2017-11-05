@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark Teams-API wrapper classes.
+"""Cisco Spark Teams API wrapper.
 
 Classes:
     Team: Models a Spark 'team' JSON object as a native Python object.
-    TeamsAPI: Wraps the Cisco Spark Teams-API and exposes the APIs as native
+    TeamsAPI: Wraps the Cisco Spark Teams API and exposes the API as native
         Python methods that return native Python objects.
 
 """
@@ -19,9 +19,9 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
-from ciscosparkapi.restsession import RestSession
-from ciscosparkapi.sparkdata import SparkData
-from ciscosparkapi.utils import (
+from ..restsession import RestSession
+from ..sparkdata import SparkData
+from ..utils import (
     check_type,
     dict_from_items_with_values,
     generator_container,
@@ -71,9 +71,9 @@ class Team(SparkData):
 
 
 class TeamsAPI(object):
-    """Cisco Spark Teams-API wrapper class.
+    """Cisco Spark Teams API wrapper.
 
-    Wraps the Cisco Spark Teams-API and exposes the APIs as native Python
+    Wraps the Cisco Spark Teams API and exposes the API as native Python
     methods that return native Python objects.
 
     """

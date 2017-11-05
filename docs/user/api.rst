@@ -7,11 +7,12 @@ User API Doc
 ============
 
 
-Main Interface
-==============
+CiscoSparkAPI
+=============
 
-All of the API calls have been wrapped and hierarchically organized underneath
-a single :class:`CiscoSparkAPI` class.
+The :class:`CiscoSparkAPI` class is the main interface for the package. All of
+the Spark APIs (people, rooms, etc.) and their API endpoints have been wrapped
+and hierarchically organized underneath the :class:`CiscoSparkAPI` class.
 
 .. autoclass:: CiscoSparkAPI()
     :members:
@@ -25,7 +26,7 @@ a single :class:`CiscoSparkAPI` class.
 people
 ------
 
-.. autoclass:: PeopleAPI()
+.. autoclass:: ciscosparkapi.api.people.PeopleAPI()
 
 
 .. _rooms:
@@ -33,7 +34,7 @@ people
 rooms
 -----
 
-.. autoclass:: RoomsAPI()
+.. autoclass:: ciscosparkapi.api.rooms.RoomsAPI()
 
 
 .. _memberships:
@@ -41,7 +42,7 @@ rooms
 memberships
 -----------
 
-.. autoclass:: MembershipsAPI()
+.. autoclass:: ciscosparkapi.api.memberships.MembershipsAPI()
 
 
 .. _messages:
@@ -49,7 +50,7 @@ memberships
 messages
 --------
 
-.. autoclass:: MessagesAPI()
+.. autoclass:: ciscosparkapi.api.messages.MessagesAPI()
 
 
 .. _teams:
@@ -57,7 +58,7 @@ messages
 teams
 -----
 
-.. autoclass:: TeamsAPI()
+.. autoclass:: ciscosparkapi.api.teams.TeamsAPI()
 
 
 .. _team_memberships:
@@ -65,7 +66,7 @@ teams
 team_memberships
 ----------------
 
-.. autoclass:: TeamMembershipsAPI()
+.. autoclass:: ciscosparkapi.api.team_memberships.TeamMembershipsAPI()
 
 
 .. _webhooks:
@@ -73,7 +74,7 @@ team_memberships
 webhooks
 --------
 
-.. autoclass:: WebhooksAPI()
+.. autoclass:: ciscosparkapi.api.webhooks.WebhooksAPI()
 
 
 .. _organizations:
@@ -81,7 +82,7 @@ webhooks
 organizations
 -------------
 
-.. autoclass:: OrganizationsAPI()
+.. autoclass:: ciscosparkapi.api.organizations.OrganizationsAPI()
 
 
 .. _licenses:
@@ -89,7 +90,7 @@ organizations
 licenses
 --------
 
-.. autoclass:: LicensesAPI()
+.. autoclass:: ciscosparkapi.api.licenses.LicensesAPI()
 
 
 .. _roles:
@@ -97,7 +98,7 @@ licenses
 roles
 -----
 
-.. autoclass:: RolesAPI()
+.. autoclass:: ciscosparkapi.api.roles.RolesAPI()
 
 
 .. _access_tokens:
@@ -105,7 +106,7 @@ roles
 access_tokens
 -------------
 
-.. autoclass:: AccessTokensAPI()
+.. autoclass:: ciscosparkapi.api.access_tokens.AccessTokensAPI()
 
 
 .. _Exceptions:
@@ -113,11 +114,17 @@ access_tokens
 Exceptions
 ==========
 
-.. autoexception:: ciscosparkapiException
+.. autoexception:: ciscosparkapiException()
+    :show-inheritance:
+    :members:
 
-.. autoexception:: SparkApiError
+.. autoexception:: SparkApiError()
+    :show-inheritance:
+    :members:
 
-.. autoexception:: SparkRateLimitError
+.. autoexception:: SparkRateLimitError()
+    :show-inheritance:
+    :members:
 
 
 .. _Spark Data Objects:

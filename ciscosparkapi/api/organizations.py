@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark Organizations-API wrapper.
+"""Cisco Spark Organizations API wrapper.
 
 Classes:
     Organization: Models a Spark Organization JSON object as a native Python
         object.
-    OrganizationsAPI: Wraps the Cisco Spark Organizations-API and exposes the
+    OrganizationsAPI: Wraps the Cisco Spark Organizations API and exposes the
         APIs as native Python methods that return native Python objects.
 
 """
@@ -20,9 +20,9 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
-from ciscosparkapi.restsession import RestSession
-from ciscosparkapi.sparkdata import SparkData
-from ciscosparkapi.utils import (
+from ..restsession import RestSession
+from ..sparkdata import SparkData
+from ..utils import (
     check_type,
     dict_from_items_with_values,
     generator_container,
@@ -67,9 +67,9 @@ class Organization(SparkData):
 
 
 class OrganizationsAPI(object):
-    """Cisco Spark Organizations-API wrapper.
+    """Cisco Spark Organizations API wrapper.
 
-    Wraps the Cisco Spark Organizations-API and exposes the APIs as native
+    Wraps the Cisco Spark Organizations API and exposes the API as native
     Python methods that return native Python objects.
 
     """

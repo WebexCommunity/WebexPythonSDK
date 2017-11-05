@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark People-API wrapper classes.
+"""Cisco Spark People API wrapper classes.
 
 Classes:
     Person: Models a Spark 'person' JSON object as a native Python object.
-    PeopleAPI: Wraps the Cisco Spark People-API and exposes the APIs as native
+    PeopleAPI: Wraps the Cisco Spark People API and exposes the API as native
         Python methods that return native Python objects.
 
 """
@@ -19,9 +19,9 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
-from ciscosparkapi.restsession import RestSession
-from ciscosparkapi.sparkdata import SparkData
-from ciscosparkapi.utils import (
+from ..restsession import RestSession
+from ..sparkdata import SparkData
+from ..utils import (
     check_type,
     dict_from_items_with_values,
     generator_container,
@@ -131,9 +131,9 @@ class Person(SparkData):
 
 
 class PeopleAPI(object):
-    """Cisco Spark People-API wrapper class.
+    """Cisco Spark People API wrapper.
 
-    Wraps the Cisco Spark People-API and exposes the APIs as native Python
+    Wraps the Cisco Spark People API and exposes the API as native Python
     methods that return native Python objects.
 
     """

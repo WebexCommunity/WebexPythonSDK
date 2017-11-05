@@ -21,13 +21,13 @@ import warnings
 
 import requests
 
-from ciscosparkapi.exceptions import (
+from .exceptions import (
     ciscosparkapiException,
     SparkApiError,
     SparkRateLimitError,
 )
-from ciscosparkapi.responsecodes import EXPECTED_RESPONSE_CODE
-from ciscosparkapi.utils import (
+from .response_codes import EXPECTED_RESPONSE_CODE
+from .utils import (
     validate_base_url,
     check_response_code,
     extract_and_parse_json,

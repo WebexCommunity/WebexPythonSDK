@@ -15,32 +15,53 @@ from past.builtins import basestring
 import logging
 import os
 
-from ciscosparkapi.exceptions import ciscosparkapiException, SparkApiError
-from ciscosparkapi.restsession import (
+from .api.people import Person
+from .api.rooms import Room
+from .api.memberships import Membership
+from .api.messages import Message
+from .api.teams import Team
+from .api.team_memberships import TeamMembership
+from .api.webhooks import Webhook, WebhookEvent
+from .api.organizations import Organization
+from .api.licenses import License
+from .api.roles import Role
+from .api.access_tokens import AccessToken
+
+from .api.people import PeopleAPI as _PeopleAPI
+from .api.rooms import RoomsAPI as _RoomsAPI
+from .api.memberships import MembershipsAPI as _MembershipsAPI
+from .api.messages import MessagesAPI as _MessagesAPI
+from .api.teams import TeamsAPI as _TeamsAPI
+from .api.team_memberships import TeamMembershipsAPI as _TeamMembershipsAPI
+from .api.webhooks import WebhooksAPI as _WebhooksAPI
+from .api.organizations import OrganizationsAPI as _OrganizationsAPI
+from .api.licenses import LicensesAPI as _LicensesAPI
+from .api.roles import RolesAPI as _RolesAPI
+from .api.access_tokens import AccessTokensAPI as _AccessTokensAPI
+
+from .exceptions import (
+    ciscosparkapiException,
+    SparkApiError,
+    SparkRateLimitError,
+)
+
+from .restsession import (
     DEFAULT_SINGLE_REQUEST_TIMEOUT,
     DEFAULT_WAIT_ON_RATE_LIMIT,
-    RestSession,
+    RestSession as _RestSession,
 )
-from ciscosparkapi.api.people import Person, PeopleAPI
-from ciscosparkapi.api.rooms import Room, RoomsAPI
-from ciscosparkapi.api.memberships import Membership, MembershipsAPI
-from ciscosparkapi.api.messages import Message, MessagesAPI
-from ciscosparkapi.api.teams import Team, TeamsAPI
-from ciscosparkapi.api.teammemberships import (
-    TeamMembership,
-    TeamMembershipsAPI
-)
-from ciscosparkapi.api.webhooks import Webhook, WebhookEvent, WebhooksAPI
-from ciscosparkapi.api.organizations import Organization, OrganizationsAPI
-from ciscosparkapi.api.licenses import License, LicensesAPI
-from ciscosparkapi.api.roles import Role, RolesAPI
-from ciscosparkapi.api.accesstokens import AccessToken, AccessTokensAPI
 
 
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
 __copyright__ = "Copyright (c) 2016 Cisco Systems, Inc."
 __license__ = "MIT"
+__all__ = [
+    "CiscoSparkAPI", "ciscosparkapiException", "SparkApiError",
+    "SparkRateLimitError", "Person", "Room", "Membership", "Message", "Team",
+    "TeamMembership", "Webhook", "WebhookEvent", "Organization", "License",
+    "Role", "AccessToken"
+]
 
 
 # Versioneer version control
@@ -151,7 +172,7 @@ class CiscoSparkAPI(object):
         # All of the API calls associated with a CiscoSparkAPI object will
         # leverage a single RESTful 'session' connecting to the Cisco Spark
         # cloud.
-        self._session = RestSession(
+        self._session = _RestSession(
             access_token,
             base_url,
             timeout=timeout,
@@ -160,34 +181,39 @@ class CiscoSparkAPI(object):
         )
 
         # Spark API wrappers
-        self.people = PeopleAPI(self._session)
-        self.rooms = RoomsAPI(self._session)
-        self.memberships = MembershipsAPI(self._session)
-        self.messages = MessagesAPI(self._session)
-        self.teams = TeamsAPI(self._session)
-        self.team_memberships = TeamMembershipsAPI(self._session)
-        self.webhooks = WebhooksAPI(self._session)
-        self.organizations = OrganizationsAPI(self._session)
-        self.licenses = LicensesAPI(self._session)
-        self.roles = RolesAPI(self._session)
-        self.access_tokens = AccessTokensAPI(self.base_url, timeout=timeout)
+        self.people = _PeopleAPI(self._session)
+        self.rooms = _RoomsAPI(self._session)
+        self.memberships = _MembershipsAPI(self._session)
+        self.messages = _MessagesAPI(self._session)
+        self.teams = _TeamsAPI(self._session)
+        self.team_memberships = _TeamMembershipsAPI(self._session)
+        self.webhooks = _WebhooksAPI(self._session)
+        self.organizations = _OrganizationsAPI(self._session)
+        self.licenses = _LicensesAPI(self._session)
+        self.roles = _RolesAPI(self._session)
+        self.access_tokens = _AccessTokensAPI(self.base_url, timeout=timeout)
 
     @property
     def access_token(self):
+        """The access token used for API calls to the Cisco Spark service."""
         return self._session.access_token
 
     @property
     def base_url(self):
+        """The base URL prefixed to the individual API endpoint suffixes."""
         return self._session.base_url
 
     @property
     def timeout(self):
+        """[deprecated] Timeout (in seconds) for RESTful HTTP requests."""
         return self._session.timeout
 
     @property
     def single_request_timeout(self):
+        """Timeout (in seconds) for an single HTTP request."""
         return self._session.single_request_timeout
 
     @property
     def wait_on_rate_limit(self):
+        """Automatic rate-limit handling enabled / disabled."""
         return self._session.wait_on_rate_limit

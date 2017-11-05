@@ -95,25 +95,25 @@ class TestCiscoSparkAPI:
     # Test creation of component API objects
 
     def test_people_api_object_creation(self, api):
-        assert isinstance(api.people, ciscosparkapi.PeopleAPI)
+        assert isinstance(api.people, ciscosparkapi._PeopleAPI)
 
     def test_rooms_api_object_creation(self, api):
-        assert isinstance(api.rooms, ciscosparkapi.RoomsAPI)
+        assert isinstance(api.rooms, ciscosparkapi._RoomsAPI)
 
     def test_memberships_api_object_creation(self, api):
-        assert isinstance(api.memberships, ciscosparkapi.MembershipsAPI)
+        assert isinstance(api.memberships, ciscosparkapi._MembershipsAPI)
 
     def test_messages_api_object_creation(self, api):
-        assert isinstance(api.messages, ciscosparkapi.MessagesAPI)
+        assert isinstance(api.messages, ciscosparkapi._MessagesAPI)
 
     def test_teams_api_object_creation(self, api):
-        assert isinstance(api.teams, ciscosparkapi.TeamsAPI)
+        assert isinstance(api.teams, ciscosparkapi._TeamsAPI)
 
     def test_team_memberships_api_object_creation(self, api):
-        assert isinstance(api.team_memberships, ciscosparkapi.TeamMembershipsAPI)
+        assert isinstance(api.team_memberships, ciscosparkapi._TeamMembershipsAPI)
 
     def test_webhooks_api_object_creation(self, api):
-        assert isinstance(api.webhooks, ciscosparkapi.WebhooksAPI)
+        assert isinstance(api.webhooks, ciscosparkapi._WebhooksAPI)
 
     def test_access_tokens_api_object_creation(self, api):
-        assert isinstance(api.access_tokens, ciscosparkapi.AccessTokensAPI)
+        assert isinstance(api.access_tokens, ciscosparkapi._AccessTokensAPI)

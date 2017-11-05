@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark Rooms-API wrapper classes.
+"""Cisco Spark Rooms API wrapper.
 
 Classes:
     Room: Models a Spark 'room' JSON object as a native Python object.
-    RoomsAPI: Wraps the Cisco Spark Rooms-API and exposes the APIs as native
+    RoomsAPI: Wraps the Cisco Spark Rooms API and exposes the API as native
         Python methods that return native Python objects.
 
 """
@@ -19,9 +19,9 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
-from ciscosparkapi.restsession import RestSession
-from ciscosparkapi.sparkdata import SparkData
-from ciscosparkapi.utils import (
+from ..restsession import RestSession
+from ..sparkdata import SparkData
+from ..utils import (
     check_type,
     dict_from_items_with_values,
     generator_container,
@@ -91,9 +91,9 @@ class Room(SparkData):
 
 
 class RoomsAPI(object):
-    """Cisco Spark Rooms-API wrapper class.
+    """Cisco Spark Rooms API wrapper.
 
-    Wraps the Cisco Spark Rooms-API and exposes the APIs as native Python
+    Wraps the Cisco Spark Rooms API and exposes the API as native Python
     methods that return native Python objects.
 
     """

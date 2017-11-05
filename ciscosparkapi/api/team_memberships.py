@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark Memberships-API wrapper classes.
+"""Cisco Spark Memberships API wrapper.
 
 Classes:
     TeamMembership: Models a Spark 'team membership' JSON object as a native
         Python object.
-    TeamMembershipsAPI: Wraps the Cisco Spark Memberships-API and exposes
+    TeamMembershipsAPI: Wraps the Cisco Spark Memberships API and exposes
         the APIs as native Python methods that return native Python objects.
 
 """
@@ -20,9 +20,9 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
-from ciscosparkapi.restsession import RestSession
-from ciscosparkapi.sparkdata import SparkData
-from ciscosparkapi.utils import (
+from ..restsession import RestSession
+from ..sparkdata import SparkData
+from ..utils import (
     check_type,
     dict_from_items_with_values,
     generator_container,
@@ -93,9 +93,9 @@ class TeamMembership(SparkData):
 
 
 class TeamMembershipsAPI(object):
-    """Cisco Spark Team-Memberships-API wrapper class.
+    """Cisco Spark Team-Memberships API wrapper.
 
-    Wraps the Cisco Spark Memberships-API and exposes the APIs as native Python
+    Wraps the Cisco Spark Memberships API and exposes the API as native Python
     methods that return native Python objects.
 
     """

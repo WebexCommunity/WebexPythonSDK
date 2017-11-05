@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark Access-Tokens-API wrapper classes.
+"""Cisco Spark Access-Tokens API wrapper.
 
 Classes:
     AccessToken: Models a Spark 'access token' JSON object as a native Python
         object.
-    AccessTokensAPI: Wraps the Cisco Spark Access-Tokens-API and exposes the
-        APIs as native Python methods that return native Python objects.
+    AccessTokensAPI: Wraps the Cisco Spark Access-Tokens API and exposes the
+        API as native Python methods that return native Python objects.
 
 """
 
@@ -26,9 +26,9 @@ import urllib.parse
 
 import requests
 
-from ciscosparkapi.responsecodes import EXPECTED_RESPONSE_CODE
-from ciscosparkapi.sparkdata import SparkData
-from ciscosparkapi.utils import (
+from ..response_codes import EXPECTED_RESPONSE_CODE
+from ..sparkdata import SparkData
+from ..utils import (
     check_response_code,
     check_type,
     dict_from_items_with_values,
@@ -83,9 +83,9 @@ class AccessToken(SparkData):
 
 
 class AccessTokensAPI(object):
-    """Cisco Spark Access-Tokens-API wrapper class.
+    """Cisco Spark Access-Tokens API wrapper.
 
-    Wraps the Cisco Spark Access-Tokens-API and exposes the APIs as native
+    Wraps the Cisco Spark Access-Tokens API and exposes the API as native
     Python methods that return native Python objects.
 
     """

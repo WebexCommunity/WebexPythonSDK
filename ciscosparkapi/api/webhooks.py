@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark Webhooks-API wrapper classes.
+"""Cisco Spark Webhooks API wrapper.
 
 Classes:
     Webhook: Models a Spark 'webhook' JSON object as a native Python object.
-    WebhooksAPI: Wraps the Cisco Spark Webhooks-API and exposes the APIs as
+    WebhooksAPI: Wraps the Cisco Spark Webhooks API and exposes the API as
         native Python methods that return native Python objects.
 
 """
@@ -19,12 +19,12 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
-from ciscosparkapi.api.memberships import Membership
-from ciscosparkapi.api.messages import Message
-from ciscosparkapi.api.rooms import Room
-from ciscosparkapi.restsession import RestSession
-from ciscosparkapi.sparkdata import SparkData
-from ciscosparkapi.utils import (
+from ..api.memberships import Membership
+from ..api.messages import Message
+from ..api.rooms import Room
+from ..restsession import RestSession
+from ..sparkdata import SparkData
+from ..utils import (
     check_type,
     dict_from_items_with_values,
     generator_container,
@@ -244,9 +244,9 @@ class WebhookEvent(SparkData):
 
 
 class WebhooksAPI(object):
-    """Cisco Spark Webhooks-API wrapper class.
+    """Cisco Spark Webhooks API wrapper.
 
-    Wraps the Cisco Spark Webhooks-API and exposes the APIs as native Python
+    Wraps the Cisco Spark Webhooks API and exposes the API as native Python
     methods that return native Python objects.
 
     """

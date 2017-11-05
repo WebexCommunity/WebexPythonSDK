@@ -20,12 +20,12 @@ import urllib.parse
 
 from collections import namedtuple
 
-from ciscosparkapi.exceptions import (
+from .exceptions import (
     ciscosparkapiException,
     SparkApiError,
     SparkRateLimitError,
 )
-from ciscosparkapi.responsecodes import RATE_LIMIT_RESPONSE_CODE
+from .response_codes import RATE_LIMIT_RESPONSE_CODE
 
 
 __author__ = "Chris Lunsford"

@@ -17,7 +17,7 @@ import textwrap
 
 import requests
 
-from ciscosparkapi.responsecodes import SPARK_RESPONSE_CODES
+from .response_codes import SPARK_RESPONSE_CODES
 
 
 __author__ = "Chris Lunsford"
@@ -119,8 +119,12 @@ class SparkApiError(ciscosparkapiException):
         assert isinstance(response, requests.Response)
 
         # Extended exception data attributes
-        self.response = response
         self.request = response.request
+        """The :class:`requests.PreparedRequest` object that initiated the API 
+        call."""
+
+        self.response = response
+        """The :class:`requests.Response` object returned from the API call."""
 
         # Error message
         response_code = response.status_code
