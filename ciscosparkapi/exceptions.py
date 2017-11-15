@@ -140,4 +140,12 @@ class SparkApiError(ciscosparkapiException):
 
 class SparkRateLimitError(SparkApiError):
     """Cisco Spark Rate-Limit exceeded Error."""
-    pass
+
+    def __init__(self, response):
+        assert isinstance(response, requests.Response)
+
+        # Set a sane default just incase Spark lets us down
+        self.retry_after = 200
+
+        if 'Retry-After' in response.headers.keys():
+            self.retry_after = int(response.headers['Retry-After'])
