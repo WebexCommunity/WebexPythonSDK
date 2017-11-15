@@ -120,6 +120,9 @@ def check_type(o, acceptable_types, may_be_none=True):
             object is not an instance of one of the acceptable types.
 
     """
+    if not isinstance(acceptable_types, tuple):
+        acceptable_types = (acceptable_types,)
+
     if may_be_none and o is None:
         # Object is None, and that is OK!
         pass

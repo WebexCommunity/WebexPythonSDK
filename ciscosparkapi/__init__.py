@@ -51,6 +51,8 @@ from .restsession import (
     RestSession as _RestSession,
 )
 
+from .utils import check_type
+
 
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
@@ -152,15 +154,19 @@ class CiscoSparkAPI(object):
             CiscoSparkAPI: A new CiscoSparkAPI object.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
             ciscosparkapiException: If an access token is not provided via the
                 access_token argument or SPARK_ACCESS_TOKEN environment
                 variable.
 
         """
-        assert access_token is None or isinstance(access_token, basestring)
+        check_type(access_token, basestring)
+        check_type(base_url, basestring)
+        check_type(single_request_timeout, int)
+        check_type(wait_on_rate_limit, bool)
+
         env_access_token = os.environ.get(ACCESS_TOKEN_ENVIRONMENT_VARIABLE)
-        access_token = access_token if access_token else env_access_token
+        access_token = access_token or env_access_token
         if not access_token:
             error_message = "You must provide an Spark access token to " \
                             "interact with the Cisco Spark APIs, either via " \
