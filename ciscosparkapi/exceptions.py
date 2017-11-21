@@ -128,12 +128,14 @@ class SparkApiError(ciscosparkapiException):
 
         # Error message
         response_code = response.status_code
+        response_reason = " " + response.reason if response.reason else ""
         description = SPARK_RESPONSE_CODES.get(response_code,
                                                "Unknown Response Code")
         detail = response_to_string(response)
 
-        super(SparkApiError, self).__init__("Response Code [{}] - {}\n{}"
+        super(SparkApiError, self).__init__("Response Code [{}]{} - {}\n{}"
                                             "".format(response_code,
+                                                      response_reason,
                                                       description,
                                                       detail))
 
