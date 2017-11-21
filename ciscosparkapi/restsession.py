@@ -281,7 +281,7 @@ class RestSession(object):
                 # Wait and retry if automatic rate-limit handling is enabled
                 if self.wait_on_rate_limit and e.retry_after:
                     logger.info("Received rate-limit message; "
-                                "waiting {:0.0f} seconds."
+                                "waiting {0} seconds."
                                 "".format(e.retry_after))
                     time.sleep(e.retry_after)
                     continue
