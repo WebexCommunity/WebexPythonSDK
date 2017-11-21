@@ -142,10 +142,13 @@ class SparkRateLimitError(SparkApiError):
     """Cisco Spark Rate-Limit exceeded Error."""
 
     def __init__(self, response):
-        assert isinstance(response, requests.Response)
+        super(SparkRateLimitError, self).__init__(response)
 
-        # Set a sane default just incase Spark lets us down
-        self.retry_after = 200
-
-        if 'Retry-After' in response.headers.keys():
-            self.retry_after = int(response.headers['Retry-After'])
+        # Extended exception data attributes
+        self.retry_after = response.headers.get('Retry-After', 200)
+        """The `Retry-After` time period (in seconds) provided by Cisco Spark.
+        
+        Defaults to 200 seconds if the response `Retry-After` header isn't 
+        present in the response headers.
+        
+        """
