@@ -211,48 +211,47 @@ def extract_and_parse_json(response):
 
 
 class GeneratorContainer(object):
-    """Container for storing a function call to a generator function.
+    """Store a generator function call, making it for safe reuse.
 
-    Return a fresh iterator every time __iter__() is called on the container
+    Return a fresh generator every time __iter__() is called on the container
     object.
-
-    Attributes:
-        generator(func): The generator function.
-        args(list): The arguments passed to the generator function.
-        kwargs(dict): The keyword arguments passed to the generator function.
 
     """
 
-    def __init__(self, generator, *args, **kwargs):
+    def __init__(self, generator_function, *args, **kwargs):
         """Init a new GeneratorContainer.
 
         Args:
-            generator(func): The generator function.
+            generator_function(func): The generator function.
             *args: The arguments passed to the generator function.
             **kwargs: The keyword arguments passed to the generator function.
 
         """
-        self.generator = generator
+        self.generator_function = generator_function
         self.args = args
         self.kwargs = kwargs
 
+    def new_generator(self):
+        """Create a new generator object."""
+        return self.generator_function(*self.args, **self.kwargs)
+
     def __iter__(self):
         """Return a fresh iterator."""
-        return self.generator(*self.args, **self.kwargs)
+        return self.new_generator()
 
-
-def generator_container(generator):
+def generator_container(generator_function):
     """Function Decorator: Containerize calls to a generator function.
 
     Args:
-        generator(func): The generator function being containerized.
+        generator_function(func): The generator function being containerized.
 
     Returns:
-        func: A wrapper function that containerizes the calls to the generator.
+        func: A wrapper function that containerizes the calls to the generator
+            function.
 
     """
 
-    @functools.wraps(generator)
+    @functools.wraps(generator_function)
     def generator_container_wrapper(*args, **kwargs):
         """Store a generator call in a container and return the container.
 
@@ -264,6 +263,6 @@ def generator_container(generator):
             GeneratorContainer: A container wrapping the call to the generator.
 
         """
-        return GeneratorContainer(generator, *args, **kwargs)
+        return GeneratorContainer(generator_function, *args, **kwargs)
 
     return generator_container_wrapper
