@@ -23,6 +23,7 @@ from past.builtins import basestring
 
 import functools
 import inspect
+from itertools import islice
 
 
 __author__ = "Chris Lunsford"
@@ -79,6 +80,43 @@ class GeneratorContainer(object):
     def __iter__(self):
         """Return a fresh iterator."""
         return self.new_generator()
+
+    def __getitem__(self, item):
+        """Slice a generator container.
+
+        This is a convenience feature that, with a minor optimization, is
+        essentially syntactic sugar for:
+
+        `itertools.islice(GeneratorContainer, start, stop, step)`
+
+        This method attempts to optimize the spark request page size for
+        slicing by setting the `max` parameter to the stop-value of the slice.
+        If the sliced sequence can be returned in a single response, it will
+        be. Otherwise automatic pagination will take care of returning enough
+        pages for the data to be sliced.  If `max=` was already specified as a
+        parameter to the generator function wrapped by the GeneratorContainer,
+        this optimization will not change the value.
+
+        Args:
+            item(slice): A slice object specifying the start, stop and step.
+
+        Returns:
+            itertools.islice: An itertools.islice object slicing the
+                GeneratorContainer's wrapped generator function.
+
+        """
+        if isinstance(item, slice):
+            arguments = self.arguments.copy()
+            arguments.setdefault('max', item.stop)
+            return islice(
+                self.generator_function(**arguments),
+                item.start,
+                item.stop,
+                item.step,
+            )
+        else:
+            raise IndexError("GeneratorContainers support slicing only. "
+                             "Indexing is not supported.")
 
 
 def generator_container(generator_function):
