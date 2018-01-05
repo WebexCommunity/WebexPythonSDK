@@ -19,16 +19,16 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
-from ..api.memberships import Membership
-from ..api.messages import Message
-from ..api.rooms import Room
+from ..generator_containers import generator_container
 from ..restsession import RestSession
 from ..sparkdata import SparkData
 from ..utils import (
     check_type,
     dict_from_items_with_values,
-    generator_container,
 )
+from .memberships import Membership
+from .messages import Message
+from .rooms import Room
 
 
 __author__ = "Chris Lunsford"

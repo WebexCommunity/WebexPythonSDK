@@ -1,0 +1,110 @@
+# -*- coding: utf-8 -*-
+"""GeneratorContainer class makes generator functions safe for reuse.
+
+Classes:
+    GeneratorContainer: Makes generator functions sage for reuse.
+
+Functions:
+    generator_container: Function decorator for wrapping a generator function
+        in a GeneratorContainer.
+
+"""
+
+
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
+from builtins import *
+from past.builtins import basestring
+
+import functools
+import inspect
+
+
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016 Cisco Systems, Inc."
+__license__ = "MIT"
+
+
+class GeneratorContainer(object):
+    """Store a generator function call, making it for safe reuse.
+
+    Return a fresh generator every time __iter__() is called on the container
+    object.
+
+    """
+
+    def __init__(self, generator_function, *args, **kwargs):
+        """Init a new GeneratorContainer.
+
+        Args:
+            generator_function(func): The generator function.
+            *args: The arguments passed to the generator function.
+            **kwargs: The keyword arguments passed to the generator function.
+
+        """
+        if not inspect.isgeneratorfunction(generator_function):
+            raise TypeError("generator_function must be a generator function.")
+
+        self.generator_function = generator_function
+        self.signature = inspect.signature(self.generator_function)
+        self.bound_arguments = self.signature.bind(*args, **kwargs)
+        self.arguments = self.bound_arguments.arguments
+        self.args = self.bound_arguments.args
+        self.kwargs = self.bound_arguments.kwargs
+
+    def __repr__(self):
+        """A string representation of this object."""
+        return '<GeneratorContainer {func_name}({arguments})>'.format(
+            func_name=self.generator_function.__qualname__,
+            arguments=", ".join(
+                str(key) + '=' + repr(value)
+                for key, value in self.arguments.items()
+            ),
+        )
+
+    def __str__(self):
+        """A human-readable string representation of this object."""
+        return self.__repr__()
+
+    def new_generator(self):
+        """Create a new generator object."""
+        return self.generator_function(*self.args, **self.kwargs)
+
+    def __iter__(self):
+        """Return a fresh iterator."""
+        return self.new_generator()
+
+
+def generator_container(generator_function):
+    """Function Decorator: Containerize calls to a generator function.
+
+    Args:
+        generator_function(func): The generator function being containerized.
+
+    Returns:
+        func: A wrapper function that containerizes the calls to the generator
+            function.
+
+    """
+
+    @functools.wraps(generator_function)
+    def generator_container_wrapper(*args, **kwargs):
+        """Store a generator call in a container and return the container.
+
+        Args:
+            *args: The arguments passed to the generator function.
+            **kwargs: The keyword arguments passed to the generator function.
+
+        Returns:
+            GeneratorContainer: A container wrapping the call to the generator.
+
+        """
+        return GeneratorContainer(generator_function, *args, **kwargs)
+
+    return generator_container_wrapper

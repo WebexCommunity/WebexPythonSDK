@@ -21,12 +21,12 @@ from past.builtins import basestring
 
 from requests_toolbelt import MultipartEncoder
 
+from ..generator_containers import generator_container
 from ..restsession import RestSession
 from ..sparkdata import SparkData
 from ..utils import (
     check_type,
     dict_from_items_with_values,
-    generator_container,
     is_web_url,
     is_local_file,
     open_local_file,
