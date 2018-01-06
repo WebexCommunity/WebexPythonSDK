@@ -519,8 +519,8 @@ contain all of the returned objects.
     >>> rooms_list = list(rooms_iterable)
 
 
+*Copyright (c) 2016-2018 Cisco and/or its affiliates.*
 
-*Copyright (c) 2016 Cisco Systems, Inc.*
 
 .. _ciscospark.com: https://www.ciscospark.com/
 .. _developer.ciscospark.com: https://developer.ciscospark.com/

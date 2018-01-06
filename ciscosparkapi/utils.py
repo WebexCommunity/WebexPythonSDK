@@ -12,13 +12,20 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
+
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__license__ = "MIT"
+
+
+from collections import namedtuple, OrderedDict
 import json
 import mimetypes
 import os
 import sys
 import urllib.parse
 
-from collections import namedtuple, OrderedDict
 
 from .exceptions import (
     ciscosparkapiException,
@@ -26,12 +33,6 @@ from .exceptions import (
     SparkRateLimitError,
 )
 from .response_codes import RATE_LIMIT_RESPONSE_CODE
-
-
-__author__ = "Chris Lunsford"
-__author_email__ = "chrlunsf@cisco.com"
-__copyright__ = "Copyright (c) 2016 Cisco Systems, Inc."
-__license__ = "MIT"
 
 
 EncodableFile = namedtuple('EncodableFile',

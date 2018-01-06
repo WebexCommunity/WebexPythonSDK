@@ -12,6 +12,19 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
+
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__license__ = "MIT"
+__all__ = [
+    "CiscoSparkAPI", "ciscosparkapiException", "SparkApiError",
+    "SparkRateLimitError", "Person", "Room", "Membership", "Message", "Team",
+    "TeamMembership", "Webhook", "WebhookEvent", "Organization", "License",
+    "Role", "AccessToken"
+]
+
+
 import logging
 import os
 
@@ -52,18 +65,6 @@ from .restsession import (
 )
 
 from .utils import check_type
-
-
-__author__ = "Chris Lunsford"
-__author_email__ = "chrlunsf@cisco.com"
-__copyright__ = "Copyright (c) 2016 Cisco Systems, Inc."
-__license__ = "MIT"
-__all__ = [
-    "CiscoSparkAPI", "ciscosparkapiException", "SparkApiError",
-    "SparkRateLimitError", "Person", "Room", "Membership", "Message", "Team",
-    "TeamMembership", "Webhook", "WebhookEvent", "Organization", "License",
-    "Role", "AccessToken"
-]
 
 
 # Versioneer version control

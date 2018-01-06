@@ -19,6 +19,13 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
+
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__license__ = "MIT"
+
+
 from ..generator_containers import generator_container
 from ..restsession import RestSession
 from ..sparkdata import SparkData
@@ -26,12 +33,6 @@ from ..utils import (
     check_type,
     dict_from_items_with_values,
 )
-
-
-__author__ = "Chris Lunsford"
-__author_email__ = "chrlunsf@cisco.com"
-__copyright__ = "Copyright (c) 2016 Cisco Systems, Inc."
-__license__ = "MIT"
 
 
 class License(SparkData):

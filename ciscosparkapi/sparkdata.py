@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-"""SparkData base-class; models Spark JSON objects as native Python objects.
+"""SparkData (base-class) models Spark JSON objects as native Python objects.
+
+Classes:
+    SparkData: Models Spark JSON objects as native Python objects.
 
 The SparkData class models any JSON object passed to it as a string or Python
 dictionary as a native Python object; providing attribute access using native
@@ -12,18 +15,6 @@ attribute access to any additional JSON attributes received from the Cisco
 Spark cloud, which haven't been implemented by the concrete sub-classes.  This
 provides a measure of future-proofing when additional data attributes are added
 to objects by the Cisco Spark cloud.
-
-Example:
-    >>> json_obj = '''{"created": "2012-06-15T20:36:48.914Z",
-                       "displayName": "Chris Lunsford (chrlunsf)",
-                       "id": "Y2lzY29zcGFyazovL3VzL1BFT1BMRS9mZjhlZTZmYi1h...",
-                       "avatar": "https://1efa7a94ed216783e352-c6226652871...",
-                       "emails": ["chrlunsf@cisco.com"]}'''
-    >>> python_obj = SparkData(json_obj)
-    >>> python_obj.displayName
-    u'Chris Lunsford (chrlunsf)'
-    >>> python_obj.created
-    u'2012-06-15T20:36:48.914Z'
 
 """
 
@@ -38,15 +29,16 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
-import json as json_pkg
-
-from collections import OrderedDict
-
 
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
-__copyright__ = "Copyright (c) 2016 Cisco Systems, Inc."
+__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
+
+
+import json as json_pkg
+
+from collections import OrderedDict
 
 
 def _json_dict(json):
@@ -120,14 +112,13 @@ class SparkData(object):
             raise AttributeError(error)
 
     def __str__(self):
-        """Return a human-readable string representation of this object."""
+        """A human-readable string representation of this object."""
         class_str = self.__class__.__name__
         json_str = json_pkg.dumps(self._json_data, indent=2)
         return "{}:\n{}".format(class_str, json_str)
 
     def __repr__(self):
-        """Return a string representing this object as valid Python expression.
-        """
+        """A string representing this object as valid Python expression."""
         class_str = self.__class__.__name__
         json_str = json_pkg.dumps(self._json_data, ensure_ascii=False)
         return "{}({})".format(class_str, json_str)

@@ -172,7 +172,8 @@ Please use the issues_ log.
 #. Submit a `pull request`_.
 
 
-*Copyright (c) 2016 Cisco Systems, Inc.*
+*Copyright (c) 2016-2018 Cisco and/or its affiliates.*
+
 
 .. _Introduction: http://ciscosparkapi.readthedocs.io/en/latest/user/intro.html
 .. _pagination: https://developer.ciscospark.com/pagination.html

@@ -12,18 +12,19 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
+
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__license__ = "MIT"
+
+
 import sys
 import textwrap
 
 import requests
 
 from .response_codes import SPARK_RESPONSE_CODES
-
-
-__author__ = "Chris Lunsford"
-__author_email__ = "chrlunsf@cisco.com"
-__copyright__ = "Copyright (c) 2016 Cisco Systems, Inc."
-__license__ = "MIT"
 
 
 # Helper functions
@@ -37,7 +38,7 @@ def sanitize(header_tuple):
 
     if (header.lower().strip() == "Authorization".lower().strip()
             and "Bearer".lower().strip() in value.lower().strip()):
-        return header, "Bearer <omitted>"
+        return header, "Bearer <redacted>"
 
     else:
         return header_tuple
@@ -120,8 +121,7 @@ class SparkApiError(ciscosparkapiException):
 
         # Extended exception data attributes
         self.request = response.request
-        """The :class:`requests.PreparedRequest` object that initiated the API 
-        call."""
+        """The :class:`requests.PreparedRequest` of the API call."""
 
         self.response = response
         """The :class:`requests.Response` object returned from the API call."""
@@ -149,8 +149,8 @@ class SparkRateLimitError(SparkApiError):
         # Extended exception data attributes
         self.retry_after = response.headers.get('Retry-After', 200)
         """The `Retry-After` time period (in seconds) provided by Cisco Spark.
-        
-        Defaults to 200 seconds if the response `Retry-After` header isn't 
+
+        Defaults to 200 seconds if the response `Retry-After` header isn't
         present in the response headers.
-        
+
         """

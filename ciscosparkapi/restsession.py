@@ -14,6 +14,13 @@ from past.builtins import basestring
 from future import standard_library
 standard_library.install_aliases()
 
+
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__license__ = "MIT"
+
+
 import logging
 import time
 import urllib.parse
@@ -32,12 +39,6 @@ from .utils import (
     check_response_code,
     extract_and_parse_json,
 )
-
-
-__author__ = "Chris Lunsford"
-__author_email__ = "chrlunsf@cisco.com"
-__copyright__ = "Copyright (c) 2016 Cisco Systems, Inc."
-__license__ = "MIT"
 
 
 # Module Constants

@@ -1,4 +1,5 @@
-# `local` working directory
+# Local Files
+.envrc
 local/
 
 

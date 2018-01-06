@@ -19,6 +19,13 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
+
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__license__ = "MIT"
+
+
 from requests_toolbelt import MultipartEncoder
 
 from ..generator_containers import generator_container
@@ -31,12 +38,6 @@ from ..utils import (
     is_local_file,
     open_local_file,
 )
-
-
-__author__ = "Chris Lunsford"
-__author_email__ = "chrlunsf@cisco.com"
-__copyright__ = "Copyright (c) 2016 Cisco Systems, Inc."
-__license__ = "MIT"
 
 
 class Message(SparkData):

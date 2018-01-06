@@ -241,4 +241,4 @@ Access Token
     :inherited-members:
 
 
-*Copyright (c) 2016 Cisco Systems, Inc.*
+*Copyright (c) 2016-2018 Cisco and/or its affiliates.*

@@ -21,15 +21,16 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
-import functools
-import inspect
-from itertools import islice
-
 
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
-__copyright__ = "Copyright (c) 2016 Cisco Systems, Inc."
+__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
+
+
+import functools
+import inspect
+from itertools import islice
 
 
 class GeneratorContainer(object):

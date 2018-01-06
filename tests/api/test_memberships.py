@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
-
 """pytest Memberships functions, fixtures and tests."""
+
+
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__license__ = "MIT"
 
 
 import itertools

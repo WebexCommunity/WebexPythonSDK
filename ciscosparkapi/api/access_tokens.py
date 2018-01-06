@@ -22,6 +22,13 @@ from past.builtins import basestring
 from future import standard_library
 standard_library.install_aliases()
 
+
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__license__ = "MIT"
+
+
 import urllib.parse
 
 import requests
@@ -35,12 +42,6 @@ from ..utils import (
     extract_and_parse_json,
     validate_base_url,
 )
-
-
-__author__ = "Chris Lunsford"
-__author_email__ = "chrlunsf@cisco.com"
-__copyright__ = "Copyright (c) 2016 Cisco Systems, Inc."
-__license__ = "MIT"
 
 
 API_ENDPOINT = "access_token"

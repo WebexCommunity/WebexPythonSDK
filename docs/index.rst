@@ -67,7 +67,8 @@ is easy.  Signup for a `free account`_ and then head over to the
 `Spark for Developers`_ website to learn more.
 
 
-*Copyright (c) 2016 Cisco Systems, Inc.*
+*Copyright (c) 2016-2018 Cisco and/or its affiliates.*
+
 
 .. _free account: `Cisco Spark`
 .. _Cisco Spark: https://www.ciscospark.com/

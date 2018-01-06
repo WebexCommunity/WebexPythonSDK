@@ -151,8 +151,8 @@ ciscosparkapi License
 .. include:: ../../LICENSE
 
 
+*Copyright (c) 2016-2018 Cisco and/or its affiliates.*
 
-*Copyright (c) 2016 Cisco Systems, Inc.*
 
 .. _MIT Open Source License: https://opensource.org/licenses/MIT
 .. _developer.ciscospark.com: https://developer.ciscospark.com
