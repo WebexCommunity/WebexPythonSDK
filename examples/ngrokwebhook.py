@@ -1,73 +1,108 @@
-#sample script that reads ngrok info from localhost:4040 and create Cisco Spark Webhook
-#typicall ngrok is called "ngrok http 8080" to redirect localhost:8080 to Internet
-#accesible ngrok url
-#
-#To use script simply launch ngrok, then launch this script.  After ngrok is killed, run this
-#script a second time to remove webhook from Cisco Spark
+#!/usr/bin/env python3
+#  -*- coding: utf-8 -*-
+"""Sample script to read local ngrok info and create a corresponding webhook.
+
+Sample script that reads ngrok info from the local ngrok client api and creates
+a Cisco Spark Webhook pointint to the ngrok tunnel's public HTTP URL.
+
+Typically ngrok is called run with the following syntax to redirect an
+Internet accesible ngrok url to localhost port 8080:
+
+    $ ngrok http 8080
+
+To use script simply launch ngrok, and then launch this script.  After ngrok is
+killed, run this script a second time to remove webhook from Cisco Spark.
+
+"""
 
 
-import requests
-import json
-import re
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
+from builtins import *
+
+
+__author__ = "Brad Bester"
+__author_email__ = "brbester@cisco.com"
+__contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
+__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__license__ = "MIT"
+
+
 import sys
-import requests.packages.urllib3
-requests.packages.urllib3.disable_warnings()
-from ciscosparkapi import CiscoSparkAPI, Webhook
 
-def findwebhookidbyname(api, webhookname):
-    webhooks = api.webhooks.list()
-    for wh in webhooks:
-        if wh.name == webhookname:
-            return wh.id
-    return "not found"
+from ciscosparkapi import CiscoSparkAPI
+import requests
 
-#Webhook attributes
-webhookname="testwebhook"
-resource="messages"
-event="created"
-url_suffix="/sparkwebhook"
 
-#grab the at from a local at.txt file instead of global variable
-fat=open ("at.txt","r+")
-at=fat.readline().rstrip()
-fat.close
-
-api = CiscoSparkAPI(at)
-
-#go to the localhost page for nogrok and grab the public url for http
-try:
-    ngrokpage = requests.get("http://127.0.0.1:4040").text
-except:
-    print ("no ngrok running - deleting webhook if it exists")
-    whid=findwebhookidbyname(api, webhookname)
-    if "not found" in whid:
-        print ("no webhook found")
-        sys.exit()
-    else:
-        print (whid)
-        dict=api.webhooks.delete(whid)
-        print (dict)
-        print ("Webhook deleted")
-        sys.exit()
-
-for line in ngrokpage.split("\n"):
-    if "window.common = " in line:
-        ngrokjson = re.search('JSON.parse\(\"(.+)\"\)\;',line).group(1)
-        ngrokjson = (ngrokjson.replace('\\',''))
-print (ngrokjson)
-Url = (json.loads(ngrokjson)["Session"]["Tunnels"]["command_line (http)"]["URL"])+url_suffix
-print (Url)
-
-#check if the webhook exists by name and then create it if not
-whid=findwebhookidbyname(api, webhookname)
-
-if "not found" in whid:
-    #create
-    print ("not found")
-    dict=api.webhooks.create(webhookname, Url, resource, event)
-    print (dict)
+# Find and import urljoin
+if sys.version_info[0] < 3:
+    from urlparse import urljoin
 else:
-    #update
-    print (whid)
-    dict=api.webhooks.update(whid, name=webhookname, targetUrl=Url) 
-    print (dict)
+    from urllib.parse import urljoin
+
+
+# Constants
+NGROK_CLIENT_API_BASE_URL = "http://localhost:4040/api"
+WEBHOOK_NAME = "ngrok_webhook"
+WEBHOOK_URL_SUFFIX = "/sparkwebhook"
+WEBHOOK_RESOURCE = "messages"
+WEBHOOK_EVENT = "created"
+
+
+def get_ngrok_public_url():
+    """Get the ngrok public HTTP URL from the local client API."""
+    try:
+        response = requests.get(url=NGROK_CLIENT_API_BASE_URL + "/tunnels",
+                                headers={'content-type': 'application/json'})
+        response.raise_for_status()
+
+    except requests.exceptions.RequestException:
+        print("Could not connect to the ngrok client API; "
+              "assuming not running.")
+        return None
+
+    else:
+        for tunnel in response.json()["tunnels"]:
+            if tunnel.get("public_url", "").startswith("http://"):
+                print("Found ngrok public HTTP URL:", tunnel["public_url"])
+                return tunnel["public_url"]
+
+
+def delete_webhooks_with_name(spark_api, name):
+    """Find a webhook by name."""
+    for webhook in spark_api.webhooks.list():
+        if webhook.name == name:
+            print("Deleting Webhook:", webhook.name, webhook.targetUrl)
+            spark_api.webhooks.delete(webhook.id)
+
+
+def create_ngrok_webhook(spark_api, ngrok_public_url):
+    """Create a Cisco Spark webhook pointing to the public ngrok URL."""
+    print("Creating Webhook...")
+    webhook = spark_api.webhooks.create(
+        name=WEBHOOK_NAME,
+        targetUrl=urljoin(ngrok_public_url, WEBHOOK_URL_SUFFIX),
+        resource=WEBHOOK_RESOURCE,
+        event=WEBHOOK_EVENT,
+    )
+    print(webhook)
+    print("Webhook successfully created.")
+    return webhook
+
+
+def main():
+    """Delete previous webhooks. If local ngrok tunnel, create a webhook."""
+    spark_api = CiscoSparkAPI()
+    delete_webhooks_with_name(spark_api, name=WEBHOOK_NAME)
+    public_url = get_ngrok_public_url()
+    if public_url is not None:
+        create_ngrok_webhook(spark_api, public_url)
+
+
+if __name__ == '__main__':
+    main()
