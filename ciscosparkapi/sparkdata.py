@@ -56,7 +56,7 @@ def _json_dict(json):
     """
     if isinstance(json, dict):
         return json
-    elif isinstance(json, str):
+    elif isinstance(json, basestring):
         return json_pkg.loads(json, object_hook=OrderedDict)
     else:
         error = "'json' must be a dictionary or valid JSON string; " \
