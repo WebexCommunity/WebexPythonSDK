@@ -25,21 +25,31 @@ This script supports Python versions 2 and 3.
 """
 
 
-from __future__ import (absolute_import, division,
-                        print_function, unicode_literals)
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
 from builtins import *
 
-import json
 
-import requests
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__contributors__ = ["Brad Bester <brbester@cisco.com>"]
+__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__license__ = "MIT"
+
 
 from flask import Flask, request
+import requests
 
 from ciscosparkapi import CiscoSparkAPI, Webhook
 
 
 # Module constants
-CAT_FACTS_URL = 'http://catfacts-api.appspot.com/api/facts?number=1'
+CAT_FACTS_URL = 'https://catfact.ninja/fact'
 
 
 # Initialize the environment
@@ -47,20 +57,18 @@ flask_app = Flask(__name__)             # Create the web application instance
 spark_api = CiscoSparkAPI()             # Create the Cisco Spark API connection object
 
 
-urls = ('/sparkwebhook', 'webhook')
-
-
 # Helper functions
 def get_catfact():
-    """Get a cat fact from appspot.com and return it as a string.
+    """Get a cat fact from catfact.ninja and return it as a string.
 
     Functions for Soundhound, Google, IBM Watson, or other APIs can be added
     to create the desired functionality into this bot.
 
     """
     response = requests.get(CAT_FACTS_URL, verify=False)
-    response_dict = json.loads(response.text)
-    return response_dict['facts'][0]
+    response.raise_for_status()
+    json_data = response.json()
+    return json_data['fact']
 
 
 # Core bot functionality
@@ -68,22 +76,22 @@ def get_catfact():
 def sparkwebhook():
     """Processes incoming requests to the '/sparkwebhook' URI."""
     if request.method == 'GET':
-        return (""" <!DOCTYPE html>
-                    <html lang="en">
-                        <head>
-                            <meta charset="UTF-8">
-                            <title>Spark Bot served via Flask</title>
-                        </head>
-                    <body>
-                    <p>
-                    <strong>Your Flask web server is up and running!</strong>
-                    </p>
-                    <p>
-                    Here is a nice Cat Fact for you:
-                    </p>
-                    <blockquote> {} </blockquote>
-                    </body>
-                    </html>
+        return ("""<!DOCTYPE html>
+                   <html lang="en">
+                       <head>
+                           <meta charset="UTF-8">
+                           <title>Spark Bot served via Flask</title>
+                       </head>
+                   <body>
+                   <p>
+                   <strong>Your Flask web server is up and running!</strong>
+                   </p>
+                   <p>
+                   Here is a nice Cat Fact for you:
+                   </p>
+                   <blockquote>{}</blockquote>
+                   </body>
+                   </html>
                 """.format(get_catfact()))
     elif request.method == 'POST':
         """Respond to inbound webhook JSON HTTP POST from Cisco Spark."""

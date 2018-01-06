@@ -3,9 +3,10 @@ Documentation
 
 A simple bot script, built on Pyramid using Cornice
 
-This sample script leverages the Pyramid web framework (https://trypyramid.com/) with
-Cornice (https://cornice.readthedocs.io).  By default the web server will be reachable at
-port 6543 you can change this default if desired (see `pyramidSparkBot.ini`).
+This sample script leverages the Pyramid web framework https://trypyramid.com/
+with Cornice https://cornice.readthedocs.io.  By default the web server will be
+reachable at port 6543 you can change this default if desired
+(see `pyramidSparkBot.ini`).
 
 ngrok (https://ngrok.com/) can be used to tunnel traffic back to your server
 if your machine sits behind a firewall.

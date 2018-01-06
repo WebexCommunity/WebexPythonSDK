@@ -25,10 +25,22 @@ Therefore this script only supports Python 2.
 """
 
 
-from __future__ import print_function
-from builtins import object
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
+from builtins import *
 
-import json
+
+__author__ = "Brad Bester"
+__author_email__ = "brbester@cisco.com"
+__contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
+__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__license__ = "MIT"
+
 
 import web
 import requests
@@ -37,38 +49,39 @@ from ciscosparkapi import CiscoSparkAPI, Webhook
 
 
 # Module constants
-CAT_FACTS_URL = 'http://catfacts-api.appspot.com/api/facts?number=1'
+CAT_FACTS_URL = 'https://catfact.ninja/fact'
 
 
 # Global variables
-urls = ('/sparkwebhook', 'webhook')       # Your Spark webhook should point to http://<serverip>:8080/sparkwebhook
-app = web.application(urls, globals())    # Create the web application instance
-api = CiscoSparkAPI()                     # Create the Cisco Spark API connection object
+urls = ('/sparkwebhook', 'webhook')                                             # Your Spark webhook should point to http://<serverip>:8080/sparkwebhook
+app = web.application(urls, globals())                                          # Create the web application instance
+api = CiscoSparkAPI()                                                           # Create the Cisco Spark API connection object
 
 
 def get_catfact():
-    """Get a cat fact from appspot.com and return it as a string.
+    """Get a cat fact from catfact.ninja and return it as a string.
 
     Functions for Soundhound, Google, IBM Watson, or other APIs can be added
     to create the desired functionality into this bot.
 
     """
     response = requests.get(CAT_FACTS_URL, verify=False)
-    response_dict = json.loads(response.text)
-    return response_dict['facts'][0]
+    response.raise_for_status()
+    json_data = response.json()
+    return json_data['fact']
 
 
 class webhook(object):
     def POST(self):
         """Respond to inbound webhook JSON HTTP POSTs from Cisco Spark."""
-        json_data = web.data()                                  # Get the POST data sent from Spark
+        json_data = web.data()                                                  # Get the POST data sent from Spark
         print("\nWEBHOOK POST RECEIVED:")
         print(json_data, "\n")
 
-        webhook_obj = Webhook(json_data)                        # Create a Webhook object from the JSON data
-        room = api.rooms.get(webhook_obj.data.roomId)           # Get the room details
-        message = api.messages.get(webhook_obj.data.id)         # Get the message details
-        person = api.people.get(message.personId)               # Get the sender's details
+        webhook_obj = Webhook(json_data)                                        # Create a Webhook object from the JSON data
+        room = api.rooms.get(webhook_obj.data.roomId)                           # Get the room details
+        message = api.messages.get(webhook_obj.data.id)                         # Get the message details
+        person = api.people.get(message.personId)                               # Get the sender's details
 
         print("NEW MESSAGE IN ROOM '{}'".format(room.title))
         print("FROM '{}'".format(person.displayName))
@@ -85,9 +98,9 @@ class webhook(object):
             # Message was sent by someone else; parse message and respond.
             if "/CAT" in message.text:
                 print("FOUND '/CAT'")
-                cat_fact = get_catfact()                                          # Get a cat fact
+                cat_fact = get_catfact()                                        # Get a cat fact
                 print("SENDING CAT FACT '{}'".format(cat_fact))
-                response_message = api.messages.create(room.id, text=cat_fact)    # Post the fact to the room where the request was received
+                api.messages.create(room.id, text=cat_fact)                     # Post the fact to the room where the request was received
         return 'OK'
 
 

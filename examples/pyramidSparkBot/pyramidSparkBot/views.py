@@ -1,8 +1,10 @@
+#  -*- coding: utf-8 -*-
 """A simple bot script, built on Pyramid using Cornice
 
-This sample script leverages the Pyramid web framework (https://trypyramid.com/) with
-Cornice (https://cornice.readthedocs.io).  By default the web server will be reachable at
-port 6543 you can change this default if desired (see `pyramidSparkBot.ini`).
+This sample script leverages the Pyramid web framework https://trypyramid.com/
+with Cornice https://cornice.readthedocs.io.  By default the web server will be
+reachable at port 6543 you can change this default if desired
+(see `pyramidSparkBot.ini`).
 
 ngrok (https://ngrok.com/) can be used to tunnel traffic back to your server
 if your machine sits behind a firewall.
@@ -19,25 +21,41 @@ https://developer.ciscospark.com.  The bot's Access Token should be added as a
 script.
 
 This script supports Python versions 2 and 3.
-"""
-from __future__ import (absolute_import, division,
-                        print_function, unicode_literals)
-from cornice import Service
 
+"""
+
+
+# Use future for Python v2 and v3 compatibility
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
 from builtins import *
 
-import json
 
-import requests
+__author__ = "Jose Bogarín Solano"
+__author_email__ = "jose@bogarin.co.cr"
+__contributors__ = [
+    "Brad Bester <brbester@cisco.com>",
+    "Chris Lunsford <chrlunsf@cisco.com>",
+]
+__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__license__ = "MIT"
+
 
 from ciscosparkapi import CiscoSparkAPI, Webhook
+from cornice import Service
+import requests
+
 
 import logging
 log = logging.getLogger(__name__)
 
 
 # Module constants
-CAT_FACT_URL = 'http://catfacts-api.appspot.com/api/facts?number=1'
+CAT_FACTS_URL = 'https://catfact.ninja/fact'
 
 
 # Initialize the environment
@@ -46,16 +64,23 @@ spark_api = CiscoSparkAPI()             # Create the Cisco Spark API connection 
 
 # Helper functions
 def get_catfact():
-    """Get a cat fact from catfacts-api.appspot.com and return it as a string.
+    """Get a cat fact from catfact.ninja and return it as a string.
+
     Functions for Soundhound, Google, IBM Watson, or other APIs can be added
     to create the desired functionality into this bot.
+
     """
-    response = requests.get(CAT_FACT_URL, verify=False)
-    response_dict = json.loads(response.text)
-    return response_dict['facts'][0]
+    response = requests.get(CAT_FACTS_URL, verify=False)
+    response.raise_for_status()
+    json_data = response.json()
+    return json_data['fact']
 
 
-sparkwebhook = Service(name='sparkwebhook', path='/sparkwebhook', description="Spark Webhook")
+sparkwebhook = Service(
+    name='sparkwebhook',
+    path='/sparkwebhook',
+    description="Spark Webhook",
+)
 
 
 @sparkwebhook.get()
@@ -63,11 +88,11 @@ def get_sparkwebhook(request):
     log.info(get_catfact())
     return {"fact": get_catfact()}
 
-@sparkwebhook.post()
+
 # Your Spark webhook should point to http://<serverip>:6543/sparkwebhook
+@sparkwebhook.post()
 def post_sparkwebhook(request):
     """Respond to inbound webhook JSON HTTP POST from Cisco Spark."""
-
     json_data = request.json                                               # Get the POST data sent from Cisco Spark
     log.info("\n")
     log.info("WEBHOOK POST RECEIVED:")
@@ -99,4 +124,3 @@ def post_sparkwebhook(request):
             log.info("SENDING CAT FACT'{}'".format(catfact))
             spark_api.messages.create(room.id, text=catfact)              # Post the fact to the room where the request was received
         return {'Message': 'OK'}
-

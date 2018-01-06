@@ -31,19 +31,18 @@ print("Searching for existing demo rooms...")
 rooms = api.rooms.list()                                                          # Creates a generator container (iterable) that lists the rooms where you are a member
 existing_demo_rooms = [room for room in rooms if room.title == DEMO_ROOM_NAME]    # Builds a list of rooms with the name DEMO_ROOM_NAME
 if existing_demo_rooms:
-    print("Found {} existing room(s); "
-          "deleting them.".format(len(existing_demo_rooms)))
+    print("Found {} existing room(s); deleting them."
+          "".format(len(existing_demo_rooms)))
     for room in existing_demo_rooms:
-         api.rooms.delete(room.id)                                                # Delete the room
-         print ("Room '{}' deleted.".format(room.id))
-
+        api.rooms.delete(room.id)                                                # Delete the room
+        print("Room '{}' deleted.".format(room.id))
 
 
 demo_room = api.rooms.create(DEMO_ROOM_NAME)                          # Create a new demo room
 print(demo_room)                                                      # Print the room details (formatted JSON)
 for person_email in DEMO_PEOPLE:
     api.memberships.create(demo_room.id, personEmail=person_email)    # Add people to the room
-message = api.messages.create(demo_room.id,text=DEMO_MESSAGE)         # Create a message in the new room
+message = api.messages.create(demo_room.id, text=DEMO_MESSAGE)        # Create a message in the new room
 print(message)                                                        # Print the message details (formatted JSON)
-message = api.messages.create(demo_room.id,files=[DEMO_FILE_URL])     # Post a file in the new room from test_url
+message = api.messages.create(demo_room.id, files=[DEMO_FILE_URL])    # Post a file in the new room from test_url
 print(message)                                                        # Print the message details (formatted JSON)
