@@ -19,7 +19,6 @@ from __future__ import (
     unicode_literals,
 )
 from builtins import *
-from past.builtins import basestring
 
 
 __author__ = "Chris Lunsford"
@@ -31,6 +30,7 @@ __license__ = "MIT"
 import functools
 import inspect
 from itertools import islice
+import sys
 
 
 class GeneratorContainer(object):
@@ -54,11 +54,17 @@ class GeneratorContainer(object):
             raise TypeError("generator_function must be a generator function.")
 
         self.generator_function = generator_function
-        self.signature = inspect.signature(self.generator_function)
-        self.bound_arguments = self.signature.bind(*args, **kwargs)
-        self.arguments = self.bound_arguments.arguments
-        self.args = self.bound_arguments.args
-        self.kwargs = self.bound_arguments.kwargs
+
+        if sys.version_info[0] < 3:
+            self.arguments = inspect.getcallargs(
+                self.generator_function,
+                *args,
+                **kwargs
+            )
+        else:
+            signature = inspect.signature(self.generator_function)
+            bound_arguments = signature.bind(*args, **kwargs)
+            self.arguments = bound_arguments.arguments
 
     def __repr__(self):
         """A string representation of this object."""
@@ -76,7 +82,7 @@ class GeneratorContainer(object):
 
     def new_generator(self):
         """Create a new generator object."""
-        return self.generator_function(*self.args, **self.kwargs)
+        return self.generator_function(**self.arguments)
 
     def __iter__(self):
         """Return a fresh iterator."""
