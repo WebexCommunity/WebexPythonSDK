@@ -19,7 +19,6 @@ from tests.utils import download_file
 
 pytest_plugins = [
     'tests.test_ciscosparkapi',
-    'tests.api.test_accesstokens',
     'tests.api.test_memberships',
     'tests.api.test_messages',
     'tests.api.test_people',
