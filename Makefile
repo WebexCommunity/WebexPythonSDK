@@ -33,6 +33,11 @@ update :
 .PHONY : tests
 tests: lint toxtest ;
 
+.PHONY : ci-init
+ci-init :
+	pip install pipenv
+	pipenv install
+
 .PHONY : ci
 ci :
 	pytest -m "not ratelimit"
