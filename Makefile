@@ -40,23 +40,23 @@ ci-init :
 
 .PHONY : ci
 ci :
-	pytest -m "not ratelimit"
+	pipenv run pytest -m "not ratelimit"
 
 .PHONY : toxtest
 toxtest : tox.ini
-	tox
+	pipenv run tox
 
 .PHONY : pytest
 pytest :
-	pytest -m "not ratelimit"
+	pipenv run pytest -m "not ratelimit"
 
 .PHONY : pytest-rate-limit
-pytest-rate-limit : local/environment.sh
-	pytest -m "ratelimit"
+pytest-rate-limit :
+	pipenv run pytest -m "ratelimit"
 
 .PHONY : lint
 lint :
-	flake8 ciscosparkapi
+	pipenv run flake8 ciscosparkapi
 
 
 # Git recipes
