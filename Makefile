@@ -22,8 +22,9 @@ init : Pipfile
 .PHONY : update
 update :
 	pipenv update --dev
-	pipenv lock -r > requirements.txt
-	pipenv lock -r --dev > requirements-dev.txt
+	pipenv lock -r > requirements-secure.txt
+	pipenv lock -r --dev > requirements-secure-dev.txt
+	pipenv run pip freeze > requirements.txt
 	rm versioneer.py
 	pipenv run versioneer install
 
