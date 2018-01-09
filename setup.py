@@ -66,6 +66,6 @@ setup(
     install_requires=[
             'future',
             'requests>=2.4.2',
-            'requests_toolbelt',
+            'requests-toolbelt',
     ],
 )

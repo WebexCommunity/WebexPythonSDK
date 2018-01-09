@@ -1,0 +1,23 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+"e1839a8" = {path = ".", editable = true}
+versioneer = "*"
+
+
+[dev-packages]
+
+versioneer = "*"
+sphinx = "*"
+sphinx-rtd-theme = "*"
+pytest = "*"
+tox = "*"
+virtualenv = "*"
+"flake8" = "*"
+twine = "*"

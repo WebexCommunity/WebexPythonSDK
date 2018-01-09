@@ -16,34 +16,37 @@ docs : docs/Makefile
 
 # Local project directory and environment management recipes
 .PHONY : init
-init : requirements.txt
-	pip install -r requirements.txt
+init : Pipfile
+	pipenv install --dev --skip-lock
 
 .PHONY : update
-update : clean-venv init versioneer.py
+update :
+	pipenv update --dev
+	pipenv lock -r > requirements.txt
+	pipenv lock -r --dev > requirements-dev.txt
 	rm versioneer.py
-	versioneer install
+	pipenv run versioneer install
 
 
 # Local testing recipes
 .PHONY : tests
-tests: toxtest lint ;
+tests: lint toxtest ;
 
 .PHONY : ci
 ci :
 	pytest -m "not ratelimit"
 
 .PHONY : toxtest
-toxtest : local/environment.sh tox.ini
-	source local/environment.sh && tox
+toxtest : tox.ini
+	tox
 
 .PHONY : pytest
-pytest : local/environment.sh
-	source local/environment.sh && pytest -m "not ratelimit"
+pytest :
+	pytest -m "not ratelimit"
 
 .PHONY : pytest-rate-limit
 pytest-rate-limit : local/environment.sh
-	source local/environment.sh && pytest -m "ratelimit"
+	pytest -m "ratelimit"
 
 .PHONY : lint
 lint :
@@ -59,7 +62,10 @@ push :
 
 # Cleaning recipes
 .PHONY : clean
-clean : cleanbuild cleandocs cleanpytest cleantox ;
+clean : cleanbuild cleandocs cleanpytest cleantox clean-dist ;
+
+.PHONY : clean-all
+clean-all : clean clean-venv ;
 
 .PHONY : cleanbuild
 cleanbuild :
@@ -78,13 +84,10 @@ cleantox : cleanpytest
 cleanpytest :
 	rm -rf ./.cache/
 
-.PHONY : clean-all
-clean-all : clean clean-dist ;
-
 .PHONY : clean-dist
 clean-dist :
 	rm -rf ./dist/*
 
 .PHONY : clean-venv
 clean-venv :
-	pip freeze | grep -v "^-e" | xargs pip uninstall -y
+	pipenv --rm

@@ -1,5 +1,6 @@
 # Local Files
 .envrc
+.venv/
 local/
 
 
