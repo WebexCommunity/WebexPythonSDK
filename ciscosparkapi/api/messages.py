@@ -127,17 +127,17 @@ class MessagesAPI(object):
                 API calls to the Cisco Spark service.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
 
         """
-        assert isinstance(session, RestSession)
+        check_type(session, RestSession, may_be_none=False)
         super(MessagesAPI, self).__init__()
         self._session = session
 
     @generator_container
     def list(self, roomId, mentionedPeople=None, before=None,
              beforeMessage=None, max=None, **request_parameters):
-        """Lists all messages in a room.
+        """Lists messages in a room.
 
         Each message will include content attachments if present.
 
@@ -199,7 +199,7 @@ class MessagesAPI(object):
 
     def create(self, roomId=None, toPersonId=None, toPersonEmail=None,
                text=None, markdown=None, files=None, **request_parameters):
-        """Posts a message, and optionally a attachment, to a room.
+        """Post a message, and optionally a attachment, to a room.
 
         The files parameter is a list, which accepts multiple values to allow
         for future expansion, but currently only one file may be included with

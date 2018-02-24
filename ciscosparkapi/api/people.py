@@ -369,7 +369,7 @@ class PeopleAPI(object):
             personId(basestring): The ID of the person to be deleted.
 
         Raises:
-            AssertionError: If the parameter types are incorrect.
+            TypeError: If the parameter types are incorrect.
             SparkApiError: If the Cisco Spark cloud returns an error.
 
         """
