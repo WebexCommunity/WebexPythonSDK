@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """pytest Memberships functions, fixtures and tests."""
+import ciscosparkapi.models.membership
 
 
 __author__ = "Chris Lunsford"
@@ -71,7 +72,7 @@ def empty_room(api, me, room):
 
 
 def is_valid_membership(membership):
-    return isinstance(membership, ciscosparkapi.Membership) \
+    return isinstance(membership, ciscosparkapi.models.membership.Membership) \
            and membership.id is not None
 
 

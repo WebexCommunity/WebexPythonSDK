@@ -19,14 +19,17 @@ to objects by the Cisco Spark cloud.
 """
 
 
-# Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
     division,
     print_function,
     unicode_literals,
 )
+
 from builtins import *
+from collections import OrderedDict
+import json as json_pkg
+
 from past.builtins import basestring
 
 
@@ -34,11 +37,6 @@ __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
 __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
-
-
-import json as json_pkg
-
-from collections import OrderedDict
 
 
 def _json_dict(json):

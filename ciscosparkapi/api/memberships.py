@@ -1,24 +1,25 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark Memberships API wrapper.
-
-Classes:
-    Membership: Models a Spark 'membership' JSON object as a native Python
-        object.
-    MembershipsAPI: Wraps the Cisco Spark Memberships API and exposes the
-        APIs as native Python methods that return native Python objects.
-
-"""
+"""Cisco Spark Memberships API."""
 
 
-# Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
     division,
     print_function,
     unicode_literals,
 )
+
 from builtins import *
+
 from past.builtins import basestring
+
+from ..generator_containers import generator_container
+from ..models.membership import Membership
+from ..restsession import RestSession
+from ..utils import (
+    check_type,
+    dict_from_items_with_values,
+)
 
 
 __author__ = "Chris Lunsford"
@@ -27,78 +28,8 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-from ..generator_containers import generator_container
-from ..restsession import RestSession
-from ..sparkdata import SparkData
-from ..utils import (
-    check_type,
-    dict_from_items_with_values,
-)
-
-
-class Membership(SparkData):
-    """Model a Spark 'membership' JSON object as a native Python object."""
-
-    def __init__(self, json):
-        """Initialize a Membership object from a dictionary or JSON string.
-
-        Args:
-            json(dict, basestring): Input dictionary or JSON string.
-
-        Raises:
-            TypeError: If the input object is not a dictionary or string.
-
-        """
-        super(Membership, self).__init__(json)
-
-    @property
-    def id(self):
-        """The membership's unique ID."""
-        return self._json_data.get('id')
-
-    @property
-    def roomId(self):
-        """The ID of the room."""
-        return self._json_data.get('roomId')
-
-    @property
-    def personId(self):
-        """The ID of the person."""
-        return self._json_data.get('personId')
-
-    @property
-    def personEmail(self):
-        """The email address of the person."""
-        return self._json_data.get('personEmail')
-
-    @property
-    def personDisplayName(self):
-        """The display name of the person."""
-        return self._json_data.get('personDisplayName')
-
-    @property
-    def personOrgId(self):
-        """The ID of the organization that the person is associated with."""
-        return self._json_data.get('personOrgId')
-
-    @property
-    def isModerator(self):
-        """Person is a moderator for the room."""
-        return self._json_data.get('isModerator')
-
-    @property
-    def isMonitor(self):
-        """Person is a monitor for the room."""
-        return self._json_data.get('isMonitor')
-
-    @property
-    def created(self):
-        """The date and time the membership was created."""
-        return self._json_data.get('created')
-
-
 class MembershipsAPI(object):
-    """Cisco Spark Memberships API wrapper.
+    """Cisco Spark Memberships API.
 
     Wraps the Cisco Spark Memberships API and exposes the API as native Python
     methods that return native Python objects.

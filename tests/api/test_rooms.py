@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """pytest Rooms functions, fixtures and tests."""
+import ciscosparkapi.models.room
 
 
 __author__ = "Chris Lunsford"
@@ -31,7 +32,8 @@ def delete_room(api, room):
 
 
 def is_valid_room(obj):
-    return isinstance(obj, ciscosparkapi.Room) and obj.id is not None
+    return isinstance(obj,
+                      ciscosparkapi.models.room.Room) and obj.id is not None
 
 
 def are_valid_rooms(iterable):

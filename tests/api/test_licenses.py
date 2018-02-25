@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """pytest Licenses API wrapper tests and fixtures."""
+import ciscosparkapi.models.license
 
 
 __author__ = "Chris Lunsford"
@@ -24,7 +25,8 @@ def get_license_by_id(api, licenseId):
 
 
 def is_valid_license(obj):
-    return isinstance(obj, ciscosparkapi.License) and obj.id is not None
+    return isinstance(obj,
+                      ciscosparkapi.models.license.License) and obj.id is not None
 
 
 def are_valid_licenses(iterable):

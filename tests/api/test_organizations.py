@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """pytest Organizations API wrapper tests and fixtures."""
+import ciscosparkapi.models.organization
 
 
 __author__ = "Chris Lunsford"
@@ -24,7 +25,8 @@ def get_organization_by_id(api, orgId):
 
 
 def is_valid_organization(obj):
-    return isinstance(obj, ciscosparkapi.Organization) and obj.id is not None
+    return isinstance(obj,
+                      ciscosparkapi.models.organization.Organization) and obj.id is not None
 
 def are_valid_organizations(iterable):
     return all([is_valid_organization(obj) for obj in iterable])

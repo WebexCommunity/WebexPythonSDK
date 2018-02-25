@@ -1,24 +1,25 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark Organizations API wrapper.
-
-Classes:
-    Organization: Models a Spark Organization JSON object as a native Python
-        object.
-    OrganizationsAPI: Wraps the Cisco Spark Organizations API and exposes the
-        APIs as native Python methods that return native Python objects.
-
-"""
+"""Cisco Spark Organizations API."""
 
 
-# Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
     division,
     print_function,
     unicode_literals,
 )
+
 from builtins import *
+
 from past.builtins import basestring
+
+from ..generator_containers import generator_container
+from ..models.organization import Organization
+from ..restsession import RestSession
+from ..utils import (
+    check_type,
+    dict_from_items_with_values,
+)
 
 
 __author__ = "Chris Lunsford"
@@ -27,48 +28,8 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-from ..generator_containers import generator_container
-from ..restsession import RestSession
-from ..sparkdata import SparkData
-from ..utils import (
-    check_type,
-    dict_from_items_with_values,
-)
-
-
-class Organization(SparkData):
-    """Model a Spark Organization JSON object as a native Python object."""
-
-    def __init__(self, json):
-        """Init a Organization data object from a dictionary or JSON string.
-
-        Args:
-            json(dict, basestring): Input dictionary or JSON string.
-
-        Raises:
-            TypeError: If the input object is not a dictionary or string.
-
-        """
-        super(Organization, self).__init__(json)
-
-    @property
-    def id(self):
-        """The unique ID for the Organization."""
-        return self._json_data.get('id')
-
-    @property
-    def displayName(self):
-        """The human-friendly display name of the Organization."""
-        return self._json_data.get('displayName')
-
-    @property
-    def created(self):
-        """Creation date and time in ISO8601 format."""
-        return self._json_data.get('created')
-
-
 class OrganizationsAPI(object):
-    """Cisco Spark Organizations API wrapper.
+    """Cisco Spark Organizations API.
 
     Wraps the Cisco Spark Organizations API and exposes the API as native
     Python methods that return native Python objects.

@@ -2,69 +2,57 @@
 """Python API wrapper for the Cisco Spark APIs."""
 
 
-# Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
     division,
     print_function,
     unicode_literals,
 )
+
 from builtins import *
+import logging
+import os
+
 from past.builtins import basestring
+
+from .api.access_tokens import AccessTokensAPI as _AccessTokensAPI
+from .api.licenses import LicensesAPI as _LicensesAPI
+from .api.memberships import MembershipsAPI as _MembershipsAPI
+from .api.messages import MessagesAPI as _MessagesAPI
+from .api.organizations import OrganizationsAPI as _OrganizationsAPI
+from .api.people import PeopleAPI as _PeopleAPI
+from .api.roles import RolesAPI as _RolesAPI
+from .api.rooms import RoomsAPI as _RoomsAPI
+from .api.team_memberships import TeamMembershipsAPI as _TeamMembershipsAPI
+from .api.teams import TeamsAPI as _TeamsAPI
+from .api.webhooks import WebhooksAPI as _WebhooksAPI
+from .exceptions import (
+    SparkApiError, SparkRateLimitError, ciscosparkapiException,
+)
+from .models.access_token import AccessToken
+from .models.license import License
+from .models.membership import Membership
+from .models.message import Message
+from .models.organization import Organization
+from .models.person import Person
+from .models.role import Role
+from .models.room import Room
+from .models.team import Team
+from .models.team_membership import TeamMembership
+from .models.webhook import Webhook
+from .models.webhook_event import WebhookEvent
+from .restsession import (
+    DEFAULT_SINGLE_REQUEST_TIMEOUT,
+    DEFAULT_WAIT_ON_RATE_LIMIT,
+    RestSession as _RestSession,
+)
+from .utils import check_type
 
 
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
 __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
-__all__ = [
-    "CiscoSparkAPI", "ciscosparkapiException", "SparkApiError",
-    "SparkRateLimitError", "Person", "Room", "Membership", "Message", "Team",
-    "TeamMembership", "Webhook", "WebhookEvent", "Organization", "License",
-    "Role", "AccessToken"
-]
-
-
-import logging
-import os
-
-from .api.people import Person
-from .api.rooms import Room
-from .api.memberships import Membership
-from .api.messages import Message
-from .api.teams import Team
-from .api.team_memberships import TeamMembership
-from .api.webhooks import Webhook, WebhookEvent
-from .api.organizations import Organization
-from .api.licenses import License
-from .api.roles import Role
-from .api.access_tokens import AccessToken
-
-from .api.people import PeopleAPI as _PeopleAPI
-from .api.rooms import RoomsAPI as _RoomsAPI
-from .api.memberships import MembershipsAPI as _MembershipsAPI
-from .api.messages import MessagesAPI as _MessagesAPI
-from .api.teams import TeamsAPI as _TeamsAPI
-from .api.team_memberships import TeamMembershipsAPI as _TeamMembershipsAPI
-from .api.webhooks import WebhooksAPI as _WebhooksAPI
-from .api.organizations import OrganizationsAPI as _OrganizationsAPI
-from .api.licenses import LicensesAPI as _LicensesAPI
-from .api.roles import RolesAPI as _RolesAPI
-from .api.access_tokens import AccessTokensAPI as _AccessTokensAPI
-
-from .exceptions import (
-    ciscosparkapiException,
-    SparkApiError,
-    SparkRateLimitError,
-)
-
-from .restsession import (
-    DEFAULT_SINGLE_REQUEST_TIMEOUT,
-    DEFAULT_WAIT_ON_RATE_LIMIT,
-    RestSession as _RestSession,
-)
-
-from .utils import check_type
 
 
 # Versioneer version control

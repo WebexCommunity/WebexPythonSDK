@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """pytest Team Memberships functions, fixtures and tests."""
+import ciscosparkapi.models.team_membership
 
 
 __author__ = "Chris Lunsford"
@@ -54,7 +55,8 @@ def empty_team(api, me, team):
 
 
 def is_valid_team_membership(membership):
-    return isinstance(membership, ciscosparkapi.TeamMembership) \
+    return isinstance(membership,
+                      ciscosparkapi.models.team_membership.TeamMembership) \
            and membership.id is not None
 
 

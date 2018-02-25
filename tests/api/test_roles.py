@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """pytest Roles API wrapper tests and fixtures."""
+import ciscosparkapi.models.role
 
 
 __author__ = "Chris Lunsford"
@@ -24,7 +25,8 @@ def get_role_by_id(api, roleId):
 
 
 def is_valid_role(obj):
-    return isinstance(obj, ciscosparkapi.Role) and obj.id is not None
+    return isinstance(obj,
+                      ciscosparkapi.models.role.Role) and obj.id is not None
 
 
 def are_valid_roles(iterable):

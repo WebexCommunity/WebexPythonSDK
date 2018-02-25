@@ -1,23 +1,26 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark Messages API wrapper.
-
-Classes:
-    Message: Models a Spark 'message' JSON object as a native Python object.
-    MessagesAPI: Wraps the Cisco Spark Messages API and exposes the API as
-        native Python methods that return native Python objects.
-
-"""
+"""Cisco Spark Messages API."""
 
 
-# Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
     division,
     print_function,
     unicode_literals,
 )
+
 from builtins import *
+
 from past.builtins import basestring
+from requests_toolbelt import MultipartEncoder
+
+from ..generator_containers import generator_container
+from ..models.message import Message
+from ..restsession import RestSession
+from ..utils import (
+    check_type, dict_from_items_with_values, is_local_file, is_web_url,
+    open_local_file,
+)
 
 
 __author__ = "Chris Lunsford"
@@ -26,93 +29,8 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-from requests_toolbelt import MultipartEncoder
-
-from ..generator_containers import generator_container
-from ..restsession import RestSession
-from ..sparkdata import SparkData
-from ..utils import (
-    check_type,
-    dict_from_items_with_values,
-    is_web_url,
-    is_local_file,
-    open_local_file,
-)
-
-
-class Message(SparkData):
-    """Model a Spark 'message' JSON object as a native Python object."""
-
-    def __init__(self, json):
-        """Initialize a Message data object from a dictionary or JSON string.
-
-        Args:
-            json(dict, basestring): Input dictionary or JSON string.
-
-        Raises:
-            TypeError: If the input object is not a dictionary or string.
-
-        """
-        super(Message, self).__init__(json)
-
-    @property
-    def id(self):
-        """The message's unique ID."""
-        return self._json_data.get('id')
-
-    @property
-    def roomId(self):
-        """The ID of the room."""
-        return self._json_data.get('roomId')
-
-    @property
-    def roomType(self):
-        """The type of room (i.e. 'group', 'direct' etc.)."""
-        return self._json_data.get('roomType')
-
-    @property
-    def text(self):
-        """The message, in plain text."""
-        return self._json_data.get('text')
-
-    @property
-    def files(self):
-        """Files attached to the the message (list of URLs)."""
-        return self._json_data.get('files')
-
-    @property
-    def personId(self):
-        """The person ID of the sender."""
-        return self._json_data.get('personId')
-
-    @property
-    def personEmail(self):
-        """The email address of the sender."""
-        return self._json_data.get('personEmail')
-
-    @property
-    def markdown(self):
-        """The message, in markdown format."""
-        return self._json_data.get('markdown')
-
-    @property
-    def html(self):
-        """The message, in HTML format."""
-        return self._json_data.get('html')
-
-    @property
-    def mentionedPeople(self):
-        """The list of IDs of people mentioned in the message."""
-        return self._json_data.get('mentionedPeople')
-
-    @property
-    def created(self):
-        """The date and time the message was created."""
-        return self._json_data.get('created')
-
-
 class MessagesAPI(object):
-    """Cisco Spark Messages API wrapper.
+    """Cisco Spark Messages API.
 
     Wraps the Cisco Spark Messages API and exposes the API as native Python
     methods that return native Python objects.

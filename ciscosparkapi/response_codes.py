@@ -2,15 +2,12 @@
 """Cisco Spark Response Codes."""
 
 
-# Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
     division,
     print_function,
     unicode_literals,
 )
-from builtins import *
-from past.builtins import basestring
 
 
 __author__ = "Chris Lunsford"

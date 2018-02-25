@@ -1,40 +1,23 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark Access-Tokens API wrapper.
-
-Classes:
-    AccessToken: Models a Spark 'access token' JSON object as a native Python
-        object.
-    AccessTokensAPI: Wraps the Cisco Spark Access-Tokens API and exposes the
-        API as native Python methods that return native Python objects.
-
-"""
+"""Cisco Spark Access-Tokens API."""
 
 
-# Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
     division,
     print_function,
     unicode_literals,
 )
+
 from builtins import *
-from past.builtins import basestring
-from future import standard_library
-standard_library.install_aliases()
-
-
-__author__ = "Chris Lunsford"
-__author_email__ = "chrlunsf@cisco.com"
-__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
-__license__ = "MIT"
-
-
 import urllib.parse
 
+from future import standard_library
+from past.builtins import basestring
 import requests
 
+from ..models.access_token import AccessToken
 from ..response_codes import EXPECTED_RESPONSE_CODE
-from ..sparkdata import SparkData
 from ..utils import (
     check_response_code,
     check_type,
@@ -44,47 +27,20 @@ from ..utils import (
 )
 
 
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__license__ = "MIT"
+
+
+standard_library.install_aliases()
+
+
 API_ENDPOINT = "access_token"
 
 
-class AccessToken(SparkData):
-    """Model a Spark 'access token' JSON object as a native Python object."""
-
-    def __init__(self, json):
-        """Init a new AccessToken data object from a dictionary or JSON string.
-
-        Args:
-            json(dict, basestring): Input dictionary or JSON string.
-
-        Raises:
-            TypeError: If the input object is not a dictionary or string.
-
-        """
-        super(AccessToken, self).__init__(json)
-
-    @property
-    def access_token(self):
-        """Cisco Spark access token."""
-        return self._json_data.get('access_token')
-
-    @property
-    def expires_in(self):
-        """Access token expiry time (in seconds)."""
-        return self._json_data.get('expires_in')
-
-    @property
-    def refresh_token(self):
-        """Refresh token used to request a new/refreshed access token."""
-        return self._json_data.get('refresh_token')
-
-    @property
-    def refresh_token_expires_in(self):
-        """Refresh token expiry time (in seconds)."""
-        return self._json_data.get('refresh_token_expires_in')
-
-
 class AccessTokensAPI(object):
-    """Cisco Spark Access-Tokens API wrapper.
+    """Cisco Spark Access-Tokens API.
 
     Wraps the Cisco Spark Access-Tokens API and exposes the API as native
     Python methods that return native Python objects.
@@ -138,7 +94,7 @@ class AccessTokensAPI(object):
                 process.
 
         Returns:
-            AccessToken: An AccessToken object with the access token provided
+            ciscosparkapi.AccessToken: An AccessToken object with the access token provided
                 by the Cisco Spark cloud.
 
         Raises:

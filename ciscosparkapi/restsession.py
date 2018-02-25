@@ -2,16 +2,30 @@
 """RestSession class for creating 'connections' to the Cisco Spark APIs."""
 
 
-# Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
     division,
     print_function,
     unicode_literals,
 )
+
 from builtins import *
-from past.builtins import basestring
+import logging
+import time
+import urllib.parse
+import warnings
+
 from future import standard_library
+from past.builtins import basestring
+import requests
+
+from .exceptions import SparkRateLimitError, ciscosparkapiException
+from .response_codes import EXPECTED_RESPONSE_CODE
+from .utils import (
+    check_response_code, extract_and_parse_json, validate_base_url,
+)
+
+
 standard_library.install_aliases()
 
 
@@ -19,26 +33,6 @@ __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
 __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
-
-
-import logging
-import time
-import urllib.parse
-import warnings
-
-import requests
-
-from .exceptions import (
-    ciscosparkapiException,
-    SparkApiError,
-    SparkRateLimitError,
-)
-from .response_codes import EXPECTED_RESPONSE_CODE
-from .utils import (
-    validate_base_url,
-    check_response_code,
-    extract_and_parse_json,
-)
 
 
 # Module Constants

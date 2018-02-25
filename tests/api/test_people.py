@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """pytest People functions, fixtures and tests."""
+import ciscosparkapi.models.person
 
 
 __author__ = "Chris Lunsford"
@@ -19,7 +20,8 @@ from tests.conftest import TEST_FILE_URL
 # Helper Functions
 
 def is_valid_person(obj):
-    return isinstance(obj, ciscosparkapi.Person) and obj.id is not None
+    return isinstance(obj,
+                      ciscosparkapi.models.person.Person) and obj.id is not None
 
 
 def are_valid_people(iterable):

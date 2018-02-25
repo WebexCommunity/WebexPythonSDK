@@ -2,29 +2,27 @@
 """ciscosparkapi exception classes."""
 
 
-# Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
     division,
     print_function,
     unicode_literals,
 )
+
 from builtins import *
+import sys
+import textwrap
+
 from past.builtins import basestring
+import requests
+
+from .response_codes import SPARK_RESPONSE_CODES
 
 
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
 __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
-
-
-import sys
-import textwrap
-
-import requests
-
-from .response_codes import SPARK_RESPONSE_CODES
 
 
 # Helper functions

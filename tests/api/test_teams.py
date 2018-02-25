@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """pytest Team functions, fixtures and tests."""
+import ciscosparkapi.models.team
 
 
 __author__ = "Chris Lunsford"
@@ -32,7 +33,8 @@ def delete_team(api, team):
 
 
 def is_valid_team(obj):
-    return isinstance(obj, ciscosparkapi.Team) and obj.id is not None
+    return isinstance(obj,
+                      ciscosparkapi.models.team.Team) and obj.id is not None
 
 
 def are_valid_teams(iterable):

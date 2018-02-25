@@ -1,23 +1,25 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark People API wrapper classes.
-
-Classes:
-    Person: Models a Spark 'person' JSON object as a native Python object.
-    PeopleAPI: Wraps the Cisco Spark People API and exposes the API as native
-        Python methods that return native Python objects.
-
-"""
+"""Cisco Spark People API."""
 
 
-# Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
     division,
     print_function,
     unicode_literals,
 )
+
 from builtins import *
+
 from past.builtins import basestring
+
+from ..generator_containers import generator_container
+from ..models.person import Person
+from ..restsession import RestSession
+from ..utils import (
+    check_type,
+    dict_from_items_with_values,
+)
 
 
 __author__ = "Chris Lunsford"
@@ -26,113 +28,8 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-from ..generator_containers import generator_container
-from ..restsession import RestSession
-from ..sparkdata import SparkData
-from ..utils import (
-    check_type,
-    dict_from_items_with_values,
-)
-
-
-class Person(SparkData):
-    """Model a Spark person JSON object as a native Python object."""
-
-    def __init__(self, json):
-        """Initialize a Person data object from a dictionary or JSON string.
-
-        Args:
-            json(dict, basestring): Input dictionary or JSON string.
-
-        Raises:
-            TypeError: If the input object is not a dictionary or string.
-
-        """
-        super(Person, self).__init__(json)
-
-    @property
-    def type(self):
-        """The type of object returned by Cisco Spark (should be `person`)."""
-        return self._json_data.get('type')
-
-    @property
-    def id(self):
-        """The person's unique ID."""
-        return self._json_data.get('id')
-
-    @property
-    def emails(self):
-        """Email address(es) of the person."""
-        return self._json_data['emails']
-
-    @property
-    def displayName(self):
-        """Full name of the person."""
-        return self._json_data.get('displayName')
-
-    @property
-    def nickName(self):
-        """'Nick name' or preferred short name of the person."""
-        return self._json_data.get('nickName')
-
-    @property
-    def firstName(self):
-        """First name of the person."""
-        return self._json_data.get('firstName')
-
-    @property
-    def lastName(self):
-        """Last name of the person."""
-        return self._json_data.get('lastName')
-
-    @property
-    def avatar(self):
-        """URL to the person's avatar in PNG format."""
-        return self._json_data.get('avatar')
-
-    @property
-    def orgId(self):
-        """ID of the organization to which this person belongs."""
-        return self._json_data.get('orgId')
-
-    @property
-    def roles(self):
-        """Roles of the person."""
-        return self._json_data.get('roles')
-
-    @property
-    def licenses(self):
-        """Licenses allocated to the person."""
-        return self._json_data.get('licenses')
-
-    @property
-    def created(self):
-        """The date and time the person was created."""
-        return self._json_data.get('created')
-
-    @property
-    def status(self):
-        """The person's current status."""
-        return self._json_data.get('status')
-
-    @property
-    def lastActivity(self):
-        """The date and time of the person's last activity."""
-        return self._json_data.get('lastActivity')
-
-    @property
-    def invitePending(self):
-        """Person has been sent an invite, but hasn't responded."""
-        return self._json_data.get('invitePending')
-
-    @property
-    def loginEnabled(self):
-        """Person is allowed to login."""
-        return self._json_data.get('loginEnabled')
-
-
 class PeopleAPI(object):
-    """Cisco Spark People API wrapper.
+    """Cisco Spark People API.
 
     Wraps the Cisco Spark People API and exposes the API as native Python
     methods that return native Python objects.
