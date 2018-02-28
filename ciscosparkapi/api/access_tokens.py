@@ -9,10 +9,12 @@ from __future__ import (
     unicode_literals,
 )
 
+from future import standard_library
+standard_library.install_aliases()
+
 from builtins import *
 import urllib.parse
 
-from future import standard_library
 from past.builtins import basestring
 import requests
 
@@ -32,7 +34,6 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-standard_library.install_aliases()
 
 
 API_ENDPOINT = 'access_token'

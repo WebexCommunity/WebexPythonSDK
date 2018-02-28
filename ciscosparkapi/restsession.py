@@ -9,13 +9,15 @@ from __future__ import (
     unicode_literals,
 )
 
+from future import standard_library
+standard_library.install_aliases()
+
 from builtins import *
 import logging
 import time
 import urllib.parse
 import warnings
 
-from future import standard_library
 from past.builtins import basestring
 import requests
 
@@ -25,8 +27,6 @@ from .utils import (
     check_response_code, extract_and_parse_json, validate_base_url,
 )
 
-
-standard_library.install_aliases()
 
 
 __author__ = "Chris Lunsford"
