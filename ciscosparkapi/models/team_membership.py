@@ -20,21 +20,8 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-class TeamMembership(SparkData):
-    """Model a Spark 'team membership' JSON object as a native Python object.
-    """
-
-    def __init__(self, json):
-        """Initialize a TeamMembership object from a dictionary or JSON string.
-
-        Args:
-            json(dict, basestring): Input dictionary or JSON object.
-
-        Raises:
-            TypeError: If the input object is not a dictionary or string.
-
-        """
-        super(TeamMembership, self).__init__(json)
+class TeamMembershipBasicPropertiesMixin(object):
+    """A mixin for :class:`SparkData` classes."""
 
     @property
     def id(self):

@@ -20,20 +20,8 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-class Organization(SparkData):
-    """Model a Spark Organization JSON object as a native Python object."""
-
-    def __init__(self, json):
-        """Init a Organization data object from a dictionary or JSON string.
-
-        Args:
-            json(dict, basestring): Input dictionary or JSON string.
-
-        Raises:
-            TypeError: If the input object is not a dictionary or string.
-
-        """
-        super(Organization, self).__init__(json)
+class OrganizationBasicPropertiesMixin(object):
+    """A mixin for :class:`SparkData` classes."""
 
     @property
     def id(self):

@@ -11,8 +11,6 @@ from __future__ import (
 
 from builtins import *
 
-from .sparkdata import SparkData
-
 
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
@@ -20,20 +18,8 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-class Team(SparkData):
-    """Model a Spark 'team' JSON object as a native Python object."""
-
-    def __init__(self, json):
-        """Initialize a new Team data object from a dictionary or JSON string.
-
-        Args:
-            json(dict, basestring): Input dictionary or JSON object.
-
-        Raises:
-            TypeError: If the input object is not a dictionary or string.
-
-        """
-        super(Team, self).__init__(json)
+class TeamBasicPropertiesMixin(object):
+    """A mixin for :class:`SparkData` classes."""
 
     @property
     def id(self):

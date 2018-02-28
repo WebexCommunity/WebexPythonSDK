@@ -11,8 +11,6 @@ from __future__ import (
 
 from builtins import *
 
-from .sparkdata import SparkData
-
 
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
@@ -20,20 +18,8 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-class Room(SparkData):
-    """Model a Spark 'room' JSON object as a native Python object."""
-
-    def __init__(self, json):
-        """Initialize a Room data object from a dictionary or JSON string.
-
-        Args:
-            json(dict, basestring): Input dictionary or JSON string.
-
-        Raises:
-            TypeError: If the input object is not a dictionary or string.
-
-        """
-        super(Room, self).__init__(json)
+class RoomBasicPropertiesMixin(object):
+    """A mixin for :class:`SparkData` classes."""
 
     @property
     def id(self):
@@ -52,7 +38,7 @@ class Room(SparkData):
 
     @property
     def isLocked(self):
-        """Whether or not the room is locked and controled by moderator(s)."""
+        """Whether or not the room is locked and controlled by moderator(s)."""
         return self._json_data.get('isLocked')
 
     @property

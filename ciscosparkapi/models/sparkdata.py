@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""SparkData (base-class) models Spark JSON objects as native Python objects.
+"""SparkData data model; models Spark JSON objects as native Python objects.
 
 Classes:
     SparkData: Models Spark JSON objects as native Python objects.
@@ -7,14 +7,6 @@ Classes:
 The SparkData class models any JSON object passed to it as a string or Python
 dictionary as a native Python object; providing attribute access using native
 dot-syntax (`object.attribute`).
-
-SparkData is intended to serve as a base-class, which provides inheritable
-functionality, for concrete sub-classes that model specific Cisco Spark data
-objects (rooms, messages, webhooks, etc.).  The SparkData base-class provides
-attribute access to any additional JSON attributes received from the Cisco
-Spark cloud, which haven't been implemented by the concrete sub-classes.  This
-provides a measure of future-proofing when additional data attributes are added
-to objects by the Cisco Spark cloud.
 
 """
 
@@ -28,7 +20,7 @@ from __future__ import (
 
 from builtins import *
 from collections import OrderedDict
-import json as json_pkg
+import json
 
 from past.builtins import basestring
 
@@ -39,11 +31,11 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-def _json_dict(json):
+def _json_dict(json_data):
     """Given a dictionary or JSON string; return a dictionary.
 
     Args:
-        json(dict, str): Input JSON object.
+        json_data(dict, str): Input JSON object.
 
     Returns:
         A Python dictionary with the contents of the JSON object.
@@ -52,31 +44,32 @@ def _json_dict(json):
         TypeError: If the input object is not a dictionary or string.
 
     """
-    if isinstance(json, dict):
-        return json
-    elif isinstance(json, basestring):
-        return json_pkg.loads(json, object_hook=OrderedDict)
+    if isinstance(json_data, dict):
+        return json_data
+    elif isinstance(json_data, basestring):
+        return json.loads(json_data, object_hook=OrderedDict)
     else:
-        error = "'json' must be a dictionary or valid JSON string; " \
-                "received: {!r}".format(json)
-        raise TypeError(error)
+        raise TypeError(
+            "'json_data' must be a dictionary or valid JSON string; "
+            "received: {!r}".format(json_data)
+        )
 
 
 class SparkData(object):
-    """Model Spark JSON objects as native Python objects."""
+    """Model a Spark JSON object as a native Python object."""
 
-    def __init__(self, json):
+    def __init__(self, json_data):
         """Init a new SparkData object from a dictionary or JSON string.
 
         Args:
-            json(dict, str): Input JSON object.
+            json_data(dict, basestring): Input JSON string or dictionary.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
 
         """
         super(SparkData, self).__init__()
-        self._json_data = _json_dict(json)
+        self._json_data = _json_dict(json_data)
 
     def __getattr__(self, item):
         """Provide native attribute access to the JSON object attributes.
@@ -105,20 +98,21 @@ class SparkData(object):
             else:
                 return item_data
         else:
-            error = "'{}' object has no attribute " \
-                    "'{}'".format(self.__class__.__name__, item)
-            raise AttributeError(error)
+            raise AttributeError(
+                "'{}' object has no attribute '{}'"
+                "".format(self.__class__.__name__, item)
+            )
 
     def __str__(self):
         """A human-readable string representation of this object."""
         class_str = self.__class__.__name__
-        json_str = json_pkg.dumps(self._json_data, indent=2)
+        json_str = json.dumps(self._json_data, indent=2)
         return "{}:\n{}".format(class_str, json_str)
 
     def __repr__(self):
         """A string representing this object as valid Python expression."""
         class_str = self.__class__.__name__
-        json_str = json_pkg.dumps(self._json_data, ensure_ascii=False)
+        json_str = json.dumps(self._json_data, ensure_ascii=False)
         return "{}({})".format(class_str, json_str)
 
     @property
@@ -137,4 +131,4 @@ class SparkData(object):
         encoder.
 
         """
-        return json_pkg.dumps(self._json_data, **kwargs)
+        return json.dumps(self._json_data, **kwargs)
