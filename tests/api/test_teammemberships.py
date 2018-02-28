@@ -1,19 +1,16 @@
 # -*- coding: utf-8 -*-
 """pytest Team Memberships functions, fixtures and tests."""
-import ciscosparkapi.models.team_membership
+
+
+import pytest
+
+import ciscosparkapi
 
 
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
 __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
-
-
-import itertools
-
-import pytest
-
-import ciscosparkapi
 
 
 # Helper Functions
@@ -55,8 +52,7 @@ def empty_team(api, me, team):
 
 
 def is_valid_team_membership(membership):
-    return isinstance(membership,
-                      ciscosparkapi.models.team_membership.TeamMembership) \
+    return isinstance(membership, ciscosparkapi.TeamMembership) \
            and membership.id is not None
 
 

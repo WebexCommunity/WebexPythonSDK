@@ -14,7 +14,6 @@ from builtins import *
 from past.builtins import basestring
 
 from ..generator_containers import generator_container
-from ..models.membership import Membership
 from ..restsession import RestSession
 from ..utils import (
     check_type,
@@ -28,6 +27,10 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
+API_ENDPOINT = 'memberships'
+OBJECT_TYPE = 'membership'
+
+
 class MembershipsAPI(object):
     """Cisco Spark Memberships API.
 
@@ -36,7 +39,7 @@ class MembershipsAPI(object):
 
     """
 
-    def __init__(self, session):
+    def __init__(self, session, object_factory):
         """Init a new MembershipsAPI object with the provided RestSession.
 
         Args:
@@ -52,6 +55,7 @@ class MembershipsAPI(object):
         super(MembershipsAPI, self).__init__()
 
         self._session = session
+        self._object_factory = object_factory
 
     @generator_container
     def list(self, roomId=None, personId=None, personEmail=None, max=None,
@@ -110,11 +114,11 @@ class MembershipsAPI(object):
         )
 
         # API request - get items
-        items = self._session.get_items('memberships', params=params)
+        items = self._session.get_items(API_ENDPOINT, params=params)
 
-        # Yield Person objects created from the returned items JSON objects
+        # Yield membership objects created from the returned items JSON objects
         for item in items:
-            yield Membership(item)
+            yield self._object_factory(OBJECT_TYPE, item)
 
     def create(self, roomId, personId=None, personEmail=None,
                isModerator=False, **request_parameters):
@@ -154,10 +158,10 @@ class MembershipsAPI(object):
         )
 
         # API request
-        json_data = self._session.post('memberships', json=post_data)
+        json_data = self._session.post(API_ENDPOINT, json=post_data)
 
-        # Return a Membership object created from the response JSON data
-        return Membership(json_data)
+        # Return a membership object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def get(self, membershipId):
         """Get details for a membership, by ID.
@@ -177,10 +181,10 @@ class MembershipsAPI(object):
         check_type(membershipId, basestring, may_be_none=False)
 
         # API request
-        json_data = self._session.get('memberships/' + membershipId)
+        json_data = self._session.get(API_ENDPOINT + '/' + membershipId)
 
-        # Return a Membership object created from the response JSON data
-        return Membership(json_data)
+        # Return a membership object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def update(self, membershipId, isModerator=None, **request_parameters):
         """Update properties for a membership, by ID.
@@ -209,11 +213,11 @@ class MembershipsAPI(object):
         )
 
         # API request
-        json_data = self._session.put('memberships/' + membershipId,
+        json_data = self._session.put(API_ENDPOINT + '/' + membershipId,
                                       json=put_data)
 
-        # Return a Membership object created from the response JSON data
-        return Membership(json_data)
+        # Return a membership object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def delete(self, membershipId):
         """Delete a membership, by ID.
@@ -229,4 +233,4 @@ class MembershipsAPI(object):
         check_type(membershipId, basestring)
 
         # API request
-        self._session.delete('memberships/' + membershipId)
+        self._session.delete(API_ENDPOINT + '/' + membershipId)

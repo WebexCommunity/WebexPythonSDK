@@ -29,18 +29,10 @@ from .api.webhooks import WebhooksAPI as _WebhooksAPI
 from .exceptions import (
     SparkApiError, SparkRateLimitError, ciscosparkapiException,
 )
-from .models.access_token import AccessToken
-from .models.license import License
-from .models.membership import Membership
-from .models.message import Message
-from .models.organization import Organization
-from .models.person import Person
-from .models.role import Role
-from .models.room import Room
-from .models.team import Team
-from .models.team_membership import TeamMembership
-from .models.webhook import Webhook
-from .models.webhook_event import WebhookEvent
+from .models import (
+    AccessToken, License, Membership, Message, Organization, Person, Role,
+    Room, Team, TeamMembership, Webhook, WebhookEvent, sparkdata_factory,
+)
 from .restsession import (
     DEFAULT_SINGLE_REQUEST_TIMEOUT,
     DEFAULT_WAIT_ON_RATE_LIMIT,
@@ -82,34 +74,35 @@ class CiscoSparkAPI(object):
     CiscoSparkAPI wraps all of the individual Cisco Spark APIs and represents
     them in a simple hierarchical structure.
 
-    :CiscoSparkAPI: :class:`people <PeopleAPI>`
+    :CiscoSparkAPI: :class:`people <_PeopleAPI>`
 
-                    :class:`rooms <RoomsAPI>`
+                    :class:`rooms <_RoomsAPI>`
 
-                    :class:`memberships <MembershipsAPI>`
+                    :class:`memberships <_MembershipsAPI>`
 
-                    :class:`messages <MessagesAPI>`
+                    :class:`messages <_MessagesAPI>`
 
-                    :class:`teams <TeamsAPI>`
+                    :class:`teams <_TeamsAPI>`
 
-                    :class:`team_memberships <TeamMembershipsAPI>`
+                    :class:`team_memberships <_TeamMembershipsAPI>`
 
-                    :class:`webhooks <WebhooksAPI>`
+                    :class:`webhooks <_WebhooksAPI>`
 
-                    :class:`organizations <OrganizationsAPI>`
+                    :class:`organizations <_OrganizationsAPI>`
 
-                    :class:`licenses <LicensesAPI>`
+                    :class:`licenses <_LicensesAPI>`
 
-                    :class:`roles <RolesAPI>`
+                    :class:`roles <_RolesAPI>`
 
-                    :class:`access_tokens <AccessTokensAPI>`
+                    :class:`access_tokens <_AccessTokensAPI>`
 
     """
 
     def __init__(self, access_token=None, base_url=DEFAULT_BASE_URL,
                  timeout=None,
                  single_request_timeout=DEFAULT_SINGLE_REQUEST_TIMEOUT,
-                 wait_on_rate_limit=DEFAULT_WAIT_ON_RATE_LIMIT):
+                 wait_on_rate_limit=DEFAULT_WAIT_ON_RATE_LIMIT,
+                 object_factory=sparkdata_factory):
         """Create a new CiscoSparkAPI object.
 
         An access token must be used when interacting with the Cisco Spark API.
@@ -138,6 +131,8 @@ class CiscoSparkAPI(object):
                 ciscosparkapi.DEFAULT_SINGLE_REQUEST_TIMEOUT.
             wait_on_rate_limit(bool): Enables or disables automatic rate-limit
                 handling. Defaults to ciscosparkapi.DEFAULT_WAIT_ON_RATE_LIMIT.
+            object_factory(callable): The factory function to use to create
+                Python objects from the returned Cisco Spark JSON data objects.
 
         Returns:
             CiscoSparkAPI: A new CiscoSparkAPI object.
@@ -176,17 +171,21 @@ class CiscoSparkAPI(object):
         )
 
         # Spark API wrappers
-        self.people = _PeopleAPI(self._session)
-        self.rooms = _RoomsAPI(self._session)
-        self.memberships = _MembershipsAPI(self._session)
-        self.messages = _MessagesAPI(self._session)
-        self.teams = _TeamsAPI(self._session)
-        self.team_memberships = _TeamMembershipsAPI(self._session)
-        self.webhooks = _WebhooksAPI(self._session)
-        self.organizations = _OrganizationsAPI(self._session)
-        self.licenses = _LicensesAPI(self._session)
-        self.roles = _RolesAPI(self._session)
-        self.access_tokens = _AccessTokensAPI(self.base_url, timeout=timeout)
+        self.people = _PeopleAPI(self._session, object_factory)
+        self.rooms = _RoomsAPI(self._session, object_factory)
+        self.memberships = _MembershipsAPI(self._session, object_factory)
+        self.messages = _MessagesAPI(self._session, object_factory)
+        self.teams = _TeamsAPI(self._session, object_factory)
+        self.team_memberships = _TeamMembershipsAPI(
+            self._session, object_factory
+        )
+        self.webhooks = _WebhooksAPI(self._session, object_factory)
+        self.organizations = _OrganizationsAPI(self._session, object_factory)
+        self.licenses = _LicensesAPI(self._session, object_factory)
+        self.roles = _RolesAPI(self._session, object_factory)
+        self.access_tokens = _AccessTokensAPI(
+            self.base_url, object_factory, timeout=single_request_timeout
+        )
 
     @property
     def access_token(self):

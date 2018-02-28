@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 """pytest Roles API wrapper tests and fixtures."""
-import ciscosparkapi.models.role
+
+
+import pytest
+
+import ciscosparkapi
 
 
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
 __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
-
-
-import pytest
-
-import ciscosparkapi
 
 
 # Helper Functions
@@ -25,8 +24,7 @@ def get_role_by_id(api, roleId):
 
 
 def is_valid_role(obj):
-    return isinstance(obj,
-                      ciscosparkapi.models.role.Role) and obj.id is not None
+    return isinstance(obj, ciscosparkapi.Role) and obj.id is not None
 
 
 def are_valid_roles(iterable):

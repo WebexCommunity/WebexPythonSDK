@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 """pytest Organizations API wrapper tests and fixtures."""
-import ciscosparkapi.models.organization
+
+
+import pytest
+
+import ciscosparkapi
 
 
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
 __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
-
-
-import pytest
-
-import ciscosparkapi
 
 
 # Helper Functions
@@ -25,8 +24,7 @@ def get_organization_by_id(api, orgId):
 
 
 def is_valid_organization(obj):
-    return isinstance(obj,
-                      ciscosparkapi.models.organization.Organization) and obj.id is not None
+    return isinstance(obj, ciscosparkapi.Organization) and obj.id is not None
 
 def are_valid_organizations(iterable):
     return all([is_valid_organization(obj) for obj in iterable])

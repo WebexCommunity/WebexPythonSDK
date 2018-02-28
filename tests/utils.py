@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
-
 """Tests helper functions and classes."""
-
-
-__author__ = "Chris Lunsford"
-__author_email__ = "chrlunsf@cisco.com"
-__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
-__license__ = "MIT"
 
 
 import datetime
@@ -14,6 +7,12 @@ import os
 import string
 
 import requests
+
+
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__license__ = "MIT"
 
 
 STRING_PREFIX = "ciscosparkapi py.test"

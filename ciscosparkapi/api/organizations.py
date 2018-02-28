@@ -14,7 +14,6 @@ from builtins import *
 from past.builtins import basestring
 
 from ..generator_containers import generator_container
-from ..models.organization import Organization
 from ..restsession import RestSession
 from ..utils import (
     check_type,
@@ -28,6 +27,10 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
+API_ENDPOINT = 'organizations'
+OBJECT_TYPE = 'organization'
+
+
 class OrganizationsAPI(object):
     """Cisco Spark Organizations API.
 
@@ -36,7 +39,7 @@ class OrganizationsAPI(object):
 
     """
 
-    def __init__(self, session):
+    def __init__(self, session, object_factory):
         """Init a new OrganizationsAPI object with the provided RestSession.
 
         Args:
@@ -52,6 +55,7 @@ class OrganizationsAPI(object):
         super(OrganizationsAPI, self).__init__()
 
         self._session = session
+        self._object_factory = object_factory
 
     @generator_container
     def list(self, max=None, **request_parameters):
@@ -90,11 +94,11 @@ class OrganizationsAPI(object):
         )
 
         # API request - get items
-        items = self._session.get_items('organizations', params=params)
+        items = self._session.get_items(API_ENDPOINT, params=params)
 
-        # Yield Organization objects created from the returned JSON objects
+        # Yield organization objects created from the returned JSON objects
         for item in items:
-            yield Organization(item)
+            yield self._object_factory(OBJECT_TYPE, item)
 
     def get(self, orgId):
         """Get the details of an Organization, by ID.
@@ -114,7 +118,7 @@ class OrganizationsAPI(object):
         check_type(orgId, basestring, may_be_none=False)
 
         # API request
-        json_data = self._session.get('organizations/' + orgId)
+        json_data = self._session.get(API_ENDPOINT + '/' + orgId)
 
-        # Return a Organization object created from the returned JSON object
-        return Organization(json_data)
+        # Return a organization object created from the returned JSON object
+        return self._object_factory(OBJECT_TYPE, json_data)

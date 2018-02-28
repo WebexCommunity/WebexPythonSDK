@@ -16,7 +16,6 @@ from future import standard_library
 from past.builtins import basestring
 import requests
 
-from ..models.access_token import AccessToken
 from ..response_codes import EXPECTED_RESPONSE_CODE
 from ..utils import (
     check_response_code,
@@ -36,7 +35,8 @@ __license__ = "MIT"
 standard_library.install_aliases()
 
 
-API_ENDPOINT = "access_token"
+API_ENDPOINT = 'access_token'
+OBJECT_TYPE = 'access_token'
 
 
 class AccessTokensAPI(object):
@@ -47,7 +47,7 @@ class AccessTokensAPI(object):
 
     """
 
-    def __init__(self, base_url, timeout=None):
+    def __init__(self, base_url, object_factory, timeout=None):
         """Initialize an AccessTokensAPI object with the provided RestSession.
 
         Args:
@@ -67,6 +67,8 @@ class AccessTokensAPI(object):
         self._timeout = timeout
         self._endpoint_url = urllib.parse.urljoin(self.base_url, API_ENDPOINT)
         self._request_kwargs = {"timeout": timeout}
+
+        self._object_factory = object_factory
 
     @property
     def base_url(self):
@@ -121,8 +123,8 @@ class AccessTokensAPI(object):
         check_response_code(response, EXPECTED_RESPONSE_CODE['POST'])
         json_data = extract_and_parse_json(response)
 
-        # Return a AccessToken object created from the response JSON data
-        return AccessToken(json_data)
+        # Return a access_token object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def refresh(self, client_id, client_secret, refresh_token):
         """Return a refreshed Access Token from the provided refresh_token.
@@ -161,4 +163,4 @@ class AccessTokensAPI(object):
         json_data = extract_and_parse_json(response)
 
         # Return a AccessToken object created from the response JSON data
-        return AccessToken(json_data)
+        return self._object_factory(OBJECT_TYPE, json_data)

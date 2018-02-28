@@ -14,7 +14,6 @@ from builtins import *
 from past.builtins import basestring
 
 from ..generator_containers import generator_container
-from ..models.license import License
 from ..restsession import RestSession
 from ..utils import (
     check_type,
@@ -28,6 +27,10 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
+API_ENDPOINT = 'licenses'
+OBJECT_TYPE = 'license'
+
+
 class LicensesAPI(object):
     """Cisco Spark Licenses API.
 
@@ -36,7 +39,7 @@ class LicensesAPI(object):
 
     """
 
-    def __init__(self, session):
+    def __init__(self, session, object_factory):
         """Initialize a new LicensesAPI object with the provided RestSession.
 
         Args:
@@ -52,6 +55,7 @@ class LicensesAPI(object):
         super(LicensesAPI, self).__init__()
 
         self._session = session
+        self._object_factory = object_factory
 
     @generator_container
     def list(self, orgId=None, max=None, **request_parameters):
@@ -96,11 +100,11 @@ class LicensesAPI(object):
         )
 
         # API request - get items
-        items = self._session.get_items('licenses', params=params)
+        items = self._session.get_items(API_ENDPOINT, params=params)
 
-        # Yield License objects created from the returned JSON objects
+        # Yield license objects created from the returned JSON objects
         for item in items:
-            yield License(item)
+            yield self._object_factory(OBJECT_TYPE, item)
 
     def get(self, licenseId):
         """Get the details of a License, by ID.
@@ -120,7 +124,7 @@ class LicensesAPI(object):
         check_type(licenseId, basestring, may_be_none=False)
 
         # API request
-        json_data = self._session.get('licenses/' + licenseId)
+        json_data = self._session.get(API_ENDPOINT + '/' + licenseId)
 
-        # Return a License object created from the returned JSON object
-        return License(json_data)
+        # Return a license object created from the returned JSON object
+        return self._object_factory(OBJECT_TYPE, json_data)

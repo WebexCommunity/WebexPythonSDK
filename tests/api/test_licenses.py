@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 """pytest Licenses API wrapper tests and fixtures."""
-import ciscosparkapi.models.license
+
+
+import pytest
+
+import ciscosparkapi
 
 
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
 __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
-
-
-import pytest
-
-import ciscosparkapi
 
 
 # Helper Functions
@@ -25,8 +24,7 @@ def get_license_by_id(api, licenseId):
 
 
 def is_valid_license(obj):
-    return isinstance(obj,
-                      ciscosparkapi.models.license.License) and obj.id is not None
+    return isinstance(obj, ciscosparkapi.License) and obj.id is not None
 
 
 def are_valid_licenses(iterable):

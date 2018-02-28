@@ -11,9 +11,6 @@ from __future__ import (
 
 from builtins import *
 
-from .membership import Membership
-from .message import Message
-from .room import Room
 from .sparkdata import SparkData
 
 

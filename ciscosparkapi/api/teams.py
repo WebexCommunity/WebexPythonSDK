@@ -14,7 +14,6 @@ from builtins import *
 from past.builtins import basestring
 
 from ..generator_containers import generator_container
-from ..models.team import Team
 from ..restsession import RestSession
 from ..utils import (
     check_type,
@@ -28,6 +27,10 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
+API_ENDPOINT = 'teams'
+OBJECT_TYPE = 'team'
+
+
 class TeamsAPI(object):
     """Cisco Spark Teams API.
 
@@ -36,7 +39,7 @@ class TeamsAPI(object):
 
     """
 
-    def __init__(self, session):
+    def __init__(self, session, object_factory):
         """Initialize a new TeamsAPI object with the provided RestSession.
 
         Args:
@@ -52,6 +55,7 @@ class TeamsAPI(object):
         super(TeamsAPI, self).__init__()
 
         self._session = session
+        self._object_factory = object_factory
 
     @generator_container
     def list(self, max=None, **request_parameters):
@@ -90,11 +94,11 @@ class TeamsAPI(object):
         )
 
         # API request - get items
-        items = self._session.get_items('teams', params=params)
+        items = self._session.get_items(API_ENDPOINT, params=params)
 
-        # Yield Team objects created from the returned items JSON objects
+        # Yield team objects created from the returned items JSON objects
         for item in items:
-            yield Team(item)
+            yield self._object_factory(OBJECT_TYPE, item)
 
     def create(self, name, **request_parameters):
         """Create a team.
@@ -122,10 +126,10 @@ class TeamsAPI(object):
         )
 
         # API request
-        json_data = self._session.post('teams', json=post_data)
+        json_data = self._session.post(API_ENDPOINT, json=post_data)
 
-        # Return a Team object created from the response JSON data
-        return Team(json_data)
+        # Return a team object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def get(self, teamId):
         """Get the details of a team, by ID.
@@ -144,10 +148,10 @@ class TeamsAPI(object):
         check_type(teamId, basestring, may_be_none=False)
 
         # API request
-        json_data = self._session.get('teams/' + teamId)
+        json_data = self._session.get(API_ENDPOINT + '/' + teamId)
 
-        # Return a Team object created from the response JSON data
-        return Team(json_data)
+        # Return a team object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def update(self, teamId, name=None, **request_parameters):
         """Update details for a team, by ID.
@@ -175,10 +179,11 @@ class TeamsAPI(object):
         )
 
         # API request
-        json_data = self._session.put('teams/' + teamId, json=put_data)
+        json_data = self._session.put(API_ENDPOINT + '/' + teamId,
+                                      json=put_data)
 
-        # Return a Team object created from the response JSON data
-        return Team(json_data)
+        # Return a team object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def delete(self, teamId):
         """Delete a team.
@@ -194,4 +199,4 @@ class TeamsAPI(object):
         check_type(teamId, basestring, may_be_none=False)
 
         # API request
-        self._session.delete('teams/' + teamId)
+        self._session.delete(API_ENDPOINT + '/' + teamId)

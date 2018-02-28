@@ -14,7 +14,6 @@ from builtins import *
 from past.builtins import basestring
 
 from ..generator_containers import generator_container
-from ..models.webhook import Webhook
 from ..restsession import RestSession
 from ..utils import (
     check_type,
@@ -28,6 +27,10 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
+API_ENDPOINT = 'webhooks'
+OBJECT_TYPE = 'webhook'
+
+
 class WebhooksAPI(object):
     """Cisco Spark Webhooks API.
 
@@ -36,7 +39,7 @@ class WebhooksAPI(object):
 
     """
 
-    def __init__(self, session):
+    def __init__(self, session, object_factory):
         """Initialize a new WebhooksAPI object with the provided RestSession.
 
         Args:
@@ -52,6 +55,7 @@ class WebhooksAPI(object):
         super(WebhooksAPI, self).__init__()
 
         self._session = session
+        self._object_factory = object_factory
 
     @generator_container
     def list(self, max=None, **request_parameters):
@@ -90,11 +94,11 @@ class WebhooksAPI(object):
         )
 
         # API request - get items
-        items = self._session.get_items('webhooks', params=params)
+        items = self._session.get_items(API_ENDPOINT, params=params)
 
-        # Yield Webhook objects created from the returned items JSON objects
+        # Yield webhook objects created from the returned items JSON objects
         for item in items:
-            yield Webhook(item)
+            yield self._object_factory(OBJECT_TYPE, item)
 
     def create(self, name, targetUrl, resource, event,
                filter=None, secret=None, **request_parameters):
@@ -137,10 +141,10 @@ class WebhooksAPI(object):
         )
 
         # API request
-        json_data = self._session.post('webhooks', json=post_data)
+        json_data = self._session.post(API_ENDPOINT, json=post_data)
 
-        # Return a Webhook object created from the response JSON data
-        return Webhook(json_data)
+        # Return a webhook object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def get(self, webhookId):
         """Get the details of a webhook, by ID.
@@ -160,10 +164,10 @@ class WebhooksAPI(object):
         check_type(webhookId, basestring, may_be_none=False)
 
         # API request
-        json_data = self._session.get('webhooks/' + webhookId)
+        json_data = self._session.get(API_ENDPOINT + '/' + webhookId)
 
-        # Return a Webhook object created from the response JSON data
-        return Webhook(json_data)
+        # Return a webhook object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def update(self, webhookId, name=None, targetUrl=None,
                **request_parameters):
@@ -196,10 +200,11 @@ class WebhooksAPI(object):
         )
 
         # API request
-        json_data = self._session.put('webhooks/' + webhookId, json=put_data)
+        json_data = self._session.put(API_ENDPOINT + '/' + webhookId,
+                                      json=put_data)
 
-        # Return a Webhook object created from the response JSON data
-        return Webhook(json_data)
+        # Return a webhook object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def delete(self, webhookId):
         """Delete a webhook, by ID.
@@ -215,4 +220,4 @@ class WebhooksAPI(object):
         check_type(webhookId, basestring, may_be_none=False)
 
         # API request
-        self._session.delete('webhooks/' + webhookId)
+        self._session.delete(API_ENDPOINT + '/' + webhookId)

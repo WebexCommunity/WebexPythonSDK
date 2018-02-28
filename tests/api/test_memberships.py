@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
 """pytest Memberships functions, fixtures and tests."""
-import ciscosparkapi.models.membership
-
-
-__author__ = "Chris Lunsford"
-__author_email__ = "chrlunsf@cisco.com"
-__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
-__license__ = "MIT"
 
 
 import itertools
@@ -14,6 +7,12 @@ import itertools
 import pytest
 
 import ciscosparkapi
+
+
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__license__ = "MIT"
 
 
 # Helper Functions
@@ -72,7 +71,7 @@ def empty_room(api, me, room):
 
 
 def is_valid_membership(membership):
-    return isinstance(membership, ciscosparkapi.models.membership.Membership) \
+    return isinstance(membership, ciscosparkapi.Membership) \
            and membership.id is not None
 
 

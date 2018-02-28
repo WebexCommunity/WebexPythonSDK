@@ -2,12 +2,6 @@
 """pytest configuration and top-level fixtures."""
 
 
-__author__ = "Chris Lunsford"
-__author_email__ = "chrlunsf@cisco.com"
-__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
-__license__ = "MIT"
-
-
 import os
 import string
 import tempfile
@@ -17,18 +11,23 @@ import pytest
 from tests.utils import download_file
 
 
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__license__ = "MIT"
+
+
 pytest_plugins = [
     'tests.test_ciscosparkapi',
+    'tests.api.test_licenses',
     'tests.api.test_memberships',
     'tests.api.test_messages',
+    'tests.api.test_organizations',
     'tests.api.test_people',
+    'tests.api.test_roles',
     'tests.api.test_rooms',
     'tests.api.test_teammemberships',
     'tests.api.test_teams',
-    'tests.api.test_webhooks',
-    'tests.api.test_organizations',
-    'tests.api.test_licenses',
-    'tests.api.test_roles',
 ]
 
 

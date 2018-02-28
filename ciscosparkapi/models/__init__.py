@@ -59,6 +59,9 @@ class Person(SparkData, PersonBasicPropertiesMixin):
 class Role(SparkData, RoleBasicPropertiesMixin):
     """Cisco Spark Role data model."""
 
+class Room(SparkData, RoomBasicPropertiesMixin):
+    """Cisco Spark Room data model."""
+
 
 class Team(SparkData, TeamBasicPropertiesMixin):
     """Cisco Spark Team data model."""
@@ -85,6 +88,7 @@ sparkdata_models = defaultdict(
     organization=Organization,
     person=Person,
     role=Role,
+    room=Room,
     team=Team,
     team_membership=TeamMembership,
     webhook=Webhook,
@@ -103,6 +107,10 @@ def sparkdata_factory(model, json_data):
 
     Returns:
         SparkData: The created SparkData object.
+
+    Raises:
+        TypeError: If the json_data parameter is not a JSON string or
+            dictionary.
 
     """
     return sparkdata_models[model](json_data)

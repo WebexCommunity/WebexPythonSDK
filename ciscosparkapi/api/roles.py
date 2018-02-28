@@ -14,7 +14,6 @@ from builtins import *
 from past.builtins import basestring
 
 from ..generator_containers import generator_container
-from ..models.role import Role
 from ..restsession import RestSession
 from ..utils import (
     check_type,
@@ -28,6 +27,10 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
+API_ENDPOINT = 'roles'
+OBJECT_TYPE = 'role'
+
+
 class RolesAPI(object):
     """Cisco Spark Roles API.
 
@@ -36,7 +39,7 @@ class RolesAPI(object):
 
     """
 
-    def __init__(self, session):
+    def __init__(self, session, object_factory):
         """Initialize a new RolesAPI object with the provided RestSession.
 
         Args:
@@ -52,6 +55,7 @@ class RolesAPI(object):
         super(RolesAPI, self).__init__()
 
         self._session = session
+        self._object_factory = object_factory
 
     @generator_container
     def list(self, max=None, **request_parameters):
@@ -90,11 +94,11 @@ class RolesAPI(object):
         )
 
         # API request - get items
-        items = self._session.get_items('roles', params=params)
+        items = self._session.get_items(API_ENDPOINT, params=params)
 
-        # Yield Role objects created from the returned JSON objects
+        # Yield role objects created from the returned JSON objects
         for item in items:
-            yield Role(item)
+            yield self._object_factory(OBJECT_TYPE, item)
 
     def get(self, roleId):
         """Get the details of a Role, by ID.
@@ -113,7 +117,7 @@ class RolesAPI(object):
         check_type(roleId, basestring, may_be_none=False)
 
         # API request
-        json_data = self._session.get('roles/' + roleId)
+        json_data = self._session.get(API_ENDPOINT + '/' + roleId)
 
-        # Return a Role object created from the returned JSON object
-        return Role(json_data)
+        # Return a role object created from the returned JSON object
+        return self._object_factory(OBJECT_TYPE, json_data)

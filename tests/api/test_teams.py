@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
 """pytest Team functions, fixtures and tests."""
-import ciscosparkapi.models.team
-
-
-__author__ = "Chris Lunsford"
-__author_email__ = "chrlunsf@cisco.com"
-__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
-__license__ = "MIT"
 
 
 import itertools
@@ -15,6 +8,12 @@ import pytest
 
 import ciscosparkapi
 from tests.utils import create_string
+
+
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__license__ = "MIT"
 
 
 # Helper Functions
@@ -33,8 +32,7 @@ def delete_team(api, team):
 
 
 def is_valid_team(obj):
-    return isinstance(obj,
-                      ciscosparkapi.models.team.Team) and obj.id is not None
+    return isinstance(obj, ciscosparkapi.Team) and obj.id is not None
 
 
 def are_valid_teams(iterable):

@@ -15,7 +15,6 @@ from past.builtins import basestring
 from requests_toolbelt import MultipartEncoder
 
 from ..generator_containers import generator_container
-from ..models.message import Message
 from ..restsession import RestSession
 from ..utils import (
     check_type, dict_from_items_with_values, is_local_file, is_web_url,
@@ -29,6 +28,10 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
+API_ENDPOINT = 'messages'
+OBJECT_TYPE = 'message'
+
+
 class MessagesAPI(object):
     """Cisco Spark Messages API.
 
@@ -37,7 +40,7 @@ class MessagesAPI(object):
 
     """
 
-    def __init__(self, session):
+    def __init__(self, session, object_factory):
         """Init a new MessagesAPI object with the provided RestSession.
 
         Args:
@@ -51,6 +54,7 @@ class MessagesAPI(object):
         check_type(session, RestSession, may_be_none=False)
         super(MessagesAPI, self).__init__()
         self._session = session
+        self._object_factory = object_factory
 
     @generator_container
     def list(self, roomId, mentionedPeople=None, before=None,
@@ -109,11 +113,11 @@ class MessagesAPI(object):
         )
 
         # API request - get items
-        items = self._session.get_items('messages', params=params)
+        items = self._session.get_items(API_ENDPOINT, params=params)
 
-        # Yield Message objects created from the returned items JSON objects
+        # Yield message objects created from the returned items JSON objects
         for item in items:
-            yield Message(item)
+            yield self._object_factory(OBJECT_TYPE, item)
 
     def create(self, roomId=None, toPersonId=None, toPersonEmail=None,
                text=None, markdown=None, files=None, **request_parameters):
@@ -180,7 +184,7 @@ class MessagesAPI(object):
         # API request
         if not files or is_web_url(files[0]):
             # Standard JSON post
-            json_data = self._session.post('messages', json=post_data)
+            json_data = self._session.post(API_ENDPOINT, json=post_data)
 
         elif is_local_file(files[0]):
             # Multipart MIME post
@@ -188,7 +192,7 @@ class MessagesAPI(object):
                 post_data['files'] = open_local_file(files[0])
                 multipart_data = MultipartEncoder(post_data)
                 headers = {'Content-type': multipart_data.content_type}
-                json_data = self._session.post('messages',
+                json_data = self._session.post(API_ENDPOINT,
                                                headers=headers,
                                                data=multipart_data)
             finally:
@@ -198,8 +202,8 @@ class MessagesAPI(object):
             raise ValueError("The `files` parameter does not contain a vaild "
                              "URL or path to a local file.")
 
-        # Return a Message object created from the response JSON data
-        return Message(json_data)
+        # Return a message object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def get(self, messageId):
         """Get the details of a message, by ID.
@@ -219,10 +223,10 @@ class MessagesAPI(object):
         check_type(messageId, basestring, may_be_none=False)
 
         # API request
-        json_data = self._session.get('messages/' + messageId)
+        json_data = self._session.get(API_ENDPOINT + '/' + messageId)
 
-        # Return a Message object created from the response JSON data
-        return Message(json_data)
+        # Return a message object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def delete(self, messageId):
         """Delete a message.
@@ -238,4 +242,4 @@ class MessagesAPI(object):
         check_type(messageId, basestring, may_be_none=False)
 
         # API request
-        self._session.delete('messages/' + messageId)
+        self._session.delete(API_ENDPOINT + '/' + messageId)

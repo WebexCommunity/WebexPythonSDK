@@ -14,7 +14,6 @@ from builtins import *
 from past.builtins import basestring
 
 from ..generator_containers import generator_container
-from ..models.person import Person
 from ..restsession import RestSession
 from ..utils import (
     check_type,
@@ -28,6 +27,10 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
+API_ENDPOINT = 'people'
+OBJECT_TYPE = 'person'
+
+
 class PeopleAPI(object):
     """Cisco Spark People API.
 
@@ -36,7 +39,7 @@ class PeopleAPI(object):
 
     """
 
-    def __init__(self, session):
+    def __init__(self, session, object_factory):
         """Initialize a new PeopleAPI object with the provided RestSession.
 
         Args:
@@ -52,6 +55,7 @@ class PeopleAPI(object):
         super(PeopleAPI, self).__init__()
 
         self._session = session
+        self._object_factory = object_factory
 
     @generator_container
     def list(self, email=None, displayName=None, id=None, orgId=None, max=None,
@@ -105,11 +109,11 @@ class PeopleAPI(object):
         )
 
         # API request - get items
-        items = self._session.get_items('people', params=params)
+        items = self._session.get_items(API_ENDPOINT, params=params)
 
-        # Yield Person objects created from the returned items JSON objects
+        # Yield person objects created from the returned items JSON objects
         for item in items:
-            yield Person(item)
+            yield self._object_factory(OBJECT_TYPE, item)
 
     def create(self, emails, displayName=None, firstName=None, lastName=None,
                avatar=None, orgId=None, roles=None, licenses=None,
@@ -164,10 +168,10 @@ class PeopleAPI(object):
         )
 
         # API request
-        json_data = self._session.post('people', json=post_data)
+        json_data = self._session.post(API_ENDPOINT, json=post_data)
 
-        # Return a Person object created from the returned JSON object
-        return Person(json_data)
+        # Return a person object created from the returned JSON object
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def get(self, personId):
         """Get a person's details, by ID.
@@ -186,10 +190,10 @@ class PeopleAPI(object):
         check_type(personId, basestring, may_be_none=False)
 
         # API request
-        json_data = self._session.get('people/' + personId)
+        json_data = self._session.get(API_ENDPOINT + '/' + personId)
 
-        # Return a Person object created from the response JSON data
-        return Person(json_data)
+        # Return a person object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def update(self, personId, emails=None, displayName=None, firstName=None,
                lastName=None, avatar=None, orgId=None, roles=None,
@@ -252,10 +256,11 @@ class PeopleAPI(object):
         )
 
         # API request
-        json_data = self._session.put('people/' + personId, json=put_data)
+        json_data = self._session.put(API_ENDPOINT + '/' + personId,
+                                      json=put_data)
 
-        # Return a Person object created from the returned JSON object
-        return Person(json_data)
+        # Return a person object created from the returned JSON object
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def delete(self, personId):
         """Remove a person from the system.
@@ -273,7 +278,7 @@ class PeopleAPI(object):
         check_type(personId, basestring, may_be_none=False)
 
         # API request
-        self._session.delete('people/' + personId)
+        self._session.delete(API_ENDPOINT + '/' + personId)
 
     def me(self):
         """Get the details of the person accessing the API.
@@ -283,7 +288,7 @@ class PeopleAPI(object):
 
         """
         # API request
-        json_data = self._session.get('people/me')
+        json_data = self._session.get(API_ENDPOINT + '/me')
 
-        # Return a Person object created from the response JSON data
-        return Person(json_data)
+        # Return a person object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
