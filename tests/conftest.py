@@ -3,6 +3,7 @@
 
 
 import os
+import random
 import string
 import tempfile
 
@@ -32,6 +33,7 @@ pytest_plugins = [
 
 
 TEST_DOMAIN = "cmlccie.com"
+TEST_ID_START = 91
 TEST_FILE_URL = "https://developer.ciscospark.com/images/logo_spark_lg@256.png"
 
 
@@ -40,7 +42,7 @@ email_template = string.Template("test${number}@" + TEST_DOMAIN)
 
 # Helper Functions
 def new_email_generator():
-    i = 50
+    i = TEST_ID_START
     while True:
         email_address = email_template.substitute(number=i)
         i += 1
@@ -73,5 +75,14 @@ def get_new_email_address():
 
     def inner_function():
         return next(generator)
+
+    return inner_function
+
+
+@pytest.fixture()
+def get_random_email_address():
+    def inner_function():
+        i = random.randint(1000, 9999)
+        return email_template.substitute(number=i)
 
     return inner_function

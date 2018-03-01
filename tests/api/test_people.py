@@ -17,12 +17,8 @@ __license__ = "MIT"
 
 # Helper Functions
 
-def is_valid_person(obj):
-    return isinstance(obj, ciscosparkapi.Person) and obj.id is not None
-
-
-def are_valid_people(iterable):
-    return all([is_valid_person(obj) for obj in iterable])
+def create_person(api, emails, **person_attributes):
+    return api.people.create(emails, **person_attributes)
 
 
 def get_person_by_id(api, id):
@@ -44,10 +40,6 @@ def get_person_by_email(api, email):
         return None
 
 
-def create_person(api, emails, **person_attributes):
-    return api.people.create(emails, **person_attributes)
-
-
 def update_person(api, person, **person_attributes):
     # Get a copy of the person's current attributes
     new_attributes = person.json_data
@@ -63,6 +55,23 @@ def delete_person(api, person):
     api.people.delete(person.id)
 
 
+def is_valid_person(obj):
+    return isinstance(obj, ciscosparkapi.Person) and obj.id is not None
+
+
+def are_valid_people(iterable):
+    return all([is_valid_person(obj) for obj in iterable])
+
+
+def person_exists(api, person):
+    try:
+        get_person_by_id(api, person.id)
+    except ciscosparkapi.SparkApiError:
+        return False
+    else:
+        return True
+
+
 # pytest Fixtures
 
 @pytest.fixture(scope="session")
@@ -70,7 +79,7 @@ def me(api):
     return api.people.me()
 
 @pytest.fixture(scope="session")
-def get_new_test_person(api, get_new_email_address, me, licenses_dict):
+def get_test_person(api, get_new_email_address, me, licenses_dict):
 
     def inner_function():
         person_email = get_new_email_address()
@@ -95,10 +104,10 @@ def get_new_test_person(api, get_new_email_address, me, licenses_dict):
 class PeopleManager(object):
     """Creates, tracks and manages test accounts 'people' used by the tests."""
 
-    def __init__(self, api, get_new_test_person):
+    def __init__(self, api, get_test_person):
         super(PeopleManager, self).__init__()
         self._api = api
-        self._get_new_test_person = get_new_test_person
+        self._get_new_test_person = get_test_person
         self.test_people = {}
 
     def __getitem__(self, item):
@@ -133,17 +142,37 @@ class PeopleManager(object):
 
 
 @pytest.fixture(scope="session")
-def test_people(api, get_new_test_person):
-    test_people = PeopleManager(api, get_new_test_person)
+def test_people(api, get_test_person):
+    test_people = PeopleManager(api, get_test_person)
     yield test_people
     del test_people
 
 
 @pytest.fixture()
-def temp_person(api, get_new_test_person):
-    person = get_new_test_person()
+def temp_person(api, get_random_email_address, me, licenses_dict):
+    # Get an e-mail address not currently used on Cisco Spark
+    person_email = None
+    person = True
+    while person:
+        person_email = get_random_email_address()
+        person = get_person_by_email(api, person_email)
+
+    # Create the person
+    person = create_person(
+        api,
+        emails=[person_email],
+        displayName="ciscosparkapi",
+        firstName="ciscosparkapi",
+        lastName="ciscosparkapi",
+        orgId=me.orgId,
+        licenses=[licenses_dict["Messaging"].id],
+    )
+    assert is_valid_person(person)
+
     yield person
-    delete_person(api, person)
+
+    if person_exists(api, person):
+        delete_person(api, person)
 
 
 @pytest.fixture()
