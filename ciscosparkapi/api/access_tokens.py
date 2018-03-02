@@ -1,40 +1,24 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark Access-Tokens API wrapper.
-
-Classes:
-    AccessToken: Models a Spark 'access token' JSON object as a native Python
-        object.
-    AccessTokensAPI: Wraps the Cisco Spark Access-Tokens API and exposes the
-        API as native Python methods that return native Python objects.
-
-"""
+"""Cisco Spark Access-Tokens API."""
 
 
-# Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
     division,
     print_function,
     unicode_literals,
 )
-from builtins import *
-from past.builtins import basestring
+
 from future import standard_library
 standard_library.install_aliases()
 
-
-__author__ = "Chris Lunsford"
-__author_email__ = "chrlunsf@cisco.com"
-__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
-__license__ = "MIT"
-
-
+from builtins import *
 import urllib.parse
 
+from past.builtins import basestring
 import requests
 
 from ..response_codes import EXPECTED_RESPONSE_CODE
-from ..sparkdata import SparkData
 from ..utils import (
     check_response_code,
     check_type,
@@ -44,54 +28,27 @@ from ..utils import (
 )
 
 
-API_ENDPOINT = "access_token"
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__license__ = "MIT"
 
 
-class AccessToken(SparkData):
-    """Model a Spark 'access token' JSON object as a native Python object."""
 
-    def __init__(self, json):
-        """Init a new AccessToken data object from a dictionary or JSON string.
 
-        Args:
-            json(dict, basestring): Input dictionary or JSON string.
-
-        Raises:
-            TypeError: If the input object is not a dictionary or string.
-
-        """
-        super(AccessToken, self).__init__(json)
-
-    @property
-    def access_token(self):
-        """Cisco Spark access token."""
-        return self._json_data.get('access_token')
-
-    @property
-    def expires_in(self):
-        """Access token expiry time (in seconds)."""
-        return self._json_data.get('expires_in')
-
-    @property
-    def refresh_token(self):
-        """Refresh token used to request a new/refreshed access token."""
-        return self._json_data.get('refresh_token')
-
-    @property
-    def refresh_token_expires_in(self):
-        """Refresh token expiry time (in seconds)."""
-        return self._json_data.get('refresh_token_expires_in')
+API_ENDPOINT = 'access_token'
+OBJECT_TYPE = 'access_token'
 
 
 class AccessTokensAPI(object):
-    """Cisco Spark Access-Tokens API wrapper.
+    """Cisco Spark Access-Tokens API.
 
     Wraps the Cisco Spark Access-Tokens API and exposes the API as native
     Python methods that return native Python objects.
 
     """
 
-    def __init__(self, base_url, timeout=None):
+    def __init__(self, base_url, object_factory, timeout=None):
         """Initialize an AccessTokensAPI object with the provided RestSession.
 
         Args:
@@ -111,6 +68,8 @@ class AccessTokensAPI(object):
         self._timeout = timeout
         self._endpoint_url = urllib.parse.urljoin(self.base_url, API_ENDPOINT)
         self._request_kwargs = {"timeout": timeout}
+
+        self._object_factory = object_factory
 
     @property
     def base_url(self):
@@ -138,7 +97,7 @@ class AccessTokensAPI(object):
                 process.
 
         Returns:
-            AccessToken: An AccessToken object with the access token provided
+            ciscosparkapi.AccessToken: An AccessToken object with the access token provided
                 by the Cisco Spark cloud.
 
         Raises:
@@ -165,8 +124,8 @@ class AccessTokensAPI(object):
         check_response_code(response, EXPECTED_RESPONSE_CODE['POST'])
         json_data = extract_and_parse_json(response)
 
-        # Return a AccessToken object created from the response JSON data
-        return AccessToken(json_data)
+        # Return a access_token object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def refresh(self, client_id, client_secret, refresh_token):
         """Return a refreshed Access Token from the provided refresh_token.
@@ -205,4 +164,4 @@ class AccessTokensAPI(object):
         json_data = extract_and_parse_json(response)
 
         # Return a AccessToken object created from the response JSON data
-        return AccessToken(json_data)
+        return self._object_factory(OBJECT_TYPE, json_data)

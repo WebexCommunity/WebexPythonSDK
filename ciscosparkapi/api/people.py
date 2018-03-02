@@ -1,23 +1,24 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark People API wrapper classes.
-
-Classes:
-    Person: Models a Spark 'person' JSON object as a native Python object.
-    PeopleAPI: Wraps the Cisco Spark People API and exposes the API as native
-        Python methods that return native Python objects.
-
-"""
+"""Cisco Spark People API."""
 
 
-# Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
     division,
     print_function,
     unicode_literals,
 )
+
 from builtins import *
+
 from past.builtins import basestring
+
+from ..generator_containers import generator_container
+from ..restsession import RestSession
+from ..utils import (
+    check_type,
+    dict_from_items_with_values,
+)
 
 
 __author__ = "Chris Lunsford"
@@ -26,120 +27,19 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-from ..generator_containers import generator_container
-from ..restsession import RestSession
-from ..sparkdata import SparkData
-from ..utils import (
-    check_type,
-    dict_from_items_with_values,
-)
-
-
-class Person(SparkData):
-    """Model a Spark person JSON object as a native Python object."""
-
-    def __init__(self, json):
-        """Initialize a Person data object from a dictionary or JSON string.
-
-        Args:
-            json(dict, basestring): Input dictionary or JSON string.
-
-        Raises:
-            TypeError: If the input object is not a dictionary or string.
-
-        """
-        super(Person, self).__init__(json)
-
-    @property
-    def type(self):
-        """The type of object returned by Cisco Spark (should be `person`)."""
-        return self._json_data.get('type')
-
-    @property
-    def id(self):
-        """The person's unique ID."""
-        return self._json_data.get('id')
-
-    @property
-    def emails(self):
-        """Email address(es) of the person."""
-        return self._json_data['emails']
-
-    @property
-    def displayName(self):
-        """Full name of the person."""
-        return self._json_data.get('displayName')
-
-    @property
-    def nickName(self):
-        """'Nick name' or preferred short name of the person."""
-        return self._json_data.get('nickName')
-
-    @property
-    def firstName(self):
-        """First name of the person."""
-        return self._json_data.get('firstName')
-
-    @property
-    def lastName(self):
-        """Last name of the person."""
-        return self._json_data.get('lastName')
-
-    @property
-    def avatar(self):
-        """URL to the person's avatar in PNG format."""
-        return self._json_data.get('avatar')
-
-    @property
-    def orgId(self):
-        """ID of the organization to which this person belongs."""
-        return self._json_data.get('orgId')
-
-    @property
-    def roles(self):
-        """Roles of the person."""
-        return self._json_data.get('roles')
-
-    @property
-    def licenses(self):
-        """Licenses allocated to the person."""
-        return self._json_data.get('licenses')
-
-    @property
-    def created(self):
-        """The date and time the person was created."""
-        return self._json_data.get('created')
-
-    @property
-    def status(self):
-        """The person's current status."""
-        return self._json_data.get('status')
-
-    @property
-    def lastActivity(self):
-        """The date and time of the person's last activity."""
-        return self._json_data.get('lastActivity')
-
-    @property
-    def invitePending(self):
-        """Person has been sent an invite, but hasn't responded."""
-        return self._json_data.get('invitePending')
-
-    @property
-    def loginEnabled(self):
-        """Person is allowed to login."""
-        return self._json_data.get('loginEnabled')
+API_ENDPOINT = 'people'
+OBJECT_TYPE = 'person'
 
 
 class PeopleAPI(object):
-    """Cisco Spark People API wrapper.
+    """Cisco Spark People API.
 
     Wraps the Cisco Spark People API and exposes the API as native Python
     methods that return native Python objects.
 
     """
 
-    def __init__(self, session):
+    def __init__(self, session, object_factory):
         """Initialize a new PeopleAPI object with the provided RestSession.
 
         Args:
@@ -155,6 +55,7 @@ class PeopleAPI(object):
         super(PeopleAPI, self).__init__()
 
         self._session = session
+        self._object_factory = object_factory
 
     @generator_container
     def list(self, email=None, displayName=None, id=None, orgId=None, max=None,
@@ -208,11 +109,11 @@ class PeopleAPI(object):
         )
 
         # API request - get items
-        items = self._session.get_items('people', params=params)
+        items = self._session.get_items(API_ENDPOINT, params=params)
 
-        # Yield Person objects created from the returned items JSON objects
+        # Yield person objects created from the returned items JSON objects
         for item in items:
-            yield Person(item)
+            yield self._object_factory(OBJECT_TYPE, item)
 
     def create(self, emails, displayName=None, firstName=None, lastName=None,
                avatar=None, orgId=None, roles=None, licenses=None,
@@ -267,10 +168,10 @@ class PeopleAPI(object):
         )
 
         # API request
-        json_data = self._session.post('people', json=post_data)
+        json_data = self._session.post(API_ENDPOINT, json=post_data)
 
-        # Return a Person object created from the returned JSON object
-        return Person(json_data)
+        # Return a person object created from the returned JSON object
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def get(self, personId):
         """Get a person's details, by ID.
@@ -289,10 +190,10 @@ class PeopleAPI(object):
         check_type(personId, basestring, may_be_none=False)
 
         # API request
-        json_data = self._session.get('people/' + personId)
+        json_data = self._session.get(API_ENDPOINT + '/' + personId)
 
-        # Return a Person object created from the response JSON data
-        return Person(json_data)
+        # Return a person object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def update(self, personId, emails=None, displayName=None, firstName=None,
                lastName=None, avatar=None, orgId=None, roles=None,
@@ -355,10 +256,11 @@ class PeopleAPI(object):
         )
 
         # API request
-        json_data = self._session.put('people/' + personId, json=put_data)
+        json_data = self._session.put(API_ENDPOINT + '/' + personId,
+                                      json=put_data)
 
-        # Return a Person object created from the returned JSON object
-        return Person(json_data)
+        # Return a person object created from the returned JSON object
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def delete(self, personId):
         """Remove a person from the system.
@@ -376,7 +278,7 @@ class PeopleAPI(object):
         check_type(personId, basestring, may_be_none=False)
 
         # API request
-        self._session.delete('people/' + personId)
+        self._session.delete(API_ENDPOINT + '/' + personId)
 
     def me(self):
         """Get the details of the person accessing the API.
@@ -386,7 +288,7 @@ class PeopleAPI(object):
 
         """
         # API request
-        json_data = self._session.get('people/me')
+        json_data = self._session.get(API_ENDPOINT + '/me')
 
-        # Return a Person object created from the response JSON data
-        return Person(json_data)
+        # Return a person object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)

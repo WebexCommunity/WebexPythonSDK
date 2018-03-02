@@ -1,23 +1,25 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark Messages API wrapper.
-
-Classes:
-    Message: Models a Spark 'message' JSON object as a native Python object.
-    MessagesAPI: Wraps the Cisco Spark Messages API and exposes the API as
-        native Python methods that return native Python objects.
-
-"""
+"""Cisco Spark Messages API."""
 
 
-# Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
     division,
     print_function,
     unicode_literals,
 )
+
 from builtins import *
+
 from past.builtins import basestring
+from requests_toolbelt import MultipartEncoder
+
+from ..generator_containers import generator_container
+from ..restsession import RestSession
+from ..utils import (
+    check_type, dict_from_items_with_values, is_local_file, is_web_url,
+    open_local_file,
+)
 
 
 __author__ = "Chris Lunsford"
@@ -26,100 +28,19 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-from requests_toolbelt import MultipartEncoder
-
-from ..generator_containers import generator_container
-from ..restsession import RestSession
-from ..sparkdata import SparkData
-from ..utils import (
-    check_type,
-    dict_from_items_with_values,
-    is_web_url,
-    is_local_file,
-    open_local_file,
-)
-
-
-class Message(SparkData):
-    """Model a Spark 'message' JSON object as a native Python object."""
-
-    def __init__(self, json):
-        """Initialize a Message data object from a dictionary or JSON string.
-
-        Args:
-            json(dict, basestring): Input dictionary or JSON string.
-
-        Raises:
-            TypeError: If the input object is not a dictionary or string.
-
-        """
-        super(Message, self).__init__(json)
-
-    @property
-    def id(self):
-        """The message's unique ID."""
-        return self._json_data.get('id')
-
-    @property
-    def roomId(self):
-        """The ID of the room."""
-        return self._json_data.get('roomId')
-
-    @property
-    def roomType(self):
-        """The type of room (i.e. 'group', 'direct' etc.)."""
-        return self._json_data.get('roomType')
-
-    @property
-    def text(self):
-        """The message, in plain text."""
-        return self._json_data.get('text')
-
-    @property
-    def files(self):
-        """Files attached to the the message (list of URLs)."""
-        return self._json_data.get('files')
-
-    @property
-    def personId(self):
-        """The person ID of the sender."""
-        return self._json_data.get('personId')
-
-    @property
-    def personEmail(self):
-        """The email address of the sender."""
-        return self._json_data.get('personEmail')
-
-    @property
-    def markdown(self):
-        """The message, in markdown format."""
-        return self._json_data.get('markdown')
-
-    @property
-    def html(self):
-        """The message, in HTML format."""
-        return self._json_data.get('html')
-
-    @property
-    def mentionedPeople(self):
-        """The list of IDs of people mentioned in the message."""
-        return self._json_data.get('mentionedPeople')
-
-    @property
-    def created(self):
-        """The date and time the message was created."""
-        return self._json_data.get('created')
+API_ENDPOINT = 'messages'
+OBJECT_TYPE = 'message'
 
 
 class MessagesAPI(object):
-    """Cisco Spark Messages API wrapper.
+    """Cisco Spark Messages API.
 
     Wraps the Cisco Spark Messages API and exposes the API as native Python
     methods that return native Python objects.
 
     """
 
-    def __init__(self, session):
+    def __init__(self, session, object_factory):
         """Init a new MessagesAPI object with the provided RestSession.
 
         Args:
@@ -133,6 +54,7 @@ class MessagesAPI(object):
         check_type(session, RestSession, may_be_none=False)
         super(MessagesAPI, self).__init__()
         self._session = session
+        self._object_factory = object_factory
 
     @generator_container
     def list(self, roomId, mentionedPeople=None, before=None,
@@ -191,11 +113,11 @@ class MessagesAPI(object):
         )
 
         # API request - get items
-        items = self._session.get_items('messages', params=params)
+        items = self._session.get_items(API_ENDPOINT, params=params)
 
-        # Yield Message objects created from the returned items JSON objects
+        # Yield message objects created from the returned items JSON objects
         for item in items:
-            yield Message(item)
+            yield self._object_factory(OBJECT_TYPE, item)
 
     def create(self, roomId=None, toPersonId=None, toPersonEmail=None,
                text=None, markdown=None, files=None, **request_parameters):
@@ -262,7 +184,7 @@ class MessagesAPI(object):
         # API request
         if not files or is_web_url(files[0]):
             # Standard JSON post
-            json_data = self._session.post('messages', json=post_data)
+            json_data = self._session.post(API_ENDPOINT, json=post_data)
 
         elif is_local_file(files[0]):
             # Multipart MIME post
@@ -270,7 +192,7 @@ class MessagesAPI(object):
                 post_data['files'] = open_local_file(files[0])
                 multipart_data = MultipartEncoder(post_data)
                 headers = {'Content-type': multipart_data.content_type}
-                json_data = self._session.post('messages',
+                json_data = self._session.post(API_ENDPOINT,
                                                headers=headers,
                                                data=multipart_data)
             finally:
@@ -280,8 +202,8 @@ class MessagesAPI(object):
             raise ValueError("The `files` parameter does not contain a vaild "
                              "URL or path to a local file.")
 
-        # Return a Message object created from the response JSON data
-        return Message(json_data)
+        # Return a message object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def get(self, messageId):
         """Get the details of a message, by ID.
@@ -301,10 +223,10 @@ class MessagesAPI(object):
         check_type(messageId, basestring, may_be_none=False)
 
         # API request
-        json_data = self._session.get('messages/' + messageId)
+        json_data = self._session.get(API_ENDPOINT + '/' + messageId)
 
-        # Return a Message object created from the response JSON data
-        return Message(json_data)
+        # Return a message object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def delete(self, messageId):
         """Delete a message.
@@ -320,4 +242,4 @@ class MessagesAPI(object):
         check_type(messageId, basestring, may_be_none=False)
 
         # API request
-        self._session.delete('messages/' + messageId)
+        self._session.delete(API_ENDPOINT + '/' + messageId)

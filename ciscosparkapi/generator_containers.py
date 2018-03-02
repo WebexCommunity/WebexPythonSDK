@@ -11,26 +11,24 @@ Functions:
 """
 
 
-# Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
     division,
     print_function,
     unicode_literals,
 )
+
 from builtins import *
+import functools
+import inspect
+from itertools import islice
+import sys
 
 
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
 __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
-
-
-import functools
-import inspect
-from itertools import islice
-import sys
 
 
 class GeneratorContainer(object):

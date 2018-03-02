@@ -2,37 +2,33 @@
 """Package helper functions and classes."""
 
 
-# Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
     division,
     print_function,
     unicode_literals,
 )
+
 from builtins import *
-from past.builtins import basestring
-
-
-__author__ = "Chris Lunsford"
-__author_email__ = "chrlunsf@cisco.com"
-__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
-__license__ = "MIT"
-
-
-from collections import namedtuple, OrderedDict
+from collections import OrderedDict, namedtuple
 import json
 import mimetypes
 import os
 import sys
 import urllib.parse
 
+from past.builtins import basestring
 
 from .exceptions import (
-    ciscosparkapiException,
-    SparkApiError,
-    SparkRateLimitError,
+    SparkApiError, SparkRateLimitError, ciscosparkapiException,
 )
 from .response_codes import RATE_LIMIT_RESPONSE_CODE
+
+
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__license__ = "MIT"
 
 
 EncodableFile = namedtuple('EncodableFile',

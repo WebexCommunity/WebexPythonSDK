@@ -2,17 +2,18 @@
 """A setuptools based setup module."""
 
 
+from codecs import open
+from os import path
+
+from setuptools import setup, find_packages
+
+import versioneer
+
+
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
 __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
-
-
-from codecs import open
-from os import path
-from setuptools import setup
-
-import versioneer
 
 
 # Get the long description from the README file
@@ -58,10 +59,7 @@ setup(
 
     keywords='cisco spark api enterprise messaging',
 
-    packages=[
-            'ciscosparkapi',
-            'ciscosparkapi.api',
-    ],
+    packages=find_packages(include=['ciscosparkapi', 'ciscosparkapi.*']),
 
     install_requires=[
             'future',

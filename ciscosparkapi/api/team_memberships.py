@@ -1,24 +1,24 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark Memberships API wrapper.
-
-Classes:
-    TeamMembership: Models a Spark 'team membership' JSON object as a native
-        Python object.
-    TeamMembershipsAPI: Wraps the Cisco Spark Memberships API and exposes
-        the APIs as native Python methods that return native Python objects.
-
-"""
+"""Cisco Spark Memberships API."""
 
 
-# Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
     division,
     print_function,
     unicode_literals,
 )
+
 from builtins import *
+
 from past.builtins import basestring
+
+from ..generator_containers import generator_container
+from ..restsession import RestSession
+from ..utils import (
+    check_type,
+    dict_from_items_with_values,
+)
 
 
 __author__ = "Chris Lunsford"
@@ -27,81 +27,19 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-from ..generator_containers import generator_container
-from ..restsession import RestSession
-from ..sparkdata import SparkData
-from ..utils import (
-    check_type,
-    dict_from_items_with_values,
-)
-
-
-class TeamMembership(SparkData):
-    """Model a Spark 'team membership' JSON object as a native Python object.
-    """
-
-    def __init__(self, json):
-        """Initialize a TeamMembership object from a dictionary or JSON string.
-
-        Args:
-            json(dict, basestring): Input dictionary or JSON object.
-
-        Raises:
-            TypeError: If the input object is not a dictionary or string.
-
-        """
-        super(TeamMembership, self).__init__(json)
-
-    @property
-    def id(self):
-        """The team membership's unique ID."""
-        return self._json_data.get('id')
-
-    @property
-    def teamId(self):
-        """The ID of the team."""
-        return self._json_data.get('teamId')
-
-    @property
-    def personId(self):
-        """The ID of the person."""
-        return self._json_data.get('personId')
-
-    @property
-    def personEmail(self):
-        """The email address of the person."""
-        return self._json_data.get('personEmail')
-
-    @property
-    def personDisplayName(self):
-        """The display name of the person."""
-        return self._json_data.get('personDisplayName')
-
-    @property
-    def personOrgId(self):
-        """The ID of the organization that the person is associated with."""
-        return self._json_data.get('personOrgId')
-
-    @property
-    def isModerator(self):
-        """Person is a moderator for the team."""
-        return self._json_data.get('isModerator')
-
-    @property
-    def created(self):
-        """The date and time the team membership was created."""
-        return self._json_data.get('created')
+API_ENDPOINT = 'team/memberships'
+OBJECT_TYPE = 'team_membership'
 
 
 class TeamMembershipsAPI(object):
-    """Cisco Spark Team-Memberships API wrapper.
+    """Cisco Spark Team-Memberships API.
 
     Wraps the Cisco Spark Memberships API and exposes the API as native Python
     methods that return native Python objects.
 
     """
 
-    def __init__(self, session):
+    def __init__(self, session, object_factory):
         """Init a new TeamMembershipsAPI object with the provided RestSession.
 
         Args:
@@ -117,6 +55,7 @@ class TeamMembershipsAPI(object):
         super(TeamMembershipsAPI, self).__init__()
 
         self._session = session
+        self._object_factory = object_factory
 
     @generator_container
     def list(self, teamId, max=None, **request_parameters):
@@ -158,11 +97,12 @@ class TeamMembershipsAPI(object):
         )
 
         # API request - get items
-        items = self._session.get_items('team/memberships', params=params)
+        items = self._session.get_items(API_ENDPOINT, params=params)
 
-        # Yield Person objects created from the returned items JSON objects
+        # Yield team membership objects created from the returned items JSON
+        # objects
         for item in items:
-            yield TeamMembership(item)
+            yield self._object_factory(OBJECT_TYPE, item)
 
     def create(self, teamId, personId=None, personEmail=None,
                isModerator=False, **request_parameters):
@@ -202,10 +142,10 @@ class TeamMembershipsAPI(object):
         )
 
         # API request
-        json_data = self._session.post('team/memberships', json=post_data)
+        json_data = self._session.post(API_ENDPOINT, json=post_data)
 
-        # Return a TeamMembership object created from the response JSON data
-        return TeamMembership(json_data)
+        # Return a team membership object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def get(self, membershipId):
         """Get details for a team membership, by ID.
@@ -225,10 +165,10 @@ class TeamMembershipsAPI(object):
         check_type(membershipId, basestring, may_be_none=False)
 
         # API request
-        json_data = self._session.get('team/memberships/' + membershipId)
+        json_data = self._session.get(API_ENDPOINT + '/' + membershipId)
 
-        # Return a TeamMembership object created from the response JSON data
-        return TeamMembership(json_data)
+        # Return a team membership object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def update(self, membershipId, isModerator=None, **request_parameters):
         """Update a team membership, by ID.
@@ -257,11 +197,11 @@ class TeamMembershipsAPI(object):
         )
 
         # API request
-        json_data = self._session.put('team/memberships/' + membershipId,
+        json_data = self._session.put(API_ENDPOINT + '/' + membershipId,
                                       json=put_data)
 
-        # Return a TeamMembership object created from the response JSON data
-        return TeamMembership(json_data)
+        # Return a team membership object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def delete(self, membershipId):
         """Delete a team membership, by ID.
@@ -277,4 +217,4 @@ class TeamMembershipsAPI(object):
         check_type(membershipId, basestring, may_be_none=False)
 
         # API request
-        self._session.delete('team/memberships/' + membershipId)
+        self._session.delete(API_ENDPOINT + '/' + membershipId)

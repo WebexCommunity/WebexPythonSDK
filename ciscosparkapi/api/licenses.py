@@ -1,23 +1,24 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark Licenses API wrapper.
-
-Classes:
-    License: Models a Spark License JSON object as a native Python object.
-    LicensesAPI: Wraps the Cisco Spark Licenses API and exposes the API as
-        native Python methods that return native Python objects.
-
-"""
+"""Cisco Spark Licenses API."""
 
 
-# Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
     division,
     print_function,
     unicode_literals,
 )
+
 from builtins import *
+
 from past.builtins import basestring
+
+from ..generator_containers import generator_container
+from ..restsession import RestSession
+from ..utils import (
+    check_type,
+    dict_from_items_with_values,
+)
 
 
 __author__ = "Chris Lunsford"
@@ -26,60 +27,19 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-from ..generator_containers import generator_container
-from ..restsession import RestSession
-from ..sparkdata import SparkData
-from ..utils import (
-    check_type,
-    dict_from_items_with_values,
-)
-
-
-class License(SparkData):
-    """Model a Spark License JSON object as a native Python object."""
-
-    def __init__(self, json):
-        """Initialize a License data object from a dictionary or JSON string.
-
-        Args:
-            json(dict, basestring): Input dictionary or JSON string.
-
-        Raises:
-            TypeError: If the input object is not a dictionary or string.
-
-        """
-        super(License, self).__init__(json)
-
-    @property
-    def id(self):
-        """The unique ID for the License."""
-        return self._json_data.get('id')
-
-    @property
-    def name(self):
-        """The name of the License."""
-        return self._json_data.get('name')
-
-    @property
-    def totalUnits(self):
-        """The total number of license units."""
-        return self._json_data.get('totalUnits')
-
-    @property
-    def consumedUnits(self):
-        """The total number of license units consumed."""
-        return self._json_data.get('consumedUnits')
+API_ENDPOINT = 'licenses'
+OBJECT_TYPE = 'license'
 
 
 class LicensesAPI(object):
-    """Cisco Spark Licenses API wrapper.
+    """Cisco Spark Licenses API.
 
     Wraps the Cisco Spark Licenses API and exposes the API as native Python
     methods that return native Python objects.
 
     """
 
-    def __init__(self, session):
+    def __init__(self, session, object_factory):
         """Initialize a new LicensesAPI object with the provided RestSession.
 
         Args:
@@ -95,6 +55,7 @@ class LicensesAPI(object):
         super(LicensesAPI, self).__init__()
 
         self._session = session
+        self._object_factory = object_factory
 
     @generator_container
     def list(self, orgId=None, max=None, **request_parameters):
@@ -139,11 +100,11 @@ class LicensesAPI(object):
         )
 
         # API request - get items
-        items = self._session.get_items('licenses', params=params)
+        items = self._session.get_items(API_ENDPOINT, params=params)
 
-        # Yield License objects created from the returned JSON objects
+        # Yield license objects created from the returned JSON objects
         for item in items:
-            yield License(item)
+            yield self._object_factory(OBJECT_TYPE, item)
 
     def get(self, licenseId):
         """Get the details of a License, by ID.
@@ -163,7 +124,7 @@ class LicensesAPI(object):
         check_type(licenseId, basestring, may_be_none=False)
 
         # API request
-        json_data = self._session.get('licenses/' + licenseId)
+        json_data = self._session.get(API_ENDPOINT + '/' + licenseId)
 
-        # Return a License object created from the returned JSON object
-        return License(json_data)
+        # Return a license object created from the returned JSON object
+        return self._object_factory(OBJECT_TYPE, json_data)

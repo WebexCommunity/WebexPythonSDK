@@ -1,23 +1,24 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark Rooms API wrapper.
-
-Classes:
-    Room: Models a Spark 'room' JSON object as a native Python object.
-    RoomsAPI: Wraps the Cisco Spark Rooms API and exposes the API as native
-        Python methods that return native Python objects.
-
-"""
+"""Cisco Spark Rooms API."""
 
 
-# Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
     division,
     print_function,
     unicode_literals,
 )
+
 from builtins import *
+
 from past.builtins import basestring
+
+from ..generator_containers import generator_container
+from ..restsession import RestSession
+from ..utils import (
+    check_type,
+    dict_from_items_with_values,
+)
 
 
 __author__ = "Chris Lunsford"
@@ -26,80 +27,19 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-from ..generator_containers import generator_container
-from ..restsession import RestSession
-from ..sparkdata import SparkData
-from ..utils import (
-    check_type,
-    dict_from_items_with_values,
-)
-
-
-class Room(SparkData):
-    """Model a Spark 'room' JSON object as a native Python object."""
-
-    def __init__(self, json):
-        """Initialize a Room data object from a dictionary or JSON string.
-
-        Args:
-            json(dict, basestring): Input dictionary or JSON string.
-
-        Raises:
-            TypeError: If the input object is not a dictionary or string.
-
-        """
-        super(Room, self).__init__(json)
-
-    @property
-    def id(self):
-        """The rooms's unique ID."""
-        return self._json_data.get('id')
-
-    @property
-    def title(self):
-        """A user-friendly name for the room."""
-        return self._json_data.get('title')
-
-    @property
-    def type(self):
-        """The type of room (i.e. 'group', 'direct' etc.)."""
-        return self._json_data.get('type')
-
-    @property
-    def isLocked(self):
-        """Whether or not the room is locked and controled by moderator(s)."""
-        return self._json_data.get('isLocked')
-
-    @property
-    def lastActivity(self):
-        """The date and time when the room was last active."""
-        return self._json_data.get('lastActivity')
-
-    @property
-    def created(self):
-        """The date and time when the room was created."""
-        return self._json_data.get('created')
-
-    @property
-    def creatorId(self):
-        """The ID of the person who created the room."""
-        return self._json_data.get('creatorId')
-
-    @property
-    def teamId(self):
-        """The ID for the team with which this room is associated."""
-        return self._json_data.get('teamId')
+API_ENDPOINT = 'rooms'
+OBJECT_TYPE = 'room'
 
 
 class RoomsAPI(object):
-    """Cisco Spark Rooms API wrapper.
+    """Cisco Spark Rooms API.
 
     Wraps the Cisco Spark Rooms API and exposes the API as native Python
     methods that return native Python objects.
 
     """
 
-    def __init__(self, session):
+    def __init__(self, session, object_factory):
         """Initialize a new RoomsAPI object with the provided RestSession.
 
         Args:
@@ -115,6 +55,7 @@ class RoomsAPI(object):
         super(RoomsAPI, self).__init__()
 
         self._session = session
+        self._object_factory = object_factory
 
     @generator_container
     def list(self, teamId=None, type=None, sortBy=None, max=None,
@@ -170,11 +111,11 @@ class RoomsAPI(object):
         )
 
         # API request - get items
-        items = self._session.get_items('rooms', params=params)
+        items = self._session.get_items(API_ENDPOINT, params=params)
 
-        # Yield Room objects created from the returned items JSON objects
+        # Yield room objects created from the returned items JSON objects
         for item in items:
-            yield Room(item)
+            yield self._object_factory(OBJECT_TYPE, item)
 
     def create(self, title, teamId=None, **request_parameters):
         """Create a room.
@@ -206,10 +147,10 @@ class RoomsAPI(object):
         )
 
         # API request
-        json_data = self._session.post('rooms', json=post_data)
+        json_data = self._session.post(API_ENDPOINT, json=post_data)
 
-        # Return a Room object created from the response JSON data
-        return Room(json_data)
+        # Return a room object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def get(self, roomId):
         """Get the details of a room, by ID.
@@ -228,10 +169,10 @@ class RoomsAPI(object):
         check_type(roomId, basestring, may_be_none=False)
 
         # API request
-        json_data = self._session.get('rooms/' + roomId)
+        json_data = self._session.get(API_ENDPOINT + '/' + roomId)
 
-        # Return a Room object created from the response JSON data
-        return Room(json_data)
+        # Return a room object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def update(self, roomId, title=None, **request_parameters):
         """Update details for a room, by ID.
@@ -259,10 +200,11 @@ class RoomsAPI(object):
         )
 
         # API request
-        json_data = self._session.put('rooms/' + roomId, json=put_data)
+        json_data = self._session.put(API_ENDPOINT + '/' + roomId,
+                                      json=put_data)
 
-        # Return a Room object created from the response JSON data
-        return Room(json_data)
+        # Return a room object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def delete(self, roomId):
         """Delete a room.
@@ -278,4 +220,4 @@ class RoomsAPI(object):
         check_type(roomId, basestring, may_be_none=False)
 
         # API request
-        self._session.delete('rooms/' + roomId)
+        self._session.delete(API_ENDPOINT + '/' + roomId)

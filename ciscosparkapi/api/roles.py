@@ -1,23 +1,24 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark Roles API wrapper.
-
-Classes:
-    Role: Models a Spark Role JSON object as a native Python object.
-    RolesAPI: Wraps the Cisco Spark Roles API and exposes the API as native
-        Python methods that return native Python objects.
-
-"""
+"""Cisco Spark Roles API."""
 
 
-# Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
     division,
     print_function,
     unicode_literals,
 )
+
 from builtins import *
+
 from past.builtins import basestring
+
+from ..generator_containers import generator_container
+from ..restsession import RestSession
+from ..utils import (
+    check_type,
+    dict_from_items_with_values,
+)
 
 
 __author__ = "Chris Lunsford"
@@ -26,50 +27,19 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-from ..generator_containers import generator_container
-from ..restsession import RestSession
-from ..sparkdata import SparkData
-from ..utils import (
-    check_type,
-    dict_from_items_with_values,
-)
-
-
-class Role(SparkData):
-    """Model a Spark Role JSON object as a native Python object."""
-
-    def __init__(self, json):
-        """Initialize a new Role data object from a dictionary or JSON string.
-
-        Args:
-            json(dict, basestring): Input dictionary or JSON string.
-
-        Raises:
-            TypeError: If the input object is not a dictionary or string.
-
-        """
-        super(Role, self).__init__(json)
-
-    @property
-    def id(self):
-        """The unique ID for the Role."""
-        return self._json_data.get('id')
-
-    @property
-    def name(self):
-        """The name of the Role."""
-        return self._json_data.get('name')
+API_ENDPOINT = 'roles'
+OBJECT_TYPE = 'role'
 
 
 class RolesAPI(object):
-    """Cisco Spark Roles API wrapper.
+    """Cisco Spark Roles API.
 
     Wraps the Cisco Spark Roles API and exposes the API as native Python
     methods that return native Python objects.
 
     """
 
-    def __init__(self, session):
+    def __init__(self, session, object_factory):
         """Initialize a new RolesAPI object with the provided RestSession.
 
         Args:
@@ -85,6 +55,7 @@ class RolesAPI(object):
         super(RolesAPI, self).__init__()
 
         self._session = session
+        self._object_factory = object_factory
 
     @generator_container
     def list(self, max=None, **request_parameters):
@@ -123,11 +94,11 @@ class RolesAPI(object):
         )
 
         # API request - get items
-        items = self._session.get_items('roles', params=params)
+        items = self._session.get_items(API_ENDPOINT, params=params)
 
-        # Yield Role objects created from the returned JSON objects
+        # Yield role objects created from the returned JSON objects
         for item in items:
-            yield Role(item)
+            yield self._object_factory(OBJECT_TYPE, item)
 
     def get(self, roleId):
         """Get the details of a Role, by ID.
@@ -146,7 +117,7 @@ class RolesAPI(object):
         check_type(roleId, basestring, may_be_none=False)
 
         # API request
-        json_data = self._session.get('roles/' + roleId)
+        json_data = self._session.get(API_ENDPOINT + '/' + roleId)
 
-        # Return a Role object created from the returned JSON object
-        return Role(json_data)
+        # Return a role object created from the returned JSON object
+        return self._object_factory(OBJECT_TYPE, json_data)
