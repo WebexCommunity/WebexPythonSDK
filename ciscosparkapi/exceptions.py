@@ -145,7 +145,7 @@ class SparkRateLimitError(SparkApiError):
         super(SparkRateLimitError, self).__init__(response)
 
         # Extended exception data attributes
-        self.retry_after = response.headers.get('Retry-After', 200)
+        self.retry_after = int(response.headers.get('Retry-After', 200))
         """The `Retry-After` time period (in seconds) provided by Cisco Spark.
 
         Defaults to 200 seconds if the response `Retry-After` header isn't
