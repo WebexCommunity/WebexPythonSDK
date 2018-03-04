@@ -112,10 +112,9 @@ def group_room_markdown_message(group_room, send_group_room_message, me,
     # Uses / depends on group_room_text_message to ensure this message is
     # created after group_room_text_message, so that we can be sure that a
     # message exists 'before' this one - used to test 'before' list filters.
-    markdown = create_string("<@personEmail:{email}|{name}>, This is "
+    markdown = create_string("<@personId:{id}|{name}>, This is "
                              "**markdown** with a mention."
-                             "".format(email=me.emails[0],
-                                       name=me.displayName))
+                             "".format(id=me.id, name=me.displayName))
     return send_group_room_message(group_room.id, markdown=markdown)
 
 
