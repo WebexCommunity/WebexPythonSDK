@@ -27,7 +27,8 @@ from .api.team_memberships import TeamMembershipsAPI as _TeamMembershipsAPI
 from .api.teams import TeamsAPI as _TeamsAPI
 from .api.webhooks import WebhooksAPI as _WebhooksAPI
 from .exceptions import (
-    SparkApiError, SparkRateLimitError, ciscosparkapiException,
+    SparkApiError, SparkRateLimitError, SparkRateLimitWarning,
+    ciscosparkapiException,
 )
 from .models import (
     AccessToken, License, Membership, Message, Organization, Person, Role,

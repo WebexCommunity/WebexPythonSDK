@@ -152,3 +152,23 @@ class SparkRateLimitError(SparkApiError):
         present in the response headers.
 
         """
+
+
+class SparkRateLimitWarning(UserWarning):
+    """Cisco Spark rate-limit exceeded warning; the request will be retried."""
+
+    def __init__(self, response):
+        super(SparkRateLimitWarning, self).__init__()
+        self.retry_after = int(response.headers.get('Retry-After', 200))
+        """The `Retry-After` time period (in seconds) provided by Cisco Spark.
+
+        Defaults to 200 seconds if the response `Retry-After` header isn't
+        present in the response headers.
+
+        """
+
+    def __str__(self):
+        """Spark rate-limit exceeded warning message."""
+        return "Rate-limit response received; the request will " \
+               "automatically be retried in {0} seconds." \
+               "".format(self.retry_after)

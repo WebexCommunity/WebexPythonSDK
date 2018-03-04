@@ -21,7 +21,9 @@ import warnings
 from past.builtins import basestring
 import requests
 
-from .exceptions import SparkRateLimitError, ciscosparkapiException
+from .exceptions import (
+    SparkRateLimitError, SparkRateLimitWarning, ciscosparkapiException
+)
 from .response_codes import EXPECTED_RESPONSE_CODE
 from .utils import (
     check_response_code, extract_and_parse_json, validate_base_url,
@@ -58,24 +60,25 @@ def _fix_next_url(next_url):
 
     Raises:
         AssertionError: If the parameter types are incorrect.
-        ciscosparkapiException: If 'next_url' does not contain a valid API
-            endpoint URL (scheme, netloc and path).
+        ValueError: If 'next_url' does not contain a valid API endpoint URL
+            (scheme, netloc and path).
 
     """
     next_url = str(next_url)
     parsed_url = urllib.parse.urlparse(next_url)
 
     if not parsed_url.scheme or not parsed_url.netloc or not parsed_url.path:
-        error_message = "'next_url' must be a valid API endpoint URL, " \
-                        "minimally containing a scheme, netloc and path."
-        raise ciscosparkapiException(error_message)
+        raise ValueError(
+            "'next_url' must be a valid API endpoint URL, minimally "
+            "containing a scheme, netloc and path."
+        )
 
     if parsed_url.query:
         query_list = parsed_url.query.split('&')
         if 'max=null' in query_list:
             query_list.remove('max=null')
             warnings.warn("`max=null` still present in next-URL returned "
-                          "from Cisco Spark", Warning)
+                          "from Cisco Spark", RuntimeWarning)
         new_query = '&'.join(query_list)
         parsed_url = list(parsed_url)
         parsed_url[4] = new_query
@@ -275,9 +278,7 @@ class RestSession(object):
 
                 # Wait and retry if automatic rate-limit handling is enabled
                 if self.wait_on_rate_limit and e.retry_after:
-                    logger.info("Received rate-limit message; "
-                                "waiting {0} seconds."
-                                "".format(e.retry_after))
+                    warnings.warn(SparkRateLimitWarning(response))
                     time.sleep(e.retry_after)
                     continue
 
