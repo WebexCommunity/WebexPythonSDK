@@ -10,6 +10,8 @@ from __future__ import (
 )
 
 from future import standard_library
+
+
 standard_library.install_aliases()
 
 from builtins import *
@@ -26,9 +28,8 @@ from .exceptions import (
 )
 from .response_codes import EXPECTED_RESPONSE_CODE
 from .utils import (
-    check_response_code, extract_and_parse_json, validate_base_url,
+    check_type, check_response_code, extract_and_parse_json, validate_base_url,
 )
-
 
 
 __author__ = "Chris Lunsford"
@@ -101,18 +102,20 @@ class RestSession(object):
             base_url(basestring): The base URL that will be suffixed onto API
                 endpoint relative URLs to produce a callable absolute URL.
             timeout: [Deprecated] The timeout (seconds) for an API request.
-            single_request_timeout(float): The timeout (seconds) for a single
+            single_request_timeout(int): The timeout (seconds) for a single
                 HTTP REST API request.
             wait_on_rate_limit(bool): Enable or disable automatic rate-limit
                 handling.
 
+        Raises:
+            TypeError: If the parameter types are incorrect.
+
         """
-        assert isinstance(access_token, basestring)
-        assert isinstance(base_url, basestring)
-        assert timeout is None or isinstance(timeout, (int, float))
-        assert (single_request_timeout is None or
-                isinstance(single_request_timeout, (int, float)))
-        assert isinstance(wait_on_rate_limit, bool)
+        check_type(access_token, basestring, may_be_none=False)
+        check_type(base_url, basestring, may_be_none=False)
+        check_type(timeout, int)
+        check_type(single_request_timeout, int)
+        check_type(wait_on_rate_limit, bool, may_be_none=False)
 
         super(RestSession, self).__init__()
 
@@ -165,8 +168,9 @@ class RestSession(object):
         warnings.warn("The 'timeout' property is being deprecated. Please use "
                       "the 'single_request_timeout' instead.",
                       DeprecationWarning)
+        check_type(value, int)
         assert value is None or value > 0
-        self._single_request_timeout = float(value)
+        self._single_request_timeout = value
 
     @property
     def single_request_timeout(self):
@@ -176,9 +180,9 @@ class RestSession(object):
     @single_request_timeout.setter
     def single_request_timeout(self, value):
         """The timeout (seconds) for a single HTTP REST API request."""
-        assert (value is None or
-                (isinstance(value, (int, float)) and value > 0.0))
-        self._single_request_timeout = float(value)
+        check_type(value, int)
+        assert value is None or value > 0
+        self._single_request_timeout = value
 
     @property
     def wait_on_rate_limit(self):
@@ -195,7 +199,7 @@ class RestSession(object):
     @wait_on_rate_limit.setter
     def wait_on_rate_limit(self, value):
         """Enable or disable automatic rate-limit handling."""
-        assert isinstance(value, bool)
+        check_type(value, bool, may_be_none=False)
         self._wait_on_rate_limit = value
 
     @property
@@ -215,7 +219,7 @@ class RestSession(object):
              headers(dict): Updates to the current session headers.
 
         """
-        assert isinstance(headers, dict)
+        check_type(headers, dict, may_be_none=False)
         self._req_session.headers.update(headers)
 
     def abs_url(self, url):
@@ -257,8 +261,6 @@ class RestSession(object):
                 returned by the Cisco Spark API endpoint.
 
         """
-        logger = logging.getLogger(__name__)
-
         # Ensure the url is an absolute URL
         abs_url = self.abs_url(url)
 
@@ -272,20 +274,16 @@ class RestSession(object):
             try:
                 # Check the response code for error conditions
                 check_response_code(response, erc)
-
             except SparkRateLimitError as e:
                 # Catch rate-limit errors
-
                 # Wait and retry if automatic rate-limit handling is enabled
                 if self.wait_on_rate_limit and e.retry_after:
                     warnings.warn(SparkRateLimitWarning(response))
                     time.sleep(e.retry_after)
                     continue
-
                 else:
                     # Re-raise the SparkRateLimitError
                     raise
-
             else:
                 return response
 
@@ -304,8 +302,8 @@ class RestSession(object):
                 returned by the Cisco Spark API endpoint.
 
         """
-        assert isinstance(url, basestring)
-        assert params is None or isinstance(params, dict)
+        check_type(url, basestring, may_be_none=False)
+        check_type(params, dict)
 
         # Expected response code
         erc = kwargs.pop('erc', EXPECTED_RESPONSE_CODE['GET'])
@@ -330,8 +328,8 @@ class RestSession(object):
                 returned by the Cisco Spark API endpoint.
 
         """
-        assert isinstance(url, basestring)
-        assert params is None or isinstance(params, dict)
+        check_type(url, basestring, may_be_none=False)
+        check_type(params, dict)
 
         # Expected response code
         erc = kwargs.pop('erc', EXPECTED_RESPONSE_CODE['GET'])
@@ -412,7 +410,7 @@ class RestSession(object):
                 returned by the Cisco Spark API endpoint.
 
         """
-        assert isinstance(url, basestring)
+        check_type(url, basestring, may_be_none=False)
 
         # Expected response code
         erc = kwargs.pop('erc', EXPECTED_RESPONSE_CODE['POST'])
@@ -437,7 +435,7 @@ class RestSession(object):
                 returned by the Cisco Spark API endpoint.
 
         """
-        assert isinstance(url, basestring)
+        check_type(url, basestring, may_be_none=False)
 
         # Expected response code
         erc = kwargs.pop('erc', EXPECTED_RESPONSE_CODE['PUT'])
@@ -460,7 +458,7 @@ class RestSession(object):
                 returned by the Cisco Spark API endpoint.
 
         """
-        assert isinstance(url, basestring)
+        check_type(url, basestring, may_be_none=False)
 
         # Expected response code
         erc = kwargs.pop('erc', EXPECTED_RESPONSE_CODE['DELETE'])
