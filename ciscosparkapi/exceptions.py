@@ -145,11 +145,12 @@ class SparkRateLimitError(SparkApiError):
         super(SparkRateLimitError, self).__init__(response)
 
         # Extended exception data attributes
-        self.retry_after = abs(int(response.headers.get('Retry-After', 15)))
+        self.retry_after = max(1, int(response.headers.get('Retry-After', 15)))
         """The `Retry-After` time period (in seconds) provided by Cisco Spark.
 
         Defaults to 15 seconds if the response `Retry-After` header isn't
-        present in the response headers.
+        present in the response headers, and defaults to a minimum wait time of
+        1 second if Spark returns a `Retry-After` header of 0 seconds.
 
         """
 
@@ -159,11 +160,12 @@ class SparkRateLimitWarning(UserWarning):
 
     def __init__(self, response):
         super(SparkRateLimitWarning, self).__init__()
-        self.retry_after = abs(int(response.headers.get('Retry-After', 15)))
+        self.retry_after = max(1, int(response.headers.get('Retry-After', 15)))
         """The `Retry-After` time period (in seconds) provided by Cisco Spark.
 
         Defaults to 15 seconds if the response `Retry-After` header isn't
-        present in the response headers.
+        present in the response headers, and defaults to a minimum wait time of
+        1 second if Spark returns a `Retry-After` header of 0 seconds.
 
         """
 
