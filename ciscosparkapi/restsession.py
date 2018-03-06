@@ -277,7 +277,7 @@ class RestSession(object):
             except SparkRateLimitError as e:
                 # Catch rate-limit errors
                 # Wait and retry if automatic rate-limit handling is enabled
-                if self.wait_on_rate_limit and e.retry_after:
+                if self.wait_on_rate_limit:
                     warnings.warn(SparkRateLimitWarning(response))
                     time.sleep(e.retry_after)
                     continue
