@@ -2,8 +2,7 @@ SHELL=/bin/bash
 
 # Build recipes
 .PHONY : build
-build : tests docs buildpackage
-	$(MAKE) clean
+build : tests docs buildpackage ;
 
 .PHONY : buildpackage
 buildpackage : setup.py
