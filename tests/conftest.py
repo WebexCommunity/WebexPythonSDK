@@ -29,6 +29,7 @@ pytest_plugins = [
     'tests.api.test_rooms',
     'tests.api.test_teammemberships',
     'tests.api.test_teams',
+    "tests.api.test_events",
 ]
 
 
