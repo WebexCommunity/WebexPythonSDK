@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Cisco Spark Access-Token data model."""
+"""Cisco Spark Webhook-Event data model."""
 
 
 from __future__ import (
@@ -91,30 +91,5 @@ class WebhookEventBasicPropertiesMixin(object):
 
     @property
     def data(self):
-        """The data for the resource that triggered the webhook.
-
-        For example, if you registered a webhook that triggers when messages
-        are created (i.e. posted into a room) then the data property will
-        contain the JSON representation for a message resource.
-
-        Note:  That not all of the details of the resource are included in the
-        data object.  For example, the contents of a message are not included.
-        You would need to request the details for the message using the message
-        'id' (which is in the data object) and the
-        `CiscoSparkAPI.messages.get()` method.
-
-        """
-        if self._data is None and self._json_data.get('data'):
-            if self.resource == "memberships":
-                self._data = Membership(self._json_data.get('data'))
-
-            elif self.resource == "messages":
-                self._data = Message(self._json_data.get('data'))
-
-            elif self.resource == "rooms":
-                self._data = Room(self._json_data.get('data'))
-
-            else:
-                self._data = SparkData(self._json_data.get('data'))
-
-        return self._data
+        """The data for the resource that triggered the webhook."""
+        return SparkData(self._json_data.get('data'))

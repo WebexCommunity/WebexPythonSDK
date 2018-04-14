@@ -16,6 +16,7 @@ import os
 from past.builtins import basestring
 
 from .api.access_tokens import AccessTokensAPI as _AccessTokensAPI
+from .api.events import EventsAPI as _EventsAPI
 from .api.licenses import LicensesAPI as _LicensesAPI
 from .api.memberships import MembershipsAPI as _MembershipsAPI
 from .api.messages import MessagesAPI as _MessagesAPI
@@ -31,8 +32,8 @@ from .exceptions import (
     ciscosparkapiException,
 )
 from .models import (
-    AccessToken, License, Membership, Message, Organization, Person, Role,
-    Room, Team, TeamMembership, Webhook, WebhookEvent, sparkdata_factory,
+    AccessToken, Event, License, Membership, Message, Organization, Person,
+    Role, Room, Team, TeamMembership, Webhook, WebhookEvent, sparkdata_factory,
 )
 from .restsession import (
     DEFAULT_SINGLE_REQUEST_TIMEOUT,
@@ -94,6 +95,8 @@ class CiscoSparkAPI(object):
                     :class:`licenses <_LicensesAPI>`
 
                     :class:`roles <_RolesAPI>`
+
+                    :class:`events <_EventsAPI>`
 
                     :class:`access_tokens <_AccessTokensAPI>`
 
@@ -187,6 +190,7 @@ class CiscoSparkAPI(object):
         self.access_tokens = _AccessTokensAPI(
             self.base_url, object_factory, timeout=single_request_timeout
         )
+        self.events = _EventsAPI(self._session, object_factory)
 
     @property
     def access_token(self):

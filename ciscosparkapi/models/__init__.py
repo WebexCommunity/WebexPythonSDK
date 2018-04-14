@@ -12,6 +12,7 @@ from __future__ import (
 from collections import defaultdict
 
 from .access_token import AccessTokenBasicPropertiesMixin
+from .event import EventBasicPropertiesMixin
 from .license import LicenseBasicPropertiesMixin
 from .membership import MembershipBasicPropertiesMixin
 from .message import MessageBasicPropertiesMixin
@@ -34,6 +35,10 @@ __license__ = "MIT"
 
 class AccessToken(SparkData, AccessTokenBasicPropertiesMixin):
     """Cisco Spark Access-Token data model."""
+
+
+class Event(SparkData, EventBasicPropertiesMixin):
+    """Cisco Spark Event data model."""
 
 
 class License(SparkData, LicenseBasicPropertiesMixin):
@@ -82,6 +87,7 @@ class WebhookEvent(SparkData, WebhookEventBasicPropertiesMixin):
 sparkdata_models = defaultdict(
     lambda: SparkData,
     access_token=AccessToken,
+    event=Event,
     license=License,
     membership=Membership,
     message=Message,
