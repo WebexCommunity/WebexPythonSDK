@@ -34,8 +34,6 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-
-
 API_ENDPOINT = 'access_token'
 OBJECT_TYPE = 'access_token'
 
@@ -97,8 +95,8 @@ class AccessTokensAPI(object):
                 process.
 
         Returns:
-            ciscosparkapi.AccessToken: An AccessToken object with the access token provided
-                by the Cisco Spark cloud.
+            ciscosparkapi.AccessToken: An AccessToken object with the access
+                token provided by the Cisco Spark cloud.
 
         Raises:
             TypeError: If the parameter types are incorrect.

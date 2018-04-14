@@ -64,6 +64,7 @@ class Person(SparkData, PersonBasicPropertiesMixin):
 class Role(SparkData, RoleBasicPropertiesMixin):
     """Cisco Spark Role data model."""
 
+
 class Room(SparkData, RoomBasicPropertiesMixin):
     """Cisco Spark Room data model."""
 
