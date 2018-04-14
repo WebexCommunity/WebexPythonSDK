@@ -101,6 +101,14 @@ roles
 .. autoclass:: ciscosparkapi.api.roles.RolesAPI()
 
 
+.. _events:
+
+events
+-----
+
+.. autoclass:: ciscosparkapi.api.events.EventsAPI()
+
+
 .. _access_tokens:
 
 access_tokens
@@ -229,6 +237,15 @@ Role
 ----
 
 .. autoclass:: Role()
+    :inherited-members:
+
+
+.. _Event:
+
+Event
+-----
+
+.. autoclass:: Event()
     :inherited-members:
 
 

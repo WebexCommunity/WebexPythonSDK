@@ -96,6 +96,8 @@ class CiscoSparkAPI(object):
 
                     :class:`roles <_RolesAPI>`
 
+                    :class:`events <_EventsAPI>`
+
                     :class:`access_tokens <_AccessTokensAPI>`
 
     """
