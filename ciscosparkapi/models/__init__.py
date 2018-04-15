@@ -20,11 +20,13 @@ from .organization import OrganizationBasicPropertiesMixin
 from .person import PersonBasicPropertiesMixin
 from .role import RoleBasicPropertiesMixin
 from .room import RoomBasicPropertiesMixin
+from .simple import SimpleDataModel
 from .sparkdata import SparkData
 from .team import TeamBasicPropertiesMixin
 from .team_membership import TeamMembershipBasicPropertiesMixin
 from .webhook import WebhookBasicPropertiesMixin
 from .webhook_event import WebhookEventBasicPropertiesMixin
+from ..utils import json_dict
 
 
 __author__ = "Chris Lunsford"
@@ -85,7 +87,7 @@ class WebhookEvent(SparkData, WebhookEventBasicPropertiesMixin):
     """Cisco Spark Webhook-Events data model."""
 
 
-sparkdata_models = defaultdict(
+spark_data_models = defaultdict(
     lambda: SparkData,
     access_token=AccessToken,
     event=Event,
@@ -103,7 +105,7 @@ sparkdata_models = defaultdict(
 )
 
 
-def sparkdata_factory(model, json_data):
+def spark_data_factory(model, json_data):
     """Factory function for creating SparkData objects.
 
     Args:
@@ -120,4 +122,45 @@ def sparkdata_factory(model, json_data):
             dictionary.
 
     """
-    return sparkdata_models[model](json_data)
+    return spark_data_models[model](json_data)
+
+
+def simple_data_factory(model, json_data):
+    """Factory function for creating SimpleDataModel objects.
+
+    Args:
+        model(basestring): The data model to use when creating the SparkData
+            object (message, room, membership, etc.).
+        json_data(basestring, dict): The JSON string or dictionary data with
+            which to initialize the object.
+
+    Returns:
+        SimpleDataModel: The created SimpleDataModel object.
+
+    Raises:
+        TypeError: If the json_data parameter is not a JSON string or
+            dictionary.
+
+    """
+    return SimpleDataModel(json_data)
+
+
+def dict_data_factory(model, json_data):
+    """Factory function for creating SimpleDataModel objects.
+
+    Args:
+        model(basestring): The data model to use when creating the SparkData
+            object (message, room, membership, etc.).
+        json_data(basestring, dict): The JSON string or dictionary data with
+            which to initialize the object.
+
+    Returns:
+        OrderedDict: An ordered dictionary with the contents of the Spark JSON
+            object.
+
+    Raises:
+        TypeError: If the json_data parameter is not a JSON string or
+            dictionary.
+
+    """
+    return json_dict(json_data)

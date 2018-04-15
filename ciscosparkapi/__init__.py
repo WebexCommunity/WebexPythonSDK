@@ -33,7 +33,8 @@ from .exceptions import (
 )
 from .models import (
     AccessToken, Event, License, Membership, Message, Organization, Person,
-    Role, Room, Team, TeamMembership, Webhook, WebhookEvent, sparkdata_factory,
+    Role, Room, Team, TeamMembership, Webhook, WebhookEvent, dict_data_factory,
+    simple_data_factory, spark_data_factory,
 )
 from .restsession import (
     DEFAULT_SINGLE_REQUEST_TIMEOUT,
@@ -106,7 +107,7 @@ class CiscoSparkAPI(object):
                  timeout=None,
                  single_request_timeout=DEFAULT_SINGLE_REQUEST_TIMEOUT,
                  wait_on_rate_limit=DEFAULT_WAIT_ON_RATE_LIMIT,
-                 object_factory=sparkdata_factory):
+                 object_factory=spark_data_factory):
         """Create a new CiscoSparkAPI object.
 
         An access token must be used when interacting with the Cisco Spark API.

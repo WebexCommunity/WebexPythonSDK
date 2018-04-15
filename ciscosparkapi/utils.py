@@ -204,3 +204,27 @@ def extract_and_parse_json(response):
 
     """
     return json.loads(response.text, object_hook=OrderedDict)
+
+
+def json_dict(json_data):
+    """Given a dictionary or JSON string; return a dictionary.
+
+    Args:
+        json_data(dict, str): Input JSON object.
+
+    Returns:
+        A Python dictionary with the contents of the JSON object.
+
+    Raises:
+        TypeError: If the input object is not a dictionary or string.
+
+    """
+    if isinstance(json_data, dict):
+        return json_data
+    elif isinstance(json_data, basestring):
+        return json.loads(json_data, object_hook=OrderedDict)
+    else:
+        raise TypeError(
+            "'json_data' must be a dictionary or valid JSON string; "
+            "received: {!r}".format(json_data)
+        )

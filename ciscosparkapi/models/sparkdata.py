@@ -19,40 +19,15 @@ from __future__ import (
 )
 
 from builtins import *
-from collections import OrderedDict
 import json
 
-from past.builtins import basestring
+from ..utils import json_dict
 
 
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
 __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
-
-
-def _json_dict(json_data):
-    """Given a dictionary or JSON string; return a dictionary.
-
-    Args:
-        json_data(dict, str): Input JSON object.
-
-    Returns:
-        A Python dictionary with the contents of the JSON object.
-
-    Raises:
-        TypeError: If the input object is not a dictionary or string.
-
-    """
-    if isinstance(json_data, dict):
-        return json_data
-    elif isinstance(json_data, basestring):
-        return json.loads(json_data, object_hook=OrderedDict)
-    else:
-        raise TypeError(
-            "'json_data' must be a dictionary or valid JSON string; "
-            "received: {!r}".format(json_data)
-        )
 
 
 class SparkData(object):
@@ -69,7 +44,7 @@ class SparkData(object):
 
         """
         super(SparkData, self).__init__()
-        self._json_data = _json_dict(json_data)
+        self._json_data = json_dict(json_data)
 
     def __getattr__(self, item):
         """Provide native attribute access to the JSON object attributes.
@@ -113,7 +88,7 @@ class SparkData(object):
         """A string representing this object as valid Python expression."""
         class_str = self.__class__.__name__
         json_str = json.dumps(self._json_data, ensure_ascii=False)
-        return "{}({})".format(class_str, json_str)
+        return "{}({})".format(class_str, repr(json_str))
 
     @property
     def json_data(self):
