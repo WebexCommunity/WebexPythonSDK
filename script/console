@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Open the project's console.
+#
+# Copyright (c) 2016-2018 Cisco and/or its affiliates.
+# License: MIT
+
+
+set -e
+cd "$(dirname "$0")/.."
+
+
+# Launch the project's console
+ipython -i script/ipython_console.py

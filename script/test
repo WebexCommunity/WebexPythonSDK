@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# Run the project's test suite(s).
+#
+# Copyright (c) 2016-2018 Cisco and/or its affiliates.
+# License: MIT
+
+
+# Run all tests by default
+all=true
+
+
+# Process Script Arguments
+for i in ${@}; do
+    case ${i} in
+        --lint)
+        lint=true
+        all=
+        ;;
+
+        --test)
+        test=true
+        all=
+        ;;
+
+        *)
+        echo "Unknown argument: $i"
+        exit 1
+        ;;
+    esac
+done
+
+
+set -e
+cd "$(dirname "$0")/.."
+
+
+# Lint the source code
+if [ ${all} ] || [ ${lint} ]; then
+    echo "==> Linting the source code"
+    flake8
+fi
+
+# Run the test suite
+if [ ${all} ] || [ ${test} ]; then
+    echo "==> Running the test suite"
+    py.test
+fi

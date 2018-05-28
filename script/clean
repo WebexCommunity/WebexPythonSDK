@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# Clean the project directory.
+#
+# Copyright (c) 2016-2018 Cisco and/or its affiliates.
+# License: MIT
+
+
+set -e
+cd "$(dirname "$0")/.."
+
+
+# Process Script Arguments
+for i in ${@}; do
+    case ${i} in
+        --deep)
+        deep_clean=true
+        ;;
+
+        *)
+        echo "Unknown argument: $i"
+        exit 1
+        ;;
+    esac
+done
+
+
+echo "==> Cleaning the project directory"
+
+echo "Removing Python build artifacts"
+find . -name '*.pyc' -exec rm -f {} +
+find . -name '*.pyo' -exec rm -f {} +
+find . -name '*~' -exec rm -f {} +
+find . -name '__pycache__' -exec rm -fr {} +
+find . -name '*.egg-info' -exec rm -fr {} +
+find . -name '*.egg' -exec rm -f {} +
+rm -rf build/
+rm -rf dist/
+rm -rf .eggs/
+
+echo "Removing test and coverage artifacts"
+rm -rf .cache/
+rm -f  .coverage
+rm -rf .tox/
+rm -rf htmlcov/
+rm -rf .pytest_cache/
+
+if [ -d "docs" ]; then
+    echo "Cleaning the docs directories"
+    rm -rf docs/_build/*
+fi
+
+
+if [ ${deep_clean} ]; then
+    echo "==> Deep cleaning..."
+
+    if [ -f "Pipfile" ] && [ -n "$(pipenv --version 2>/dev/null)" ]; then
+        echo "Removing pipenv environment"
+        pipenv --rm || true
+    fi
+
+    if [ -d ".venv" ]; then
+        echo "Removing project virtual environment: .venv"
+        rm -rf .venv/
+    fi
+
+    if [ -d "venv" ]; then
+        echo "Removing project virtual environment: 'venv'"
+        rm -rf venv/
+    fi
+fi
