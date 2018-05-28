@@ -45,7 +45,7 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-from ciscosparkapi import CiscoSparkAPI, Webhook
+from webexteamsdk import CiscoSparkAPI, Webhook
 from cornice import Service
 import requests
 

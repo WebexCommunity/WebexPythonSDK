@@ -1,40 +1,40 @@
 =============
-ciscosparkapi
+webexteamsdk
 =============
 
 *Simple, lightweight, scalable Python API wrapper for the Cisco Spark APIs*
 
 .. image:: https://img.shields.io/badge/license-MIT-blue.svg
-    :target: https://github.com/CiscoDevNet/ciscosparkapi/blob/master/LICENSE
-.. image:: https://img.shields.io/pypi/v/ciscosparkapi.svg
-    :target: https://pypi.python.org/pypi/ciscosparkapi
-.. image:: https://travis-ci.org/CiscoDevNet/ciscosparkapi.svg?branch=master
-    :target: https://travis-ci.org/CiscoDevNet/ciscosparkapi
-.. image:: https://readthedocs.org/projects/ciscosparkapi/badge/?version=latest
-    :target: http://ciscosparkapi.readthedocs.io/en/latest/?badge=latest
+    :target: https://github.com/CiscoDevNet/webexteamsdk/blob/master/LICENSE
+.. image:: https://img.shields.io/pypi/v/webexteamsdk.svg
+    :target: https://pypi.python.org/pypi/webexteamsdk
+.. image:: https://travis-ci.org/CiscoDevNet/webexteamsdk.svg?branch=master
+    :target: https://travis-ci.org/CiscoDevNet/webexteamsdk
+.. image:: https://readthedocs.org/projects/webexteamsdk/badge/?version=latest
+    :target: http://webexteamsdk.readthedocs.io/en/latest/?badge=latest
 
 -------------------------------------------------------------------------------
 
-**ciscosparkapi** is a *community developed* Pythonic wrapping of the Cisco
+**webexteamsdk** is a *community developed* Pythonic wrapping of the Cisco
 Spark APIs, which makes working with Cisco Spark in Python a *native* and
 *natural* experience!
 
 .. code-block:: python
 
-    from ciscosparkapi import CiscoSparkAPI
+    from webexteamsdk import CiscoSparkAPI
 
     api = CiscoSparkAPI()
 
-    # Find all rooms that have 'ciscosparkapi Demo' in their title
+    # Find all rooms that have 'webexteamsdk Demo' in their title
     all_rooms = api.rooms.list()
-    demo_rooms = [room for room in all_rooms if 'ciscosparkapi Demo' in room.title]
+    demo_rooms = [room for room in all_rooms if 'webexteamsdk Demo' in room.title]
 
     # Delete all of the demo rooms
     for room in demo_rooms:
         api.rooms.delete(room.id)
 
     # Create a new demo room
-    demo_room = api.rooms.create('ciscosparkapi Demo')
+    demo_room = api.rooms.create('webexteamsdk Demo')
 
     # Add people to the new demo room
     email_addresses = ["test01@cmlccie.com", "test02@cmlccie.com"]
@@ -47,10 +47,10 @@ Spark APIs, which makes working with Cisco Spark in Python a *native* and
 
 
 That's more than 6 Spark API calls in less than 23 lines of code (with comments
-and whitespace), and likely more than that since ciscosparkapi handles
+and whitespace), and likely more than that since webexteamsdk handles
 pagination_ for you automatically!
 
-ciscosparkapi makes your life better...  `Learn how!`__
+webexteamsdk makes your life better...  `Learn how!`__
 
 __ Introduction_
 
@@ -58,7 +58,7 @@ __ Introduction_
 Features
 --------
 
-ciscosparkapi does all of this for you...
+webexteamsdk does all of this for you...
 
 + Transparently sources your Spark credentials from your local environment
 
@@ -89,28 +89,28 @@ ciscosparkapi does all of this for you...
 Installation
 ------------
 
-Installing and upgrading ciscosparkapi is easy:
+Installing and upgrading webexteamsdk is easy:
 
 **Install via PIP**
 
 .. code-block:: bash
 
-    $ pip install ciscosparkapi
+    $ pip install webexteamsdk
 
 **Upgrading to the latest Version**
 
 .. code-block:: bash
 
-    $ pip install ciscosparkapi --upgrade
+    $ pip install webexteamsdk --upgrade
 
 
 Documentation
 -------------
 
 **Excellent documentation is now available at:**
-http://ciscosparkapi.readthedocs.io
+http://webexteamsdk.readthedocs.io
 
-Check out the Quickstart_ to dive in and begin using ciscosparkapi.
+Check out the Quickstart_ to dive in and begin using webexteamsdk.
 
 
 Examples
@@ -150,7 +150,7 @@ __ Community_
 Contribution
 ------------
 
-ciscosparkapi_ and it's sister project ciscosparksdk_ are community
+webexteamsdk_ and it's sister project ciscosparksdk_ are community
 development projects.  Feedback, thoughts, ideas and code contributions are
 most welcome!
 
@@ -175,18 +175,18 @@ Please use the issues_ log.
 *Copyright (c) 2016-2018 Cisco and/or its affiliates.*
 
 
-.. _Introduction: http://ciscosparkapi.readthedocs.io/en/latest/user/intro.html
+.. _Introduction: http://webexteamsdk.readthedocs.io/en/latest/user/intro.html
 .. _pagination: https://developer.ciscospark.com/pagination.html
-.. _ciscosparkapi.readthedocs.io: https://ciscosparkapi.readthedocs.io
-.. _Quickstart: http://ciscosparkapi.readthedocs.io/en/latest/user/quickstart.html
-.. _examples: https://github.com/CiscoDevNet/ciscosparkapi/tree/master/examples
-.. _ciscosparkapi: https://github.com/CiscoDevNet/ciscosparkapi
+.. _webexteamsdk.readthedocs.io: https://webexteamsdk.readthedocs.io
+.. _Quickstart: http://webexteamsdk.readthedocs.io/en/latest/user/quickstart.html
+.. _examples: https://github.com/CiscoDevNet/webexteamsdk/tree/master/examples
+.. _webexteamsdk: https://github.com/CiscoDevNet/webexteamsdk
 .. _ciscosparksdk: https://github.com/CiscoDevNet/ciscosparksdk
-.. _issues: https://github.com/CiscoDevNet/ciscosparkapi/issues
+.. _issues: https://github.com/CiscoDevNet/webexteamsdk/issues
 .. _Community: https://eurl.io/#HkMxO-_9-
-.. _projects: https://github.com/CiscoDevNet/ciscosparkapi/projects
-.. _pull requests: https://github.com/CiscoDevNet/ciscosparkapi/pulls
-.. _releases: https://github.com/CiscoDevNet/ciscosparkapi/releases
+.. _projects: https://github.com/CiscoDevNet/webexteamsdk/projects
+.. _pull requests: https://github.com/CiscoDevNet/webexteamsdk/pulls
+.. _releases: https://github.com/CiscoDevNet/webexteamsdk/releases
 .. _charter: https://github.com/CiscoDevNet/spark-python-packages-team/blob/master/Charter.md
-.. _the repository: ciscosparkapi_
+.. _the repository: webexteamsdk_
 .. _pull request: `pull requests`_

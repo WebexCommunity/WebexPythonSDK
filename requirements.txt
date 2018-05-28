@@ -1,22 +1,32 @@
 alabaster==0.7.10
+appnope==0.1.0
 atomicwrites==1.1.5
 attrs==18.1.0
 Babel==2.5.3
+backcall==0.1.0
 certifi==2018.4.16
 chardet==3.0.4
--e git+https://github.com/CiscoDevNet/ciscosparkapi.git@a99b19eece51a8fc8dc3edc2c5b7a43417c7aac0#egg=ciscosparkapi
+decorator==4.3.0
 docutils==0.14
 flake8==3.5.0
 future==0.16.0
 idna==2.6
 imagesize==1.0.0
+ipython==6.4.0
+ipython-genutils==0.2.0
+jedi==0.12.0
 Jinja2==2.10
 MarkupSafe==1.0
 mccabe==0.6.1
 more-itertools==4.2.0
 packaging==17.1
+parso==0.2.1
+pexpect==4.5.0
+pickleshare==0.7.4
 pkginfo==1.4.2
 pluggy==0.6.0
+prompt-toolkit==1.0.15
+ptyprocess==0.5.2
 py==1.5.3
 pycodestyle==2.3.1
 pyflakes==1.6.0
@@ -26,6 +36,7 @@ pytest==3.6.0
 pytz==2018.4
 requests==2.18.4
 requests-toolbelt==0.8.0
+simplegeneric==0.8.1
 six==1.11.0
 snowballstemmer==1.2.1
 Sphinx==1.7.4
@@ -33,7 +44,10 @@ sphinx-rtd-theme==0.3.1
 sphinxcontrib-websupport==1.0.1
 tox==3.0.0
 tqdm==4.23.4
+traitlets==4.3.2
 twine==1.11.0
 urllib3==1.22
 versioneer==0.18
 virtualenv==16.0.0
+wcwidth==0.1.7
+-e git+https://github.com/CiscoDevNet/ciscosparkapi.git@a356a97156d17f02d2d80bf55344a7bf251598ab#egg=webexteamsdk

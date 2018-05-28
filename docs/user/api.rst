@@ -1,6 +1,6 @@
 .. _User API Doc:
 
-.. currentmodule:: ciscosparkapi
+.. currentmodule:: webexteamsdk
 
 ============
 User API Doc
@@ -26,7 +26,7 @@ and hierarchically organized underneath the :class:`CiscoSparkAPI` class.
 people
 ------
 
-.. autoclass:: ciscosparkapi.api.people.PeopleAPI()
+.. autoclass:: webexteamsdk.api.people.PeopleAPI()
 
 
 .. _rooms:
@@ -34,7 +34,7 @@ people
 rooms
 -----
 
-.. autoclass:: ciscosparkapi.api.rooms.RoomsAPI()
+.. autoclass:: webexteamsdk.api.rooms.RoomsAPI()
 
 
 .. _memberships:
@@ -42,7 +42,7 @@ rooms
 memberships
 -----------
 
-.. autoclass:: ciscosparkapi.api.memberships.MembershipsAPI()
+.. autoclass:: webexteamsdk.api.memberships.MembershipsAPI()
 
 
 .. _messages:
@@ -50,7 +50,7 @@ memberships
 messages
 --------
 
-.. autoclass:: ciscosparkapi.api.messages.MessagesAPI()
+.. autoclass:: webexteamsdk.api.messages.MessagesAPI()
 
 
 .. _teams:
@@ -58,7 +58,7 @@ messages
 teams
 -----
 
-.. autoclass:: ciscosparkapi.api.teams.TeamsAPI()
+.. autoclass:: webexteamsdk.api.teams.TeamsAPI()
 
 
 .. _team_memberships:
@@ -66,7 +66,7 @@ teams
 team_memberships
 ----------------
 
-.. autoclass:: ciscosparkapi.api.team_memberships.TeamMembershipsAPI()
+.. autoclass:: webexteamsdk.api.team_memberships.TeamMembershipsAPI()
 
 
 .. _webhooks:
@@ -74,7 +74,7 @@ team_memberships
 webhooks
 --------
 
-.. autoclass:: ciscosparkapi.api.webhooks.WebhooksAPI()
+.. autoclass:: webexteamsdk.api.webhooks.WebhooksAPI()
 
 
 .. _organizations:
@@ -82,7 +82,7 @@ webhooks
 organizations
 -------------
 
-.. autoclass:: ciscosparkapi.api.organizations.OrganizationsAPI()
+.. autoclass:: webexteamsdk.api.organizations.OrganizationsAPI()
 
 
 .. _licenses:
@@ -90,7 +90,7 @@ organizations
 licenses
 --------
 
-.. autoclass:: ciscosparkapi.api.licenses.LicensesAPI()
+.. autoclass:: webexteamsdk.api.licenses.LicensesAPI()
 
 
 .. _roles:
@@ -98,7 +98,7 @@ licenses
 roles
 -----
 
-.. autoclass:: ciscosparkapi.api.roles.RolesAPI()
+.. autoclass:: webexteamsdk.api.roles.RolesAPI()
 
 
 .. _events:
@@ -106,7 +106,7 @@ roles
 events
 -----
 
-.. autoclass:: ciscosparkapi.api.events.EventsAPI()
+.. autoclass:: webexteamsdk.api.events.EventsAPI()
 
 
 .. _access_tokens:
@@ -114,7 +114,7 @@ events
 access_tokens
 -------------
 
-.. autoclass:: ciscosparkapi.api.access_tokens.AccessTokensAPI()
+.. autoclass:: webexteamsdk.api.access_tokens.AccessTokensAPI()
 
 
 .. _Exceptions:
@@ -122,7 +122,7 @@ access_tokens
 Exceptions
 ==========
 
-.. autoexception:: ciscosparkapiException()
+.. autoexception:: webexteamsdkException()
     :show-inheritance:
     :members:
 

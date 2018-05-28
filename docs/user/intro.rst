@@ -47,14 +47,14 @@ Like I said, EASY.  However, in use, the code can become rather repetitive...
 - When requesting lists of items, you have to deal with pagination_
 
 
-Enter **ciscosparkapi**, a simple API wrapper that wraps all of the Spark API
+Enter **webexteamsdk**, a simple API wrapper that wraps all of the Spark API
 calls and returned JSON objects within native Python objects and methods.
 
-With ciscosparkapi, the above Python code can be consolidated to the following:
+With webexteamsdk, the above Python code can be consolidated to the following:
 
 .. code-block:: python
 
-    from ciscosparkapi import CiscoSparkAPI
+    from webexteamsdk import CiscoSparkAPI
 
     api = CiscoSparkAPI()
     try:
@@ -65,7 +65,7 @@ With ciscosparkapi, the above Python code can be consolidated to the following:
         print(e)
 
 
-**ciscosparkapi handles all of this for you:**
+**webexteamsdk handles all of this for you:**
 
 + Reads your Spark access token from a ``SPARK_ACCESS_TOKEN`` environment
   variable
@@ -103,20 +103,20 @@ All of this, combined, lets you do powerful things simply:
 
 .. code-block:: python
 
-    from ciscosparkapi import CiscoSparkAPI
+    from webexteamsdk import CiscoSparkAPI
 
     api = CiscoSparkAPI()
 
-    # Find all rooms that have 'ciscosparkapi Demo' in their title
+    # Find all rooms that have 'webexteamsdk Demo' in their title
     all_rooms = api.rooms.list()
-    demo_rooms = [room for room in all_rooms if 'ciscosparkapi Demo' in room.title]
+    demo_rooms = [room for room in all_rooms if 'webexteamsdk Demo' in room.title]
 
     # Delete all of the demo rooms
     for room in demo_rooms:
         api.rooms.delete(room.id)
 
     # Create a new demo room
-    demo_room = api.rooms.create('ciscosparkapi Demo')
+    demo_room = api.rooms.create('webexteamsdk Demo')
 
     # Add people to the new demo room
     email_addresses = ["test01@cmlccie.com", "test02@cmlccie.com"]
@@ -129,7 +129,7 @@ All of this, combined, lets you do powerful things simply:
 
 
 That's more than 6 Spark API calls in less than 23 lines of code (with comments
-and whitespace), and likely more than that since ciscosparkapi handles
+and whitespace), and likely more than that since webexteamsdk handles
 pagination_ for you automatically!
 
 Head over to the :ref:`Quickstart` page to begin working with the
@@ -141,11 +141,11 @@ Head over to the :ref:`Quickstart` page to begin working with the
 MIT License
 -----------
 
-ciscosparkapi is currently licensed under the `MIT Open Source License`_, and
+webexteamsdk is currently licensed under the `MIT Open Source License`_, and
 distributed as a source distribution (no binaries) via :ref:`PyPI <Install>`,
 and the complete :ref:`source code <Source Code>` is available on GitHub.
 
-ciscosparkapi License
+webexteamsdk License
 ---------------------
 
 .. include:: ../../LICENSE

@@ -24,7 +24,7 @@ from past.builtins import basestring
 import requests
 
 from .exceptions import (
-    SparkRateLimitError, SparkRateLimitWarning, ciscosparkapiException
+    SparkRateLimitError, SparkRateLimitWarning, webexteamsdkException
 )
 from .response_codes import EXPECTED_RESPONSE_CODE
 from .utils import (
@@ -373,7 +373,7 @@ class RestSession(object):
         Raises:
             SparkApiError: If anything other than the expected response code is
                 returned by the Cisco Spark API endpoint.
-            ciscosparkapiException: If the returned response does not contain a
+            webexteamsdkException: If the returned response does not contain a
                 top-level dictionary with an 'items' key.
 
         """
@@ -388,7 +388,7 @@ class RestSession(object):
             if items is None:
                 error_message = "'items' key not found in JSON data: " \
                                 "{!r}".format(json_page)
-                raise ciscosparkapiException(error_message)
+                raise webexteamsdkException(error_message)
 
             else:
                 for item in items:

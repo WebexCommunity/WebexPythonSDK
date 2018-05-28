@@ -6,7 +6,7 @@ import itertools
 
 import pytest
 
-import ciscosparkapi
+import webexteamsdk
 
 
 __author__ = "Chris Lunsford"
@@ -18,7 +18,7 @@ __license__ = "MIT"
 # Helper Functions
 
 def is_valid_event(obj):
-    return isinstance(obj, ciscosparkapi.Event) and obj.id is not None
+    return isinstance(obj, webexteamsdk.Event) and obj.id is not None
 
 
 def are_valid_events(iterable):

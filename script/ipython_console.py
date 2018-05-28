@@ -14,11 +14,11 @@ from __future__ import (
 
 from builtins import *
 
-import ciscosparkapi
+import webexteamsdk
 
 
 __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-api = ciscosparkapi.CiscoSparkAPI()
+api = webexteamsdk.CiscoSparkAPI()

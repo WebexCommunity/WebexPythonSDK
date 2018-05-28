@@ -29,7 +29,7 @@ from .api.teams import TeamsAPI as _TeamsAPI
 from .api.webhooks import WebhooksAPI as _WebhooksAPI
 from .exceptions import (
     SparkApiError, SparkRateLimitError, SparkRateLimitWarning,
-    ciscosparkapiException,
+    webexteamsdkException,
 )
 from .models import (
     AccessToken, Event, License, Membership, Message, Organization, Person,
@@ -119,7 +119,7 @@ class CiscoSparkAPI(object):
           2. If an access_token argument is not supplied, the package checks
              for a SPARK_ACCESS_TOKEN environment variable.
 
-        A ciscosparkapiException is raised if an access token is not provided
+        A webexteamsdkException is raised if an access token is not provided
         via one of these two methods.
 
         Args:
@@ -128,14 +128,14 @@ class CiscoSparkAPI(object):
                 SPARK_ACCESS_TOKEN environment variable.
             base_url(basestring): The base URL to be prefixed to the
                 individual API endpoint suffixes.
-                Defaults to ciscosparkapi.DEFAULT_BASE_URL.
+                Defaults to webexteamsdk.DEFAULT_BASE_URL.
             timeout(int): [deprecated] Timeout (in seconds) for RESTful HTTP
-                requests. Defaults to ciscosparkapi.DEFAULT_TIMEOUT.
+                requests. Defaults to webexteamsdk.DEFAULT_TIMEOUT.
             single_request_timeout(int): Timeout (in seconds) for RESTful HTTP
                 requests. Defaults to
-                ciscosparkapi.DEFAULT_SINGLE_REQUEST_TIMEOUT.
+                webexteamsdk.DEFAULT_SINGLE_REQUEST_TIMEOUT.
             wait_on_rate_limit(bool): Enables or disables automatic rate-limit
-                handling. Defaults to ciscosparkapi.DEFAULT_WAIT_ON_RATE_LIMIT.
+                handling. Defaults to webexteamsdk.DEFAULT_WAIT_ON_RATE_LIMIT.
             object_factory(callable): The factory function to use to create
                 Python objects from the returned Cisco Spark JSON data objects.
 
@@ -144,7 +144,7 @@ class CiscoSparkAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ciscosparkapiException: If an access token is not provided via the
+            webexteamsdkException: If an access token is not provided via the
                 access_token argument or SPARK_ACCESS_TOKEN environment
                 variable.
 
@@ -161,7 +161,7 @@ class CiscoSparkAPI(object):
                             "interact with the Cisco Spark APIs, either via " \
                             "a SPARK_ACCESS_TOKEN environment variable " \
                             "or via the access_token argument."
-            raise ciscosparkapiException(error_message)
+            raise webexteamsdkException(error_message)
 
         # Create the API session
         # All of the API calls associated with a CiscoSparkAPI object will

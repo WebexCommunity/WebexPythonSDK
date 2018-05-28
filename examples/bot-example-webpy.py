@@ -45,7 +45,7 @@ __license__ = "MIT"
 import web
 import requests
 
-from ciscosparkapi import CiscoSparkAPI, Webhook
+from webexteamsdk import CiscoSparkAPI, Webhook
 
 
 # Module constants

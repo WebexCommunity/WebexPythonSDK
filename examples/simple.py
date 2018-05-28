@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #  -*- coding: utf-8 -*-
-"""Simple ciscosparkapi demonstration script.
+"""Simple webexteamsdk demonstration script.
 
 Very simple script to create a demo room, post a message, and post a file.
 If one or more rooms with the name of the demo room already exist, it will
@@ -14,10 +14,10 @@ variable set to run this script.
 
 
 from __future__ import print_function
-from ciscosparkapi import CiscoSparkAPI
+from webexteamsdk import CiscoSparkAPI
 
 
-DEMO_ROOM_NAME = "ciscosparkapi Demo Room"
+DEMO_ROOM_NAME = "webexteamsdk Demo Room"
 DEMO_PEOPLE = ["test01@cmlccie.com", "test02@cmlccie.com"]
 DEMO_MESSAGE = u"Cisco Spark rocks!  \ud83d\ude0e"
 DEMO_FILE_URL = "https://developer.ciscospark.com/images/logo_spark_lg@256.png"

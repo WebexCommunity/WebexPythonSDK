@@ -37,7 +37,7 @@ setup(
     install_requires=[
         'cornice',
         'waitress',
-        'ciscosparkapi'
+        'webexteamsdk'
     ],
     entry_points="""[paste.app_factory]
                     main=pyramidSparkBot:main

@@ -15,7 +15,7 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-STRING_PREFIX = "ciscosparkapi py.test"
+STRING_PREFIX = "webexteamsdk py.test"
 STRING_TEMPLATE = string.Template("$prefix $item [$datetime]")
 
 

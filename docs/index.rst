@@ -1,22 +1,22 @@
-.. currentmodule:: ciscosparkapi
+.. currentmodule:: webexteamsdk
 
 =============
-ciscosparkapi
+webexteamsdk
 =============
 
 *Simple, lightweight, scalable Python API wrapper for the Cisco Spark APIs*
 
 -------------------------------------------------------------------------------
 
-Welcome to the docs!  ciscosparkapi is a *community developed* Pythonic
+Welcome to the docs!  webexteamsdk is a *community developed* Pythonic
 wrapping of the Cisco Spark APIs.  The package represents all of the Cisco
 Spark API interactions via native Python tools.  Making working with the Cisco
 Spark APIs in Python a *native* and *natural* experience.
 
-**ciscosparkapi helps you get things done faster.**  We take
+**webexteamsdk helps you get things done faster.**  We take
 care of the API semantics, and you can focus on writing your code.
 
-With ciscosparkapi, you can easily:
+With webexteamsdk, you can easily:
 
 * Interact with the Cisco Spark APIs in an interactive Python session
 
@@ -25,7 +25,7 @@ With ciscosparkapi, you can easily:
 * Leverage the API wrapper to cleanly add Spark functionality to your project
   without having to write the boilerplate code for working with the Spark APIs
 
-To *dive in* and see how ciscosparkapi makes your life better, check out the
+To *dive in* and see how webexteamsdk makes your life better, check out the
 :ref:`Quickstart`!
 
 The User Guide
@@ -44,7 +44,7 @@ The Community Guide
 ===================
 
 Community developer docs are *coming soon*.  For now, please see the
-contribution_ instructions on the ciscosparkapi_ GitHub page to get started.
+contribution_ instructions on the webexteamsdk_ GitHub page to get started.
 
 
 General Information about the Cisco Spark Service
@@ -73,5 +73,5 @@ is easy.  Signup for a `free account`_ and then head over to the
 .. _free account: `Cisco Spark`
 .. _Cisco Spark: https://www.ciscospark.com/
 .. _Spark for Developers: https://developer.ciscospark.com/
-.. _contribution: https://github.com/CiscoDevNet/ciscosparkapi#contribution
-.. _ciscosparkapi: https://github.com/CiscoDevNet/ciscosparkapi
+.. _contribution: https://github.com/CiscoDevNet/webexteamsdk#contribution
+.. _webexteamsdk: https://github.com/CiscoDevNet/webexteamsdk

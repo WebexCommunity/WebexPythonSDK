@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ciscosparkapi exception classes."""
+"""webexteamsdk exception classes."""
 
 
 from __future__ import (
@@ -106,12 +106,12 @@ def response_to_string(response):
     ])
 
 
-class ciscosparkapiException(Exception):
-    """Base class for all ciscosparkapi package exceptions."""
+class webexteamsdkException(Exception):
+    """Base class for all webexteamsdk package exceptions."""
     pass
 
 
-class SparkApiError(ciscosparkapiException):
+class SparkApiError(webexteamsdkException):
     """Errors returned by requests to the Cisco Spark cloud APIs."""
 
     def __init__(self, response):

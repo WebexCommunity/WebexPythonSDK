@@ -6,7 +6,7 @@ import itertools
 
 import pytest
 
-import ciscosparkapi
+import webexteamsdk
 
 
 __author__ = "Chris Lunsford"
@@ -71,7 +71,7 @@ def empty_room(api, me, room):
 
 
 def is_valid_membership(membership):
-    return isinstance(membership, ciscosparkapi.Membership) \
+    return isinstance(membership, webexteamsdk.Membership) \
            and membership.id is not None
 
 
@@ -83,7 +83,7 @@ def are_valid_memberships(iterable):
 def membership_exists(api, membership):
     try:
         get_membership_by_id(api, membership.id)
-    except ciscosparkapi.SparkApiError:
+    except webexteamsdk.SparkApiError:
         return False
     else:
         return True

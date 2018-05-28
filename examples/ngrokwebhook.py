@@ -35,7 +35,7 @@ __license__ = "MIT"
 
 import sys
 
-from ciscosparkapi import CiscoSparkAPI
+from webexteamsdk import CiscoSparkAPI
 import requests
 
 

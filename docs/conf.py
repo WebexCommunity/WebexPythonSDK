@@ -7,10 +7,10 @@ import sys
 sys.path.insert(0, os.path.abspath('..'))
 
 
-from ciscosparkapi._version import get_versions
+from webexteamsdk._version import get_versions
 
 
-project = u'ciscosparkapi'
+project = u'webexteamsdk'
 copyright = u'2016 Cisco Systems, Inc.'
 author = u'Chris Lunsford'
 version = get_versions()['version']
@@ -70,7 +70,7 @@ if not on_rtd:
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-# html_title = u'ciscosparkapi vv0.3'
+# html_title = u'webexteamsdk vv0.3'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
@@ -170,7 +170,7 @@ html_static_path = ['_static']
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'ciscosparkapidoc'
+htmlhelp_basename = 'webexteamsdkdoc'
 
 
 
@@ -198,7 +198,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'ciscosparkapi.tex', u'ciscosparkapi Documentation',
+    (master_doc, 'webexteamsdk.tex', u'webexteamsdk Documentation',
      u'Chris Lunsford', 'manual'),
 ]
 
@@ -241,7 +241,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'ciscosparkapi', u'ciscosparkapi Documentation',
+    (master_doc, 'webexteamsdk', u'webexteamsdk Documentation',
      [author], 1)
 ]
 
@@ -257,8 +257,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'ciscosparkapi', u'ciscosparkapi Documentation',
-     author, 'ciscosparkapi', 'One line description of project.',
+    (master_doc, 'webexteamsdk', u'webexteamsdk Documentation',
+     author, 'webexteamsdk', 'One line description of project.',
      'Miscellaneous'),
 ]
 

@@ -10,14 +10,14 @@ Installation
 PIP Install
 -----------
 
-ciscosparkapi is available via PIP and the `Python Package Index (PyPI)`_.  To
-install ciscosparkapi, simply run this command from your terminal of choice:
+webexteamsdk is available via PIP and the `Python Package Index (PyPI)`_.  To
+install webexteamsdk, simply run this command from your terminal of choice:
 
 .. code-block:: bash
 
-    $ pip install ciscosparkapi
+    $ pip install webexteamsdk
 
-The ciscosparkapi package is distributed as a *source distribution* (no
+The webexteamsdk package is distributed as a *source distribution* (no
 binaries).
 
 
@@ -31,7 +31,7 @@ PIP:
 
 .. code-block:: bash
 
-    $ pip install ciscosparkapi --upgrade
+    $ pip install webexteamsdk --upgrade
 
 
 .. _Source Code:
@@ -39,16 +39,16 @@ PIP:
 Get the Source Code
 -------------------
 
-ciscosparkapi is developed on GitHub.  If you like and use this package,
+webexteamsdk is developed on GitHub.  If you like and use this package,
 please take a few seconds to Star the package on
-the `CiscoDevNet/ciscosparkapi`_ GitHub page.  Your feedback and
+the `CiscoDevNet/webexteamsdk`_ GitHub page.  Your feedback and
 contributions are always welcome.
 
 Use the following command to download the source code (GIT repository):
 
 .. code-block:: bash
 
-    $ git clone https://github.com/CiscoDevNet/ciscosparkapi.git
+    $ git clone https://github.com/CiscoDevNet/webexteamsdk.git
 
 You can then install the package to your environment, with the following
 command:
@@ -61,5 +61,5 @@ command:
 *Copyright (c) 2016-2018 Cisco and/or its affiliates.*
 
 
-.. _Python Package Index (PyPI): https://pypi.python.org/pypi/ciscosparkapi
-.. _CiscoDevNet/ciscosparkapi: https://github.com/CiscoDevNet/ciscosparkapi
+.. _Python Package Index (PyPI): https://pypi.python.org/pypi/webexteamsdk
+.. _CiscoDevNet/webexteamsdk: https://github.com/CiscoDevNet/webexteamsdk

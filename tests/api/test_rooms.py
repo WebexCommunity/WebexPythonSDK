@@ -6,7 +6,7 @@ import itertools
 
 import pytest
 
-import ciscosparkapi
+import webexteamsdk
 from tests.utils import create_string
 
 
@@ -29,7 +29,7 @@ def create_team_room(api, team, room_title):
 def delete_room(api, room):
     try:
         api.rooms.delete(room.id)
-    except ciscosparkapi.SparkApiError as e:
+    except webexteamsdk.SparkApiError as e:
         if e.response.status_code == 404:
             # Room doesn't exist
             pass
@@ -38,7 +38,7 @@ def delete_room(api, room):
 
 
 def is_valid_room(obj):
-    return isinstance(obj, ciscosparkapi.Room) and obj.id is not None
+    return isinstance(obj, webexteamsdk.Room) and obj.id is not None
 
 
 def are_valid_rooms(iterable):
@@ -48,7 +48,7 @@ def are_valid_rooms(iterable):
 def room_exists(api, room):
     try:
         api.rooms.get(room.id)
-    except ciscosparkapi.SparkApiError:
+    except webexteamsdk.SparkApiError:
         return False
     else:
         return True

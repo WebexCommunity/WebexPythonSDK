@@ -20,7 +20,7 @@ import urllib.parse
 from past.builtins import basestring
 
 from .exceptions import (
-    SparkApiError, SparkRateLimitError, ciscosparkapiException,
+    SparkApiError, SparkRateLimitError, webexteamsdkException,
 )
 from .response_codes import RATE_LIMIT_RESPONSE_CODE
 
@@ -73,7 +73,7 @@ def validate_base_url(base_url):
     else:
         error_message = "base_url must contain a valid scheme (protocol " \
                         "specifier) and network location (hostname)"
-        raise ciscosparkapiException(error_message)
+        raise webexteamsdkException(error_message)
 
 
 def is_web_url(string):

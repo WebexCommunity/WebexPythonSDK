@@ -1,13 +1,13 @@
 Contribution
 ------------
 
-[ciscosparkapi](https://github.com/CiscoDevNet/ciscosparkapi) is a community
+[webexteamsdk](https://github.com/CiscoDevNet/webexteamsdk) is a community
 development project.  Feedback, thoughts, ideas and code contributions are
 most welcome!
 
 **How to contributed feedback, issues, thoughts and ideas...**
 
-Please use the [issues](https://github.com/CiscoDevNet/ciscosparkapi/issues) 
+Please use the [issues](https://github.com/CiscoDevNet/webexteamsdk/issues) 
 log. to report issues or post ideas for enhancement or discussion.
 
 **Interested in contributing code?**

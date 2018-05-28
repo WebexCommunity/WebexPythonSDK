@@ -23,7 +23,7 @@ with open(path.join(current_path, 'README.rst'), encoding='utf-8') as f:
 
 
 setup(
-    name='ciscosparkapi',
+    name='webexteamsdk',
 
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
@@ -32,8 +32,8 @@ setup(
                 'Cisco Spark APIs',
     long_description=long_description,
 
-    url='https://github.com/CiscoDevNet/ciscosparkapi',
-    download_url="https://pypi.python.org/pypi/ciscosparkapi",
+    url='https://github.com/CiscoDevNet/webexteamsdk',
+    download_url="https://pypi.python.org/pypi/webexteamsdk",
 
     author=__author__,
     author_email=__author_email__,
@@ -59,7 +59,7 @@ setup(
 
     keywords='cisco spark api enterprise messaging',
 
-    packages=find_packages(include=['ciscosparkapi', 'ciscosparkapi.*']),
+    packages=find_packages(include=['webexteamsdk', 'webexteamsdk.*']),
 
     install_requires=[
             'future',

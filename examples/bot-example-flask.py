@@ -45,7 +45,7 @@ __license__ = "MIT"
 from flask import Flask, request
 import requests
 
-from ciscosparkapi import CiscoSparkAPI, Webhook
+from webexteamsdk import CiscoSparkAPI, Webhook
 
 
 # Module constants

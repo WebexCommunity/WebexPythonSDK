@@ -95,7 +95,7 @@ class AccessTokensAPI(object):
                 process.
 
         Returns:
-            ciscosparkapi.AccessToken: An AccessToken object with the access
+            webexteamsdk.AccessToken: An AccessToken object with the access
                 token provided by the Cisco Spark cloud.
 
         Raises:

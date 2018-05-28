@@ -6,7 +6,7 @@ import itertools
 
 import pytest
 
-import ciscosparkapi
+import webexteamsdk
 
 
 __author__ = "Chris Lunsford"
@@ -56,7 +56,7 @@ def delete_person(api, person):
 
 
 def is_valid_person(obj):
-    return isinstance(obj, ciscosparkapi.Person) and obj.id is not None
+    return isinstance(obj, webexteamsdk.Person) and obj.id is not None
 
 
 def are_valid_people(iterable):
@@ -66,7 +66,7 @@ def are_valid_people(iterable):
 def person_exists(api, person):
     try:
         get_person_by_id(api, person.id)
-    except ciscosparkapi.SparkApiError:
+    except webexteamsdk.SparkApiError:
         return False
     else:
         return True
@@ -89,9 +89,9 @@ def get_test_person(api, get_new_email_address, me, licenses_dict):
         else:
             person = create_person(api,
                                    emails=[person_email],
-                                   displayName="ciscosparkapi",
-                                   firstName="ciscosparkapi",
-                                   lastName="ciscosparkapi",
+                                   displayName="webexteamsdk",
+                                   firstName="webexteamsdk",
+                                   lastName="webexteamsdk",
                                    orgId=me.orgId,
                                    licenses=[licenses_dict["Messaging"].id],
                                    )
@@ -161,9 +161,9 @@ def temp_person(api, get_random_email_address, me, licenses_dict):
     person = create_person(
         api,
         emails=[person_email],
-        displayName="ciscosparkapi",
-        firstName="ciscosparkapi",
-        lastName="ciscosparkapi",
+        displayName="webexteamsdk",
+        firstName="webexteamsdk",
+        lastName="webexteamsdk",
         orgId=me.orgId,
         licenses=[licenses_dict["Messaging"].id],
     )
