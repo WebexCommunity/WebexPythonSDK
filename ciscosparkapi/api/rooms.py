@@ -90,7 +90,7 @@ class RoomsAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-                yields the rooms returned by the Cisco Spark query.
+            yields the rooms returned by the Cisco Spark query.
 
         Raises:
             TypeError: If the parameter types are incorrect.

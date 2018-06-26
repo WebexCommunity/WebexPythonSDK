@@ -90,7 +90,7 @@ class MessagesAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-                yields the messages returned by the Cisco Spark query.
+            yields the messages returned by the Cisco Spark query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -213,7 +213,7 @@ class MessagesAPI(object):
 
         Returns:
             Message: A Message object with the details of the requested
-                message.
+            message.
 
         Raises:
             TypeError: If the parameter types are incorrect.

@@ -96,7 +96,7 @@ class EventsAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-                yields the events returned by the Cisco Spark query.
+            yields the events returned by the Cisco Spark query.
 
         Raises:
             TypeError: If the parameter types are incorrect.

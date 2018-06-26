@@ -86,7 +86,7 @@ class PeopleAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-                yields the people returned by the Cisco Spark query.
+            yields the people returned by the Cisco Spark query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
