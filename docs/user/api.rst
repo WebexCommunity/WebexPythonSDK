@@ -104,7 +104,7 @@ roles
 .. _events:
 
 events
------
+------
 
 .. autoclass:: ciscosparkapi.api.events.EventsAPI()
 

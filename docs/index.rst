@@ -54,7 +54,7 @@ What is Cisco Spark?
 --------------------
 
     "Cisco Spark is where all your work lives.  Bring your teams together in a
-     place that makes it easy to keep people and work connected."
+    place that makes it easy to keep people and work connected."
 
 Check out the official `Cisco Spark`_ website for more information and to
 create a free account!

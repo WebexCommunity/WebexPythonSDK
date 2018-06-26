@@ -136,7 +136,7 @@ Head over to the :ref:`Quickstart` page to begin working with the
 **Cisco Spark APIs in native Python**!
 
 
-.. _License:
+.. _MITLicense:
 
 MIT License
 -----------
