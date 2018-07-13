@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams API wrapper.
+"""Webex Teams API wrappers.
 
 Copyright (c) 2016-2018 Cisco and/or its affiliates.
 
