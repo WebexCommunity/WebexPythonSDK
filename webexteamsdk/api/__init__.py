@@ -22,17 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
-import os
-
 from past.types import basestring
 
 from webexteamsdk.config import (
-    ACCESS_TOKEN_ENVIRONMENT_VARIABLE, DEFAULT_BASE_URL,
-    DEFAULT_SINGLE_REQUEST_TIMEOUT, DEFAULT_WAIT_ON_RATE_LIMIT,
+    DEFAULT_BASE_URL, DEFAULT_SINGLE_REQUEST_TIMEOUT,
+    DEFAULT_WAIT_ON_RATE_LIMIT,
 )
+from webexteamsdk.environment import WEBEX_TEAMS_ACCESS_TOKEN
 from webexteamsdk.exceptions import AccessTokenError
-from webexteamsdk.models import spark_data_factory
+from webexteamsdk.models.immutable import immutable_data_factory
 from webexteamsdk.restsession import RestSession
 from webexteamsdk.utils import check_type
 from .access_tokens import AccessTokensAPI
@@ -87,17 +85,17 @@ class WebexTeamsAPI(object):
     def __init__(self, access_token=None, base_url=DEFAULT_BASE_URL,
                  single_request_timeout=DEFAULT_SINGLE_REQUEST_TIMEOUT,
                  wait_on_rate_limit=DEFAULT_WAIT_ON_RATE_LIMIT,
-                 object_factory=spark_data_factory):
+                 object_factory=immutable_data_factory):
         """Create a new WebexTeamsAPI object.
 
         An access token must be used when interacting with the Webex Teams API.
         This package supports two methods for you to provide that access token:
 
-          1. You may manually specify the access token via the access_token
+          1. You may manually specify the access token via the `access_token`
              argument, when creating a new WebexTeamsAPI object.
 
           2. If an access_token argument is not supplied, the package checks
-             for a SPARK_ACCESS_TOKEN environment variable.
+             for a WEBEX_TEAMS_ACCESS_TOKEN environment variable.
 
         An AccessTokenError is raised if an access token is not provided
         via one of these two methods.
@@ -105,15 +103,16 @@ class WebexTeamsAPI(object):
         Args:
             access_token(basestring): The access token to be used for API
                 calls to the Webex Teams service.  Defaults to checking for a
-                SPARK_ACCESS_TOKEN environment variable.
+                WEBEX_TEAMS_ACCESS_TOKEN environment variable.
             base_url(basestring): The base URL to be prefixed to the
                 individual API endpoint suffixes.
                 Defaults to webexteamsdk.DEFAULT_BASE_URL.
             single_request_timeout(int): Timeout (in seconds) for RESTful HTTP
                 requests. Defaults to
-                webexteamsdk.DEFAULT_SINGLE_REQUEST_TIMEOUT.
+                webexteamsdk.config.DEFAULT_SINGLE_REQUEST_TIMEOUT.
             wait_on_rate_limit(bool): Enables or disables automatic rate-limit
-                handling. Defaults to webexteamsdk.DEFAULT_WAIT_ON_RATE_LIMIT.
+                handling. Defaults to
+                webexteamsdk.config.DEFAULT_WAIT_ON_RATE_LIMIT.
             object_factory(callable): The factory function to use to create
                 Python objects from the returned Webex Teams JSON data objects.
 
@@ -132,14 +131,13 @@ class WebexTeamsAPI(object):
         check_type(single_request_timeout, int)
         check_type(wait_on_rate_limit, bool)
 
-        env_access_token = os.environ.get(ACCESS_TOKEN_ENVIRONMENT_VARIABLE)
-        access_token = access_token or env_access_token
+        access_token = access_token or WEBEX_TEAMS_ACCESS_TOKEN
         if not access_token:
-            error_message = "You must provide an Spark access token to " \
-                            "interact with the Webex Teams APIs, either via " \
-                            "a SPARK_ACCESS_TOKEN environment variable " \
-                            "or via the access_token argument."
-            raise AccessTokenError(error_message)
+            raise AccessTokenError(
+                "You must provide a Webex Teams access token to interact with "
+                "the Webex Teams APIs, either via a SPARK_ACCESS_TOKEN "
+                "environment variable or via the access_token argument."
+            )
 
         # Create the API session
         # All of the API calls associated with a WebexTeamsAPI object will
