@@ -30,12 +30,12 @@ from __future__ import (
     unicode_literals,
 )
 
-from builtins import *
 import sys
 import textwrap
+from builtins import *
 
-from past.builtins import basestring
 import requests
+from past.builtins import basestring
 
 from .response_codes import SPARK_RESPONSE_CODES
 
@@ -43,7 +43,7 @@ from .response_codes import SPARK_RESPONSE_CODES
 # Helper functions
 
 
-def to_unicode(string):
+def _to_unicode(string):
     """Convert a string (bytes, str or unicode) to unicode."""
     assert isinstance(string, basestring)
     if sys.version_info[0] >= 3:
@@ -58,7 +58,22 @@ def to_unicode(string):
             return string
 
 
-def response_to_string(response):
+def _sanitize(header_tuple):
+    """Sanitize request headers.
+
+    Remove authentication `Bearer` token.
+    """
+    header, value = header_tuple
+
+    if (header.lower().strip() == "Authorization".lower().strip()
+            and "Bearer".lower().strip() in value.lower().strip()):
+        return header, "Bearer <redacted>"
+
+    else:
+        return header_tuple
+
+
+def _response_to_string(response):
     """Render a response object as a human readable string."""
     assert isinstance(response, requests.Response)
     request = response.request
@@ -70,12 +85,12 @@ def response_to_string(response):
                         width=79,
                         subsequent_indent=' ' * (len(request.method) + 1))
     req_headers = [
-        textwrap.fill("{}: {}".format(*sanitize(header)),
+        textwrap.fill("{}: {}".format(*_sanitize(header)),
                       width=79,
                       subsequent_indent=' ' * 4)
         for header in request.headers.items()
     ]
-    req_body = (textwrap.fill(to_unicode(request.body), width=79)
+    req_body = (textwrap.fill(_to_unicode(request.body), width=79)
                 if request.body else "")
 
     # Prepare response components
@@ -130,7 +145,7 @@ class SparkApiError(webexteamsdkException):
         response_reason = " " + response.reason if response.reason else ""
         description = SPARK_RESPONSE_CODES.get(response_code,
                                                "Unknown Response Code")
-        detail = response_to_string(response)
+        detail = _response_to_string(response)
 
         super(SparkApiError, self).__init__("Response Code [{}]{} - {}\n{}"
                                             "".format(response_code,
