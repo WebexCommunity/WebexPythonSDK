@@ -33,20 +33,21 @@ from __future__ import (
 import logging
 
 from ._metadata import *
+from ._version import get_versions
 from .api import WebexTeamsAPI
 from .exceptions import (
     ApiError, RateLimitError, RateLimitWarning,
     webexteamsdkException,
 )
-from .models import (
+from .models.dictionary import dict_data_factory
+from .models.immutable import (
     AccessToken, Event, License, Membership, Message, Organization, Person,
-    Role, Room, Team, TeamMembership, Webhook, WebhookEvent, dict_data_factory,
-    simple_data_factory, spark_data_factory,
+    Role, Room, Team, TeamMembership, Webhook, WebhookEvent,
+    immutable_data_factory,
 )
+from .models.simple import SimpleDataModel, simple_data_factory
 
 
-# Versioneer version control
-from ._version import get_versions
 __version__ = get_versions()['version']
 del get_versions
 

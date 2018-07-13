@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Organization data model.
+"""Webex Teams Team-Membership data model.
 
 Copyright (c) 2016-2018 Cisco and/or its affiliates.
 
@@ -32,23 +32,46 @@ from __future__ import (
 
 from builtins import *
 
-from .sparkdata import SparkData
 
-
-class OrganizationBasicPropertiesMixin(object):
+class TeamMembershipBasicPropertiesMixin(object):
     """A mixin for :class:`SparkData` classes."""
 
     @property
     def id(self):
-        """The unique ID for the Organization."""
+        """The team membership's unique ID."""
         return self._json_data.get('id')
 
     @property
-    def displayName(self):
-        """The human-friendly display name of the Organization."""
-        return self._json_data.get('displayName')
+    def teamId(self):
+        """The ID of the team."""
+        return self._json_data.get('teamId')
+
+    @property
+    def personId(self):
+        """The ID of the person."""
+        return self._json_data.get('personId')
+
+    @property
+    def personEmail(self):
+        """The email address of the person."""
+        return self._json_data.get('personEmail')
+
+    @property
+    def personDisplayName(self):
+        """The display name of the person."""
+        return self._json_data.get('personDisplayName')
+
+    @property
+    def personOrgId(self):
+        """The ID of the organization that the person is associated with."""
+        return self._json_data.get('personOrgId')
+
+    @property
+    def isModerator(self):
+        """Person is a moderator for the team."""
+        return self._json_data.get('isModerator')
 
     @property
     def created(self):
-        """Creation date and time in ISO8601 format."""
+        """The date and time the team membership was created."""
         return self._json_data.get('created')

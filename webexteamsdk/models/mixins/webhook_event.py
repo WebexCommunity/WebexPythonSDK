@@ -32,8 +32,6 @@ from __future__ import (
 
 from builtins import *
 
-from .sparkdata import SparkData
-
 
 class WebhookEventBasicPropertiesMixin(object):
     """A mixin for :class:`SparkData` classes."""
@@ -103,8 +101,3 @@ class WebhookEventBasicPropertiesMixin(object):
     def actorId(self):
         """The ID of the person that caused the webhook to be sent."""
         return self._json_data.get('actorId')
-
-    @property
-    def data(self):
-        """The data for the resource that triggered the webhook."""
-        return SparkData(self._json_data.get('data'))

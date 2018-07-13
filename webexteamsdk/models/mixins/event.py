@@ -32,8 +32,6 @@ from __future__ import (
 
 from builtins import *
 
-from .sparkdata import SparkData
-
 
 class EventBasicPropertiesMixin(object):
     """A mixin for :class:`SparkData` classes."""
@@ -45,7 +43,7 @@ class EventBasicPropertiesMixin(object):
 
     @property
     def resource(self):
-        """The event resource type (`messagess`, `memberships`)."""
+        """The event resource type (`messages`, `memberships`)."""
         return self._json_data.get('resource')
 
     @property
@@ -62,8 +60,3 @@ class EventBasicPropertiesMixin(object):
     def created(self):
         """The date and time the event was performed."""
         return self._json_data.get('created')
-
-    @property
-    def data(self):
-        """The event resource data."""
-        return SparkData(self._json_data.get('data'))

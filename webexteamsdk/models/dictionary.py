@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Simple data model; models Webex Teams JSON objects as simple Python objects.
-
-Classes:
-    SimpleDataModel: Models Spark JSON objects as simple Python objects.
-
-The SimpleDataModel class models any JSON object passed to it as a string or
-Python dictionary as a native Python object; providing attribute access using
-native dot-syntax.
+"""Webex Teams data models.
 
 Copyright (c) 2016-2018 Cisco and/or its affiliates.
 
@@ -37,41 +30,10 @@ from __future__ import (
     unicode_literals,
 )
 
-import json
-from builtins import *
-
 from webexteamsdk.utils import json_dict
 
 
-class SimpleDataModel(object):
-    """Model a Spark JSON object as a simple Python object."""
-
-    def __init__(self, json_data):
-        """Init a new SparkData object from a dictionary or JSON string.
-
-        Args:
-            json_data(dict, basestring): Input JSON string or dictionary.
-
-        Raises:
-            TypeError: If the input object is not a dictionary or string.
-
-        """
-        super(SimpleDataModel, self).__init__()
-        for attribute, value in json_dict(json_data).items():
-            setattr(self, attribute, value)
-
-    def __str__(self):
-        """A human-readable string representation of this object."""
-        return json.dumps(self.__dict__, ensure_ascii=False, indent=4)
-
-    def __repr__(self):
-        """A string representing this object as valid Python expression."""
-        class_str = self.__class__.__name__
-        json_str = json.dumps(self.__dict__, ensure_ascii=False)
-        return "{}({})".format(class_str, repr(json_str))
-
-
-def simple_data_factory(model, json_data):
+def dict_data_factory(model, json_data):
     """Factory function for creating SimpleDataModel objects.
 
     Args:
@@ -81,11 +43,12 @@ def simple_data_factory(model, json_data):
             which to initialize the object.
 
     Returns:
-        SimpleDataModel: The created SimpleDataModel object.
+        OrderedDict: An ordered dictionary with the contents of the Spark JSON
+            object.
 
     Raises:
         TypeError: If the json_data parameter is not a JSON string or
             dictionary.
 
     """
-    return SimpleDataModel(json_data)
+    return json_dict(json_data)
