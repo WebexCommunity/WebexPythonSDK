@@ -40,9 +40,6 @@ from past.builtins import basestring
 from .response_codes import SPARK_RESPONSE_CODES
 
 
-# Helper functions
-
-
 def _to_unicode(string):
     """Convert a string (bytes, str or unicode) to unicode."""
     assert isinstance(string, basestring)
@@ -127,7 +124,12 @@ class webexteamsdkException(Exception):
     pass
 
 
-class SparkApiError(webexteamsdkException):
+class AccessTokenError(webexteamsdkException):
+    """Raised when an incorrect Webex Teams Access Token has been provided."""
+    pass
+
+
+class ApiError(webexteamsdkException):
     """Errors returned by requests to the Webex Teams cloud APIs."""
 
     def __init__(self, response):
@@ -147,18 +149,27 @@ class SparkApiError(webexteamsdkException):
                                                "Unknown Response Code")
         detail = _response_to_string(response)
 
-        super(SparkApiError, self).__init__("Response Code [{}]{} - {}\n{}"
+        super(ApiError, self).__init__("Response Code [{}]{} - {}\n{}"
                                             "".format(response_code,
                                                       response_reason,
                                                       description,
                                                       detail))
 
 
-class SparkRateLimitError(SparkApiError):
-    """Webex Teams Rate-Limit exceeded Error."""
+class MalformedResponse(webexteamsdkException):
+    """Raised when a malformed response is received from Webex Teams."""
+    pass
+
+
+class RateLimitError(ApiError):
+    """Webex Teams Rate-Limit exceeded Error.
+
+    Raised when a rate-limit exceeded message is received and the request
+    **will not** be retried.
+    """
 
     def __init__(self, response):
-        super(SparkRateLimitError, self).__init__(response)
+        super(RateLimitError, self).__init__(response)
 
         # Extended exception data attributes
         self.retry_after = max(1, int(response.headers.get('Retry-After', 15)))
@@ -171,11 +182,15 @@ class SparkRateLimitError(SparkApiError):
         """
 
 
-class SparkRateLimitWarning(UserWarning):
-    """Webex Teams rate-limit exceeded warning; the request will be retried."""
+class RateLimitWarning(UserWarning):
+    """Webex Teams rate-limit exceeded warning.
+
+    Raised when a rate-limit exceeded message is received and the request will
+    be retried.
+    """
 
     def __init__(self, response):
-        super(SparkRateLimitWarning, self).__init__()
+        super(RateLimitWarning, self).__init__()
         self.retry_after = max(1, int(response.headers.get('Retry-After', 15)))
         """The `Retry-After` time period (in seconds) provided by Webex Teams.
 
@@ -186,7 +201,7 @@ class SparkRateLimitWarning(UserWarning):
         """
 
     def __str__(self):
-        """Spark rate-limit exceeded warning message."""
+        """Webex Teams rate-limit exceeded warning message."""
         return "Rate-limit response received; the request will " \
                "automatically be retried in {0} seconds." \
                "".format(self.retry_after)

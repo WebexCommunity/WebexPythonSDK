@@ -122,7 +122,7 @@ class AccessTokensAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(client_id, basestring, may_be_none=False)
@@ -163,7 +163,7 @@ class AccessTokensAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(client_id, basestring, may_be_none=False)

@@ -31,7 +31,7 @@ from webexteamsdk.config import (
     ACCESS_TOKEN_ENVIRONMENT_VARIABLE, DEFAULT_BASE_URL,
     DEFAULT_SINGLE_REQUEST_TIMEOUT, DEFAULT_WAIT_ON_RATE_LIMIT,
 )
-from webexteamsdk.exceptions import webexteamsdkException
+from webexteamsdk.exceptions import AccessTokenError
 from webexteamsdk.models import spark_data_factory
 from webexteamsdk.restsession import RestSession
 from webexteamsdk.utils import check_type
@@ -99,7 +99,7 @@ class WebexTeamsAPI(object):
           2. If an access_token argument is not supplied, the package checks
              for a SPARK_ACCESS_TOKEN environment variable.
 
-        A webexteamsdkException is raised if an access token is not provided
+        An AccessTokenError is raised if an access token is not provided
         via one of these two methods.
 
         Args:
@@ -122,7 +122,7 @@ class WebexTeamsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            webexteamsdkException: If an access token is not provided via the
+            AccessTokenError: If an access token is not provided via the
                 access_token argument or SPARK_ACCESS_TOKEN environment
                 variable.
 
@@ -139,7 +139,7 @@ class WebexTeamsAPI(object):
                             "interact with the Webex Teams APIs, either via " \
                             "a SPARK_ACCESS_TOKEN environment variable " \
                             "or via the access_token argument."
-            raise webexteamsdkException(error_message)
+            raise AccessTokenError(error_message)
 
         # Create the API session
         # All of the API calls associated with a WebexTeamsAPI object will

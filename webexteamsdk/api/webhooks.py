@@ -98,7 +98,7 @@ class WebhooksAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(max, int)
@@ -135,7 +135,7 @@ class WebhooksAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(name, basestring, may_be_none=False)
@@ -173,7 +173,7 @@ class WebhooksAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(webhookId, basestring, may_be_none=False)
@@ -201,7 +201,7 @@ class WebhooksAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(webhookId, basestring, may_be_none=False)
@@ -229,7 +229,7 @@ class WebhooksAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(webhookId, basestring, may_be_none=False)

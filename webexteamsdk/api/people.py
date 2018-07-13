@@ -105,7 +105,7 @@ class PeopleAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(id, basestring)
@@ -158,7 +158,7 @@ class PeopleAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(emails, list, may_be_none=False)
@@ -199,7 +199,7 @@ class PeopleAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(personId, basestring, may_be_none=False)
@@ -246,7 +246,7 @@ class PeopleAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(emails, list)
@@ -287,7 +287,7 @@ class PeopleAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(personId, basestring, may_be_none=False)
@@ -299,7 +299,7 @@ class PeopleAPI(object):
         """Get the details of the person accessing the API.
 
         Raises:
-            SparkApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex Teams cloud returns an error.
 
         """
         # API request

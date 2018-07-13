@@ -30,7 +30,7 @@ def get_team_details_by_id(api, team_id):
 def delete_team(api, team):
     try:
         api.teams.delete(team.id)
-    except webexteamsdk.SparkApiError as e:
+    except webexteamsdk.ApiError as e:
         if e.response.status_code == 404:
             # Team doesn't exist
             pass
@@ -49,7 +49,7 @@ def are_valid_teams(iterable):
 def team_exists(api, team):
     try:
         get_team_details_by_id(api, team.id)
-    except webexteamsdk.SparkApiError:
+    except webexteamsdk.ApiError:
         return False
     else:
         return True

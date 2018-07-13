@@ -64,7 +64,7 @@ def are_valid_team_memberships(iterable):
 def membership_exists(api, membership):
     try:
         get_team_membership_by_id(api, membership.id)
-    except webexteamsdk.SparkApiError:
+    except webexteamsdk.ApiError:
         return False
     else:
         return True

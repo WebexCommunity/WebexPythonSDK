@@ -61,7 +61,7 @@ With webexteamsdk, the above Python code can be consolidated to the following:
         message = api.messages.create('<room_id>', text='<message_text>')
         print("New message created, with ID:", message.id)
         print(message.text)
-    except SparkApiError as e:
+    except ApiError as e:
         print(e)
 
 

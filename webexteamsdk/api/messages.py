@@ -109,7 +109,7 @@ class MessagesAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(roomId, basestring, may_be_none=False)
@@ -164,7 +164,7 @@ class MessagesAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex Teams cloud returns an error.
             ValueError: If the files parameter is a list of length > 1, or if
                 the string in the list (the only element in the list) does not
                 contain a valid URL or path to a local file.
@@ -232,7 +232,7 @@ class MessagesAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(messageId, basestring, may_be_none=False)
@@ -251,7 +251,7 @@ class MessagesAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(messageId, basestring, may_be_none=False)

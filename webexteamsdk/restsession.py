@@ -31,27 +31,21 @@ from __future__ import (
 )
 
 from future import standard_library
-from webexteamsdk import (
-    DEFAULT_SINGLE_REQUEST_TIMEOUT,
-    DEFAULT_WAIT_ON_RATE_LIMIT,
-)
-
 standard_library.install_aliases()
 
-from builtins import *
 import time
 import urllib.parse
 import warnings
+from builtins import *
 
-from past.builtins import basestring
 import requests
+from past.builtins import basestring
 
-from .exceptions import (
-    SparkRateLimitError, SparkRateLimitWarning, webexteamsdkException
-)
+from .config import DEFAULT_SINGLE_REQUEST_TIMEOUT, DEFAULT_WAIT_ON_RATE_LIMIT
+from .exceptions import MalformedResponse, RateLimitError, RateLimitWarning
 from .response_codes import EXPECTED_RESPONSE_CODE
 from .utils import (
-    check_type, check_response_code, extract_and_parse_json, validate_base_url,
+    check_response_code, check_type, extract_and_parse_json, validate_base_url,
 )
 
 
@@ -237,7 +231,7 @@ class RestSession(object):
             **kwargs: Passed on to the requests package.
 
         Raises:
-            SparkApiError: If anything other than the expected response code is
+            ApiError: If anything other than the expected response code is
                 returned by the Webex Teams API endpoint.
 
         """
@@ -254,15 +248,15 @@ class RestSession(object):
             try:
                 # Check the response code for error conditions
                 check_response_code(response, erc)
-            except SparkRateLimitError as e:
+            except RateLimitError as e:
                 # Catch rate-limit errors
                 # Wait and retry if automatic rate-limit handling is enabled
                 if self.wait_on_rate_limit:
-                    warnings.warn(SparkRateLimitWarning(response))
+                    warnings.warn(RateLimitWarning(response))
                     time.sleep(e.retry_after)
                     continue
                 else:
-                    # Re-raise the SparkRateLimitError
+                    # Re-raise the RateLimitError
                     raise
             else:
                 return response
@@ -278,7 +272,7 @@ class RestSession(object):
                 others: Passed on to the requests package.
 
         Raises:
-            SparkApiError: If anything other than the expected response code is
+            ApiError: If anything other than the expected response code is
                 returned by the Webex Teams API endpoint.
 
         """
@@ -304,7 +298,7 @@ class RestSession(object):
                 others: Passed on to the requests package.
 
         Raises:
-            SparkApiError: If anything other than the expected response code is
+            ApiError: If anything other than the expected response code is
                 returned by the Webex Teams API endpoint.
 
         """
@@ -351,9 +345,9 @@ class RestSession(object):
                 others: Passed on to the requests package.
 
         Raises:
-            SparkApiError: If anything other than the expected response code is
+            ApiError: If anything other than the expected response code is
                 returned by the Webex Teams API endpoint.
-            webexteamsdkException: If the returned response does not contain a
+            MalformedResponse: If the returned response does not contain a
                 top-level dictionary with an 'items' key.
 
         """
@@ -368,7 +362,7 @@ class RestSession(object):
             if items is None:
                 error_message = "'items' key not found in JSON data: " \
                                 "{!r}".format(json_page)
-                raise webexteamsdkException(error_message)
+                raise MalformedResponse(error_message)
 
             else:
                 for item in items:
@@ -386,7 +380,7 @@ class RestSession(object):
                 others: Passed on to the requests package.
 
         Raises:
-            SparkApiError: If anything other than the expected response code is
+            ApiError: If anything other than the expected response code is
                 returned by the Webex Teams API endpoint.
 
         """
@@ -411,7 +405,7 @@ class RestSession(object):
                 others: Passed on to the requests package.
 
         Raises:
-            SparkApiError: If anything other than the expected response code is
+            ApiError: If anything other than the expected response code is
                 returned by the Webex Teams API endpoint.
 
         """
@@ -434,7 +428,7 @@ class RestSession(object):
                 others: Passed on to the requests package.
 
         Raises:
-            SparkApiError: If anything other than the expected response code is
+            ApiError: If anything other than the expected response code is
                 returned by the Webex Teams API endpoint.
 
         """

@@ -262,13 +262,13 @@ Catching Exceptions
 -------------------
 
 If something should go wrong with the API call, an exception will be raised.
-:exc:`SparkApiError` exceptions are raised when an error condition is
+:exc:`ApiError` exceptions are raised when an error condition is
 returned from the Webex Teams cloud.  Details will be provided in the error
 message.
 
 .. code-block:: python
 
-    >>> from webexteamsdk import CiscoSparkAPI, SparkApiError
+    >>> from webexteamsdk import CiscoSparkAPI, ApiError
     >>> api = CiscoSparkAPI()
     >>> room = api.rooms.create("webexteamsdk Test Room")
     >>> me = api.people.me()
@@ -281,19 +281,19 @@ message.
         check_response_code(response, erc)
       File "webexteamsdk/utils.py", line 104, in check_response_code
         response=response)
-    webexteamsdk.exceptions.SparkApiError: Response Code [409] - The request
+    webexteamsdk.exceptions.ApiError: Response Code [409] - The request
     could not be processed because it conflicts with some established rule of
     the system. For example, a person may not be added to a room more than
     once.
 
 You can catch any errors returned by the Webex Teams cloud by catching
-:exc:`SparkApiError` exceptions in a try-except block.
+:exc:`ApiError` exceptions in a try-except block.
 
 .. code-block:: python
 
     >>> try:
     ...     api.memberships.create(roomId=room.id, personId=me.id)
-    ... except SparkApiError as e:
+    ... except ApiError as e:
     ...     memberships = api.memberships.list(roomId=room.id)
     ...     for membership in memberships:
     ...         if membership.personId == me.id:

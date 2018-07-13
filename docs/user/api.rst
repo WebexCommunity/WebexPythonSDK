@@ -126,11 +126,11 @@ Exceptions
     :show-inheritance:
     :members:
 
-.. autoexception:: SparkApiError()
+.. autoexception:: ApiError()
     :show-inheritance:
     :members:
 
-.. autoexception:: SparkRateLimitError()
+.. autoexception:: RateLimitError()
     :show-inheritance:
     :members:
 

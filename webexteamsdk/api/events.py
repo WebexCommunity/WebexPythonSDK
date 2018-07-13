@@ -115,7 +115,7 @@ class EventsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(resource, basestring)
@@ -156,7 +156,7 @@ class EventsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(eventId, basestring, may_be_none=False)

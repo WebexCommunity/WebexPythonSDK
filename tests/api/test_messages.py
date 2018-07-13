@@ -51,7 +51,7 @@ def are_valid_messages(iterable):
 def message_exists(api, message):
     try:
         api.messages.get(message.id)
-    except webexteamsdk.SparkApiError:
+    except webexteamsdk.ApiError:
         return False
     else:
         return True
@@ -95,7 +95,7 @@ def send_group_room_message(api):
     for message in messages:
         try:
             delete_message(api, message)
-        except webexteamsdk.SparkApiError as e:
+        except webexteamsdk.ApiError as e:
             pass
 
 

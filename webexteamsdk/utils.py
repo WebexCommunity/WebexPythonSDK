@@ -30,18 +30,18 @@ from __future__ import (
     unicode_literals,
 )
 
-from builtins import *
-from collections import OrderedDict, namedtuple
 import json
 import mimetypes
 import os
 import sys
 import urllib.parse
+from builtins import *
+from collections import OrderedDict, namedtuple
 
 from past.builtins import basestring
 
 from .exceptions import (
-    SparkApiError, SparkRateLimitError, webexteamsdkException,
+    ApiError, RateLimitError,
 )
 from .response_codes import RATE_LIMIT_RESPONSE_CODE
 
@@ -88,7 +88,7 @@ def validate_base_url(base_url):
     else:
         error_message = "base_url must contain a valid scheme (protocol " \
                         "specifier) and network location (hostname)"
-        raise webexteamsdkException(error_message)
+        raise ValueError(error_message)
 
 
 def is_web_url(string):
@@ -183,10 +183,10 @@ def raise_if_extra_kwargs(kwargs):
 
 
 def check_response_code(response, expected_response_code):
-    """Check response code against the expected code; raise SparkApiError.
+    """Check response code against the expected code; raise ApiError.
 
     Checks the requests.response.status_code against the provided expected
-    response code (erc), and raises a SparkApiError if they do not match.
+    response code (erc), and raises a ApiError if they do not match.
 
     Args:
         response(requests.response): The response object returned by a request
@@ -195,16 +195,16 @@ def check_response_code(response, expected_response_code):
             code).
 
     Raises:
-        SparkApiError: If the requests.response.status_code does not match the
+        ApiError: If the requests.response.status_code does not match the
             provided expected response code (erc).
 
      """
     if response.status_code == expected_response_code:
         pass
     elif response.status_code == RATE_LIMIT_RESPONSE_CODE:
-        raise SparkRateLimitError(response)
+        raise RateLimitError(response)
     else:
-        raise SparkApiError(response)
+        raise ApiError(response)
 
 
 def extract_and_parse_json(response):

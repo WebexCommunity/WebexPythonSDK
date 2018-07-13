@@ -29,7 +29,7 @@ def create_team_room(api, team, room_title):
 def delete_room(api, room):
     try:
         api.rooms.delete(room.id)
-    except webexteamsdk.SparkApiError as e:
+    except webexteamsdk.ApiError as e:
         if e.response.status_code == 404:
             # Room doesn't exist
             pass
@@ -48,7 +48,7 @@ def are_valid_rooms(iterable):
 def room_exists(api, room):
     try:
         api.rooms.get(room.id)
-    except webexteamsdk.SparkApiError:
+    except webexteamsdk.ApiError:
         return False
     else:
         return True

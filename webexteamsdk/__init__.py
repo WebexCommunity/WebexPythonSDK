@@ -35,7 +35,7 @@ import logging
 from ._metadata import *
 from .api import WebexTeamsAPI
 from .exceptions import (
-    SparkApiError, SparkRateLimitError, SparkRateLimitWarning,
+    ApiError, RateLimitError, RateLimitWarning,
     webexteamsdkException,
 )
 from .models import (

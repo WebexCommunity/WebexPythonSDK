@@ -23,7 +23,7 @@ logging.captureWarnings(True)
 def rate_limit_detected(w):
     """Check to see if a rate-limit warning is in the warnings list."""
     while w:
-        if issubclass(w.pop().category, webexteamsdk.SparkRateLimitWarning):
+        if issubclass(w.pop().category, webexteamsdk.RateLimitWarning):
             return True
             break
     return False

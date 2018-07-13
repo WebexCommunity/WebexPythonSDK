@@ -66,7 +66,7 @@ def are_valid_people(iterable):
 def person_exists(api, person):
     try:
         get_person_by_id(api, person.id)
-    except webexteamsdk.SparkApiError:
+    except webexteamsdk.ApiError:
         return False
     else:
         return True
