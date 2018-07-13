@@ -88,7 +88,7 @@ def _fix_next_url(next_url):
 class RestSession(object):
     """RESTful HTTP session class for making calls to the Cisco Spark APIs."""
 
-    def __init__(self, access_token, base_url, timeout=None,
+    def __init__(self, access_token, base_url,
                  single_request_timeout=DEFAULT_SINGLE_REQUEST_TIMEOUT,
                  wait_on_rate_limit=DEFAULT_WAIT_ON_RATE_LIMIT):
         """Initialize a new RestSession object.
@@ -98,7 +98,6 @@ class RestSession(object):
                 this session.
             base_url(basestring): The base URL that will be suffixed onto API
                 endpoint relative URLs to produce a callable absolute URL.
-            timeout: [Deprecated] The timeout (seconds) for an API request.
             single_request_timeout(int): The timeout (seconds) for a single
                 HTTP REST API request.
             wait_on_rate_limit(bool): Enable or disable automatic rate-limit
@@ -110,7 +109,6 @@ class RestSession(object):
         """
         check_type(access_token, basestring, may_be_none=False)
         check_type(base_url, basestring, may_be_none=False)
-        check_type(timeout, int)
         check_type(single_request_timeout, int)
         check_type(wait_on_rate_limit, bool, may_be_none=False)
 
@@ -121,8 +119,6 @@ class RestSession(object):
         self._access_token = str(access_token)
         self._single_request_timeout = single_request_timeout
         self._wait_on_rate_limit = wait_on_rate_limit
-        if timeout:
-            self.timeout = timeout
 
         # Initialize a new `requests` session
         self._req_session = requests.session()
@@ -140,34 +136,6 @@ class RestSession(object):
     def access_token(self):
         """The Cisco Spark access token used for this session."""
         return self._access_token
-
-    @property
-    def timeout(self):
-        """[Deprecated] The timeout (seconds) for an API request.
-
-        We are deprecating the timeout property in favor of the more
-        descriptive single_request_timeout property.
-
-        """
-        warnings.warn("The 'timeout' property is being deprecated. Please use "
-                      "the 'single_request_timeout' instead.",
-                      DeprecationWarning)
-        return self._single_request_timeout
-
-    @timeout.setter
-    def timeout(self, value):
-        """[Deprecated] The timeout (seconds) for an API request.
-
-        We are deprecating the timeout property in favor of the more
-        descriptive single_request_timeout property.
-
-        """
-        warnings.warn("The 'timeout' property is being deprecated. Please use "
-                      "the 'single_request_timeout' instead.",
-                      DeprecationWarning)
-        check_type(value, int)
-        assert value is None or value > 0
-        self._single_request_timeout = value
 
     @property
     def single_request_timeout(self):

@@ -46,26 +46,27 @@ class AccessTokensAPI(object):
 
     """
 
-    def __init__(self, base_url, object_factory, timeout=None):
+    def __init__(self, base_url, object_factory, single_request_timeout=None):
         """Initialize an AccessTokensAPI object with the provided RestSession.
 
         Args:
             base_url(basestring): The base URL the API endpoints.
-            timeout(int): Timeout in seconds for the API requests.
+            single_request_timeout(int): Timeout in seconds for the API
+                requests.
 
         Raises:
             TypeError: If the parameter types are incorrect.
 
         """
         check_type(base_url, basestring, may_be_none=False)
-        check_type(timeout, int)
+        check_type(single_request_timeout, int)
 
         super(AccessTokensAPI, self).__init__()
 
         self._base_url = str(validate_base_url(base_url))
-        self._timeout = timeout
+        self._single_request_timeout = single_request_timeout
         self._endpoint_url = urllib.parse.urljoin(self.base_url, API_ENDPOINT)
-        self._request_kwargs = {"timeout": timeout}
+        self._request_kwargs = {"timeout": single_request_timeout}
 
         self._object_factory = object_factory
 
@@ -75,9 +76,9 @@ class AccessTokensAPI(object):
         return self._base_url
 
     @property
-    def timeout(self):
+    def single_request_timeout(self):
         """Timeout in seconds for the API requests."""
-        return self._timeout
+        return self._single_request_timeout
 
     def get(self, client_id, client_secret, code, redirect_uri):
         """Exchange an Authorization Code for an Access Token.

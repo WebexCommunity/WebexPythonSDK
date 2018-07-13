@@ -1,19 +1,40 @@
 # -*- coding: utf-8 -*-
+"""Webex Teams API wrapper.
+
+Copyright (c) 2016-2018 Cisco and/or its affiliates.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+"""
+
+
 import os
 
 from past.types import basestring
 
-from webexteamsdk import (
-    DEFAULT_SINGLE_REQUEST_TIMEOUT,
-    DEFAULT_WAIT_ON_RATE_LIMIT,
-    spark_data_factory,
-    check_type,
-    webexteamsdkException,
-)
 from webexteamsdk.config import (
-    DEFAULT_BASE_URL,
-    ACCESS_TOKEN_ENVIRONMENT_VARIABLE,
+    ACCESS_TOKEN_ENVIRONMENT_VARIABLE, DEFAULT_BASE_URL,
+    DEFAULT_SINGLE_REQUEST_TIMEOUT, DEFAULT_WAIT_ON_RATE_LIMIT,
 )
+from webexteamsdk.exceptions import webexteamsdkException
+from webexteamsdk.models import spark_data_factory
+from webexteamsdk.restsession import RestSession
+from webexteamsdk.utils import check_type
 from .access_tokens import AccessTokensAPI
 from .events import EventsAPI
 from .licenses import LicensesAPI
@@ -26,57 +47,54 @@ from .rooms import RoomsAPI
 from .team_memberships import TeamMembershipsAPI
 from .teams import TeamsAPI
 from .webhooks import WebhooksAPI
-from .restsession import RestSession
 
 
 class WebexTeamsAPI(object):
-    """Cisco Spark API wrapper.
+    """Webex Teams API wrapper.
 
-    Creates a 'session' for all API calls through a created CiscoSparkAPI
+    Creates a 'session' for all API calls through a created WebexTeamsAPI
     object.  The 'session' handles authentication, provides the needed headers,
     and checks all responses for error conditions.
 
-    CiscoSparkAPI wraps all of the individual Cisco Spark APIs and represents
+    WebexTeamsAPI wraps all of the individual Webex Teams APIs and represents
     them in a simple hierarchical structure.
 
-    :CiscoSparkAPI: :class:`people <_PeopleAPI>`
+    :WebexTeamsAPI: :class:`people <PeopleAPI>`
 
-                    :class:`rooms <_RoomsAPI>`
+                    :class:`rooms <RoomsAPI>`
 
-                    :class:`memberships <_MembershipsAPI>`
+                    :class:`memberships <MembershipsAPI>`
 
-                    :class:`messages <_MessagesAPI>`
+                    :class:`messages <MessagesAPI>`
 
-                    :class:`teams <_TeamsAPI>`
+                    :class:`teams <TeamsAPI>`
 
-                    :class:`team_memberships <_TeamMembershipsAPI>`
+                    :class:`team_memberships <TeamMembershipsAPI>`
 
-                    :class:`webhooks <_WebhooksAPI>`
+                    :class:`webhooks <WebhooksAPI>`
 
-                    :class:`organizations <_OrganizationsAPI>`
+                    :class:`organizations <OrganizationsAPI>`
 
-                    :class:`licenses <_LicensesAPI>`
+                    :class:`licenses <LicensesAPI>`
 
-                    :class:`roles <_RolesAPI>`
+                    :class:`roles <RolesAPI>`
 
-                    :class:`events <_EventsAPI>`
+                    :class:`events <EventsAPI>`
 
-                    :class:`access_tokens <_AccessTokensAPI>`
-
+                    :class:`access_tokens <AccessTokensAPI>`
     """
 
     def __init__(self, access_token=None, base_url=DEFAULT_BASE_URL,
-                 timeout=None,
                  single_request_timeout=DEFAULT_SINGLE_REQUEST_TIMEOUT,
                  wait_on_rate_limit=DEFAULT_WAIT_ON_RATE_LIMIT,
                  object_factory=spark_data_factory):
-        """Create a new CiscoSparkAPI object.
+        """Create a new WebexTeamsAPI object.
 
-        An access token must be used when interacting with the Cisco Spark API.
+        An access token must be used when interacting with the Webex Teams API.
         This package supports two methods for you to provide that access token:
 
           1. You may manually specify the access token via the access_token
-             argument, when creating a new CiscoSparkAPI object.
+             argument, when creating a new WebexTeamsAPI object.
 
           2. If an access_token argument is not supplied, the package checks
              for a SPARK_ACCESS_TOKEN environment variable.
@@ -86,23 +104,21 @@ class WebexTeamsAPI(object):
 
         Args:
             access_token(basestring): The access token to be used for API
-                calls to the Cisco Spark service.  Defaults to checking for a
+                calls to the Webex Teams service.  Defaults to checking for a
                 SPARK_ACCESS_TOKEN environment variable.
             base_url(basestring): The base URL to be prefixed to the
                 individual API endpoint suffixes.
                 Defaults to webexteamsdk.DEFAULT_BASE_URL.
-            timeout(int): [deprecated] Timeout (in seconds) for RESTful HTTP
-                requests. Defaults to webexteamsdk.DEFAULT_TIMEOUT.
             single_request_timeout(int): Timeout (in seconds) for RESTful HTTP
                 requests. Defaults to
                 webexteamsdk.DEFAULT_SINGLE_REQUEST_TIMEOUT.
             wait_on_rate_limit(bool): Enables or disables automatic rate-limit
                 handling. Defaults to webexteamsdk.DEFAULT_WAIT_ON_RATE_LIMIT.
             object_factory(callable): The factory function to use to create
-                Python objects from the returned Cisco Spark JSON data objects.
+                Python objects from the returned Webex Teams JSON data objects.
 
         Returns:
-            WebexTeamsAPI: A new CiscoSparkAPI object.
+            WebexTeamsAPI: A new WebexTeamsAPI object.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -120,55 +136,50 @@ class WebexTeamsAPI(object):
         access_token = access_token or env_access_token
         if not access_token:
             error_message = "You must provide an Spark access token to " \
-                            "interact with the Cisco Spark APIs, either via " \
+                            "interact with the Webex Teams APIs, either via " \
                             "a SPARK_ACCESS_TOKEN environment variable " \
                             "or via the access_token argument."
             raise webexteamsdkException(error_message)
 
         # Create the API session
-        # All of the API calls associated with a CiscoSparkAPI object will
-        # leverage a single RESTful 'session' connecting to the Cisco Spark
+        # All of the API calls associated with a WebexTeamsAPI object will
+        # leverage a single RESTful 'session' connecting to the Webex Teams
         # cloud.
-        self._session = _RestSession(
-            access_token,
-            base_url,
-            timeout=timeout,
+        self._session = RestSession(
+            access_token=access_token,
+            base_url=base_url,
             single_request_timeout=single_request_timeout,
             wait_on_rate_limit=wait_on_rate_limit
         )
 
         # Spark API wrappers
-        self.people = _PeopleAPI(self._session, object_factory)
-        self.rooms = _RoomsAPI(self._session, object_factory)
-        self.memberships = _MembershipsAPI(self._session, object_factory)
-        self.messages = _MessagesAPI(self._session, object_factory)
-        self.teams = _TeamsAPI(self._session, object_factory)
-        self.team_memberships = _TeamMembershipsAPI(
+        self.people = PeopleAPI(self._session, object_factory)
+        self.rooms = RoomsAPI(self._session, object_factory)
+        self.memberships = MembershipsAPI(self._session, object_factory)
+        self.messages = MessagesAPI(self._session, object_factory)
+        self.teams = TeamsAPI(self._session, object_factory)
+        self.team_memberships = TeamMembershipsAPI(
             self._session, object_factory
         )
-        self.webhooks = _WebhooksAPI(self._session, object_factory)
-        self.organizations = _OrganizationsAPI(self._session, object_factory)
-        self.licenses = _LicensesAPI(self._session, object_factory)
-        self.roles = _RolesAPI(self._session, object_factory)
-        self.access_tokens = _AccessTokensAPI(
-            self.base_url, object_factory, timeout=single_request_timeout
+        self.webhooks = WebhooksAPI(self._session, object_factory)
+        self.organizations = OrganizationsAPI(self._session, object_factory)
+        self.licenses = LicensesAPI(self._session, object_factory)
+        self.roles = RolesAPI(self._session, object_factory)
+        self.access_tokens = AccessTokensAPI(
+            self.base_url, object_factory,
+            single_request_timeout=single_request_timeout
         )
-        self.events = _EventsAPI(self._session, object_factory)
+        self.events = EventsAPI(self._session, object_factory)
 
     @property
     def access_token(self):
-        """The access token used for API calls to the Cisco Spark service."""
+        """The access token used for API calls to the Webex Teams service."""
         return self._session.access_token
 
     @property
     def base_url(self):
         """The base URL prefixed to the individual API endpoint suffixes."""
         return self._session.base_url
-
-    @property
-    def timeout(self):
-        """[deprecated] Timeout (in seconds) for RESTful HTTP requests."""
-        return self._session.timeout
 
     @property
     def single_request_timeout(self):
