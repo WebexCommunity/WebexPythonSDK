@@ -47,9 +47,9 @@ OBJECT_TYPE = 'role'
 
 
 class RolesAPI(object):
-    """Cisco Spark Roles API.
+    """Webex Teams Roles API.
 
-    Wraps the Cisco Spark Roles API and exposes the API as native Python
+    Wraps the Webex Teams Roles API and exposes the API as native Python
     methods that return native Python objects.
 
     """
@@ -59,7 +59,7 @@ class RolesAPI(object):
 
         Args:
             session(RestSession): The RESTful session object to be used for
-                API calls to the Cisco Spark service.
+                API calls to the Webex Teams service.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -76,7 +76,7 @@ class RolesAPI(object):
     def list(self, max=None, **request_parameters):
         """List all roles.
 
-        This method supports Cisco Spark's implementation of RFC5988 Web
+        This method supports Webex Teams's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
         container that incrementally yields all objects returned by the
         query.  The generator will automatically request additional 'pages' of
@@ -94,11 +94,11 @@ class RolesAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-                yields the roles returned by the Cisco Spark query.
+                yields the roles returned by the Webex Teams query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(max, int)
@@ -126,7 +126,7 @@ class RolesAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(roleId, basestring, may_be_none=False)

@@ -47,9 +47,9 @@ OBJECT_TYPE = 'event'
 
 
 class EventsAPI(object):
-    """Cisco Spark Events API.
+    """Webex Teams Events API.
 
-    Wraps the Cisco Spark Events API and exposes the API as native Python
+    Wraps the Webex Teams Events API and exposes the API as native Python
     methods that return native Python objects.
 
     """
@@ -59,7 +59,7 @@ class EventsAPI(object):
 
         Args:
             session(RestSession): The RESTful session object to be used for
-                API calls to the Cisco Spark service.
+                API calls to the Webex Teams service.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -83,7 +83,7 @@ class EventsAPI(object):
         Note: `from` is a keyword in Python and may not be used as a variable
         name, so we had to use `_from` instead.
 
-        This method supports Cisco Spark's implementation of RFC5988 Web
+        This method supports Webex Teams's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
         container that incrementally yields all events returned by the
         query.  The generator will automatically request additional 'pages' of
@@ -111,11 +111,11 @@ class EventsAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-                yields the events returned by the Cisco Spark query.
+                yields the events returned by the Webex Teams query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(resource, basestring)
@@ -156,7 +156,7 @@ class EventsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(eventId, basestring, may_be_none=False)

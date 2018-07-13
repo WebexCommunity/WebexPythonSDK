@@ -38,7 +38,7 @@ class PersonBasicPropertiesMixin(object):
 
     @property
     def type(self):
-        """The type of object returned by Cisco Spark (should be `person`)."""
+        """The type of object returned by Webex Teams (should be `person`)."""
         return self._json_data.get('type')
 
     @property

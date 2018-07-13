@@ -60,9 +60,9 @@ OBJECT_TYPE = 'access_token'
 
 
 class AccessTokensAPI(object):
-    """Cisco Spark Access-Tokens API.
+    """Webex Teams Access-Tokens API.
 
-    Wraps the Cisco Spark Access-Tokens API and exposes the API as native
+    Wraps the Webex Teams Access-Tokens API and exposes the API as native
     Python methods that return native Python objects.
 
     """
@@ -118,11 +118,11 @@ class AccessTokensAPI(object):
 
         Returns:
             webexteamsdk.AccessToken: An AccessToken object with the access
-                token provided by the Cisco Spark cloud.
+                token provided by the Webex Teams cloud.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(client_id, basestring, may_be_none=False)
@@ -158,12 +158,12 @@ class AccessTokensAPI(object):
                 Token.
 
         Returns:
-            AccessToken: With the access token provided by the Cisco Spark
+            AccessToken: With the access token provided by the Webex Teams
                 cloud.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(client_id, basestring, may_be_none=False)

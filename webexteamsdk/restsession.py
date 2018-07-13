@@ -59,7 +59,7 @@ from .utils import (
 def _fix_next_url(next_url):
     """Remove max=null parameter from URL.
 
-    Patch for Cisco Spark Defect: 'next' URL returned in the Link headers of
+    Patch for Webex Teams Defect: 'next' URL returned in the Link headers of
     the responses contain an errant 'max=null' parameter, which  causes the
     next request (to this URL) to fail if the URL is requested as-is.
 
@@ -91,7 +91,7 @@ def _fix_next_url(next_url):
         if 'max=null' in query_list:
             query_list.remove('max=null')
             warnings.warn("`max=null` still present in next-URL returned "
-                          "from Cisco Spark", RuntimeWarning)
+                          "from Webex Teams", RuntimeWarning)
         new_query = '&'.join(query_list)
         parsed_url = list(parsed_url)
         parsed_url[4] = new_query
@@ -101,7 +101,7 @@ def _fix_next_url(next_url):
 
 # Main module interface
 class RestSession(object):
-    """RESTful HTTP session class for making calls to the Cisco Spark APIs."""
+    """RESTful HTTP session class for making calls to the Webex Teams APIs."""
 
     def __init__(self, access_token, base_url,
                  single_request_timeout=DEFAULT_SINGLE_REQUEST_TIMEOUT,
@@ -149,7 +149,7 @@ class RestSession(object):
 
     @property
     def access_token(self):
-        """The Cisco Spark access token used for this session."""
+        """The Webex Teams access token used for this session."""
         return self._access_token
 
     @property
@@ -170,7 +170,7 @@ class RestSession(object):
 
         This setting enables or disables automatic rate-limit handling.  When
         enabled, rate-limited requests will be automatically be retried after
-        waiting `Retry-After` seconds (provided by Cisco Spark in the
+        waiting `Retry-After` seconds (provided by Webex Teams in the
         rate-limit response header).
 
         """
@@ -221,7 +221,7 @@ class RestSession(object):
             return url
 
     def request(self, method, url, erc, **kwargs):
-        """Abstract base method for making requests to the Cisco Spark APIs.
+        """Abstract base method for making requests to the Webex Teams APIs.
 
         This base method:
             * Expands the API endpoint URL to an absolute URL
@@ -233,12 +233,12 @@ class RestSession(object):
             method(basestring): The request-method type ('GET', 'POST', etc.).
             url(basestring): The URL of the API endpoint to be called.
             erc(int): The expected response code that should be returned by the
-                Cisco Spark API endpoint to indicate success.
+                Webex Teams API endpoint to indicate success.
             **kwargs: Passed on to the requests package.
 
         Raises:
             SparkApiError: If anything other than the expected response code is
-                returned by the Cisco Spark API endpoint.
+                returned by the Webex Teams API endpoint.
 
         """
         # Ensure the url is an absolute URL
@@ -279,7 +279,7 @@ class RestSession(object):
 
         Raises:
             SparkApiError: If anything other than the expected response code is
-                returned by the Cisco Spark API endpoint.
+                returned by the Webex Teams API endpoint.
 
         """
         check_type(url, basestring, may_be_none=False)
@@ -305,7 +305,7 @@ class RestSession(object):
 
         Raises:
             SparkApiError: If anything other than the expected response code is
-                returned by the Cisco Spark API endpoint.
+                returned by the Webex Teams API endpoint.
 
         """
         check_type(url, basestring, may_be_none=False)
@@ -323,7 +323,7 @@ class RestSession(object):
             if response.links.get('next'):
                 next_url = response.links.get('next').get('url')
 
-                # Patch for Cisco Spark 'max=null' in next URL bug.
+                # Patch for Webex Teams 'max=null' in next URL bug.
                 # Testing shows that patch is no longer needed; raising a
                 # warnning if it is still taking effect;
                 # considering for future removal
@@ -338,7 +338,7 @@ class RestSession(object):
     def get_items(self, url, params=None, **kwargs):
         """Return a generator that GETs and yields individual JSON `items`.
 
-        Yields individual `items` from Cisco Spark's top-level {'items': [...]}
+        Yields individual `items` from Webex Teams's top-level {'items': [...]}
         JSON objects. Provides native support for RFC5988 Web Linking.  The
         generator will request additional pages as needed until all items have
         been returned.
@@ -352,7 +352,7 @@ class RestSession(object):
 
         Raises:
             SparkApiError: If anything other than the expected response code is
-                returned by the Cisco Spark API endpoint.
+                returned by the Webex Teams API endpoint.
             webexteamsdkException: If the returned response does not contain a
                 top-level dictionary with an 'items' key.
 
@@ -387,7 +387,7 @@ class RestSession(object):
 
         Raises:
             SparkApiError: If anything other than the expected response code is
-                returned by the Cisco Spark API endpoint.
+                returned by the Webex Teams API endpoint.
 
         """
         check_type(url, basestring, may_be_none=False)
@@ -412,7 +412,7 @@ class RestSession(object):
 
         Raises:
             SparkApiError: If anything other than the expected response code is
-                returned by the Cisco Spark API endpoint.
+                returned by the Webex Teams API endpoint.
 
         """
         check_type(url, basestring, may_be_none=False)
@@ -435,7 +435,7 @@ class RestSession(object):
 
         Raises:
             SparkApiError: If anything other than the expected response code is
-                returned by the Cisco Spark API endpoint.
+                returned by the Webex Teams API endpoint.
 
         """
         check_type(url, basestring, may_be_none=False)

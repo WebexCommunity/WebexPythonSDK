@@ -47,9 +47,9 @@ OBJECT_TYPE = 'person'
 
 
 class PeopleAPI(object):
-    """Cisco Spark People API.
+    """Webex Teams People API.
 
-    Wraps the Cisco Spark People API and exposes the API as native Python
+    Wraps the Webex Teams People API and exposes the API as native Python
     methods that return native Python objects.
 
     """
@@ -59,7 +59,7 @@ class PeopleAPI(object):
 
         Args:
             session(RestSession): The RESTful session object to be used for
-                API calls to the Cisco Spark service.
+                API calls to the Webex Teams service.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -77,7 +77,7 @@ class PeopleAPI(object):
              **request_parameters):
         """List people
 
-        This method supports Cisco Spark's implementation of RFC5988 Web
+        This method supports Webex Teams's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
         container that incrementally yields all people returned by the
         query.  The generator will automatically request additional 'pages' of
@@ -101,11 +101,11 @@ class PeopleAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-                yields the people returned by the Cisco Spark query.
+                yields the people returned by the Webex Teams query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(id, basestring)
@@ -158,7 +158,7 @@ class PeopleAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(emails, list, may_be_none=False)
@@ -199,7 +199,7 @@ class PeopleAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(personId, basestring, may_be_none=False)
@@ -246,7 +246,7 @@ class PeopleAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(emails, list)
@@ -287,7 +287,7 @@ class PeopleAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(personId, basestring, may_be_none=False)
@@ -299,7 +299,7 @@ class PeopleAPI(object):
         """Get the details of the person accessing the API.
 
         Raises:
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         # API request

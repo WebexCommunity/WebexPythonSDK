@@ -38,7 +38,7 @@ class AccessTokenBasicPropertiesMixin(object):
 
     @property
     def access_token(self):
-        """Cisco Spark access token."""
+        """Webex Teams access token."""
         return self._json_data.get('access_token')
 
     @property

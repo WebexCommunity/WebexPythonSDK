@@ -47,9 +47,9 @@ OBJECT_TYPE = 'team_membership'
 
 
 class TeamMembershipsAPI(object):
-    """Cisco Spark Team-Memberships API.
+    """Webex Teams Team-Memberships API.
 
-    Wraps the Cisco Spark Memberships API and exposes the API as native Python
+    Wraps the Webex Teams Memberships API and exposes the API as native Python
     methods that return native Python objects.
 
     """
@@ -59,7 +59,7 @@ class TeamMembershipsAPI(object):
 
         Args:
             session(RestSession): The RESTful session object to be used for
-                API calls to the Cisco Spark service.
+                API calls to the Webex Teams service.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -76,7 +76,7 @@ class TeamMembershipsAPI(object):
     def list(self, teamId, max=None, **request_parameters):
         """List team memberships for a team, by ID.
 
-        This method supports Cisco Spark's implementation of RFC5988 Web
+        This method supports Webex Teams's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
         container that incrementally yields all team memberships returned by
         the query.  The generator will automatically request additional 'pages'
@@ -95,11 +95,11 @@ class TeamMembershipsAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-                yields the team memberships returned by the Cisco Spark query.
+                yields the team memberships returned by the Webex Teams query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(teamId, basestring, may_be_none=False)
@@ -140,7 +140,7 @@ class TeamMembershipsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(teamId, basestring, may_be_none=False)
@@ -174,7 +174,7 @@ class TeamMembershipsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(membershipId, basestring, may_be_none=False)
@@ -200,7 +200,7 @@ class TeamMembershipsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(membershipId, basestring, may_be_none=False)
@@ -226,7 +226,7 @@ class TeamMembershipsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(membershipId, basestring, may_be_none=False)

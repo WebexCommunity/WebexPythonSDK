@@ -2,7 +2,7 @@
 webexteamsdk
 =============
 
-*Simple, lightweight, scalable Python API wrapper for the Cisco Spark APIs*
+*Simple, lightweight, scalable Python API wrapper for the Webex Teams APIs*
 
 .. image:: https://img.shields.io/badge/license-MIT-blue.svg
     :target: https://github.com/CiscoDevNet/webexteamsdk/blob/master/LICENSE
@@ -16,7 +16,7 @@ webexteamsdk
 -------------------------------------------------------------------------------
 
 **webexteamsdk** is a *community developed* Pythonic wrapping of the Cisco
-Spark APIs, which makes working with Cisco Spark in Python a *native* and
+Spark APIs, which makes working with Webex Teams in Python a *native* and
 *natural* experience!
 
 .. code-block:: python
@@ -66,9 +66,9 @@ webexteamsdk does all of this for you...
   don't have to think about things like API endpoint URLs, HTTP headers and
   JSON formats
 
-+ Represents all Cisco Spark API interactions using native Python tools
++ Represents all Webex Teams API interactions using native Python tools
 
-  + Authentication and Connection to the Cisco Spark Cloud ==>
+  + Authentication and Connection to the Webex Teams Cloud ==>
     **CiscoSparkAPI** 'Connection Object'
 
   + API Calls ==> Hierarchically organized method calls underneath a

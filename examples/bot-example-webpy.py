@@ -55,7 +55,7 @@ CAT_FACTS_URL = 'https://catfact.ninja/fact'
 # Global variables
 urls = ('/sparkwebhook', 'webhook')                                             # Your Spark webhook should point to http://<serverip>:8080/sparkwebhook
 app = web.application(urls, globals())                                          # Create the web application instance
-api = WebexTeamsAPI()                                                           # Create the Cisco Spark API connection object
+api = WebexTeamsAPI()                                                           # Create the Webex Teams API connection object
 
 
 def get_catfact():
@@ -73,7 +73,7 @@ def get_catfact():
 
 class webhook(object):
     def POST(self):
-        """Respond to inbound webhook JSON HTTP POSTs from Cisco Spark."""
+        """Respond to inbound webhook JSON HTTP POSTs from Webex Teams."""
         json_data = web.data()                                                  # Get the POST data sent from Spark
         print("\nWEBHOOK POST RECEIVED:")
         print(json_data, "\n")

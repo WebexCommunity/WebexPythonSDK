@@ -4,12 +4,12 @@
 webexteamsdk
 =============
 
-*Simple, lightweight, scalable Python API wrapper for the Cisco Spark APIs*
+*Simple, lightweight, scalable Python API wrapper for the Webex Teams APIs*
 
 -------------------------------------------------------------------------------
 
 Welcome to the docs!  webexteamsdk is a *community developed* Pythonic
-wrapping of the Cisco Spark APIs.  The package represents all of the Cisco
+wrapping of the Webex Teams APIs.  The package represents all of the Cisco
 Spark API interactions via native Python tools.  Making working with the Cisco
 Spark APIs in Python a *native* and *natural* experience.
 
@@ -18,7 +18,7 @@ care of the API semantics, and you can focus on writing your code.
 
 With webexteamsdk, you can easily:
 
-* Interact with the Cisco Spark APIs in an interactive Python session
+* Interact with the Webex Teams APIs in an interactive Python session
 
 * Quickly create code that enables you get something done in Spark
 
@@ -47,22 +47,22 @@ Community developer docs are *coming soon*.  For now, please see the
 contribution_ instructions on the webexteamsdk_ GitHub page to get started.
 
 
-General Information about the Cisco Spark Service
+General Information about the Webex Teams Service
 =================================================
 
-What is Cisco Spark?
+What is Webex Teams?
 --------------------
 
-    "Cisco Spark is where all your work lives.  Bring your teams together in a
+    "Webex Teams is where all your work lives.  Bring your teams together in a
      place that makes it easy to keep people and work connected."
 
-Check out the official `Cisco Spark`_ website for more information and to
+Check out the official `Webex Teams`_ website for more information and to
 create a free account!
 
 Spark for Developers
 --------------------
 
-Leveraging the Cisco Spark APIs and developing on top of the Cisco Spark cloud
+Leveraging the Webex Teams APIs and developing on top of the Webex Teams cloud
 is easy.  Signup for a `free account`_ and then head over to the
 `Spark for Developers`_ website to learn more.
 
@@ -70,8 +70,8 @@ is easy.  Signup for a `free account`_ and then head over to the
 *Copyright (c) 2016-2018 Cisco and/or its affiliates.*
 
 
-.. _free account: `Cisco Spark`
-.. _Cisco Spark: https://www.ciscospark.com/
+.. _free account: `Webex Teams`
+.. _Webex Teams: https://www.ciscospark.com/
 .. _Spark for Developers: https://developer.ciscospark.com/
 .. _contribution: https://github.com/CiscoDevNet/webexteamsdk#contribution
 .. _webexteamsdk: https://github.com/CiscoDevNet/webexteamsdk

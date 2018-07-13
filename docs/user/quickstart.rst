@@ -10,7 +10,7 @@ Quickstart
 
 Make sure that you have:
 
-* A Cisco Spark Account *(a free account works fine,* `sign-up for one here`__ *)*
+* A Webex Teams Account *(a free account works fine,* `sign-up for one here`__ *)*
 * webexteamsdk :ref:`installed <Install>`
 * webexteamsdk :ref:`upgraded to the latest version <Upgrade>`
 
@@ -19,7 +19,7 @@ __ ciscospark.com_
 Get your Spark Access Token
 ---------------------------
 
-To interact with the Cisco Spark APIs, you must have a **Spark Access Token**.
+To interact with the Webex Teams APIs, you must have a **Spark Access Token**.
 A Spark Access Token is how the Spark APIs validate access and identify the
 requesting user.
 
@@ -79,7 +79,7 @@ can manually provide your access token when creating a CiscoSparkAPI object.
 Create a CiscoSparkAPI "Connection Object"
 ------------------------------------------
 
-To make interacting with the Cisco Spark APIs as simple and intuitive as
+To make interacting with the Webex Teams APIs as simple and intuitive as
 possible, all of the APIs have 'wrapped' underneath a single interface.  To get
 started, import the :class:`CiscoSparkAPI` class and create an API "connection
 object".
@@ -104,7 +104,7 @@ token, a :exc:`webexteamsdkException` will be raised.
       File "webexteamsdk/__init__.py", line 114, in __init__
         raise webexteamsdkException(error_message)
     webexteamsdkException: You must provide an Spark access token to interact
-    with the Cisco Spark APIs, either via a SPARK_ACCESS_TOKEN environment
+    with the Webex Teams APIs, either via a SPARK_ACCESS_TOKEN environment
     variable or via the access_token argument.
 
 Use the ``access_token`` argument to manually provide your access token, when
@@ -263,7 +263,7 @@ Catching Exceptions
 
 If something should go wrong with the API call, an exception will be raised.
 :exc:`SparkApiError` exceptions are raised when an error condition is
-returned from the Cisco Spark cloud.  Details will be provided in the error
+returned from the Webex Teams cloud.  Details will be provided in the error
 message.
 
 .. code-block:: python
@@ -286,7 +286,7 @@ message.
     the system. For example, a person may not be added to a room more than
     once.
 
-You can catch any errors returned by the Cisco Spark cloud by catching
+You can catch any errors returned by the Webex Teams cloud by catching
 :exc:`SparkApiError` exceptions in a try-except block.
 
 .. code-block:: python
@@ -315,7 +315,7 @@ debugging your app.
 Working with Returned Objects
 -----------------------------
 
-The Cisco Spark cloud returns data objects in JSON format, like so:
+The Webex Teams cloud returns data objects in JSON format, like so:
 
 .. code-block:: json
 

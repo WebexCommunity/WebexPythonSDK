@@ -113,7 +113,7 @@ class webexteamsdkException(Exception):
 
 
 class SparkApiError(webexteamsdkException):
-    """Errors returned by requests to the Cisco Spark cloud APIs."""
+    """Errors returned by requests to the Webex Teams cloud APIs."""
 
     def __init__(self, response):
         assert isinstance(response, requests.Response)
@@ -140,14 +140,14 @@ class SparkApiError(webexteamsdkException):
 
 
 class SparkRateLimitError(SparkApiError):
-    """Cisco Spark Rate-Limit exceeded Error."""
+    """Webex Teams Rate-Limit exceeded Error."""
 
     def __init__(self, response):
         super(SparkRateLimitError, self).__init__(response)
 
         # Extended exception data attributes
         self.retry_after = max(1, int(response.headers.get('Retry-After', 15)))
-        """The `Retry-After` time period (in seconds) provided by Cisco Spark.
+        """The `Retry-After` time period (in seconds) provided by Webex Teams.
 
         Defaults to 15 seconds if the response `Retry-After` header isn't
         present in the response headers, and defaults to a minimum wait time of
@@ -157,12 +157,12 @@ class SparkRateLimitError(SparkApiError):
 
 
 class SparkRateLimitWarning(UserWarning):
-    """Cisco Spark rate-limit exceeded warning; the request will be retried."""
+    """Webex Teams rate-limit exceeded warning; the request will be retried."""
 
     def __init__(self, response):
         super(SparkRateLimitWarning, self).__init__()
         self.retry_after = max(1, int(response.headers.get('Retry-After', 15)))
-        """The `Retry-After` time period (in seconds) provided by Cisco Spark.
+        """The `Retry-After` time period (in seconds) provided by Webex Teams.
 
         Defaults to 15 seconds if the response `Retry-After` header isn't
         present in the response headers, and defaults to a minimum wait time of

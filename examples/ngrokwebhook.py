@@ -3,7 +3,7 @@
 """Sample script to read local ngrok info and create a corresponding webhook.
 
 Sample script that reads ngrok info from the local ngrok client api and creates
-a Cisco Spark Webhook pointint to the ngrok tunnel's public HTTP URL.
+a Webex Teams Webhook pointint to the ngrok tunnel's public HTTP URL.
 
 Typically ngrok is called run with the following syntax to redirect an
 Internet accesible ngrok url to localhost port 8080:
@@ -11,7 +11,7 @@ Internet accesible ngrok url to localhost port 8080:
     $ ngrok http 8080
 
 To use script simply launch ngrok, and then launch this script.  After ngrok is
-killed, run this script a second time to remove webhook from Cisco Spark.
+killed, run this script a second time to remove webhook from Webex Teams.
 
 """
 
@@ -82,7 +82,7 @@ def delete_webhooks_with_name(spark_api, name):
 
 
 def create_ngrok_webhook(spark_api, ngrok_public_url):
-    """Create a Cisco Spark webhook pointing to the public ngrok URL."""
+    """Create a Webex Teams webhook pointing to the public ngrok URL."""
     print("Creating Webhook...")
     webhook = spark_api.webhooks.create(
         name=WEBHOOK_NAME,

@@ -5,10 +5,10 @@ Introduction
 ============
 
 
-Work with the Cisco Spark APIs in Native Python!
+Work with the Webex Teams APIs in Native Python!
 ------------------------------------------------
 
-Sure, working with the Cisco Spark APIs is easy (see
+Sure, working with the Webex Teams APIs is easy (see
 `developer.ciscospark.com`_).  They are RESTful,  naturally structured,
 require only a simple Access Token for authentication, and the data is
 elegantly represented in intuitive JSON.  What could be easier?
@@ -83,7 +83,7 @@ With webexteamsdk, the above Python code can be consolidated to the following:
   from Spark, requests for additional pages of responses are efficiently and
   automatically requested as needed
 
-+ **Automatic Rate-Limit Handling**  Sending a lot of requests to Cisco Spark?
++ **Automatic Rate-Limit Handling**  Sending a lot of requests to Webex Teams?
   Don't worry; we have you covered.  Spark will respond with a rate-limit
   response, which will automatically be caught and "handled" for you.  Your
   requests and script will automatically be "paused" for the amount of time
@@ -133,7 +133,7 @@ and whitespace), and likely more than that since webexteamsdk handles
 pagination_ for you automatically!
 
 Head over to the :ref:`Quickstart` page to begin working with the
-**Cisco Spark APIs in native Python**!
+**Webex Teams APIs in native Python**!
 
 
 .. _License:

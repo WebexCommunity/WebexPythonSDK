@@ -150,7 +150,7 @@ def test_people(api, get_test_person):
 
 @pytest.fixture()
 def temp_person(api, get_random_email_address, me, licenses_dict):
-    # Get an e-mail address not currently used on Cisco Spark
+    # Get an e-mail address not currently used on Webex Teams
     person_email = None
     person = True
     while person:

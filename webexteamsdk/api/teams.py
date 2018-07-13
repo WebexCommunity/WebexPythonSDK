@@ -47,9 +47,9 @@ OBJECT_TYPE = 'team'
 
 
 class TeamsAPI(object):
-    """Cisco Spark Teams API.
+    """Webex Teams Teams API.
 
-    Wraps the Cisco Spark Teams API and exposes the API as native Python
+    Wraps the Webex Teams Teams API and exposes the API as native Python
     methods that return native Python objects.
 
     """
@@ -59,7 +59,7 @@ class TeamsAPI(object):
 
         Args:
             session(RestSession): The RESTful session object to be used for
-                API calls to the Cisco Spark service.
+                API calls to the Webex Teams service.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -76,7 +76,7 @@ class TeamsAPI(object):
     def list(self, max=None, **request_parameters):
         """List teams to which the authenticated user belongs.
 
-        This method supports Cisco Spark's implementation of RFC5988 Web
+        This method supports Webex Teams's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
         container that incrementally yields all teams returned by the
         query.  The generator will automatically request additional 'pages' of
@@ -94,11 +94,11 @@ class TeamsAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-                yields the teams returned by the Cisco Spark query.
+                yields the teams returned by the Webex Teams query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(max, int)
@@ -130,7 +130,7 @@ class TeamsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(name, basestring, may_be_none=False)
@@ -157,7 +157,7 @@ class TeamsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(teamId, basestring, may_be_none=False)
@@ -182,7 +182,7 @@ class TeamsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(teamId, basestring, may_be_none=False)
@@ -208,7 +208,7 @@ class TeamsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(teamId, basestring, may_be_none=False)

@@ -51,55 +51,55 @@ from ..utils import json_dict
 
 
 class AccessToken(SparkData, AccessTokenBasicPropertiesMixin):
-    """Cisco Spark Access-Token data model."""
+    """Webex Teams Access-Token data model."""
 
 
 class Event(SparkData, EventBasicPropertiesMixin):
-    """Cisco Spark Event data model."""
+    """Webex Teams Event data model."""
 
 
 class License(SparkData, LicenseBasicPropertiesMixin):
-    """Cisco Spark License data model."""
+    """Webex Teams License data model."""
 
 
 class Membership(SparkData, MembershipBasicPropertiesMixin):
-    """Cisco Spark Membership data model."""
+    """Webex Teams Membership data model."""
 
 
 class Message(SparkData, MessageBasicPropertiesMixin):
-    """Cisco Spark Message data model."""
+    """Webex Teams Message data model."""
 
 
 class Organization(SparkData, OrganizationBasicPropertiesMixin):
-    """Cisco Spark Organization data model."""
+    """Webex Teams Organization data model."""
 
 
 class Person(SparkData, PersonBasicPropertiesMixin):
-    """Cisco Spark Person data model."""
+    """Webex Teams Person data model."""
 
 
 class Role(SparkData, RoleBasicPropertiesMixin):
-    """Cisco Spark Role data model."""
+    """Webex Teams Role data model."""
 
 
 class Room(SparkData, RoomBasicPropertiesMixin):
-    """Cisco Spark Room data model."""
+    """Webex Teams Room data model."""
 
 
 class Team(SparkData, TeamBasicPropertiesMixin):
-    """Cisco Spark Team data model."""
+    """Webex Teams Team data model."""
 
 
 class TeamMembership(SparkData, TeamMembershipBasicPropertiesMixin):
-    """Cisco Spark Team-Membership data model."""
+    """Webex Teams Team-Membership data model."""
 
 
 class Webhook(SparkData, WebhookBasicPropertiesMixin):
-    """Cisco Spark Webhook data model."""
+    """Webex Teams Webhook data model."""
 
 
 class WebhookEvent(SparkData, WebhookEventBasicPropertiesMixin):
-    """Cisco Spark Webhook-Events data model."""
+    """Webex Teams Webhook-Events data model."""
 
 
 spark_data_models = defaultdict(

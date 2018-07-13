@@ -47,9 +47,9 @@ OBJECT_TYPE = 'webhook'
 
 
 class WebhooksAPI(object):
-    """Cisco Spark Webhooks API.
+    """Webex Teams Webhooks API.
 
-    Wraps the Cisco Spark Webhooks API and exposes the API as native Python
+    Wraps the Webex Teams Webhooks API and exposes the API as native Python
     methods that return native Python objects.
 
     """
@@ -59,7 +59,7 @@ class WebhooksAPI(object):
 
         Args:
             session(RestSession): The RESTful session object to be used for
-                API calls to the Cisco Spark service.
+                API calls to the Webex Teams service.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -76,7 +76,7 @@ class WebhooksAPI(object):
     def list(self, max=None, **request_parameters):
         """List all of the authenticated user's webhooks.
 
-        This method supports Cisco Spark's implementation of RFC5988 Web
+        This method supports Webex Teams's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
         container that incrementally yields all webhooks returned by the
         query.  The generator will automatically request additional 'pages' of
@@ -94,11 +94,11 @@ class WebhooksAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-                yields the webhooks returned by the Cisco Spark query.
+                yields the webhooks returned by the Webex Teams query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(max, int)
@@ -135,7 +135,7 @@ class WebhooksAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(name, basestring, may_be_none=False)
@@ -173,7 +173,7 @@ class WebhooksAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(webhookId, basestring, may_be_none=False)
@@ -201,7 +201,7 @@ class WebhooksAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(webhookId, basestring, may_be_none=False)
@@ -229,7 +229,7 @@ class WebhooksAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            SparkApiError: If the Cisco Spark cloud returns an error.
+            SparkApiError: If the Webex Teams cloud returns an error.
 
         """
         check_type(webhookId, basestring, may_be_none=False)

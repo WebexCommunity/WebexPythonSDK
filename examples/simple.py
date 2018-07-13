@@ -19,7 +19,7 @@ from webexteamsdk import WebexTeamsAPI
 
 DEMO_ROOM_NAME = "webexteamsdk Demo Room"
 DEMO_PEOPLE = ["test01@cmlccie.com", "test02@cmlccie.com"]
-DEMO_MESSAGE = u"Cisco Spark rocks!  \ud83d\ude0e"
+DEMO_MESSAGE = u"Webex Teams rocks!  \ud83d\ude0e"
 DEMO_FILE_URL = "https://developer.ciscospark.com/images/logo_spark_lg@256.png"
 
 
