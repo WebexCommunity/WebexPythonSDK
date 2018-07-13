@@ -1,7 +1,10 @@
 # Local Files
-.envrc
-.venv/
 local/
+
+
+# Virtual Environments
+.venv/
+venv/
 
 
 # Test artifacts
