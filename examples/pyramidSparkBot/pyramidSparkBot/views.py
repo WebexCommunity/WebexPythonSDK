@@ -45,7 +45,8 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-from webexteamsdk import CiscoSparkAPI, Webhook
+from webexteamsdk import Webhook
+from webexteamsdk.api import WebexTeamsAPI
 from cornice import Service
 import requests
 
@@ -59,7 +60,7 @@ CAT_FACTS_URL = 'https://catfact.ninja/fact'
 
 
 # Initialize the environment
-spark_api = CiscoSparkAPI()             # Create the Cisco Spark API connection object
+spark_api = WebexTeamsAPI()             # Create the Cisco Spark API connection object
 
 
 # Helper functions

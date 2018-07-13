@@ -24,11 +24,10 @@ __contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
 __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
+from webexteamsdk import WebexTeamsAPI
 
-from webexteamsdk import CiscoSparkAPI
 
-
-api = CiscoSparkAPI()                           # Create a CiscoSparkAPI connection object; uses your SPARK_ACCESS_TOKEN environment variable
+api = WebexTeamsAPI()                           # Create a CiscoSparkAPI connection object; uses your SPARK_ACCESS_TOKEN environment variable
 
 
 # Get my user information

@@ -45,7 +45,7 @@ __license__ = "MIT"
 import web
 import requests
 
-from webexteamsdk import CiscoSparkAPI, Webhook
+from webexteamsdk import WebexTeamsAPI, Webhook
 
 
 # Module constants
@@ -55,7 +55,7 @@ CAT_FACTS_URL = 'https://catfact.ninja/fact'
 # Global variables
 urls = ('/sparkwebhook', 'webhook')                                             # Your Spark webhook should point to http://<serverip>:8080/sparkwebhook
 app = web.application(urls, globals())                                          # Create the web application instance
-api = CiscoSparkAPI()                                                           # Create the Cisco Spark API connection object
+api = WebexTeamsAPI()                                                           # Create the Cisco Spark API connection object
 
 
 def get_catfact():

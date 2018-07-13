@@ -14,7 +14,7 @@ variable set to run this script.
 
 
 from __future__ import print_function
-from webexteamsdk import CiscoSparkAPI
+from webexteamsdk import WebexTeamsAPI
 
 
 DEMO_ROOM_NAME = "webexteamsdk Demo Room"
@@ -23,7 +23,7 @@ DEMO_MESSAGE = u"Cisco Spark rocks!  \ud83d\ude0e"
 DEMO_FILE_URL = "https://developer.ciscospark.com/images/logo_spark_lg@256.png"
 
 
-api = CiscoSparkAPI()    # Create a CiscoSparkAPI connection object; uses your SPARK_ACCESS_TOKEN
+api = WebexTeamsAPI()    # Create a CiscoSparkAPI connection object; uses your SPARK_ACCESS_TOKEN
 
 
 # Clean up previous demo rooms

@@ -35,7 +35,7 @@ __license__ = "MIT"
 
 import sys
 
-from webexteamsdk import CiscoSparkAPI
+from webexteamsdk import WebexTeamsAPI
 import requests
 
 
@@ -97,7 +97,7 @@ def create_ngrok_webhook(spark_api, ngrok_public_url):
 
 def main():
     """Delete previous webhooks. If local ngrok tunnel, create a webhook."""
-    spark_api = CiscoSparkAPI()
+    spark_api = WebexTeamsAPI()
     delete_webhooks_with_name(spark_api, name=WEBHOOK_NAME)
     public_url = get_ngrok_public_url()
     if public_url is not None:

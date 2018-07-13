@@ -45,7 +45,7 @@ __license__ = "MIT"
 from flask import Flask, request
 import requests
 
-from webexteamsdk import CiscoSparkAPI, Webhook
+from webexteamsdk import WebexTeamsAPI, Webhook
 
 
 # Module constants
@@ -54,7 +54,7 @@ CAT_FACTS_URL = 'https://catfact.ninja/fact'
 
 # Initialize the environment
 flask_app = Flask(__name__)             # Create the web application instance
-spark_api = CiscoSparkAPI()             # Create the Cisco Spark API connection object
+spark_api = WebexTeamsAPI()             # Create the Cisco Spark API connection object
 
 
 # Helper functions
