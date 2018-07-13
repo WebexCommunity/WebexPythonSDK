@@ -7,7 +7,8 @@ import os
 import pytest
 
 import webexteamsdk
-
+import webexteamsdk.api
+import webexteamsdk.config
 
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
@@ -19,19 +20,20 @@ __license__ = "MIT"
 
 @pytest.fixture(scope="session")
 def access_token():
-    return os.environ.get(webexteamsdk.ACCESS_TOKEN_ENVIRONMENT_VARIABLE)
+    return os.environ.get(
+        webexteamsdk.config.ACCESS_TOKEN_ENVIRONMENT_VARIABLE)
 
 
 @pytest.fixture
 def unset_access_token(access_token):
-    del os.environ[webexteamsdk.ACCESS_TOKEN_ENVIRONMENT_VARIABLE]
+    del os.environ[webexteamsdk.config.ACCESS_TOKEN_ENVIRONMENT_VARIABLE]
     yield None
-    os.environ[webexteamsdk.ACCESS_TOKEN_ENVIRONMENT_VARIABLE] = access_token
+    os.environ[webexteamsdk.config.ACCESS_TOKEN_ENVIRONMENT_VARIABLE] = access_token
 
 
 @pytest.fixture(scope="session")
 def api():
-    return webexteamsdk.CiscoSparkAPI()
+    return webexteamsdk.api.WebexTeamsAPI()
 
 
 # CiscoSparkAPI Tests
@@ -44,59 +46,59 @@ class TestCiscoSparkAPI:
     @pytest.mark.usefixtures("unset_access_token")
     def test_creating_a_new_webexteamsdk_object_without_an_access_token(self):
         with pytest.raises(webexteamsdk.webexteamsdkException):
-            webexteamsdk.CiscoSparkAPI()
+            webexteamsdk.api.WebexTeamsAPI()
 
     @pytest.mark.usefixtures("unset_access_token")
     def test_creating_a_new_webexteamsdk_object_via_access_token_argument(self, access_token):
-        connection_object = webexteamsdk.CiscoSparkAPI(access_token=access_token)
-        assert isinstance(connection_object, webexteamsdk.CiscoSparkAPI)
+        connection_object = webexteamsdk.api.WebexTeamsAPI(access_token=access_token)
+        assert isinstance(connection_object, webexteamsdk.api.WebexTeamsAPI)
 
     def test_creating_a_new_webexteamsdk_object_via_environment_varable(self):
-        connection_object = webexteamsdk.CiscoSparkAPI()
-        assert isinstance(connection_object, webexteamsdk.CiscoSparkAPI)
+        connection_object = webexteamsdk.api.WebexTeamsAPI()
+        assert isinstance(connection_object, webexteamsdk.api.WebexTeamsAPI)
 
     def test_default_base_url(self):
-        connection_object = webexteamsdk.CiscoSparkAPI()
-        assert connection_object.base_url == webexteamsdk.DEFAULT_BASE_URL
+        connection_object = webexteamsdk.api.WebexTeamsAPI()
+        assert connection_object.base_url == webexteamsdk.config.DEFAULT_BASE_URL
 
     def test_custom_base_url(self):
         custom_url = "https://spark.cmlccie.com/v1/"
-        connection_object = webexteamsdk.CiscoSparkAPI(base_url=custom_url)
+        connection_object = webexteamsdk.api.WebexTeamsAPI(base_url=custom_url)
         assert connection_object.base_url == custom_url
 
     def test_default_timeout(self):
-        connection_object = webexteamsdk.CiscoSparkAPI()
+        connection_object = webexteamsdk.api.WebexTeamsAPI()
         assert connection_object.timeout == \
-               webexteamsdk.DEFAULT_SINGLE_REQUEST_TIMEOUT
+               webexteamsdk.config.DEFAULT_SINGLE_REQUEST_TIMEOUT
 
     def test_custom_timeout(self):
         custom_timeout = 10
-        connection_object = webexteamsdk.CiscoSparkAPI(timeout=custom_timeout)
+        connection_object = webexteamsdk.api.WebexTeamsAPI(timeout=custom_timeout)
         assert connection_object.timeout == custom_timeout
 
     def test_default_single_request_timeout(self):
-        connection_object = webexteamsdk.CiscoSparkAPI()
+        connection_object = webexteamsdk.api.WebexTeamsAPI()
         assert connection_object.single_request_timeout == \
-               webexteamsdk.DEFAULT_SINGLE_REQUEST_TIMEOUT
+               webexteamsdk.config.DEFAULT_SINGLE_REQUEST_TIMEOUT
 
     def test_custom_single_request_timeout(self):
         custom_timeout = 10
-        connection_object = webexteamsdk.CiscoSparkAPI(
+        connection_object = webexteamsdk.api.WebexTeamsAPI(
                 single_request_timeout=custom_timeout
         )
         assert connection_object.single_request_timeout == custom_timeout
 
     def test_default_wait_on_rate_limit(self):
-        connection_object = webexteamsdk.CiscoSparkAPI()
+        connection_object = webexteamsdk.api.WebexTeamsAPI()
         assert connection_object.wait_on_rate_limit == \
-               webexteamsdk.DEFAULT_WAIT_ON_RATE_LIMIT
+               webexteamsdk.config.DEFAULT_WAIT_ON_RATE_LIMIT
 
     def test_non_default_wait_on_rate_limit(self):
-        connection_object = webexteamsdk.CiscoSparkAPI(
-                wait_on_rate_limit=not webexteamsdk.DEFAULT_WAIT_ON_RATE_LIMIT
+        connection_object = webexteamsdk.api.WebexTeamsAPI(
+                wait_on_rate_limit=not webexteamsdk.config.DEFAULT_WAIT_ON_RATE_LIMIT
         )
         assert connection_object.wait_on_rate_limit != \
-               webexteamsdk.DEFAULT_WAIT_ON_RATE_LIMIT
+               webexteamsdk.config.DEFAULT_WAIT_ON_RATE_LIMIT
 
     # Test creation of component API objects
 

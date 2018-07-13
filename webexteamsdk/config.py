@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Community-developed Python SDK for the Webex Teams APIs.
+"""Package configuration.
 
 Copyright (c) 2016-2018 Cisco and/or its affiliates.
 
@@ -23,34 +23,16 @@ SOFTWARE.
 """
 
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
+# Package Constants
+DEFAULT_BASE_URL = 'https://api.ciscospark.com/v1/'
 
-import logging
+DEFAULT_SINGLE_REQUEST_TIMEOUT = 60
 
-from ._metadata import *
-from .api import WebexTeamsAPI
-from .exceptions import (
-    SparkApiError, SparkRateLimitError, SparkRateLimitWarning,
-    webexteamsdkException,
-)
-from .models import (
-    AccessToken, Event, License, Membership, Message, Organization, Person,
-    Role, Room, Team, TeamMembership, Webhook, WebhookEvent, dict_data_factory,
-    simple_data_factory, spark_data_factory,
-)
+DEFAULT_WAIT_ON_RATE_LIMIT = True
 
+ACCESS_TOKEN_ENVIRONMENT_VARIABLE = 'WEBEX_TEAMS_ACCESS_TOKEN'
 
-# Versioneer version control
-from ._version import get_versions
-__version__ = get_versions()['version']
-del get_versions
-
-
-# Initialize Package Logging
-logger = logging.getLogger(__name__)
-logger.addHandler(logging.NullHandler())
+LEGACY_ACCESS_TOKEN_ENVIRONMENT_VARIABLES = [
+    'SPARK_ACCESS_TOKEN',
+    'CISCO_SPARK_ACCESS_TOKEN',
+]

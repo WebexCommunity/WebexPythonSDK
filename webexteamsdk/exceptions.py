@@ -41,20 +41,6 @@ from .response_codes import SPARK_RESPONSE_CODES
 
 
 # Helper functions
-def sanitize(header_tuple):
-    """Sanitize request headers.
-
-    Remove Spark authentication token.
-
-    """
-    header, value = header_tuple
-
-    if (header.lower().strip() == "Authorization".lower().strip()
-            and "Bearer".lower().strip() in value.lower().strip()):
-        return header, "Bearer <redacted>"
-
-    else:
-        return header_tuple
 
 
 def to_unicode(string):

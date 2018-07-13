@@ -228,3 +228,18 @@ def json_dict(json_data):
             "'json_data' must be a dictionary or valid JSON string; "
             "received: {!r}".format(json_data)
         )
+
+
+def sanitize(header_tuple):
+    """Sanitize request headers.
+
+    Remove authentication `Bearer` token.
+    """
+    header, value = header_tuple
+
+    if (header.lower().strip() == "Authorization".lower().strip()
+            and "Bearer".lower().strip() in value.lower().strip()):
+        return header, "Bearer <redacted>"
+
+    else:
+        return header_tuple

@@ -10,12 +10,14 @@ from __future__ import (
 )
 
 from future import standard_library
-
+from webexteamsdk import (
+    DEFAULT_SINGLE_REQUEST_TIMEOUT,
+    DEFAULT_WAIT_ON_RATE_LIMIT,
+)
 
 standard_library.install_aliases()
 
 from builtins import *
-import logging
 import time
 import urllib.parse
 import warnings
@@ -36,11 +38,6 @@ __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
 __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
-
-
-# Module Constants
-DEFAULT_SINGLE_REQUEST_TIMEOUT = 60
-DEFAULT_WAIT_ON_RATE_LIMIT = True
 
 
 # Helper Functions
