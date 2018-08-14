@@ -9,6 +9,7 @@ venv/
 
 # Test artifacts
 .cache/
+.pytest_cache/
 .tox/
 
 
