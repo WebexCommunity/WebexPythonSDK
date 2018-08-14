@@ -1,6 +1,26 @@
 # -*- coding: utf-8 -*-
-"""pytest configuration and top-level fixtures."""
+"""pytest configuration and top-level fixtures.
 
+Copyright (c) 2016-2018 Cisco and/or its affiliates.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+"""
 
 import os
 import random
@@ -9,17 +29,16 @@ import tempfile
 
 import pytest
 
+from tests.environment import (
+    WEBEX_TEAMS_TEST_DOMAIN, WEBEX_TEAMS_TEST_FILE_URL,
+    WEBEX_TEAMS_TEST_ID_START,
+)
 from tests.utils import download_file
-
-
-__author__ = "Chris Lunsford"
-__author_email__ = "chrlunsf@cisco.com"
-__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
-__license__ = "MIT"
 
 
 pytest_plugins = [
     'tests.test_webexteamssdk',
+    'tests.api',
     'tests.api.test_licenses',
     'tests.api.test_memberships',
     'tests.api.test_messages',
@@ -32,18 +51,12 @@ pytest_plugins = [
     "tests.api.test_events",
 ]
 
-
-TEST_DOMAIN = "cmlccie.com"
-TEST_ID_START = 91
-TEST_FILE_URL = "https://developer.ciscospark.com/images/logo_spark_lg@256.png"
-
-
-email_template = string.Template("test${number}@" + TEST_DOMAIN)
+email_template = string.Template("test${number}@" + WEBEX_TEAMS_TEST_DOMAIN)
 
 
 # Helper Functions
 def new_email_generator():
-    i = TEST_ID_START
+    i = WEBEX_TEAMS_TEST_ID_START
     while True:
         email_address = email_template.substitute(number=i)
         i += 1
@@ -63,7 +76,7 @@ def temp_directory():
 
 @pytest.fixture("session")
 def local_file(temp_directory):
-        file = download_file(TEST_FILE_URL, temp_directory)
+        file = download_file(WEBEX_TEAMS_TEST_FILE_URL, temp_directory)
 
         yield file
 

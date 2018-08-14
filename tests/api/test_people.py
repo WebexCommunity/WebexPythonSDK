@@ -1,18 +1,32 @@
 # -*- coding: utf-8 -*-
-"""pytest People functions, fixtures and tests."""
+"""pytest People functions, fixtures and tests.
 
+Copyright (c) 2016-2018 Cisco and/or its affiliates.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+"""
 
 import itertools
 
 import pytest
 
 import webexteamssdk
-
-
-__author__ = "Chris Lunsford"
-__author_email__ = "chrlunsf@cisco.com"
-__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
-__license__ = "MIT"
 
 
 # Helper Functions
@@ -78,6 +92,7 @@ def person_exists(api, person):
 def me(api):
     return api.people.me()
 
+
 @pytest.fixture(scope="session")
 def get_test_person(api, get_new_email_address, me, licenses_dict):
 
@@ -87,14 +102,15 @@ def get_test_person(api, get_new_email_address, me, licenses_dict):
         if person:
             return person
         else:
-            person = create_person(api,
-                                   emails=[person_email],
-                                   displayName="webexteamssdk",
-                                   firstName="webexteamssdk",
-                                   lastName="webexteamssdk",
-                                   orgId=me.orgId,
-                                   licenses=[licenses_dict["Messaging"].id],
-                                   )
+            person = create_person(
+                api,
+                emails=[person_email],
+                displayName="webexteamssdk",
+                firstName="webexteamssdk",
+                lastName="webexteamssdk",
+                orgId=me.orgId,
+                licenses=[licenses_dict["Messaging"].id],
+            )
             assert is_valid_person(person)
             return person
 
