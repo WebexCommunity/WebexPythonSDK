@@ -9,20 +9,20 @@ set -e
 cd "$(dirname "$0")/.."
 
 
-# Initialize the CI environment
-echo "==> Initializing the CI environment"
-
-
-# Setup the project
-script/setup --dev
+## Initialize the CI environment
+#echo "==> Initializing the CI environment"
+#
+#
+## Setup the project
+#script/setup --dev
 
 
 # Run the test suite
 script/test
 
 
-# Build the product(s)
-script/build
-
-
-# Push the builds
+## Build the product(s)
+#script/build
+#
+#
+## Push the builds
