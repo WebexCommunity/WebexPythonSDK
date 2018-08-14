@@ -34,7 +34,7 @@ from builtins import *
 
 
 class MessageBasicPropertiesMixin(object):
-    """A mixin for :class:`SparkData` classes."""
+    """Message basic properties."""
 
     @property
     def id(self):

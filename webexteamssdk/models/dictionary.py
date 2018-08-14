@@ -43,8 +43,8 @@ def dict_data_factory(model, json_data):
             which to initialize the object.
 
     Returns:
-        OrderedDict: An ordered dictionary with the contents of the Spark JSON
-            object.
+        OrderedDict: An ordered dictionary with the contents of the Webex Teams
+         JSON object.
 
     Raises:
         TypeError: If the json_data parameter is not a JSON string or

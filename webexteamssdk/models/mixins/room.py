@@ -34,7 +34,7 @@ from builtins import *
 
 
 class RoomBasicPropertiesMixin(object):
-    """A mixin for :class:`SparkData` classes."""
+    """Room basic properties."""
 
     @property
     def id(self):

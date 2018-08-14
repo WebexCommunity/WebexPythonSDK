@@ -34,7 +34,7 @@ from builtins import *
 
 
 class WebhookEventBasicPropertiesMixin(object):
-    """A mixin for :class:`SparkData` classes."""
+    """Webhook Event basic properties."""
 
     @property
     def id(self):

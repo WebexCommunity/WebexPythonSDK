@@ -34,7 +34,7 @@ from builtins import *
 
 
 class TeamBasicPropertiesMixin(object):
-    """A mixin for :class:`SparkData` classes."""
+    """Team basic properties."""
 
     @property
     def id(self):

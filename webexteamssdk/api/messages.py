@@ -84,7 +84,7 @@ class MessagesAPI(object):
         Linking to provide pagination support.  It returns a generator
         container that incrementally yields all messages returned by the
         query.  The generator will automatically request additional 'pages' of
-        responses from Spark as needed until all responses have been returned.
+        responses from Webex as needed until all responses have been returned.
         The container makes the generator safe for reuse.  A new API call will
         be made, using the same parameters that were specified when the
         generator was created, every time a new iterator is requested from the
@@ -98,8 +98,8 @@ class MessagesAPI(object):
                 ISO8601 format.
             beforeMessage(basestring): List messages sent before a message,
                 by ID.
-            max(int): Limit the maximum number of items returned from the Spark
-                service per request.
+            max(int): Limit the maximum number of items returned from the Webex
+                Teams service per request.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
@@ -154,8 +154,6 @@ class MessagesAPI(object):
             markdown(basestring): The message, in markdown format.
             files(list): A list of public URL(s) or local path(s) to files to
                 be posted into the room. Only one file is allowed per message.
-                Uploaded files are automatically converted into a format that
-                all Spark clients can render.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 

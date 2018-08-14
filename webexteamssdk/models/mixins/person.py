@@ -34,7 +34,7 @@ from builtins import *
 
 
 class PersonBasicPropertiesMixin(object):
-    """A mixin for :class:`SparkData` classes."""
+    """Person basic properties."""
 
     @property
     def type(self):

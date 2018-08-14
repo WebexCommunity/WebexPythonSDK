@@ -31,7 +31,7 @@ from __future__ import (
 )
 
 
-SPARK_RESPONSE_CODES = {
+RESPONSE_CODES = {
     200: "OK",
     204: "Member deleted.",
     400: "The request was invalid or cannot be otherwise served. An "

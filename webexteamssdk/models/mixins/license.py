@@ -34,7 +34,7 @@ from builtins import *
 
 
 class LicenseBasicPropertiesMixin(object):
-    """A mixin for :class:`SparkData` classes."""
+    """License basic properties."""
 
     @property
     def id(self):

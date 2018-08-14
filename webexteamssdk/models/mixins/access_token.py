@@ -34,7 +34,7 @@ from builtins import *
 
 
 class AccessTokenBasicPropertiesMixin(object):
-    """A mixin for :class:`SparkData` classes."""
+    """Access Token basic properties."""
 
     @property
     def access_token(self):

@@ -37,7 +37,7 @@ from builtins import *
 import requests
 from past.builtins import basestring
 
-from .response_codes import SPARK_RESPONSE_CODES
+from .response_codes import RESPONSE_CODES
 
 
 def _to_unicode(string):
@@ -145,7 +145,7 @@ class ApiError(webexteamssdkException):
         # Error message
         response_code = response.status_code
         response_reason = " " + response.reason if response.reason else ""
-        description = SPARK_RESPONSE_CODES.get(response_code,
+        description = RESPONSE_CODES.get(response_code,
                                                "Unknown Response Code")
         detail = _response_to_string(response)
 
@@ -177,7 +177,7 @@ class RateLimitError(ApiError):
 
         Defaults to 15 seconds if the response `Retry-After` header isn't
         present in the response headers, and defaults to a minimum wait time of
-        1 second if Spark returns a `Retry-After` header of 0 seconds.
+        1 second if Webex Teams returns a `Retry-After` header of 0 seconds.
 
         """
 
@@ -196,7 +196,7 @@ class RateLimitWarning(UserWarning):
 
         Defaults to 15 seconds if the response `Retry-After` header isn't
         present in the response headers, and defaults to a minimum wait time of
-        1 second if Spark returns a `Retry-After` header of 0 seconds.
+        1 second if Webex Teams returns a `Retry-After` header of 0 seconds.
 
         """
 

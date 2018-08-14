@@ -81,7 +81,7 @@ class PeopleAPI(object):
         Linking to provide pagination support.  It returns a generator
         container that incrementally yields all people returned by the
         query.  The generator will automatically request additional 'pages' of
-        responses from Spark as needed until all responses have been returned.
+        responses from Webex as needed until all responses have been returned.
         The container makes the generator safe for reuse.  A new API call will
         be made, using the same parameters that were specified when the
         generator was created, every time a new iterator is requested from the
@@ -94,8 +94,8 @@ class PeopleAPI(object):
             id(basestring): List people by ID. Accepts up to 85 person IDs
                 separated by commas.
             orgId(basestring): The organization ID.
-            max(int): Limit the maximum number of items returned from the Spark
-                service per request.
+            max(int): Limit the maximum number of items returned from the Webex
+                Teams service per request.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
@@ -217,7 +217,7 @@ class PeopleAPI(object):
 
         Only an admin can update a person's details.
 
-        Email addresses for a person cannot be changed via the Spark API.
+        Email addresses for a person cannot be changed via the Webex Teams API.
 
         Include all details for the person. This action expects all user
         details to be present in the request. A common approach is to first GET

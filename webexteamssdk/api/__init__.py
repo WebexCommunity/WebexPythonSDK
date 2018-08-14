@@ -122,8 +122,7 @@ class WebexTeamsAPI(object):
         Raises:
             TypeError: If the parameter types are incorrect.
             AccessTokenError: If an access token is not provided via the
-                access_token argument or SPARK_ACCESS_TOKEN environment
-                variable.
+                access_token argument or an environment variable.
 
         """
         check_type(access_token, basestring)
@@ -135,7 +134,7 @@ class WebexTeamsAPI(object):
         if not access_token:
             raise AccessTokenError(
                 "You must provide a Webex Teams access token to interact with "
-                "the Webex Teams APIs, either via a SPARK_ACCESS_TOKEN "
+                "the Webex Teams APIs, either via a WEBEX_TEAMS_ACCESS_TOKEN "
                 "environment variable or via the access_token argument."
             )
 
@@ -150,7 +149,7 @@ class WebexTeamsAPI(object):
             wait_on_rate_limit=wait_on_rate_limit
         )
 
-        # Spark API wrappers
+        # API wrappers
         self.people = PeopleAPI(self._session, object_factory)
         self.rooms = RoomsAPI(self._session, object_factory)
         self.memberships = MembershipsAPI(self._session, object_factory)

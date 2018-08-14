@@ -107,7 +107,7 @@ class GeneratorContainer(object):
 
         `itertools.islice(GeneratorContainer, start, stop, step)`
 
-        This method attempts to optimize the spark request page size for
+        This method attempts to optimize the Webex Teams request page size for
         slicing by setting the `max` parameter to the stop-value of the slice.
         If the sliced sequence can be returned in a single response, it will
         be. Otherwise automatic pagination will take care of returning enough

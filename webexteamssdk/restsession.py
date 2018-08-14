@@ -103,8 +103,8 @@ class RestSession(object):
         """Initialize a new RestSession object.
 
         Args:
-            access_token(basestring): The Spark access token to be used for
-                this session.
+            access_token(basestring): The Webex Teams access token to be used
+                for this session.
             base_url(basestring): The base URL that will be suffixed onto API
                 endpoint relative URLs to produce a callable absolute URL.
             single_request_timeout(int): The timeout (seconds) for a single
@@ -220,7 +220,7 @@ class RestSession(object):
         This base method:
             * Expands the API endpoint URL to an absolute URL
             * Makes the actual HTTP request to the API endpoint
-            * Provides support for Spark rate-limiting
+            * Provides support for Webex Teams rate-limiting
             * Inspects response codes and raises exceptions as appropriate
 
         Args:

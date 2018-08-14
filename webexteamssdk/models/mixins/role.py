@@ -34,7 +34,7 @@ from builtins import *
 
 
 class RoleBasicPropertiesMixin(object):
-    """A mixin for :class:`SparkData` classes."""
+    """Role basic properties."""
 
     @property
     def id(self):

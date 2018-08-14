@@ -34,7 +34,7 @@ from builtins import *
 
 
 class EventBasicPropertiesMixin(object):
-    """A mixin for :class:`SparkData` classes."""
+    """Event basic properties."""
 
     @property
     def id(self):
