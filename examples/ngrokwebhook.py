@@ -35,7 +35,7 @@ __license__ = "MIT"
 
 import sys
 
-from webexteamsdk import WebexTeamsAPI
+from webexteamssdk import WebexTeamsAPI
 import requests
 
 

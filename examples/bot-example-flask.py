@@ -45,7 +45,7 @@ __license__ = "MIT"
 from flask import Flask, request
 import requests
 
-from webexteamsdk import WebexTeamsAPI, Webhook
+from webexteamssdk import WebexTeamsAPI, Webhook
 
 
 # Module constants

@@ -40,7 +40,7 @@ from __future__ import (
 import json
 from builtins import *
 
-from webexteamsdk.utils import json_dict
+from webexteamssdk.utils import json_dict
 
 
 class SimpleDataModel(object):

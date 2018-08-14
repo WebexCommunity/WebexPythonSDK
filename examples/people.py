@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #  -*- coding: utf-8 -*-
-""" Script to demonstrate the use of webexteamsdk for the people API
+""" Script to demonstrate the use of webexteamssdk for the people API
 
 The package natively retrieves your Spark access token from the
 SPARK_ACCESS_TOKEN environment variable.  You must have this environment
@@ -24,7 +24,7 @@ __contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
 __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
-from webexteamsdk import WebexTeamsAPI
+from webexteamssdk import WebexTeamsAPI
 
 
 api = WebexTeamsAPI()                           # Create a CiscoSparkAPI connection object; uses your SPARK_ACCESS_TOKEN environment variable

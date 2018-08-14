@@ -34,12 +34,9 @@ from builtins import *
 
 from past.builtins import basestring
 
-from ..generator_containers import generator_container
-from ..restsession import RestSession
-from ..utils import (
-    check_type,
-    dict_from_items_with_values,
-)
+from webexteamssdk.generator_containers import generator_container
+from webexteamssdk.restsession import RestSession
+from webexteamssdk.utils import check_type, dict_from_items_with_values
 
 
 API_ENDPOINT = 'organizations'

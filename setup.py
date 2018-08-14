@@ -14,7 +14,7 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-PACKAGE_NAME = 'webexteamsdk'
+PACKAGE_NAME = 'webexteamssdk'
 
 PACKAGE_KEYWORDS = [
     'cisco',

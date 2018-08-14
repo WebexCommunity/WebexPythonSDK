@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Community-developed Python SDK for the Webex Teams APIs.
+"""Webex Teams data models.
 
 Copyright (c) 2016-2018 Cisco and/or its affiliates.
 
@@ -30,28 +30,25 @@ from __future__ import (
     unicode_literals,
 )
 
-import logging
-
-from ._metadata import *
-from ._version import get_versions
-from .api import WebexTeamsAPI
-from .exceptions import (
-    ApiError, RateLimitError, RateLimitWarning,
-    webexteamsdkException,
-)
-from .models.dictionary import dict_data_factory
-from .models.immutable import (
-    AccessToken, Event, License, Membership, Message, Organization, Person,
-    Role, Room, Team, TeamMembership, Webhook, WebhookEvent,
-    immutable_data_factory,
-)
-from .models.simple import SimpleDataModel, simple_data_factory
+from webexteamssdk.utils import json_dict
 
 
-__version__ = get_versions()['version']
-del get_versions
+def dict_data_factory(model, json_data):
+    """Factory function for creating SimpleDataModel objects.
 
+    Args:
+        model(basestring): The data model to use when creating the data
+            object (message, room, membership, etc.).
+        json_data(basestring, dict): The JSON string or dictionary data with
+            which to initialize the object.
 
-# Initialize Package Logging
-logger = logging.getLogger(__name__)
-logger.addHandler(logging.NullHandler())
+    Returns:
+        OrderedDict: An ordered dictionary with the contents of the Spark JSON
+            object.
+
+    Raises:
+        TypeError: If the json_data parameter is not a JSON string or
+            dictionary.
+
+    """
+    return json_dict(json_data)

@@ -6,7 +6,7 @@ import itertools
 
 import pytest
 
-import webexteamsdk
+import webexteamssdk
 from tests.conftest import TEST_FILE_URL
 from tests.utils import create_string
 
@@ -41,7 +41,7 @@ def list_messages(api, roomId, **query_parameters):
 
 
 def is_valid_message(obj):
-    return isinstance(obj, webexteamsdk.Message) and obj.id is not None
+    return isinstance(obj, webexteamssdk.Message) and obj.id is not None
 
 
 def are_valid_messages(iterable):
@@ -51,7 +51,7 @@ def are_valid_messages(iterable):
 def message_exists(api, message):
     try:
         api.messages.get(message.id)
-    except webexteamsdk.ApiError:
+    except webexteamssdk.ApiError:
         return False
     else:
         return True
@@ -95,7 +95,7 @@ def send_group_room_message(api):
     for message in messages:
         try:
             delete_message(api, message)
-        except webexteamsdk.ApiError as e:
+        except webexteamssdk.ApiError as e:
             pass
 
 

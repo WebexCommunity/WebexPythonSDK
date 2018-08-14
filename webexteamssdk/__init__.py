@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Package metadata.
+"""Community-developed Python SDK for the Webex Teams APIs.
 
 Copyright (c) 2016-2018 Cisco and/or its affiliates.
 
@@ -23,11 +23,35 @@ SOFTWARE.
 """
 
 
-__title__ = 'webexteamsdk'
-__description__ = 'Community-developed Python SDK for the Webex Teams APIs'
-__url__ = 'https://github.com/CiscoDevNet/webexteamsdk'
-__download_url__ = 'https://pypi.python.org/pypi/webexteamsdk'
-__author__ = 'Chris Lunsford'
-__author_email__ = 'chrlunsf@cisco.com'
-__copyright__ = "Copyright (c) 2016-2018 Cisco Systems, Inc."
-__license__ = "MIT"
+from __future__ import (
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
+)
+
+import logging
+
+from ._metadata import *
+from ._version import get_versions
+from .api import WebexTeamsAPI
+from .exceptions import (
+    ApiError, RateLimitError, RateLimitWarning,
+    webexteamssdkException,
+)
+from .models.dictionary import dict_data_factory
+from .models.immutable import (
+    AccessToken, Event, License, Membership, Message, Organization, Person,
+    Role, Room, Team, TeamMembership, Webhook, WebhookEvent,
+    immutable_data_factory,
+)
+from .models.simple import SimpleDataModel, simple_data_factory
+
+
+__version__ = get_versions()['version']
+del get_versions
+
+
+# Initialize Package Logging
+logger = logging.getLogger(__name__)
+logger.addHandler(logging.NullHandler())

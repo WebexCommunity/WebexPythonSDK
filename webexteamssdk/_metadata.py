@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams data models.
+"""Package metadata.
 
 Copyright (c) 2016-2018 Cisco and/or its affiliates.
 
@@ -23,32 +23,11 @@ SOFTWARE.
 """
 
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
-
-from webexteamsdk.utils import json_dict
-
-
-def dict_data_factory(model, json_data):
-    """Factory function for creating SimpleDataModel objects.
-
-    Args:
-        model(basestring): The data model to use when creating the data
-            object (message, room, membership, etc.).
-        json_data(basestring, dict): The JSON string or dictionary data with
-            which to initialize the object.
-
-    Returns:
-        OrderedDict: An ordered dictionary with the contents of the Spark JSON
-            object.
-
-    Raises:
-        TypeError: If the json_data parameter is not a JSON string or
-            dictionary.
-
-    """
-    return json_dict(json_data)
+__title__ = 'webexteamssdk'
+__description__ = 'Community-developed Python SDK for the Webex Teams APIs'
+__url__ = 'https://github.com/CiscoDevNet/webexteamssdk'
+__download_url__ = 'https://pypi.python.org/pypi/webexteamssdk'
+__author__ = 'Chris Lunsford'
+__author_email__ = 'chrlunsf@cisco.com'
+__copyright__ = "Copyright (c) 2016-2018 Cisco Systems, Inc."
+__license__ = "MIT"

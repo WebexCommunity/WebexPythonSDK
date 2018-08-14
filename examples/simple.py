@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #  -*- coding: utf-8 -*-
-"""Simple webexteamsdk demonstration script.
+"""Simple webexteamssdk demonstration script.
 
 Very simple script to create a demo room, post a message, and post a file.
 If one or more rooms with the name of the demo room already exist, it will
@@ -14,10 +14,10 @@ variable set to run this script.
 
 
 from __future__ import print_function
-from webexteamsdk import WebexTeamsAPI
+from webexteamssdk import WebexTeamsAPI
 
 
-DEMO_ROOM_NAME = "webexteamsdk Demo Room"
+DEMO_ROOM_NAME = "webexteamssdk Demo Room"
 DEMO_PEOPLE = ["test01@cmlccie.com", "test02@cmlccie.com"]
 DEMO_MESSAGE = u"Webex Teams rocks!  \ud83d\ude0e"
 DEMO_FILE_URL = "https://developer.ciscospark.com/images/logo_spark_lg@256.png"

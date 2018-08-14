@@ -45,8 +45,8 @@ __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-from webexteamsdk import Webhook
-from webexteamsdk.api import WebexTeamsAPI
+from webexteamssdk import Webhook
+from webexteamssdk.api import WebexTeamsAPI
 from cornice import Service
 import requests
 

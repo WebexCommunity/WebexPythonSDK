@@ -41,7 +41,7 @@ from builtins import *
 import json
 from collections import defaultdict
 
-from webexteamsdk.utils import json_dict
+from webexteamssdk.utils import json_dict
 from .mixins.access_token import AccessTokenBasicPropertiesMixin
 from .mixins.event import EventBasicPropertiesMixin
 from .mixins.license import LicenseBasicPropertiesMixin

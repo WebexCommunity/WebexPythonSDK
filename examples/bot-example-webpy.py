@@ -45,7 +45,7 @@ __license__ = "MIT"
 import web
 import requests
 
-from webexteamsdk import WebexTeamsAPI, Webhook
+from webexteamssdk import WebexTeamsAPI, Webhook
 
 
 # Module constants

@@ -117,8 +117,8 @@ class AccessTokensAPI(object):
                 process.
 
         Returns:
-            webexteamsdk.AccessToken: An AccessToken object with the access
-                token provided by the Webex Teams cloud.
+            AccessToken: An AccessToken object with the access token provided
+                by the Webex Teams cloud.
 
         Raises:
             TypeError: If the parameter types are incorrect.

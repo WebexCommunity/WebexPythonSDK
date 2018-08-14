@@ -6,7 +6,7 @@ import itertools
 
 import pytest
 
-import webexteamsdk
+import webexteamssdk
 from tests.utils import create_string
 
 
@@ -30,7 +30,7 @@ def get_team_details_by_id(api, team_id):
 def delete_team(api, team):
     try:
         api.teams.delete(team.id)
-    except webexteamsdk.ApiError as e:
+    except webexteamssdk.ApiError as e:
         if e.response.status_code == 404:
             # Team doesn't exist
             pass
@@ -39,7 +39,7 @@ def delete_team(api, team):
 
 
 def is_valid_team(obj):
-    return isinstance(obj, webexteamsdk.Team) and obj.id is not None
+    return isinstance(obj, webexteamssdk.Team) and obj.id is not None
 
 
 def are_valid_teams(iterable):
@@ -49,7 +49,7 @@ def are_valid_teams(iterable):
 def team_exists(api, team):
     try:
         get_team_details_by_id(api, team.id)
-    except webexteamsdk.ApiError:
+    except webexteamssdk.ApiError:
         return False
     else:
         return True

@@ -6,7 +6,7 @@ import itertools
 
 import pytest
 
-import webexteamsdk
+import webexteamssdk
 
 
 __author__ = "Chris Lunsford"
@@ -71,7 +71,7 @@ def empty_room(api, me, room):
 
 
 def is_valid_membership(membership):
-    return isinstance(membership, webexteamsdk.Membership) \
+    return isinstance(membership, webexteamssdk.Membership) \
            and membership.id is not None
 
 
@@ -83,7 +83,7 @@ def are_valid_memberships(iterable):
 def membership_exists(api, membership):
     try:
         get_membership_by_id(api, membership.id)
-    except webexteamsdk.ApiError:
+    except webexteamssdk.ApiError:
         return False
     else:
         return True

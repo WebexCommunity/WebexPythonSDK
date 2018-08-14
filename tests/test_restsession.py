@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""webexteamsdk/restsession.py Fixtures & Tests"""
+"""webexteamssdk/restsession.py Fixtures & Tests"""
 
 
 import logging
@@ -7,7 +7,7 @@ import warnings
 
 import pytest
 
-import webexteamsdk
+import webexteamssdk
 
 
 __author__ = "Chris Lunsford"
@@ -23,7 +23,7 @@ logging.captureWarnings(True)
 def rate_limit_detected(w):
     """Check to see if a rate-limit warning is in the warnings list."""
     while w:
-        if issubclass(w.pop().category, webexteamsdk.RateLimitWarning):
+        if issubclass(w.pop().category, webexteamssdk.RateLimitWarning):
             return True
             break
     return False

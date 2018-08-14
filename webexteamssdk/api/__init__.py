@@ -24,15 +24,15 @@ SOFTWARE.
 
 from past.types import basestring
 
-from webexteamsdk.config import (
+from webexteamssdk.config import (
     DEFAULT_BASE_URL, DEFAULT_SINGLE_REQUEST_TIMEOUT,
     DEFAULT_WAIT_ON_RATE_LIMIT,
 )
-from webexteamsdk.environment import WEBEX_TEAMS_ACCESS_TOKEN
-from webexteamsdk.exceptions import AccessTokenError
-from webexteamsdk.models.immutable import immutable_data_factory
-from webexteamsdk.restsession import RestSession
-from webexteamsdk.utils import check_type
+from webexteamssdk.environment import WEBEX_TEAMS_ACCESS_TOKEN
+from webexteamssdk.exceptions import AccessTokenError
+from webexteamssdk.models.immutable import immutable_data_factory
+from webexteamssdk.restsession import RestSession
+from webexteamssdk.utils import check_type
 from .access_tokens import AccessTokensAPI
 from .events import EventsAPI
 from .licenses import LicensesAPI
@@ -106,13 +106,13 @@ class WebexTeamsAPI(object):
                 WEBEX_TEAMS_ACCESS_TOKEN environment variable.
             base_url(basestring): The base URL to be prefixed to the
                 individual API endpoint suffixes.
-                Defaults to webexteamsdk.DEFAULT_BASE_URL.
+                Defaults to webexteamssdk.DEFAULT_BASE_URL.
             single_request_timeout(int): Timeout (in seconds) for RESTful HTTP
                 requests. Defaults to
-                webexteamsdk.config.DEFAULT_SINGLE_REQUEST_TIMEOUT.
+                webexteamssdk.config.DEFAULT_SINGLE_REQUEST_TIMEOUT.
             wait_on_rate_limit(bool): Enables or disables automatic rate-limit
                 handling. Defaults to
-                webexteamsdk.config.DEFAULT_WAIT_ON_RATE_LIMIT.
+                webexteamssdk.config.DEFAULT_WAIT_ON_RATE_LIMIT.
             object_factory(callable): The factory function to use to create
                 Python objects from the returned Webex Teams JSON data objects.
 

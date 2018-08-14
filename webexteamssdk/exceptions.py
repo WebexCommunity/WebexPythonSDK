@@ -119,17 +119,17 @@ def _response_to_string(response):
     ])
 
 
-class webexteamsdkException(Exception):
-    """Base class for all webexteamsdk package exceptions."""
+class webexteamssdkException(Exception):
+    """Base class for all webexteamssdk package exceptions."""
     pass
 
 
-class AccessTokenError(webexteamsdkException):
+class AccessTokenError(webexteamssdkException):
     """Raised when an incorrect Webex Teams Access Token has been provided."""
     pass
 
 
-class ApiError(webexteamsdkException):
+class ApiError(webexteamssdkException):
     """Errors returned by requests to the Webex Teams cloud APIs."""
 
     def __init__(self, response):
@@ -156,7 +156,7 @@ class ApiError(webexteamsdkException):
                                                       detail))
 
 
-class MalformedResponse(webexteamsdkException):
+class MalformedResponse(webexteamssdkException):
     """Raised when a malformed response is received from Webex Teams."""
     pass
 
