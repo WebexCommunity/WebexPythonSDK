@@ -9,7 +9,7 @@ set -e
 cd "$(dirname "$0")/.."
 
 
-echo "==> Updating the package's dependencies"
+echo "==> Updating project dependencies"
 echo "Update installed packages"
 pipenv update --dev
 echo "Freeze package requirements"
