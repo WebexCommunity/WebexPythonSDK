@@ -50,4 +50,4 @@ urllib3==1.22
 versioneer==0.18
 virtualenv==16.0.0
 wcwidth==0.1.7
--e git+https://github.com/CiscoDevNet/ciscosparkapi.git@a356a97156d17f02d2d80bf55344a7bf251598ab#egg=webexteamsdk
+-e git+https://github.com/CiscoDevNet/ciscosparkapi.git@a356a97156d17f02d2d80bf55344a7bf251598ab#egg=webexteamssdk

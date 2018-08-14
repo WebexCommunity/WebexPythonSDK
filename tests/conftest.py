@@ -19,7 +19,7 @@ __license__ = "MIT"
 
 
 pytest_plugins = [
-    'tests.test_webexteamsdk',
+    'tests.test_webexteamssdk',
     'tests.api.test_licenses',
     'tests.api.test_memberships',
     'tests.api.test_messages',

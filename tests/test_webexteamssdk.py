@@ -44,16 +44,16 @@ class TestCiscoSparkAPI:
     # Test creating CiscoSparkAPI objects
 
     @pytest.mark.usefixtures("unset_access_token")
-    def test_creating_a_new_webexteamsdk_object_without_an_access_token(self):
+    def test_creating_a_new_webexteamssdk_object_without_an_access_token(self):
         with pytest.raises(webexteamssdk.webexteamssdkException):
             webexteamssdk.api.WebexTeamsAPI()
 
     @pytest.mark.usefixtures("unset_access_token")
-    def test_creating_a_new_webexteamsdk_object_via_access_token_argument(self, access_token):
+    def test_creating_a_new_webexteamssdk_object_via_access_token_argument(self, access_token):
         connection_object = webexteamssdk.api.WebexTeamsAPI(access_token=access_token)
         assert isinstance(connection_object, webexteamssdk.api.WebexTeamsAPI)
 
-    def test_creating_a_new_webexteamsdk_object_via_environment_varable(self):
+    def test_creating_a_new_webexteamssdk_object_via_environment_varable(self):
         connection_object = webexteamssdk.api.WebexTeamsAPI()
         assert isinstance(connection_object, webexteamssdk.api.WebexTeamsAPI)
 

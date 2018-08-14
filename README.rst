@@ -1,40 +1,40 @@
 =============
-webexteamsdk
+webexteamssdk
 =============
 
 *Simple, lightweight, scalable Python API wrapper for the Webex Teams APIs*
 
 .. image:: https://img.shields.io/badge/license-MIT-blue.svg
-    :target: https://github.com/CiscoDevNet/webexteamsdk/blob/master/LICENSE
-.. image:: https://img.shields.io/pypi/v/webexteamsdk.svg
-    :target: https://pypi.python.org/pypi/webexteamsdk
-.. image:: https://travis-ci.org/CiscoDevNet/webexteamsdk.svg?branch=master
-    :target: https://travis-ci.org/CiscoDevNet/webexteamsdk
-.. image:: https://readthedocs.org/projects/webexteamsdk/badge/?version=latest
-    :target: http://webexteamsdk.readthedocs.io/en/latest/?badge=latest
+    :target: https://github.com/CiscoDevNet/webexteamssdk/blob/master/LICENSE
+.. image:: https://img.shields.io/pypi/v/webexteamssdk.svg
+    :target: https://pypi.python.org/pypi/webexteamssdk
+.. image:: https://travis-ci.org/CiscoDevNet/webexteamssdk.svg?branch=master
+    :target: https://travis-ci.org/CiscoDevNet/webexteamssdk
+.. image:: https://readthedocs.org/projects/webexteamssdk/badge/?version=latest
+    :target: http://webexteamssdk.readthedocs.io/en/latest/?badge=latest
 
 -------------------------------------------------------------------------------
 
-**webexteamsdk** is a *community developed* Pythonic wrapping of the Cisco
+**webexteamssdk** is a *community developed* Pythonic wrapping of the Cisco
 Spark APIs, which makes working with Webex Teams in Python a *native* and
 *natural* experience!
 
 .. code-block:: python
 
-    from webexteamsdk import CiscoSparkAPI
+    from webexteamssdk import CiscoSparkAPI
 
     api = CiscoSparkAPI()
 
-    # Find all rooms that have 'webexteamsdk Demo' in their title
+    # Find all rooms that have 'webexteamssdk Demo' in their title
     all_rooms = api.rooms.list()
-    demo_rooms = [room for room in all_rooms if 'webexteamsdk Demo' in room.title]
+    demo_rooms = [room for room in all_rooms if 'webexteamssdk Demo' in room.title]
 
     # Delete all of the demo rooms
     for room in demo_rooms:
         api.rooms.delete(room.id)
 
     # Create a new demo room
-    demo_room = api.rooms.create('webexteamsdk Demo')
+    demo_room = api.rooms.create('webexteamssdk Demo')
 
     # Add people to the new demo room
     email_addresses = ["test01@cmlccie.com", "test02@cmlccie.com"]
@@ -47,10 +47,10 @@ Spark APIs, which makes working with Webex Teams in Python a *native* and
 
 
 That's more than 6 Spark API calls in less than 23 lines of code (with comments
-and whitespace), and likely more than that since webexteamsdk handles
+and whitespace), and likely more than that since webexteamssdk handles
 pagination_ for you automatically!
 
-webexteamsdk makes your life better...  `Learn how!`__
+webexteamssdk makes your life better...  `Learn how!`__
 
 __ Introduction_
 
@@ -58,7 +58,7 @@ __ Introduction_
 Features
 --------
 
-webexteamsdk does all of this for you...
+webexteamssdk does all of this for you...
 
 + Transparently sources your Spark credentials from your local environment
 
@@ -89,28 +89,28 @@ webexteamsdk does all of this for you...
 Installation
 ------------
 
-Installing and upgrading webexteamsdk is easy:
+Installing and upgrading webexteamssdk is easy:
 
 **Install via PIP**
 
 .. code-block:: bash
 
-    $ pip install webexteamsdk
+    $ pip install webexteamssdk
 
 **Upgrading to the latest Version**
 
 .. code-block:: bash
 
-    $ pip install webexteamsdk --upgrade
+    $ pip install webexteamssdk --upgrade
 
 
 Documentation
 -------------
 
 **Excellent documentation is now available at:**
-http://webexteamsdk.readthedocs.io
+http://webexteamssdk.readthedocs.io
 
-Check out the Quickstart_ to dive in and begin using webexteamsdk.
+Check out the Quickstart_ to dive in and begin using webexteamssdk.
 
 
 Examples
@@ -150,7 +150,7 @@ __ Community_
 Contribution
 ------------
 
-webexteamsdk_ and it's sister project ciscosparksdk_ are community
+webexteamssdk_ and it's sister project ciscosparksdk_ are community
 development projects.  Feedback, thoughts, ideas and code contributions are
 most welcome!
 
@@ -175,18 +175,18 @@ Please use the issues_ log.
 *Copyright (c) 2016-2018 Cisco and/or its affiliates.*
 
 
-.. _Introduction: http://webexteamsdk.readthedocs.io/en/latest/user/intro.html
+.. _Introduction: http://webexteamssdk.readthedocs.io/en/latest/user/intro.html
 .. _pagination: https://developer.ciscospark.com/pagination.html
-.. _webexteamsdk.readthedocs.io: https://webexteamsdk.readthedocs.io
-.. _Quickstart: http://webexteamsdk.readthedocs.io/en/latest/user/quickstart.html
-.. _examples: https://github.com/CiscoDevNet/webexteamsdk/tree/master/examples
-.. _webexteamsdk: https://github.com/CiscoDevNet/webexteamsdk
+.. _webexteamssdk.readthedocs.io: https://webexteamssdk.readthedocs.io
+.. _Quickstart: http://webexteamssdk.readthedocs.io/en/latest/user/quickstart.html
+.. _examples: https://github.com/CiscoDevNet/webexteamssdk/tree/master/examples
+.. _webexteamssdk: https://github.com/CiscoDevNet/webexteamssdk
 .. _ciscosparksdk: https://github.com/CiscoDevNet/ciscosparksdk
-.. _issues: https://github.com/CiscoDevNet/webexteamsdk/issues
+.. _issues: https://github.com/CiscoDevNet/webexteamssdk/issues
 .. _Community: https://eurl.io/#HkMxO-_9-
-.. _projects: https://github.com/CiscoDevNet/webexteamsdk/projects
-.. _pull requests: https://github.com/CiscoDevNet/webexteamsdk/pulls
-.. _releases: https://github.com/CiscoDevNet/webexteamsdk/releases
+.. _projects: https://github.com/CiscoDevNet/webexteamssdk/projects
+.. _pull requests: https://github.com/CiscoDevNet/webexteamssdk/pulls
+.. _releases: https://github.com/CiscoDevNet/webexteamssdk/releases
 .. _charter: https://github.com/CiscoDevNet/spark-python-packages-team/blob/master/Charter.md
-.. _the repository: webexteamsdk_
+.. _the repository: webexteamssdk_
 .. _pull request: `pull requests`_

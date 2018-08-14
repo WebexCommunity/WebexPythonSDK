@@ -1,13 +1,13 @@
 Contribution
 ------------
 
-[webexteamsdk](https://github.com/CiscoDevNet/webexteamsdk) is a community
+[webexteamssdk](https://github.com/CiscoDevNet/webexteamssdk) is a community
 development project.  Feedback, thoughts, ideas and code contributions are
 most welcome!
 
 **How to contributed feedback, issues, thoughts and ideas...**
 
-Please use the [issues](https://github.com/CiscoDevNet/webexteamsdk/issues) 
+Please use the [issues](https://github.com/CiscoDevNet/webexteamssdk/issues) 
 log. to report issues or post ideas for enhancement or discussion.
 
 **Interested in contributing code?**

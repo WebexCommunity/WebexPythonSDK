@@ -3,7 +3,7 @@ ignore = E402,F401,F403,F405,W503
 exclude =
     .git,
     __pycache__,
-    webexteamsdk/_version.py,
+    webexteamssdk/_version.py,
     docs/source/conf.py,
     build,
     dist,

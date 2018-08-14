@@ -1,18 +1,18 @@
 .. _Quickstart:
 
-.. currentmodule:: webexteamsdk
+.. currentmodule:: webexteamssdk
 
 ==========
 Quickstart
 ==========
 
-*Dive in!*  ...to get started using the webexteamsdk package:
+*Dive in!*  ...to get started using the webexteamssdk package:
 
 Make sure that you have:
 
 * A Webex Teams Account *(a free account works fine,* `sign-up for one here`__ *)*
-* webexteamsdk :ref:`installed <Install>`
-* webexteamsdk :ref:`upgraded to the latest version <Upgrade>`
+* webexteamssdk :ref:`installed <Install>`
+* webexteamssdk :ref:`upgraded to the latest version <Upgrade>`
 
 __ ciscospark.com_
 
@@ -37,7 +37,7 @@ Use your Spark Access Token
 
 As a `best practice`__, you can store your Spark access token 'credential' as
 an environment variable in your development or production environment.  By
-default, webexteamsdk will look for a ``SPARK_ACCESS_TOKEN`` environment
+default, webexteamssdk will look for a ``SPARK_ACCESS_TOKEN`` environment
 variable when creating new connection objects.
 
 __ https://12factor.net/config
@@ -67,8 +67,8 @@ shell starts up or before your run a script:
     $ python myscript.py
 
 However you choose to set it, if you have your access token stored in a
-``SPARK_ACCESS_TOKEN`` environment variable when using webexteamsdk, you are
-good to go.  webexteamsdk will pull and use this access token, by default,
+``SPARK_ACCESS_TOKEN`` environment variable when using webexteamssdk, you are
+good to go.  webexteamssdk will pull and use this access token, by default,
 when creating new :class:`CiscoSparkAPI` objects.
 
 If you don't want to set your access token as an environment variable, or
@@ -86,24 +86,24 @@ object".
 
 .. code-block:: python
 
-    >>> from webexteamsdk import CiscoSparkAPI
+    >>> from webexteamssdk import CiscoSparkAPI
     >>> api = CiscoSparkAPI()
 
-As discussed above (`Use your Spark Access Token`_), webexteamsdk defaults
+As discussed above (`Use your Spark Access Token`_), webexteamssdk defaults
 to pulling your Spark access token from a ``SPARK_ACCESS_TOKEN`` environment
 variable.  If you do not have this environment variable set and you try to
 create a new :class:`CiscoSparkAPI` object without providing a Spark access
-token, a :exc:`webexteamsdkException` will be raised.
+token, a :exc:`webexteamssdkException` will be raised.
 
 .. code-block:: python
 
-    >>> from webexteamsdk import CiscoSparkAPI
+    >>> from webexteamssdk import CiscoSparkAPI
     >>> api = CiscoSparkAPI()
     Traceback (most recent call last):
       File "<stdin>", line 1, in <module>
-      File "webexteamsdk/__init__.py", line 114, in __init__
-        raise webexteamsdkException(error_message)
-    webexteamsdkException: You must provide an Spark access token to interact
+      File "webexteamssdk/__init__.py", line 114, in __init__
+        raise webexteamssdkException(error_message)
+    webexteamssdkException: You must provide an Spark access token to interact
     with the Webex Teams APIs, either via a SPARK_ACCESS_TOKEN environment
     variable or via the access_token argument.
 
@@ -112,7 +112,7 @@ creating a new :class:`CiscoSparkAPI` connection object.
 
 .. code-block:: python
 
-    >>> from webexteamsdk import CiscoSparkAPI
+    >>> from webexteamssdk import CiscoSparkAPI
     >>> api = CiscoSparkAPI(access_token='lkj345w...')
 
 Note that this can be very useful if you are reading in access token(s) from a
@@ -121,7 +121,7 @@ object.
 
 .. code-block:: python
 
-    >>> from webexteamsdk import CiscoSparkAPI
+    >>> from webexteamssdk import CiscoSparkAPI
     >>> chris_at = 'lkj345w...'
     >>> veronica_at = 'kl45kln...'
     >>> chris_api = CiscoSparkAPI(access_token=chris_at)
@@ -268,20 +268,20 @@ message.
 
 .. code-block:: python
 
-    >>> from webexteamsdk import CiscoSparkAPI, ApiError
+    >>> from webexteamssdk import CiscoSparkAPI, ApiError
     >>> api = CiscoSparkAPI()
-    >>> room = api.rooms.create("webexteamsdk Test Room")
+    >>> room = api.rooms.create("webexteamssdk Test Room")
     >>> me = api.people.me()
     >>> api.memberships.create(roomId=room.id, personId=me.id)
     Traceback (most recent call last):
       File "<stdin>", line 1, in <module>
-      File "webexteamsdk/api/memberships.py", line 212, in create
+      File "webexteamssdk/api/memberships.py", line 212, in create
         json_obj = self._session.post('memberships', json=post_data)
-      File "webexteamsdk/restsession.py", line 187, in post
+      File "webexteamssdk/restsession.py", line 187, in post
         check_response_code(response, erc)
-      File "webexteamsdk/utils.py", line 104, in check_response_code
+      File "webexteamssdk/utils.py", line 104, in check_response_code
         response=response)
-    webexteamsdk.exceptions.ApiError: Response Code [409] - The request
+    webexteamssdk.exceptions.ApiError: Response Code [409] - The request
     could not be processed because it conflicts with some established rule of
     the system. For example, a person may not be added to a room more than
     once.
@@ -306,7 +306,7 @@ You can catch any errors returned by the Webex Teams cloud by catching
     Doh!  I forgot that I am automatically added to a room when I create it.
     >>>
 
-webexteamsdk will also raise a number of other standard errors
+webexteamssdk will also raise a number of other standard errors
 (:exc:`TypeError`, :exc:`ValueError`, etc.); however, these errors are usually
 caused by incorrect use of the package or methods and should be sorted while
 debugging your app.
@@ -334,7 +334,7 @@ The Webex Teams cloud returns data objects in JSON format, like so:
 Sure, JSON data objects can easily be parsed and represented in Python using
 dictionaries, but when working with an 'object' wouldn't it be nice to be able
 to work with it like an object - using native object syntax (like accessing
-attributes using '.' notation)?  webexteamsdk enables you to do just that:
+attributes using '.' notation)?  webexteamssdk enables you to do just that:
 
 .. code-block:: python
 
@@ -373,7 +373,7 @@ help clean up your code and make coding easier:
 
     3.  When accessing 'optional' attributes, like the ``teamId`` attribute of
         a Spark Room object (only present when the room is part of a Spark
-        Team), the :class:`webexteamsdk.Room` object will return ``None`` when
+        Team), the :class:`webexteamssdk.Room` object will return ``None`` when
         the attribute is not present and will return the attribute's value when
         it is present.  This avoids some boiler plate code and/or needless
         exception handling, when working with optional attributes.
@@ -412,10 +412,10 @@ attributes, is available :ref:`here <Spark Data Objects>` in the
 **What if Spark adds new data attributes?**
 
 Attribute access WILL WORK for the newly added attributes (yes, without a
-package update!), but tab-completion WILL NOT.  webexteamsdk is written to
+package update!), but tab-completion WILL NOT.  webexteamssdk is written to
 automatically take advantage of new attributes and data as they are returned;
 however, tab-completion (which relies on source code and introspection) will
-not work until we update the webexteamsdk package (which is easy to do; raise
+not work until we update the webexteamssdk package (which is easy to do; raise
 the issue on the issues_ page and bug us to add it).
 
 
@@ -445,7 +445,7 @@ isn't contained the first page, you can request the next and so forth.
 Python has a similar construct as well - iterable_ objects.  Iterable objects
 return their members one at a time, until they have all been returned.
 
-webexteamsdk marries these two concepts (pagination and iterables) to create a
+webexteamssdk marries these two concepts (pagination and iterables) to create a
 simple interface for working with sequences of returned objects.
 
 .. code-block:: python
@@ -455,14 +455,14 @@ simple interface for working with sequences of returned objects.
 
     >>> # Which can easily be iterated to find what you are looking for
     >>> for room in rooms:
-    ...     if 'webexteamsdk' in room.title:
+    ...     if 'webexteamssdk' in room.title:
     ...         demo_room = room
     ...         break
 
     >>> demo_room
-    Room({"title": "webexteamsdk Test Room", "created": "2016-11-12T03:24:39.278Z", "isLocked": false, "lastActivity": "2016-11-12T03:24:39.308Z", "creatorId": "Y2lzY29zcGFyazovL3VzL1BFT1BMRS9mZjhlZTZmYi1hZmVmLTRhNGQtOTJiMS1kNmIyMTZiNTg5NDk", "type": "group", "id": "Y2lzY29zcGFyazovL3VzL1JPT00vOGI1MTIwZTAtYTg4Ny0xMWU2LWFhZjUtZTlmYWEzMWQ1ZmRm"})
+    Room({"title": "webexteamssdk Test Room", "created": "2016-11-12T03:24:39.278Z", "isLocked": false, "lastActivity": "2016-11-12T03:24:39.308Z", "creatorId": "Y2lzY29zcGFyazovL3VzL1BFT1BMRS9mZjhlZTZmYi1hZmVmLTRhNGQtOTJiMS1kNmIyMTZiNTg5NDk", "type": "group", "id": "Y2lzY29zcGFyazovL3VzL1JPT00vOGI1MTIwZTAtYTg4Ny0xMWU2LWFhZjUtZTlmYWEzMWQ1ZmRm"})
 
-webexteamsdk provides this functionality by returning
+webexteamssdk provides this functionality by returning
 :class:`GeneratorContainer` objects for API calls that return lists of items.
 
 In short, :class:`GeneratorContainer` s are iterable objects that incrementally
@@ -476,9 +476,9 @@ rooms not just once but many times.
 API calls are made so you are always working with 'live data' from the Cisco
 Spark Cloud.
 
-webexteamsdk *automatically handles the pagination for you* so that you don't
+webexteamssdk *automatically handles the pagination for you* so that you don't
 have to think about it or write the boiler plate code to handle requesting
-pages of responses.  webexteamsdk automatically and efficiently requests
+pages of responses.  webexteamssdk automatically and efficiently requests
 additional pages from Spark as needed to yield the items you have requested.
 
 A :class:`GeneratorContainer` records all of the parameters of your API call,
@@ -530,6 +530,6 @@ contain all of the returned objects.
 .. _developer.ciscospark.com: https://developer.ciscospark.com/
 .. _PyCharm: https://www.jetbrains.com/pycharm/
 .. _PEP 20: https://www.python.org/dev/peps/pep-0020/
-.. _issues: https://github.com/CiscoDevNet/webexteamsdk/issues
+.. _issues: https://github.com/CiscoDevNet/webexteamssdk/issues
 .. _Pagination: https://developer.ciscospark.com/pagination.html
 .. _iterable: https://docs.python.org/2/glossary.html#term-iterable

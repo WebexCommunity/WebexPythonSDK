@@ -1,6 +1,6 @@
 .. _User API Doc:
 
-.. currentmodule:: webexteamsdk
+.. currentmodule:: webexteamssdk
 
 ============
 User API Doc
@@ -26,7 +26,7 @@ and hierarchically organized underneath the :class:`CiscoSparkAPI` class.
 people
 ------
 
-.. autoclass:: webexteamsdk.api.people.PeopleAPI()
+.. autoclass:: webexteamssdk.api.people.PeopleAPI()
 
 
 .. _rooms:
@@ -34,7 +34,7 @@ people
 rooms
 -----
 
-.. autoclass:: webexteamsdk.api.rooms.RoomsAPI()
+.. autoclass:: webexteamssdk.api.rooms.RoomsAPI()
 
 
 .. _memberships:
@@ -42,7 +42,7 @@ rooms
 memberships
 -----------
 
-.. autoclass:: webexteamsdk.api.memberships.MembershipsAPI()
+.. autoclass:: webexteamssdk.api.memberships.MembershipsAPI()
 
 
 .. _messages:
@@ -50,7 +50,7 @@ memberships
 messages
 --------
 
-.. autoclass:: webexteamsdk.api.messages.MessagesAPI()
+.. autoclass:: webexteamssdk.api.messages.MessagesAPI()
 
 
 .. _teams:
@@ -58,7 +58,7 @@ messages
 teams
 -----
 
-.. autoclass:: webexteamsdk.api.teams.TeamsAPI()
+.. autoclass:: webexteamssdk.api.teams.TeamsAPI()
 
 
 .. _team_memberships:
@@ -66,7 +66,7 @@ teams
 team_memberships
 ----------------
 
-.. autoclass:: webexteamsdk.api.team_memberships.TeamMembershipsAPI()
+.. autoclass:: webexteamssdk.api.team_memberships.TeamMembershipsAPI()
 
 
 .. _webhooks:
@@ -74,7 +74,7 @@ team_memberships
 webhooks
 --------
 
-.. autoclass:: webexteamsdk.api.webhooks.WebhooksAPI()
+.. autoclass:: webexteamssdk.api.webhooks.WebhooksAPI()
 
 
 .. _organizations:
@@ -82,7 +82,7 @@ webhooks
 organizations
 -------------
 
-.. autoclass:: webexteamsdk.api.organizations.OrganizationsAPI()
+.. autoclass:: webexteamssdk.api.organizations.OrganizationsAPI()
 
 
 .. _licenses:
@@ -90,7 +90,7 @@ organizations
 licenses
 --------
 
-.. autoclass:: webexteamsdk.api.licenses.LicensesAPI()
+.. autoclass:: webexteamssdk.api.licenses.LicensesAPI()
 
 
 .. _roles:
@@ -98,7 +98,7 @@ licenses
 roles
 -----
 
-.. autoclass:: webexteamsdk.api.roles.RolesAPI()
+.. autoclass:: webexteamssdk.api.roles.RolesAPI()
 
 
 .. _events:
@@ -106,7 +106,7 @@ roles
 events
 -----
 
-.. autoclass:: webexteamsdk.api.events.EventsAPI()
+.. autoclass:: webexteamssdk.api.events.EventsAPI()
 
 
 .. _access_tokens:
@@ -114,7 +114,7 @@ events
 access_tokens
 -------------
 
-.. autoclass:: webexteamsdk.api.access_tokens.AccessTokensAPI()
+.. autoclass:: webexteamssdk.api.access_tokens.AccessTokensAPI()
 
 
 .. _Exceptions:
@@ -122,7 +122,7 @@ access_tokens
 Exceptions
 ==========
 
-.. autoexception:: webexteamsdkException()
+.. autoexception:: webexteamssdkException()
     :show-inheritance:
     :members:
 
