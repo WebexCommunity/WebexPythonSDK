@@ -79,7 +79,7 @@ class TeamsAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-                yields the teams returned by the Cisco Spark query.
+            yields the teams returned by the Cisco Spark query.
 
         Raises:
             TypeError: If the parameter types are incorrect.

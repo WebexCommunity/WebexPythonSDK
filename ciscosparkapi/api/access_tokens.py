@@ -96,7 +96,7 @@ class AccessTokensAPI(object):
 
         Returns:
             ciscosparkapi.AccessToken: An AccessToken object with the access
-                token provided by the Cisco Spark cloud.
+            token provided by the Cisco Spark cloud.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -137,7 +137,7 @@ class AccessTokensAPI(object):
 
         Returns:
             AccessToken: With the access token provided by the Cisco Spark
-                cloud.
+            cloud.
 
         Raises:
             TypeError: If the parameter types are incorrect.

@@ -90,7 +90,7 @@ class MessagesAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-                yields the messages returned by the Cisco Spark query.
+            yields the messages returned by the Cisco Spark query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -137,7 +137,7 @@ class MessagesAPI(object):
                 specified this parameter may be optionally used to provide
                 alternate text for UI clients that do not support rich text.
             markdown(basestring): The message, in markdown format.
-            files(list): A list of public URL(s) or local path(s) to files to
+            files(`list`): A list of public URL(s) or local path(s) to files to
                 be posted into the room. Only one file is allowed per message.
                 Uploaded files are automatically converted into a format that
                 all Spark clients can render.
@@ -213,7 +213,7 @@ class MessagesAPI(object):
 
         Returns:
             Message: A Message object with the details of the requested
-                message.
+            message.
 
         Raises:
             TypeError: If the parameter types are incorrect.

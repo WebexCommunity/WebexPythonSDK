@@ -80,7 +80,7 @@ class TeamMembershipsAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-                yields the team memberships returned by the Cisco Spark query.
+            yields the team memberships returned by the Cisco Spark query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -121,7 +121,7 @@ class TeamMembershipsAPI(object):
 
         Returns:
             TeamMembership: A TeamMembership object with the details of the
-                created team membership.
+            created team membership.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -155,7 +155,7 @@ class TeamMembershipsAPI(object):
 
         Returns:
             TeamMembership: A TeamMembership object with the details of the
-                requested team membership.
+            requested team membership.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -181,7 +181,7 @@ class TeamMembershipsAPI(object):
 
         Returns:
             TeamMembership: A TeamMembership object with the updated Spark team
-                membership details.
+            membership details.
 
         Raises:
             TypeError: If the parameter types are incorrect.

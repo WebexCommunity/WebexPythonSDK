@@ -93,7 +93,7 @@ class MembershipsAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-                yields the memberships returned by the Cisco Spark query.
+            yields the memberships returned by the Cisco Spark query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -137,7 +137,7 @@ class MembershipsAPI(object):
 
         Returns:
             Membership: A Membership object with the details of the created
-                membership.
+            membership.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -171,7 +171,7 @@ class MembershipsAPI(object):
 
         Returns:
             Membership: A Membership object with the details of the requested
-                membership.
+            membership.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -197,7 +197,7 @@ class MembershipsAPI(object):
 
         Returns:
             Membership: A Membership object with the updated Spark membership
-                details.
+            details.
 
         Raises:
             TypeError: If the parameter types are incorrect.

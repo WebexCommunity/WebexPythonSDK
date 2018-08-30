@@ -10,7 +10,7 @@ buildpackage : setup.py
 
 .PHONY : docs
 docs : docs/Makefile
-	cd docs/ && $(MAKE) html
+	cd docs/ && $(MAKE) html SPHINXOPTS="-W"
 
 
 # Local project directory and environment management recipes
@@ -38,8 +38,7 @@ ci-init :
 	pipenv install
 
 .PHONY : ci
-ci :
-	pipenv run pytest -m "not ratelimit"
+ci : pytest docs
 
 .PHONY : toxtest
 toxtest : tox.ini
