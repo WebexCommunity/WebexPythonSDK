@@ -104,7 +104,7 @@ roles
 .. _events:
 
 events
------
+------
 
 .. autoclass:: webexteamssdk.api.events.EventsAPI()
 

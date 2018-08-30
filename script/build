@@ -44,5 +44,5 @@ fi
 if [ ${all} ] || [ ${docs} ]; then
     echo "==> Building the Docs"
     make -C docs clean
-    make -C docs html
+    make -C docs html SPHINXOPTS="-W"
 fi

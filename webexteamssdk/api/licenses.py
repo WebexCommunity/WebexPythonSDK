@@ -98,7 +98,7 @@ class LicensesAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-                yields the licenses returned by the Webex Teams query.
+            yields the licenses returned by the Webex Teams query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -129,7 +129,7 @@ class LicensesAPI(object):
 
         Returns:
             License: A License object with the details of the requested
-                License.
+            License.
 
         Raises:
             TypeError: If the parameter types are incorrect.

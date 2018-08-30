@@ -94,7 +94,7 @@ class RolesAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-                yields the roles returned by the Webex Teams query.
+            yields the roles returned by the Webex Teams query.
 
         Raises:
             TypeError: If the parameter types are incorrect.

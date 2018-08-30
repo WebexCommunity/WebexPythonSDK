@@ -91,7 +91,7 @@ class OrganizationsAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-                yields the organizations returned by the Webex Teams query.
+            yields the organizations returned by the Webex Teams query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -120,7 +120,7 @@ class OrganizationsAPI(object):
 
         Returns:
             Organization: An Organization object with the details of the
-                requested organization.
+            requested organization.
 
         Raises:
             TypeError: If the parameter types are incorrect.

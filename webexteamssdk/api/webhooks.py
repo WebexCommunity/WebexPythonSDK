@@ -94,7 +94,7 @@ class WebhooksAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-                yields the webhooks returned by the Webex Teams query.
+            yields the webhooks returned by the Webex Teams query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -169,7 +169,7 @@ class WebhooksAPI(object):
 
         Returns:
             Webhook: A Webhook object with the details of the requested
-                webhook.
+            webhook.
 
         Raises:
             TypeError: If the parameter types are incorrect.

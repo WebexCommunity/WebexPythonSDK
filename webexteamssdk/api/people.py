@@ -101,7 +101,7 @@ class PeopleAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-                yields the people returned by the Webex Teams query.
+            yields the people returned by the Webex Teams query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -138,16 +138,16 @@ class PeopleAPI(object):
         Only an admin can create a new user account.
 
         Args:
-            emails(list): Email address(es) of the person (list of strings).
+            emails(`list`): Email address(es) of the person (list of strings).
             displayName(basestring): Full name of the person.
             firstName(basestring): First name of the person.
             lastName(basestring): Last name of the person.
             avatar(basestring): URL to the person's avatar in PNG format.
             orgId(basestring): ID of the organization to which this
                 person belongs.
-            roles(list): Roles of the person (list of strings containing
+            roles(`list`): Roles of the person (list of strings containing
                 the role IDs to be assigned to the person).
-            licenses(list): Licenses allocated to the person (list of
+            licenses(`list`): Licenses allocated to the person (list of
                 strings - containing the license IDs to be allocated to the
                 person).
             **request_parameters: Additional request parameters (provides
@@ -226,16 +226,16 @@ class PeopleAPI(object):
 
         Args:
             personId(basestring): The person ID.
-            emails(list): Email address(es) of the person (list of strings).
+            emails(`list`): Email address(es) of the person (list of strings).
             displayName(basestring): Full name of the person.
             firstName(basestring): First name of the person.
             lastName(basestring): Last name of the person.
             avatar(basestring): URL to the person's avatar in PNG format.
             orgId(basestring): ID of the organization to which this
                 person belongs.
-            roles(list): Roles of the person (list of strings containing
+            roles(`list`): Roles of the person (list of strings containing
                 the role IDs to be assigned to the person).
-            licenses(list): Licenses allocated to the person (list of
+            licenses(`list`): Licenses allocated to the person (list of
                 strings - containing the license IDs to be allocated to the
                 person).
             **request_parameters: Additional request parameters (provides
