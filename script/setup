@@ -12,4 +12,4 @@ cd "$(dirname "$0")/.."
 echo "==> Setting up / resetting project for initial use"
 
 script/clean --deep
-script/installdeps --dev
+script/installdeps

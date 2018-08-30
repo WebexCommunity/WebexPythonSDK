@@ -9,20 +9,15 @@ set -e
 cd "$(dirname "$0")/.."
 
 
-# Initialize the CI environment
-echo "==> Initializing the CI environment"
+# Build the package
+script/build package
 
 
-# Setup the project
-script/setup --dev
+# Install the package
+for file in dist/*.tar.gz; do
+  pip install ${file}
+done
 
 
 # Run the test suite
 script/test
-
-
-## Build the product(s)
-#script/build
-#
-#
-## Push the builds

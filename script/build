@@ -34,6 +34,10 @@ for i in ${@}; do
 done
 
 
+echo "==> Cleaning previous build artifacts"
+script/clean
+
+
 # Project build steps
 if [ ${all} ] || [ ${package} ]; then
     echo "==> Building the Source Distribution package"
