@@ -29,7 +29,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from __future__ import (
     absolute_import,
     division,
@@ -147,7 +146,7 @@ class ImmutableData(object):
     def __eq__(self, other):
         """Determine if two objects are equal."""
         return isinstance(other, self.__class__) \
-               and self._freeze() == other._freeze()
+            and self._freeze() == other._freeze()
 
     def __hash__(self):
         """Hash the data object."""

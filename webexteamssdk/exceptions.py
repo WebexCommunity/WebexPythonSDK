@@ -145,15 +145,21 @@ class ApiError(webexteamssdkException):
         # Error message
         response_code = response.status_code
         response_reason = " " + response.reason if response.reason else ""
-        description = RESPONSE_CODES.get(response_code,
-                                               "Unknown Response Code")
+        description = RESPONSE_CODES.get(
+            response_code,
+            "Unknown Response Code",
+        )
         detail = _response_to_string(response)
 
-        super(ApiError, self).__init__("Response Code [{}]{} - {}\n{}"
-                                            "".format(response_code,
-                                                      response_reason,
-                                                      description,
-                                                      detail))
+        super(ApiError, self).__init__(
+            "Response Code [{}]{} - {}\n{}"
+            "".format(
+                response_code,
+                response_reason,
+                description,
+                detail
+            )
+        )
 
 
 class MalformedResponse(webexteamssdkException):
