@@ -8,20 +8,39 @@ launching the script if desired.  ngrok can be used to tunnel traffic back to
 your server if you don't wish to expose your machine publicly to the Internet.
 
 You must create a Spark webhook that points to the URL where this script is
-hosted.  You can do this via the CiscoSparkAPI.webhooks.create() method.
+hosted.  You can do this via the WebexTeamsAPI.webhooks.create() method.
 
 Additional Spark webhook details can be found here:
-https://developer.ciscospark.com/webhooks-explained.html
+https://developer.webex.com/webhooks-explained.html
 
 A bot must be created and pointed to this server in the My Apps section of
-https://developer.ciscospark.com.  The bot's Access Token should be added as a
-'SPARK_ACCESS_TOKEN' environment variable on the web server hosting this
+https://developer.webex.com.  The bot's Access Token should be added as a
+'WEBEX_TEAMS_ACCESS_TOKEN' environment variable on the web server hosting this
 script.
 
 NOTE:  While this script is written to support Python versions 2 and 3, as of
 the time of this writing web.py (v0.38) only supports Python 2.
 Therefore this script only supports Python 2.
 
+Copyright (c) 2016-2018 Cisco and/or its affiliates.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 """
 
 
@@ -53,9 +72,12 @@ CAT_FACTS_URL = 'https://catfact.ninja/fact'
 
 
 # Global variables
-urls = ('/sparkwebhook', 'webhook')                                             # Your Spark webhook should point to http://<serverip>:8080/sparkwebhook
-app = web.application(urls, globals())                                          # Create the web application instance
-api = WebexTeamsAPI()                                                           # Create the Webex Teams API connection object
+# Your Spark webhook should point to http://<serverip>:8080/sparkwebhook
+urls = ('/sparkwebhook', 'webhook')
+# Create the web application instance
+app = web.application(urls, globals())
+# Create the Webex Teams API connection object
+api = WebexTeamsAPI()
 
 
 def get_catfact():
@@ -74,14 +96,19 @@ def get_catfact():
 class webhook(object):
     def POST(self):
         """Respond to inbound webhook JSON HTTP POSTs from Webex Teams."""
-        json_data = web.data()                                                  # Get the POST data sent from Spark
+        # Get the POST data sent from Spark
+        json_data = web.data()
         print("\nWEBHOOK POST RECEIVED:")
         print(json_data, "\n")
 
-        webhook_obj = Webhook(json_data)                                        # Create a Webhook object from the JSON data
-        room = api.rooms.get(webhook_obj.data.roomId)                           # Get the room details
-        message = api.messages.get(webhook_obj.data.id)                         # Get the message details
-        person = api.people.get(message.personId)                               # Get the sender's details
+        # Create a Webhook object from the JSON data
+        webhook_obj = Webhook(json_data)
+        # Get the room details
+        room = api.rooms.get(webhook_obj.data.roomId)
+        # Get the message details
+        message = api.messages.get(webhook_obj.data.id)
+        # Get the sender's details
+        person = api.people.get(message.personId)
 
         print("NEW MESSAGE IN ROOM '{}'".format(room.title))
         print("FROM '{}'".format(person.displayName))
@@ -98,9 +125,11 @@ class webhook(object):
             # Message was sent by someone else; parse message and respond.
             if "/CAT" in message.text:
                 print("FOUND '/CAT'")
-                cat_fact = get_catfact()                                        # Get a cat fact
+                # Get a cat fact
+                cat_fact = get_catfact()
                 print("SENDING CAT FACT '{}'".format(cat_fact))
-                api.messages.create(room.id, text=cat_fact)                     # Post the fact to the room where the request was received
+                # Post the fact to the room where the request was received
+                api.messages.create(room.id, text=cat_fact)
         return 'OK'
 
 

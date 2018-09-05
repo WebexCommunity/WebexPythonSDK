@@ -1,10 +1,5 @@
-#!/usr/bin/env python
 #  -*- coding: utf-8 -*-
-""" Script to demonstrate the use of webexteamssdk for the people API
-
-The package natively retrieves your Spark access token from the
-WEBEX_TEAMS_ACCESS_TOKEN environment variable.  You must have this environment
-variable set to run this script.
+"""A simple bot script, built on Pyramid using Cornice.
 
 Copyright (c) 2016-2018 Cisco and/or its affiliates.
 
@@ -27,46 +22,46 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
-from builtins import *
-
-
 __author__ = "Jose Bogarín Solano"
 __author_email__ = "jose@bogarin.co.cr"
 __contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
 __copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
 __license__ = "MIT"
 
-from webexteamssdk import WebexTeamsAPI
+
+import os
+from setuptools import setup, find_packages
 
 
-# Create a WebexTeamsAPI connection object; uses your WEBEX_TEAMS_ACCESS_TOKEN
-# environment variable
-api = WebexTeamsAPI()
+here = os.path.abspath(os.path.dirname(__file__))
+with open(os.path.join(here, 'README.rst')) as f:
+    README = f.read()
 
 
-# Get my user information
-print("Get my information ...")
-me = api.people.me()
-print(me)
-
-
-# Get my user information using my id
-print("Get my information but using id ...")
-me_by_id = api.people.get(me.id)
-print(me_by_id)
-
-
-# Get my user information using id
-print("Get the list of people I know...")
-# Creates a generator container (iterable) that lists the people I know
-people = api.people.list(displayName="Jose")
-# Return the displayName of every person found
-for person in people:
-    print(person.displayName)
+setup(
+    name='pyramidWebexTeamsBot',
+    version=0.1,
+    description='Pyramid Webex Teams Bot application',
+    long_description=README,
+    classifiers=[
+        "Programming Language :: Python",
+        "Framework :: Pylons",
+        "Topic :: Internet :: WWW/HTTP",
+        "Topic :: Internet :: WWW/HTTP :: WSGI :: Application"
+    ],
+    keywords="web services",
+    author=__author__,
+    author_email=__author_email__,
+    packages=find_packages(),
+    include_package_data=True,
+    zip_safe=False,
+    install_requires=[
+        'cornice',
+        'waitress',
+        'webexteamssdk'
+    ],
+    entry_points="""[paste.app_factory]
+                    main=pyramidWebexTeamsBot:main
+                    """,
+    paster_plugins=['pyramid']
+)

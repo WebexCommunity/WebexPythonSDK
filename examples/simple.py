@@ -7,7 +7,7 @@ If one or more rooms with the name of the demo room already exist, it will
 delete the previously existing rooms.
 
 The package natively retrieves your Spark access token from the
-SPARK_ACCESS_TOKEN environment variable.  You must have this environment
+WEBEX_TEAMS_ACCESS_TOKEN environment variable.  You must have this environment
 variable set to run this script.
 
 """
@@ -20,29 +20,49 @@ from webexteamssdk import WebexTeamsAPI
 DEMO_ROOM_NAME = "webexteamssdk Demo Room"
 DEMO_PEOPLE = ["test01@cmlccie.com", "test02@cmlccie.com"]
 DEMO_MESSAGE = u"Webex Teams rocks!  \ud83d\ude0e"
-DEMO_FILE_URL = "https://developer.ciscospark.com/images/logo_spark_lg@256.png"
+DEMO_FILE_URL = "https://developer.webex.com/images/logo_spark_lg@256.png"
 
 
-api = WebexTeamsAPI()    # Create a CiscoSparkAPI connection object; uses your SPARK_ACCESS_TOKEN
+# Create a WebexTeamsAPI connection object; uses your WEBEX_TEAMS_ACCESS_TOKEN
+api = WebexTeamsAPI()
 
 
 # Clean up previous demo rooms
 print("Searching for existing demo rooms...")
-rooms = api.rooms.list()                                                          # Creates a generator container (iterable) that lists the rooms where you are a member
-existing_demo_rooms = [room for room in rooms if room.title == DEMO_ROOM_NAME]    # Builds a list of rooms with the name DEMO_ROOM_NAME
+
+# Create a generator container (iterable) that lists the rooms where you are
+# a member
+rooms = api.rooms.list()
+
+# Build a list of rooms with the name DEMO_ROOM_NAME
+existing_demo_rooms = [room for room in rooms if room.title == DEMO_ROOM_NAME]
 if existing_demo_rooms:
     print("Found {} existing room(s); deleting them."
           "".format(len(existing_demo_rooms)))
     for room in existing_demo_rooms:
-        api.rooms.delete(room.id)                                                # Delete the room
+        # Delete the room
+        api.rooms.delete(room.id)
         print("Room '{}' deleted.".format(room.id))
 
 
-demo_room = api.rooms.create(DEMO_ROOM_NAME)                          # Create a new demo room
-print(demo_room)                                                      # Print the room details (formatted JSON)
+# Create a new demo room
+demo_room = api.rooms.create(DEMO_ROOM_NAME)
+
+# Print the room details (formatted JSON)
+print(demo_room)
+
 for person_email in DEMO_PEOPLE:
-    api.memberships.create(demo_room.id, personEmail=person_email)    # Add people to the room
-message = api.messages.create(demo_room.id, text=DEMO_MESSAGE)        # Create a message in the new room
-print(message)                                                        # Print the message details (formatted JSON)
-message = api.messages.create(demo_room.id, files=[DEMO_FILE_URL])    # Post a file in the new room from test_url
-print(message)                                                        # Print the message details (formatted JSON)
+    # Add people to the room
+    api.memberships.create(demo_room.id, personEmail=person_email)
+
+# Create a message in the new room
+message = api.messages.create(demo_room.id, text=DEMO_MESSAGE)
+
+# Print the message details (formatted JSON)
+print(message)
+
+# Post a file in the new room from test_url
+message = api.messages.create(demo_room.id, files=[DEMO_FILE_URL])
+
+# Print the message details (formatted JSON)
+print(message)
