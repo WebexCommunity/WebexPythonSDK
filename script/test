@@ -43,5 +43,5 @@ fi
 # Run the test suite
 if [ ${all} ] || [ ${test} ]; then
     echo "==> Running the test suite"
-    py.test
+    py.test -s -m "not ratelimit"
 fi
