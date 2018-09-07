@@ -73,26 +73,14 @@ class LicensesAPI(object):
         self._object_factory = object_factory
 
     @generator_container
-    def list(self, orgId=None, max=None, **request_parameters):
+    def list(self, orgId=None, **request_parameters):
         """List all licenses for a given organization.
 
         If no orgId is specified, the default is the organization of the
         authenticated user.
 
-        This method supports Webex Teams's implementation of RFC5988 Web
-        Linking to provide pagination support.  It returns a generator
-        container that incrementally yields all objects returned by the
-        query.  The generator will automatically request additional 'pages' of
-        responses from Webex as needed until all responses have been returned.
-        The container makes the generator safe for reuse.  A new API call will
-        be made, using the same parameters that were specified when the
-        generator was created, every time a new iterator is requested from the
-        container.
-
         Args:
             orgId(basestring): Specify the organization, by ID.
-            max(int): Limit the maximum number of items returned from the Webex
-                Teams service per request.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
@@ -106,12 +94,10 @@ class LicensesAPI(object):
 
         """
         check_type(orgId, basestring)
-        check_type(max, int)
 
         params = dict_from_items_with_values(
             request_parameters,
             orgId=orgId,
-            max=max,
         )
 
         # API request - get items

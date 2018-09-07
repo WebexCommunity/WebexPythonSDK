@@ -73,22 +73,10 @@ class RolesAPI(object):
         self._object_factory = object_factory
 
     @generator_container
-    def list(self, max=None, **request_parameters):
+    def list(self, **request_parameters):
         """List all roles.
 
-        This method supports Webex Teams's implementation of RFC5988 Web
-        Linking to provide pagination support.  It returns a generator
-        container that incrementally yields all objects returned by the
-        query.  The generator will automatically request additional 'pages' of
-        responses from Webex as needed until all responses have been returned.
-        The container makes the generator safe for reuse.  A new API call will
-        be made, using the same parameters that were specified when the
-        generator was created, every time a new iterator is requested from the
-        container.
-
         Args:
-            max(int): Limit the maximum number of items returned from the Webex
-                Teams service per request.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
@@ -101,15 +89,11 @@ class RolesAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(max, int)
-
-        params = dict_from_items_with_values(
-            request_parameters,
-            max=max,
-        )
-
         # API request - get items
-        items = self._session.get_items(API_ENDPOINT, params=params)
+        items = self._session.get_items(
+            API_ENDPOINT,
+            params=request_parameters
+        )
 
         # Yield role objects created from the returned JSON objects
         for item in items:
