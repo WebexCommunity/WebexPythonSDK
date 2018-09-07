@@ -40,26 +40,22 @@ def rate_limit_detected(w):
     while w:
         if issubclass(w.pop().category, webexteamssdk.RateLimitWarning):
             return True
-            break
     return False
 
 
-# CiscoSparkAPI Tests
-class TestRestSession:
-    """Test edge cases of core RestSession functionality."""
+# Tests
+@pytest.mark.ratelimit
+def test_rate_limit_retry(api, list_of_rooms, add_rooms):
+    # Save state and initialize test setup
+    original_wait_on_rate_limit = api._session.wait_on_rate_limit
+    api._session.wait_on_rate_limit = True
 
-    @pytest.mark.ratelimit
-    def test_rate_limit_retry(self, api, rooms_list, add_rooms):
-        # Save state and initialize test setup
-        original_wait_on_rate_limit = api._session.wait_on_rate_limit
-        api._session.wait_on_rate_limit = True
+    with warnings.catch_warnings(record=True) as w:
+        rooms = api.rooms.list()
+        while True:
+            # Try and trigger a rate-limit
+            list(rooms)
+            if rate_limit_detected(w):
+                break
 
-        with warnings.catch_warnings(record=True) as w:
-            rooms = api.rooms.list()
-            while True:
-                # Try and trigger a rate-limit
-                list(rooms)
-                if rate_limit_detected(w):
-                    break
-
-        api._session.wait_on_rate_limit = original_wait_on_rate_limit
+    api._session.wait_on_rate_limit = original_wait_on_rate_limit

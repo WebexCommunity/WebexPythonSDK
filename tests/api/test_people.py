@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""pytest People functions, fixtures and tests.
+"""WebexTeamsAPI People API fixtures and tests.
 
 Copyright (c) 2016-2018 Cisco and/or its affiliates.
 
@@ -31,23 +31,9 @@ import webexteamssdk
 
 # Helper Functions
 
-def create_person(api, emails, **person_attributes):
-    return api.people.create(emails, **person_attributes)
-
-
-def get_person_by_id(api, id):
-    return api.people.get(id)
-
-
-def list_people(api, **search_attribute):
-    return list(api.people.list(**search_attribute))
-
-
 def get_person_by_email(api, email):
-    list_of_people = list_people(api, email=email)
+    list_of_people = list(api.people.list(email=email))
     if list_of_people:
-        # If found, there should only be one Spark account associated with an
-        # single e-mail address.
         assert len(list_of_people) == 1
         return list_of_people[0]
     else:
@@ -65,10 +51,6 @@ def update_person(api, person, **person_attributes):
     return api.people.update(person.id, **new_attributes)
 
 
-def delete_person(api, person):
-    api.people.delete(person.id)
-
-
 def is_valid_person(obj):
     return isinstance(obj, webexteamssdk.Person) and obj.id is not None
 
@@ -77,16 +59,7 @@ def are_valid_people(iterable):
     return all([is_valid_person(obj) for obj in iterable])
 
 
-def person_exists(api, person):
-    try:
-        get_person_by_id(api, person.id)
-    except webexteamssdk.ApiError:
-        return False
-    else:
-        return True
-
-
-# pytest Fixtures
+# Fixtures
 
 @pytest.fixture(scope="session")
 def me(api):
@@ -102,8 +75,7 @@ def get_test_person(api, get_new_email_address, me, licenses_dict):
         if person:
             return person
         else:
-            person = create_person(
-                api,
+            person = api.people.create(
                 emails=[person_email],
                 displayName="webexteamssdk",
                 firstName="webexteamssdk",
@@ -111,7 +83,6 @@ def get_test_person(api, get_new_email_address, me, licenses_dict):
                 orgId=me.orgId,
                 licenses=[licenses_dict["Messaging"].id],
             )
-            assert is_valid_person(person)
             return person
 
     return inner_function
@@ -160,7 +131,9 @@ class PeopleManager(object):
 @pytest.fixture(scope="session")
 def test_people(api, get_test_person):
     test_people = PeopleManager(api, get_test_person)
+
     yield test_people
+
     del test_people
 
 
@@ -174,8 +147,7 @@ def temp_person(api, get_random_email_address, me, licenses_dict):
         person = get_person_by_email(api, person_email)
 
     # Create the person
-    person = create_person(
-        api,
+    person = api.people.create(
         emails=[person_email],
         displayName="webexteamssdk",
         firstName="webexteamssdk",
@@ -183,74 +155,85 @@ def temp_person(api, get_random_email_address, me, licenses_dict):
         orgId=me.orgId,
         licenses=[licenses_dict["Messaging"].id],
     )
-    assert is_valid_person(person)
 
     yield person
 
-    if person_exists(api, person):
-        delete_person(api, person)
+    try:
+        api.people.delete(person.id)
+    except webexteamssdk.ApiError:
+        pass
 
 
 @pytest.fixture()
 def people_in_group_room(api, group_room_memberships):
-    return [get_person_by_id(api, membership.personId)
-            for membership in group_room_memberships]
+    return [
+        api.people.get(membership.personId)
+        for membership in group_room_memberships
+    ]
 
 
 # Tests
 
-class TestPeopleAPI(object):
-    """Test PeopleAPI methods."""
+def test_list_people_by_email(api, test_people):
+    email = test_people["not_a_member"].emails[0]
+    list_of_people = list(api.people.list(email=email))
+    assert len(list_of_people) >= 1
+    assert are_valid_people(list_of_people)
 
-    def test_create_person(self, test_people):
-        person = test_people["not_a_member"]
-        assert is_valid_person(person)
 
-    def test_update_person(self, api, temp_person):
-        update_attributes = {
-            "displayName": temp_person.displayName + " Updated",
-            "firstName": temp_person.firstName + " Updated",
-            "lastName": temp_person.lastName + " Updated",
-        }
-        updated_person = update_person(api, temp_person, **update_attributes)
-        assert is_valid_person(updated_person)
-        for attribute, value in update_attributes.items():
-            assert getattr(updated_person, attribute) == value
+def test_list_people_by_display_name(api, test_people):
+    display_name = test_people["not_a_member"].displayName
+    list_of_people = list(api.people.list(displayName=display_name))
+    assert len(list_of_people) >= 1
+    assert are_valid_people(list_of_people)
 
-    def test_get_my_details(self, me):
-        assert is_valid_person(me)
 
-    def test_get_person_details(self, api, test_people):
-        person_id = test_people["not_a_member"].id
-        person = get_person_by_id(api, person_id)
-        assert is_valid_person(person)
+def test_list_people_by_id(api, test_people):
+    person_id = test_people["not_a_member"].id
+    list_of_people = list(api.people.list(id=person_id))
+    assert len(list_of_people) >= 1
+    assert are_valid_people(list_of_people)
 
-    def test_list_people_by_email(self, api, test_people):
-        email = test_people["not_a_member"].emails[0]
-        list_of_people = list_people(api, email=email)
-        assert len(list_of_people) >= 1
-        assert are_valid_people(list_of_people)
 
-    def test_list_people_by_display_name(self, api, test_people):
-        display_name = test_people["not_a_member"].displayName
-        list_of_people = list_people(api, displayName=display_name)
-        assert len(list_of_people) >= 1
-        assert are_valid_people(list_of_people)
+def test_list_people_with_paging(api, test_people,
+                                 additional_group_room_memberships):
+    page_size = 1
+    pages = 3
+    num_people = pages * page_size
+    assert test_people.len() >= num_people
+    display_name = test_people["not_a_member"].displayName
+    people = api.people.list(displayName=display_name, max=page_size)
+    people_list = list(itertools.islice(people, num_people))
+    assert len(people_list) == num_people
+    assert are_valid_people(people_list)
 
-    def test_list_people_by_id(self, api, test_people):
-        id = test_people["not_a_member"].id
-        list_of_people = list_people(api, id=id)
-        assert len(list_of_people) >= 1
-        assert are_valid_people(list_of_people)
 
-    def test_list_people_with_paging(self, api, test_people,
-                                     additional_group_room_memberships):
-        page_size = 1
-        pages = 3
-        num_people = pages * page_size
-        assert test_people.len() >= num_people
-        display_name = test_people["not_a_member"].displayName
-        people = api.people.list(displayName=display_name, max=page_size)
-        people_list = list(itertools.islice(people, num_people))
-        assert len(people_list) == num_people
-        assert are_valid_people(people_list)
+def test_create_person(test_people):
+    person = test_people["not_a_member"]
+    assert is_valid_person(person)
+
+
+def test_get_person_details(api, test_people):
+    person_id = test_people["not_a_member"].id
+    person = api.people.get(person_id)
+    assert is_valid_person(person)
+
+
+def test_get_my_details(me):
+    assert is_valid_person(me)
+
+
+def test_update_person(api, temp_person):
+    update_attributes = {
+        "displayName": temp_person.displayName + " Updated",
+        "firstName": temp_person.firstName + " Updated",
+        "lastName": temp_person.lastName + " Updated",
+    }
+    updated_person = update_person(api, temp_person, **update_attributes)
+    assert is_valid_person(updated_person)
+    for attribute, value in update_attributes.items():
+        assert getattr(updated_person, attribute) == value
+
+
+def test_delete_person(api, temp_person):
+    api.people.delete(temp_person.id)

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""WebexTeamsAPI tests.
+"""WebexTeamsAPI fixtures and tests.
 
 Copyright (c) 2016-2018 Cisco and/or its affiliates.
 
@@ -67,92 +67,111 @@ def api():
 
 # Tests
 
-class TestWebexTeamsAPI:
-    """Test the WebexTeamsAPI class code."""
+# Test creating WebexTeamsAPI objects
 
-    # Test creating WebexTeamsAPI objects
+@pytest.mark.usefixtures("unset_access_token")
+def test_create_without_an_access_token():
+    with pytest.raises(webexteamssdk.AccessTokenError):
+        webexteamssdk.WebexTeamsAPI()
 
-    @pytest.mark.usefixtures("unset_access_token")
-    def test_creating_a_new_webexteamssdk_object_without_an_access_token(self):
-        with pytest.raises(webexteamssdk.AccessTokenError):
-            webexteamssdk.WebexTeamsAPI()
 
-    @pytest.mark.usefixtures("unset_access_token")
-    def test_creating_a_new_webexteamssdk_object_via_access_token_argument(self, access_token):
-        connection_object = webexteamssdk.WebexTeamsAPI(access_token=access_token)
-        assert isinstance(connection_object, webexteamssdk.WebexTeamsAPI)
+def test_create_with_access_token_environment_variable():
+    connection_object = webexteamssdk.WebexTeamsAPI()
+    assert isinstance(connection_object, webexteamssdk.WebexTeamsAPI)
 
-    def test_creating_a_new_webexteamssdk_object_via_environment_varable(self):
-        connection_object = webexteamssdk.WebexTeamsAPI()
-        assert isinstance(connection_object, webexteamssdk.WebexTeamsAPI)
 
-    def test_default_base_url(self):
-        connection_object = webexteamssdk.WebexTeamsAPI()
-        assert connection_object.base_url == DEFAULT_BASE_URL
+@pytest.mark.usefixtures("unset_access_token")
+def test_create_with_access_token_argument(access_token):
+    connection_object = webexteamssdk.WebexTeamsAPI(
+        access_token=access_token
+    )
+    assert isinstance(connection_object, webexteamssdk.WebexTeamsAPI)
 
-    def test_custom_base_url(self):
-        custom_url = "https://custom.domain.com/v1/"
-        connection_object = webexteamssdk.WebexTeamsAPI(base_url=custom_url)
-        assert connection_object.base_url == custom_url
 
-    def test_default_single_request_timeout(self):
-        connection_object = webexteamssdk.WebexTeamsAPI()
-        assert connection_object.single_request_timeout == \
-               DEFAULT_SINGLE_REQUEST_TIMEOUT
+def test_default_base_url():
+    connection_object = webexteamssdk.WebexTeamsAPI()
+    assert connection_object.base_url == DEFAULT_BASE_URL
 
-    def test_custom_single_request_timeout(self):
-        custom_timeout = 10
-        connection_object = webexteamssdk.WebexTeamsAPI(
-                single_request_timeout=custom_timeout
-        )
-        assert connection_object.single_request_timeout == custom_timeout
 
-    def test_default_wait_on_rate_limit(self):
-        connection_object = webexteamssdk.WebexTeamsAPI()
-        assert connection_object.wait_on_rate_limit == \
-               DEFAULT_WAIT_ON_RATE_LIMIT
+def test_custom_base_url():
+    custom_url = "https://custom.domain.com/v1/"
+    connection_object = webexteamssdk.WebexTeamsAPI(base_url=custom_url)
+    assert connection_object.base_url == custom_url
 
-    def test_non_default_wait_on_rate_limit(self):
-        connection_object = webexteamssdk.WebexTeamsAPI(
-                wait_on_rate_limit=not DEFAULT_WAIT_ON_RATE_LIMIT
-        )
-        assert connection_object.wait_on_rate_limit != \
-               DEFAULT_WAIT_ON_RATE_LIMIT
 
-    # Test creation of component API objects
+def test_default_single_request_timeout():
+    connection_object = webexteamssdk.WebexTeamsAPI()
+    assert connection_object.single_request_timeout == \
+        DEFAULT_SINGLE_REQUEST_TIMEOUT
 
-    def test_access_tokens_api_object_creation(self, api):
-        assert isinstance(api.access_tokens, AccessTokensAPI)
 
-    def test_events_api_object_creation(self, api):
-        assert isinstance(api.events, EventsAPI)
+def test_custom_single_request_timeout():
+    custom_timeout = 10
+    connection_object = webexteamssdk.WebexTeamsAPI(
+        single_request_timeout=custom_timeout
+    )
+    assert connection_object.single_request_timeout == custom_timeout
 
-    def test_licenses_api_object_creation(self, api):
-        assert isinstance(api.licenses, LicensesAPI)
 
-    def test_memberships_api_object_creation(self, api):
-        assert isinstance(api.memberships, MembershipsAPI)
+def test_default_wait_on_rate_limit():
+    connection_object = webexteamssdk.WebexTeamsAPI()
+    assert connection_object.wait_on_rate_limit == \
+        DEFAULT_WAIT_ON_RATE_LIMIT
 
-    def test_messages_api_object_creation(self, api):
-        assert isinstance(api.messages, MessagesAPI)
 
-    def test_organizations_api_object_creation(self, api):
-        assert isinstance(api.organizations, OrganizationsAPI)
+def test_non_default_wait_on_rate_limit():
+    connection_object = webexteamssdk.WebexTeamsAPI(
+        wait_on_rate_limit=not DEFAULT_WAIT_ON_RATE_LIMIT
+    )
+    assert connection_object.wait_on_rate_limit != \
+        DEFAULT_WAIT_ON_RATE_LIMIT
 
-    def test_people_api_object_creation(self, api):
-        assert isinstance(api.people, PeopleAPI)
 
-    def test_roles_api_object_creation(self, api):
-        assert isinstance(api.roles, RolesAPI)
+# Test creation of component API objects
 
-    def test_rooms_api_object_creation(self, api):
-        assert isinstance(api.rooms, RoomsAPI)
+def test_access_tokens_api_object_creation(api):
+    assert isinstance(api.access_tokens, AccessTokensAPI)
 
-    def test_team_memberships_api_object_creation(self, api):
-        assert isinstance(api.team_memberships, TeamMembershipsAPI)
 
-    def test_teams_api_object_creation(self, api):
-        assert isinstance(api.teams, TeamsAPI)
+def test_events_api_object_creation(api):
+    assert isinstance(api.events, EventsAPI)
 
-    def test_webhooks_api_object_creation(self, api):
-        assert isinstance(api.webhooks, WebhooksAPI)
+
+def test_licenses_api_object_creation(api):
+    assert isinstance(api.licenses, LicensesAPI)
+
+
+def test_memberships_api_object_creation(api):
+    assert isinstance(api.memberships, MembershipsAPI)
+
+
+def test_messages_api_object_creation(api):
+    assert isinstance(api.messages, MessagesAPI)
+
+
+def test_organizations_api_object_creation(api):
+    assert isinstance(api.organizations, OrganizationsAPI)
+
+
+def test_people_api_object_creation(api):
+    assert isinstance(api.people, PeopleAPI)
+
+
+def test_roles_api_object_creation(api):
+    assert isinstance(api.roles, RolesAPI)
+
+
+def test_rooms_api_object_creation(api):
+    assert isinstance(api.rooms, RoomsAPI)
+
+
+def test_team_memberships_api_object_creation(api):
+    assert isinstance(api.team_memberships, TeamMembershipsAPI)
+
+
+def test_teams_api_object_creation(api):
+    assert isinstance(api.teams, TeamsAPI)
+
+
+def test_webhooks_api_object_creation(api):
+    assert isinstance(api.webhooks, WebhooksAPI)
