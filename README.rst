@@ -15,15 +15,13 @@ webexteamssdk
 
 -------------------------------------------------------------------------------
 
-**webexteamssdk** is a *community developed* Pythonic wrapping of the Cisco
-Spark APIs, which makes working with Webex Teams in Python a *native* and
-*natural* experience!
+**webexteamssdk** is a *community developed* Python library for working with the Webex Teams APIs.  Our goal is to make working with Webex Teams in Python a *native* and *natural* experience!
 
 .. code-block:: python
 
-    from webexteamssdk import CiscoSparkAPI
+    from webexteamssdk import WebexTeamsAPI
 
-    api = CiscoSparkAPI()
+    api = WebexTeamsAPI()
 
     # Find all rooms that have 'webexteamssdk Demo' in their title
     all_rooms = api.rooms.list()
@@ -43,12 +41,10 @@ Spark APIs, which makes working with Webex Teams in Python a *native* and
 
     # Post a message to the new room, and upload a file
     api.messages.create(demo_room.id, text="Welcome to the room!",
-                        files=["https://developer.ciscospark.com/images/logo_spark_lg@256.png"])
+                        files=["https://www.webex.com/content/dam/wbx/us/images/dg-integ/teams_icon.png"])
 
 
-That's more than 6 Spark API calls in less than 23 lines of code (with comments
-and whitespace), and likely more than that since webexteamssdk handles
-pagination_ for you automatically!
+That's more than 6 Webex Teams API calls in less than 23 lines of code (with comments and whitespace), and likely more than that since webexteamssdk handles pagination_ for you automatically!
 
 webexteamssdk makes your life better...  `Learn how!`__
 
@@ -58,32 +54,27 @@ __ Introduction_
 Features
 --------
 
-webexteamssdk does all of this for you...
+webexteamssdk does all of this for you:
 
-+ Transparently sources your Spark credentials from your local environment
+* Transparently sources your Webex Teams access token from your local environment
 
-+ Provides and uses default arguments and settings everywhere possible, so you
-  don't have to think about things like API endpoint URLs, HTTP headers and
-  JSON formats
+* Provides and uses default arguments and settings everywhere possible, so you don't have to think about things like API endpoint URLs, HTTP headers and JSON formats
 
-+ Represents all Webex Teams API interactions using native Python tools
+* Represents all Webex Teams API interactions using native Python tools
 
-  + Authentication and Connection to the Webex Teams Cloud ==>
-    **CiscoSparkAPI** 'Connection Object'
+  * Authentication and Connection to the Webex Teams Cloud ==> **WebexTeamsAPI** "connection object"
 
-  + API Calls ==> Hierarchically organized method calls underneath a
-    **CiscoSparkAPI** 'Connection Object'
+  * API Calls ==> Hierarchically organized methods underneath the **WebexTeamsAPI** 'Connection Object'
 
-  + Returned Data Objects ==> Native Python objects
+  * Returned Data Objects ==> Native Python objects
 
-+ **Automatic and transparent pagination!**
+* **Automatic and transparent pagination!**
 
-+ **Automatic rate-limit handling!** *(wait|retry)*
+* **Automatic rate-limit handling!** *(wait|retry)*
 
-+ Multipart encoding and uploading of local files
+* Multipart encoding and uploading of local files
 
-+ Auto-completion in your favorite IDE, descriptive exceptions, and so much
-  more...
+* Auto-completion in your favorite IDE, descriptive exceptions, and so much more...
 
 
 Installation
@@ -116,10 +107,9 @@ Check out the Quickstart_ to dive in and begin using webexteamssdk.
 Examples
 --------
 
-Looking for some examples or sample scripts?  Check out the examples_ folder!
+Are you looking for some sample scripts?  Check out the examples_ folder!
 
-Have a good example script you would like to share?  Please feel free to
-`contribute`__!
+Have a good example script you would like to share?  Please feel free to `contribute`__!
 
 __ Contribution_
 
@@ -127,22 +117,15 @@ __ Contribution_
 Release Notes
 -------------
 
-Complete and fully functional *Beta* releases have been published.  Please
-see the releases_ page for release notes on the incremental functionality and
-bug fixes incorporated into the published releases.
-
-**Note:**  The package APIs may change, while the package is in beta.
+Please see the releases_ page for release notes on the incremental functionality and bug fixes incorporated into the published releases.
 
 
 Questions, Support & Discussion
 -------------------------------
 
-This is a *community developed* and *community supported* project.  If you
-experience any issues using this package, please report them using the
-issues_ log.
+webexteamssdk is a *community developed* and *community supported* project.  If you experience any issues using this package, please report them using the issues_ page.
 
-Please join the `Python Spark Devs`__ community Spark room to ask questions,
-join the discussion and share your projects and creations.
+Please join the `Python Webex Teams Devs`__ Webex Teams space to ask questions, join the discussion, and share your projects and creations.
 
 __ Community_
 
@@ -150,43 +133,23 @@ __ Community_
 Contribution
 ------------
 
-webexteamssdk_ and it's sister project ciscosparksdk_ are community
-development projects.  Feedback, thoughts, ideas and code contributions are
-most welcome!
-
-**Feedback, issues, thoughts and ideas...**
-
-Please use the issues_ log.
-
-**Interested in contributing code?**
-
-#. Check for open issues_ or create a new 'issue' for the item you want
-   to work on.
-
-   * Assign yourself to the issue, and communicate with any others that may be
-     working the issue.
-
-#. Review the project charter_ for coding standards and practices.
-#. Fork a copy of `the repository`_.
-#. Add your code to your forked repository.
-#. Submit a `pull request`_.
+webexteamssdk_ is a community development projects.  Feedback, thoughts, ideas, and code contributions are welcome!  Please see the `Contributing`_ guide for more information.
 
 
 *Copyright (c) 2016-2018 Cisco and/or its affiliates.*
 
 
 .. _Introduction: http://webexteamssdk.readthedocs.io/en/latest/user/intro.html
-.. _pagination: https://developer.ciscospark.com/pagination.html
+.. _pagination: https://developer.webex.com/pagination.html
 .. _webexteamssdk.readthedocs.io: https://webexteamssdk.readthedocs.io
 .. _Quickstart: http://webexteamssdk.readthedocs.io/en/latest/user/quickstart.html
 .. _examples: https://github.com/CiscoDevNet/webexteamssdk/tree/master/examples
 .. _webexteamssdk: https://github.com/CiscoDevNet/webexteamssdk
-.. _ciscosparksdk: https://github.com/CiscoDevNet/ciscosparksdk
 .. _issues: https://github.com/CiscoDevNet/webexteamssdk/issues
 .. _Community: https://eurl.io/#HkMxO-_9-
 .. _projects: https://github.com/CiscoDevNet/webexteamssdk/projects
 .. _pull requests: https://github.com/CiscoDevNet/webexteamssdk/pulls
 .. _releases: https://github.com/CiscoDevNet/webexteamssdk/releases
-.. _charter: https://github.com/CiscoDevNet/spark-python-packages-team/blob/master/Charter.md
 .. _the repository: webexteamssdk_
 .. _pull request: `pull requests`_
+.. _Contributing: https://github.com/CiscoDevNet/webexteamssdk/blob/master/docs/contributing.rst
