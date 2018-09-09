@@ -2,7 +2,7 @@
 webexteamssdk
 =============
 
-*Simple, lightweight, scalable Python API wrapper for the Webex Teams APIs*
+*Work with the Webex Teams APIs in native Python!*
 
 .. image:: https://img.shields.io/badge/license-MIT-blue.svg
     :target: https://github.com/CiscoDevNet/webexteamssdk/blob/master/LICENSE
@@ -14,6 +14,24 @@ webexteamssdk
     :target: http://webexteamssdk.readthedocs.io/en/latest/?badge=latest
 
 -------------------------------------------------------------------------------
+
+
+Looking for **``ciscosparkapi``**?  You are in the right place.  ``ciscosparkapi`` is now ``webexteamssdk``!  It still has all of the native and natural Webex Teams Python functionality that you love and now we have made room for even more functionality to be added in the future.
+
+We will maintain the ``ciscosparkapi`` package (bug fixes, etc.) in the `ciscosparkapi`_ branch of this repository and continue to publish package updates with these fixes to PyPI (through the;nd of 2019). Maintaining the ``ciscosparkapi`` package should keep your code and projects up and running while giving you 12+ months to migrate your code to the new ``webexteamssdk`` library.
+
+*Migration Note:* Migrating should be easy.  The ``WebexTeamsAPI`` class and the Python objects returned by the API calls are nearly identical to their ``CiscoSparkAPI`` predecessors.  Does the word "nearly" scare you?  Here are some specifics:
+
+* The obvious top-level name change from ``CiscoSparkAPI`` to ``WebexTeamsAPI``.
+* ``WebexTeamsAPI``'s API structure: method and attribute names are *identical*.
+* The returned Python objects (now derivatives of an `ImmutableData` base class) are now immutable; so you can use them in sets and as keys in dictionaries.
+* ``WebexTeamsAPI`` converts object attributes that contain data-time strings (like a room's creation date) to Python ``datetime``'s (actually a derived class that has been customized to model the Webex Teams data-time format)
+
+There is also some new functionality under the hood that we will document, communicate, and generally make available in the future.
+
+
+-------------------------------------------------------------------------------
+
 
 **webexteamssdk** is a *community developed* Python library for working with the Webex Teams APIs.  Our goal is to make working with Webex Teams in Python a *native* and *natural* experience!
 
@@ -139,6 +157,7 @@ webexteamssdk_ is a community development projects.  Feedback, thoughts, ideas, 
 *Copyright (c) 2016-2018 Cisco and/or its affiliates.*
 
 
+.. _ciscosparkapi: https://github.com/CiscoDevNet/ciscosparkapi/tree/ciscosparkapi
 .. _Introduction: http://webexteamssdk.readthedocs.io/en/latest/user/intro.html
 .. _pagination: https://developer.webex.com/pagination.html
 .. _webexteamssdk.readthedocs.io: https://webexteamssdk.readthedocs.io
