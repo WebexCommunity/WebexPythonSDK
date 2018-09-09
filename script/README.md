@@ -39,7 +39,7 @@ This is typically run after an initial clone, or, to _reset_ the project back to
 
 [`script/test`][test] Run the test suite for this project.
 
-This script implements `--lint` and `--test` command line options to enable you to select and run only the code linting or the package tests (by default, both are run when you execute `script/test` without any command line arguments).
+This script implements `lint`, `tests`, and `ratelimiting` command line options to enable you to select and run only the code linting or the package tests (by default, both are run when you execute `script/test` without any command line arguments).
 
 
 ### script/build

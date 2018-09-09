@@ -6,20 +6,25 @@
 
 
 # Run all tests by default
-all=true
+default=true
 
 
 # Process Script Arguments
 for i in ${@}; do
     case ${i} in
-        --lint)
+        lint)
         lint=true
-        all=
+        default=
         ;;
 
-        --test)
-        test=true
-        all=
+        tests)
+        tests=true
+        default=
+        ;;
+
+        ratelimiting)
+        ratelimiting=true
+        default=
         ;;
 
         *)
@@ -35,13 +40,19 @@ cd "$(dirname "$0")/.."
 
 
 # Lint the source code
-if [ ${all} ] || [ ${lint} ]; then
+if [ ${default} ] || [ ${lint} ]; then
     echo "==> Linting the source code"
     flake8
 fi
 
 # Run the test suite
-if [ ${all} ] || [ ${test} ]; then
+if [ ${default} ] || [ ${tests} ]; then
     echo "==> Running the test suite"
     py.test -s -m "not ratelimit"
+fi
+
+# Run the rate-limit tests
+if [ ${ratelimiting} ]; then
+    echo "==> Running the rate-limit tests"
+    py.test -s -m "ratelimit"
 fi
