@@ -255,7 +255,7 @@ class ZuluTimeZone(tzinfo):
 
     def tzname(self, dt):
         """Time Zone Name."""
-        return "Z"
+        return str("Z")
 
     def utcoffset(self, dt):
         """UTC Offset."""
