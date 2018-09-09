@@ -32,6 +32,7 @@ from __future__ import (
 
 from future import standard_library
 standard_library.install_aliases()
+native_str = str
 
 import json
 import mimetypes
@@ -255,7 +256,8 @@ class ZuluTimeZone(tzinfo):
 
     def tzname(self, dt):
         """Time Zone Name."""
-        return str("Z")
+        # The future package's newstr is messing with Python2 compatibility
+        return native_str("Z")
 
     def utcoffset(self, dt):
         """UTC Offset."""
