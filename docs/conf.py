@@ -7,11 +7,11 @@ import sys
 sys.path.insert(0, os.path.abspath('..'))
 
 
-from ciscosparkapi._version import get_versions
+from webexteamssdk._version import get_versions
 
 
-project = u'ciscosparkapi'
-copyright = u'2016 Cisco Systems, Inc.'
+project = u'webexteamssdk'
+copyright = u'Copyright (c) 2016-2018 Cisco and/or its affiliates.'
 author = u'Chris Lunsford'
 version = get_versions()['version']
 release = get_versions()['version']
@@ -36,9 +36,13 @@ templates_path = ['_templates']
 pygments_style = 'sphinx'
 
 
-
-autodoc_member_order = 'bysource'
-autodoc_default_flags = ['members', 'undoc-members']
+# autodoc_member_order = 'bysource'
+# autodoc_default_flags = ['members', 'undoc-members']
+autodoc_default_options = {
+    'member-order': 'bysource',
+    'members': None,
+    'undoc-members': None,
+}
 
 
 todo_include_todos = True
@@ -72,7 +76,7 @@ html_theme_options = {
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-# html_title = u'ciscosparkapi vv0.3'
+# html_title = u'webexteamssdk vv0.3'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
@@ -172,7 +176,7 @@ html_theme_options = {
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'ciscosparkapidoc'
+htmlhelp_basename = 'webexteamssdkdoc'
 
 
 
@@ -200,7 +204,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'ciscosparkapi.tex', u'ciscosparkapi Documentation',
+    (master_doc, 'webexteamssdk.tex', u'webexteamssdk Documentation',
      u'Chris Lunsford', 'manual'),
 ]
 
@@ -243,7 +247,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'ciscosparkapi', u'ciscosparkapi Documentation',
+    (master_doc, 'webexteamssdk', u'webexteamssdk Documentation',
      [author], 1)
 ]
 
@@ -259,8 +263,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'ciscosparkapi', u'ciscosparkapi Documentation',
-     author, 'ciscosparkapi', 'One line description of project.',
+    (master_doc, 'webexteamssdk', u'webexteamssdk Documentation',
+     author, 'webexteamssdk', 'One line description of project.',
      'Miscellaneous'),
 ]
 

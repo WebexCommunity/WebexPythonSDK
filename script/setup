@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Setup or reset the project to its initial state.
+#
+# Copyright (c) 2016-2018 Cisco and/or its affiliates.
+# License: MIT
+
+
+set -e
+cd "$(dirname "$0")/.."
+
+
+echo "==> Setting up / resetting project for initial use"
+
+script/clean --deep
+script/installdeps

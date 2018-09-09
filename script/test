@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# Run the project's test suite(s).
+#
+# Copyright (c) 2016-2018 Cisco and/or its affiliates.
+# License: MIT
+
+
+# Run all tests by default
+default=true
+
+
+# Process Script Arguments
+for i in ${@}; do
+    case ${i} in
+        lint)
+        lint=true
+        default=
+        ;;
+
+        tests)
+        tests=true
+        default=
+        ;;
+
+        ratelimiting)
+        ratelimiting=true
+        default=
+        ;;
+
+        *)
+        echo "Unknown argument: $i"
+        exit 1
+        ;;
+    esac
+done
+
+
+set -e
+cd "$(dirname "$0")/.."
+
+
+# Lint the source code
+if [ ${default} ] || [ ${lint} ]; then
+    echo "==> Linting the source code"
+    flake8
+fi
+
+# Run the test suite
+if [ ${default} ] || [ ${tests} ]; then
+    echo "==> Running the test suite"
+    py.test -s -m "not ratelimit"
+fi
+
+# Run the rate-limit tests
+if [ ${ratelimiting} ]; then
+    echo "==> Running the rate-limit tests"
+    py.test -s -m "ratelimit"
+fi

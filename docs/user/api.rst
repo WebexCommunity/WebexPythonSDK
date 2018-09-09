@@ -1,24 +1,24 @@
 .. _User API Doc:
 
-.. currentmodule:: ciscosparkapi
+.. currentmodule:: webexteamssdk
 
 ============
 User API Doc
 ============
 
 
-CiscoSparkAPI
+WebexTeamsAPI
 =============
 
-The :class:`CiscoSparkAPI` class is the main interface for the package. All of
-the Spark APIs (people, rooms, etc.) and their API endpoints have been wrapped
-and hierarchically organized underneath the :class:`CiscoSparkAPI` class.
+The :class:`WebexTeamsAPI` class is the main interface for the package. All of
+the Webex Teams APIs (people, rooms, etc.) and their API endpoints have been wrapped
+and hierarchically organized underneath the :class:`WebexTeamsAPI` class.
 
-.. autoclass:: CiscoSparkAPI()
+.. autoclass:: WebexTeamsAPI()
     :members:
     :exclude-members: access_token, base_url, timeout
 
-    .. automethod:: CiscoSparkAPI.__init__
+    .. automethod:: WebexTeamsAPI.__init__
 
 
 .. _people:
@@ -26,7 +26,7 @@ and hierarchically organized underneath the :class:`CiscoSparkAPI` class.
 people
 ------
 
-.. autoclass:: ciscosparkapi.api.people.PeopleAPI()
+.. autoclass:: webexteamssdk.api.people.PeopleAPI()
 
 
 .. _rooms:
@@ -34,7 +34,7 @@ people
 rooms
 -----
 
-.. autoclass:: ciscosparkapi.api.rooms.RoomsAPI()
+.. autoclass:: webexteamssdk.api.rooms.RoomsAPI()
 
 
 .. _memberships:
@@ -42,7 +42,7 @@ rooms
 memberships
 -----------
 
-.. autoclass:: ciscosparkapi.api.memberships.MembershipsAPI()
+.. autoclass:: webexteamssdk.api.memberships.MembershipsAPI()
 
 
 .. _messages:
@@ -50,7 +50,7 @@ memberships
 messages
 --------
 
-.. autoclass:: ciscosparkapi.api.messages.MessagesAPI()
+.. autoclass:: webexteamssdk.api.messages.MessagesAPI()
 
 
 .. _teams:
@@ -58,7 +58,7 @@ messages
 teams
 -----
 
-.. autoclass:: ciscosparkapi.api.teams.TeamsAPI()
+.. autoclass:: webexteamssdk.api.teams.TeamsAPI()
 
 
 .. _team_memberships:
@@ -66,7 +66,7 @@ teams
 team_memberships
 ----------------
 
-.. autoclass:: ciscosparkapi.api.team_memberships.TeamMembershipsAPI()
+.. autoclass:: webexteamssdk.api.team_memberships.TeamMembershipsAPI()
 
 
 .. _webhooks:
@@ -74,7 +74,7 @@ team_memberships
 webhooks
 --------
 
-.. autoclass:: ciscosparkapi.api.webhooks.WebhooksAPI()
+.. autoclass:: webexteamssdk.api.webhooks.WebhooksAPI()
 
 
 .. _organizations:
@@ -82,7 +82,7 @@ webhooks
 organizations
 -------------
 
-.. autoclass:: ciscosparkapi.api.organizations.OrganizationsAPI()
+.. autoclass:: webexteamssdk.api.organizations.OrganizationsAPI()
 
 
 .. _licenses:
@@ -90,7 +90,7 @@ organizations
 licenses
 --------
 
-.. autoclass:: ciscosparkapi.api.licenses.LicensesAPI()
+.. autoclass:: webexteamssdk.api.licenses.LicensesAPI()
 
 
 .. _roles:
@@ -98,7 +98,7 @@ licenses
 roles
 -----
 
-.. autoclass:: ciscosparkapi.api.roles.RolesAPI()
+.. autoclass:: webexteamssdk.api.roles.RolesAPI()
 
 
 .. _events:
@@ -106,7 +106,7 @@ roles
 events
 ------
 
-.. autoclass:: ciscosparkapi.api.events.EventsAPI()
+.. autoclass:: webexteamssdk.api.events.EventsAPI()
 
 
 .. _access_tokens:
@@ -114,31 +114,13 @@ events
 access_tokens
 -------------
 
-.. autoclass:: ciscosparkapi.api.access_tokens.AccessTokensAPI()
+.. autoclass:: webexteamssdk.api.access_tokens.AccessTokensAPI()
 
 
-.. _Exceptions:
+.. _Webex Teams Data Objects:
 
-Exceptions
-==========
-
-.. autoexception:: ciscosparkapiException()
-    :show-inheritance:
-    :members:
-
-.. autoexception:: SparkApiError()
-    :show-inheritance:
-    :members:
-
-.. autoexception:: SparkRateLimitError()
-    :show-inheritance:
-    :members:
-
-
-.. _Spark Data Objects:
-
-Spark Data Objects
-==================
+Webex Teams Data Objects
+========================
 
 
 .. _Person:
@@ -256,6 +238,42 @@ Access Token
 
 .. autoclass:: AccessToken()
     :inherited-members:
+
+
+.. _Exceptions:
+
+Exceptions
+==========
+
+.. autoexception:: webexteamssdkException()
+    :show-inheritance:
+    :members:
+
+.. autoexception:: AccessTokenError()
+    :show-inheritance:
+    :members:
+
+.. autoexception:: ApiError()
+    :show-inheritance:
+    :members:
+
+.. autoexception:: MalformedResponse()
+    :show-inheritance:
+    :members:
+
+.. autoexception:: RateLimitError()
+    :show-inheritance:
+    :members:
+
+
+.. _Warnings:
+
+Warnings
+========
+
+.. autoexception:: RateLimitWarning()
+    :show-inheritance:
+    :members:
 
 
 *Copyright (c) 2016-2018 Cisco and/or its affiliates.*

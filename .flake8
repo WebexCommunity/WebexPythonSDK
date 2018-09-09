@@ -1,9 +1,23 @@
 [flake8]
-ignore = E402,F401,F403,F405,W503
+ignore =
+    # E402 module level import not at top of file
+    E402,
+    # F401 'builtins.*' imported but unused
+    F401,
+    # F403 'from builtins import *' used; unable to detect undefined names
+    F403,
+    # F405 'unicode' may be undefined, or defined from star imports: builtins
+    F405,
+    # W503 line break before binary operator
+    W503,
 exclude =
-    .git,
+    .git/,
+    .idea/,
+    .venv/,
+    .vscode/,
     __pycache__,
-    ciscosparkapi/_version.py,
-    docs/source/conf.py,
-    build,
-    dist,
+    dist/,
+    docs/conf.py,
+    venv/,
+    versioneer.py,
+    webexteamssdk/_version.py,

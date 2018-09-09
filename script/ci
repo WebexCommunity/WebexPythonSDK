@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Run the project's test suite.
+#
+# Copyright (c) 2016-2018 Cisco and/or its affiliates.
+# License: MIT
+
+
+set -e
+cd "$(dirname "$0")/.."
+
+
+# Build the package
+script/build package
+
+
+# Install the package
+for file in dist/*.tar.gz; do
+  pip install ${file}
+done
+
+
+# Run the test suite
+script/test

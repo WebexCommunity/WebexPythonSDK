@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# Install all the development dependencies for this project.
+#
+# Copyright (c) 2016-2018 Cisco and/or its affiliates.
+# License: MIT
+
+
+set -e
+cd "$(dirname "$0")/.."
+
+
+# Ensure that packages are only installed in an active virtual environment
+export PIP_REQUIRE_VIRTUALENV=true
+
+
+# Prefer use of a Pipfile and pipenv for dependency management
+if [ -f "Pipfile" ] && [ -n "$(pipenv --version 2>/dev/null)" ]; then
+    echo "==> Installing Pipfile dependencies"
+    pipenv install --dev --skip-lock
+
+elif [ -f "requirements.txt" ]; then
+    echo "==> Installing requirements.txt dependencies"
+
+    # Check for an active virtual environment, or look for one in the project directory
+    if [ -n "$(python -c 'import sys; print (sys.real_prefix)' 2>/dev/null)" ]; then
+        echo "Installing packages in the active virtual environment"
+    elif [ -f "venv/bin/activate" ]; then
+        echo "Installing packages in the project's venv virtual environment"
+        source venv/bin/activate
+    elif [ -f ".venv/bin/activate" ]; then
+        echo "Installing packages in the project's .venv virtual environment"
+        source .venv/bin/activate
+    else
+        echo >2& "VIRTUAL ENVIRONMENT ERROR: This project will only install packages into a Python virtual environment. Please activate your virtual environment and rerun the script."
+        exit 1
+    fi
+
+    pip install -r requirements.txt
+    pip install -e .
+
+fi

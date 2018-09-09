@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# Build the project's product(s).
+#
+# Copyright (c) 2016-2018 Cisco and/or its affiliates.
+# License: MIT
+
+
+set -e
+cd "$(dirname "$0")/.."
+
+
+# Default build
+all=true
+
+
+# Process Script Arguments
+for i in ${@}; do
+    case ${i} in
+        package)
+        all=
+        package=true
+        ;;
+
+        docs)
+        all=
+        docs=true
+        ;;
+
+        *)
+        echo "Unknown argument: $i"
+        exit 1
+        ;;
+    esac
+done
+
+
+echo "==> Cleaning previous build artifacts"
+script/clean
+
+
+# Project build steps
+if [ ${all} ] || [ ${package} ]; then
+    echo "==> Building the Source Distribution package"
+    python setup.py sdist
+fi
+
+
+if [ ${all} ] || [ ${docs} ]; then
+    echo "==> Building the Docs"
+    make -C docs clean
+    make -C docs html SPHINXOPTS="-W"
+fi

@@ -91,9 +91,9 @@ qthelp:
 	@echo
 	@echo "Build finished; now you can run "qcollectiongenerator" with the" \
 	      ".qhcp project file in $(BUILDDIR)/qthelp, like this:"
-	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/ciscosparkapi.qhcp"
+	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/webexteamssdk.qhcp"
 	@echo "To view the help file:"
-	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/ciscosparkapi.qhc"
+	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/webexteamssdk.qhc"
 
 .PHONY: applehelp
 applehelp:
@@ -110,8 +110,8 @@ devhelp:
 	@echo
 	@echo "Build finished."
 	@echo "To view the help file:"
-	@echo "# mkdir -p $$HOME/.local/share/devhelp/ciscosparkapi"
-	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/ciscosparkapi"
+	@echo "# mkdir -p $$HOME/.local/share/devhelp/webexteamssdk"
+	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/webexteamssdk"
 	@echo "# devhelp"
 
 .PHONY: epub

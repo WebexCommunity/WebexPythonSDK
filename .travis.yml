@@ -4,6 +4,7 @@ python:
   - "2.7"
   - "3.5"
   - "3.6"
-install: "make ci-init"
-script: "make ci"
+  - "3.7"
+install: "script/setup"
+script: "script/ci"
 cache: pip

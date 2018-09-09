@@ -3,7 +3,7 @@
 """Sample script to read local ngrok info and create a corresponding webhook.
 
 Sample script that reads ngrok info from the local ngrok client api and creates
-a Cisco Spark Webhook pointint to the ngrok tunnel's public HTTP URL.
+a Webex Teams Webhook pointint to the ngrok tunnel's public HTTP URL.
 
 Typically ngrok is called run with the following syntax to redirect an
 Internet accesible ngrok url to localhost port 8080:
@@ -11,8 +11,27 @@ Internet accesible ngrok url to localhost port 8080:
     $ ngrok http 8080
 
 To use script simply launch ngrok, and then launch this script.  After ngrok is
-killed, run this script a second time to remove webhook from Cisco Spark.
+killed, run this script a second time to remove webhook from Webex Teams.
 
+Copyright (c) 2016-2018 Cisco and/or its affiliates.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 """
 
 
@@ -35,7 +54,7 @@ __license__ = "MIT"
 
 import sys
 
-from ciscosparkapi import CiscoSparkAPI
+from webexteamssdk import WebexTeamsAPI
 import requests
 
 
@@ -49,7 +68,7 @@ else:
 # Constants
 NGROK_CLIENT_API_BASE_URL = "http://localhost:4040/api"
 WEBHOOK_NAME = "ngrok_webhook"
-WEBHOOK_URL_SUFFIX = "/sparkwebhook"
+WEBHOOK_URL_SUFFIX = "/events"
 WEBHOOK_RESOURCE = "messages"
 WEBHOOK_EVENT = "created"
 
@@ -73,18 +92,18 @@ def get_ngrok_public_url():
                 return tunnel["public_url"]
 
 
-def delete_webhooks_with_name(spark_api, name):
+def delete_webhooks_with_name(api, name):
     """Find a webhook by name."""
-    for webhook in spark_api.webhooks.list():
+    for webhook in api.webhooks.list():
         if webhook.name == name:
             print("Deleting Webhook:", webhook.name, webhook.targetUrl)
-            spark_api.webhooks.delete(webhook.id)
+            api.webhooks.delete(webhook.id)
 
 
-def create_ngrok_webhook(spark_api, ngrok_public_url):
-    """Create a Cisco Spark webhook pointing to the public ngrok URL."""
+def create_ngrok_webhook(api, ngrok_public_url):
+    """Create a Webex Teams webhook pointing to the public ngrok URL."""
     print("Creating Webhook...")
-    webhook = spark_api.webhooks.create(
+    webhook = api.webhooks.create(
         name=WEBHOOK_NAME,
         targetUrl=urljoin(ngrok_public_url, WEBHOOK_URL_SUFFIX),
         resource=WEBHOOK_RESOURCE,
@@ -97,11 +116,11 @@ def create_ngrok_webhook(spark_api, ngrok_public_url):
 
 def main():
     """Delete previous webhooks. If local ngrok tunnel, create a webhook."""
-    spark_api = CiscoSparkAPI()
-    delete_webhooks_with_name(spark_api, name=WEBHOOK_NAME)
+    api = WebexTeamsAPI()
+    delete_webhooks_with_name(api, name=WEBHOOK_NAME)
     public_url = get_ngrok_public_url()
     if public_url is not None:
-        create_ngrok_webhook(spark_api, public_url)
+        create_ngrok_webhook(api, public_url)
 
 
 if __name__ == '__main__':
