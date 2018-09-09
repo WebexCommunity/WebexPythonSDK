@@ -9,10 +9,10 @@ port 5000 you can change this default if desired (see `flask_app.run(...)`).
 ngrok (https://ngrok.com/) can be used to tunnel traffic back to your server
 if your machine sits behind a firewall.
 
-You must create a Spark webhook that points to the URL where this script is
-hosted.  You can do this via the WebexTeamsAPI.webhooks.create() method.
+You must create a Webex Teams webhook that points to the URL where this script
+is hosted.  You can do this via the WebexTeamsAPI.webhooks.create() method.
 
-Additional Spark webhook details can be found here:
+Additional Webex Teams webhook details can be found here:
 https://developer.webex.com/webhooks-explained.html
 
 A bot must be created and pointed to this server in the My Apps section of
@@ -75,7 +75,7 @@ CAT_FACTS_URL = 'https://catfact.ninja/fact'
 # Create the web application instance
 flask_app = Flask(__name__)
 # Create the Webex Teams API connection object
-spark_api = WebexTeamsAPI()
+api = WebexTeamsAPI()
 
 
 # Helper functions
@@ -93,16 +93,16 @@ def get_catfact():
 
 
 # Core bot functionality
-# Your Spark webhook should point to http://<serverip>:5000/sparkwebhook
-@flask_app.route('/sparkwebhook', methods=['GET', 'POST'])
-def sparkwebhook():
-    """Processes incoming requests to the '/sparkwebhook' URI."""
+# Your Webex Teams webhook should point to http://<serverip>:5000/events
+@flask_app.route('/events', methods=['GET', 'POST'])
+def webex_teams_webhook_events():
+    """Processes incoming requests to the '/events' URI."""
     if request.method == 'GET':
         return ("""<!DOCTYPE html>
                    <html lang="en">
                        <head>
                            <meta charset="UTF-8">
-                           <title>Spark Bot served via Flask</title>
+                           <title>Webex Teams Bot served via Flask</title>
                        </head>
                    <body>
                    <p>
@@ -128,11 +128,11 @@ def sparkwebhook():
         # Create a Webhook object from the JSON data
         webhook_obj = Webhook(json_data)
         # Get the room details
-        room = spark_api.rooms.get(webhook_obj.data.roomId)
+        room = api.rooms.get(webhook_obj.data.roomId)
         # Get the message details
-        message = spark_api.messages.get(webhook_obj.data.id)
+        message = api.messages.get(webhook_obj.data.id)
         # Get the sender's details
-        person = spark_api.people.get(message.personId)
+        person = api.people.get(message.personId)
 
         print("NEW MESSAGE IN ROOM '{}'".format(room.title))
         print("FROM '{}'".format(person.displayName))
@@ -141,7 +141,7 @@ def sparkwebhook():
         # This is a VERY IMPORTANT loop prevention control step.
         # If you respond to all messages...  You will respond to the messages
         # that the bot posts and thereby create a loop condition.
-        me = spark_api.people.me()
+        me = api.people.me()
         if message.personId == me.id:
             # Message was sent by me (bot); do not respond.
             return 'OK'
@@ -154,7 +154,7 @@ def sparkwebhook():
                 cat_fact = get_catfact()
                 print("SENDING CAT FACT '{}'".format(cat_fact))
                 # Post the fact to the room where the request was received
-                spark_api.messages.create(room.id, text=cat_fact)
+                api.messages.create(room.id, text=cat_fact)
             return 'OK'
 
 

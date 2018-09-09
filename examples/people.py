@@ -2,7 +2,7 @@
 #  -*- coding: utf-8 -*-
 """ Script to demonstrate the use of webexteamssdk for the people API
 
-The package natively retrieves your Spark access token from the
+The package natively retrieves your Webex Teams access token from the
 WEBEX_TEAMS_ACCESS_TOKEN environment variable.  You must have this environment
 variable set to run this script.
 

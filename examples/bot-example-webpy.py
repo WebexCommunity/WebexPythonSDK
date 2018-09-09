@@ -7,10 +7,10 @@ web server will be reachable at port 8080 - append a different port when
 launching the script if desired.  ngrok can be used to tunnel traffic back to
 your server if you don't wish to expose your machine publicly to the Internet.
 
-You must create a Spark webhook that points to the URL where this script is
-hosted.  You can do this via the WebexTeamsAPI.webhooks.create() method.
+You must create a Webex Teams webhook that points to the URL where this script
+is hosted.  You can do this via the WebexTeamsAPI.webhooks.create() method.
 
-Additional Spark webhook details can be found here:
+Additional Webex Teams webhook details can be found here:
 https://developer.webex.com/webhooks-explained.html
 
 A bot must be created and pointed to this server in the My Apps section of
@@ -72,8 +72,8 @@ CAT_FACTS_URL = 'https://catfact.ninja/fact'
 
 
 # Global variables
-# Your Spark webhook should point to http://<serverip>:8080/sparkwebhook
-urls = ('/sparkwebhook', 'webhook')
+# Your Webex Teams webhook should point to http://<serverip>:8080/events
+urls = ('/events', 'webhook')
 # Create the web application instance
 app = web.application(urls, globals())
 # Create the Webex Teams API connection object
@@ -96,7 +96,7 @@ def get_catfact():
 class webhook(object):
     def POST(self):
         """Respond to inbound webhook JSON HTTP POSTs from Webex Teams."""
-        # Get the POST data sent from Spark
+        # Get the POST data sent from Webex Teams
         json_data = web.data()
         print("\nWEBHOOK POST RECEIVED:")
         print(json_data, "\n")

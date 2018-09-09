@@ -268,17 +268,17 @@ class WebexTeamsDateTime(datetime):
 
     @classmethod
     def strptime(cls, date_string, format=WEBEX_TEAMS_DATETIME_FORMAT):
-        """strptime with the Spark DateTime format as the default."""
+        """strptime with the Webex Teams DateTime format as the default."""
         return super(WebexTeamsDateTime, cls).strptime(
             date_string, format
         ).replace(tzinfo=ZuluTimeZone())
 
     def strftime(self, fmt=WEBEX_TEAMS_DATETIME_FORMAT):
-        """strftime with the Spark DateTime format as the default."""
+        """strftime with the Webex Teams DateTime format as the default."""
         return super(WebexTeamsDateTime, self).strftime(fmt)
 
     def __str__(self):
-        """Human readable string representation of this SparkDateTime."""
+        """Human readable string representation of this WebexTeamsDateTime."""
         dt = self.astimezone(ZuluTimeZone())
         return dt.strftime("%Y-%m-%dT%H:%M:%S.{:0=3}%Z").format(
             self.microsecond // 1000

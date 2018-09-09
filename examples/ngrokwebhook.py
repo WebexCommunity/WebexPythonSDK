@@ -68,7 +68,7 @@ else:
 # Constants
 NGROK_CLIENT_API_BASE_URL = "http://localhost:4040/api"
 WEBHOOK_NAME = "ngrok_webhook"
-WEBHOOK_URL_SUFFIX = "/sparkwebhook"
+WEBHOOK_URL_SUFFIX = "/events"
 WEBHOOK_RESOURCE = "messages"
 WEBHOOK_EVENT = "created"
 
@@ -92,18 +92,18 @@ def get_ngrok_public_url():
                 return tunnel["public_url"]
 
 
-def delete_webhooks_with_name(spark_api, name):
+def delete_webhooks_with_name(api, name):
     """Find a webhook by name."""
-    for webhook in spark_api.webhooks.list():
+    for webhook in api.webhooks.list():
         if webhook.name == name:
             print("Deleting Webhook:", webhook.name, webhook.targetUrl)
-            spark_api.webhooks.delete(webhook.id)
+            api.webhooks.delete(webhook.id)
 
 
-def create_ngrok_webhook(spark_api, ngrok_public_url):
+def create_ngrok_webhook(api, ngrok_public_url):
     """Create a Webex Teams webhook pointing to the public ngrok URL."""
     print("Creating Webhook...")
-    webhook = spark_api.webhooks.create(
+    webhook = api.webhooks.create(
         name=WEBHOOK_NAME,
         targetUrl=urljoin(ngrok_public_url, WEBHOOK_URL_SUFFIX),
         resource=WEBHOOK_RESOURCE,
@@ -116,11 +116,11 @@ def create_ngrok_webhook(spark_api, ngrok_public_url):
 
 def main():
     """Delete previous webhooks. If local ngrok tunnel, create a webhook."""
-    spark_api = WebexTeamsAPI()
-    delete_webhooks_with_name(spark_api, name=WEBHOOK_NAME)
+    api = WebexTeamsAPI()
+    delete_webhooks_with_name(api, name=WEBHOOK_NAME)
     public_url = get_ngrok_public_url()
     if public_url is not None:
-        create_ngrok_webhook(spark_api, public_url)
+        create_ngrok_webhook(api, public_url)
 
 
 if __name__ == '__main__':

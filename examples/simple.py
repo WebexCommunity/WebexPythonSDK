@@ -6,7 +6,7 @@ Very simple script to create a demo room, post a message, and post a file.
 If one or more rooms with the name of the demo room already exist, it will
 delete the previously existing rooms.
 
-The package natively retrieves your Spark access token from the
+The package natively retrieves your Webex Teams access token from the
 WEBEX_TEAMS_ACCESS_TOKEN environment variable.  You must have this environment
 variable set to run this script.
 
@@ -20,7 +20,8 @@ from webexteamssdk import WebexTeamsAPI
 DEMO_ROOM_NAME = "webexteamssdk Demo Room"
 DEMO_PEOPLE = ["test01@cmlccie.com", "test02@cmlccie.com"]
 DEMO_MESSAGE = u"Webex Teams rocks!  \ud83d\ude0e"
-DEMO_FILE_URL = "https://developer.webex.com/images/logo_spark_lg@256.png"
+DEMO_FILE_URL = \
+    "https://www.webex.com/content/dam/wbx/us/images/dg-integ/teams_icon.png"
 
 
 # Create a WebexTeamsAPI connection object; uses your WEBEX_TEAMS_ACCESS_TOKEN
