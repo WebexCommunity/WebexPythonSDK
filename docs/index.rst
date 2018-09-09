@@ -10,8 +10,8 @@ webexteamssdk
 
 Welcome to the docs!  webexteamssdk is a *community developed* Pythonic
 wrapping of the Webex Teams APIs.  The package represents all of the Cisco
-Spark API interactions via native Python tools.  Making working with the Cisco
-Spark APIs in Python a *native* and *natural* experience.
+Webex Teams API interactions via native Python tools.  Making working with the Cisco
+Webex Teams APIs in Python a *native* and *natural* experience.
 
 **webexteamssdk helps you get things done faster.**  We take
 care of the API semantics, and you can focus on writing your code.
@@ -20,10 +20,10 @@ With webexteamssdk, you can easily:
 
 * Interact with the Webex Teams APIs in an interactive Python session
 
-* Quickly create code that enables you get something done in Spark
+* Quickly create code that enables you get something done in Webex Teams
 
-* Leverage the API wrapper to cleanly add Spark functionality to your project
-  without having to write the boilerplate code for working with the Spark APIs
+* Leverage the API wrapper to cleanly add Webex Teams functionality to your project
+  without having to write the boilerplate code for working with the Webex Teams APIs
 
 To *dive in* and see how webexteamssdk makes your life better, check out the
 :ref:`Quickstart`!
@@ -59,19 +59,19 @@ What is Webex Teams?
 Check out the official `Webex Teams`_ website for more information and to
 create a free account!
 
-Spark for Developers
---------------------
+Webex Teams for Developers
+--------------------------
 
 Leveraging the Webex Teams APIs and developing on top of the Webex Teams cloud
 is easy.  Signup for a `free account`_ and then head over to the
-`Spark for Developers`_ website to learn more.
+`Webex Teams for Developers`_ website to learn more.
 
 
 *Copyright (c) 2016-2018 Cisco and/or its affiliates.*
 
 
 .. _free account: `Webex Teams`
-.. _Webex Teams: https://www.ciscospark.com/
-.. _Spark for Developers: https://developer.ciscospark.com/
+.. _Webex Teams: https://www.webex.com/products/teams/index.html
+.. _Webex Teams for Developers: https://developer.webex.com/
 .. _contribution: https://github.com/CiscoDevNet/webexteamssdk#contribution
 .. _webexteamssdk: https://github.com/CiscoDevNet/webexteamssdk

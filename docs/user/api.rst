@@ -7,18 +7,18 @@ User API Doc
 ============
 
 
-CiscoSparkAPI
+WebexTeamsAPI
 =============
 
-The :class:`CiscoSparkAPI` class is the main interface for the package. All of
-the Spark APIs (people, rooms, etc.) and their API endpoints have been wrapped
-and hierarchically organized underneath the :class:`CiscoSparkAPI` class.
+The :class:`WebexTeamsAPI` class is the main interface for the package. All of
+the Webex Teams APIs (people, rooms, etc.) and their API endpoints have been wrapped
+and hierarchically organized underneath the :class:`WebexTeamsAPI` class.
 
-.. autoclass:: CiscoSparkAPI()
+.. autoclass:: WebexTeamsAPI()
     :members:
     :exclude-members: access_token, base_url, timeout
 
-    .. automethod:: CiscoSparkAPI.__init__
+    .. automethod:: WebexTeamsAPI.__init__
 
 
 .. _people:
@@ -117,28 +117,10 @@ access_tokens
 .. autoclass:: webexteamssdk.api.access_tokens.AccessTokensAPI()
 
 
-.. _Exceptions:
+.. _Webex Teams Data Objects:
 
-Exceptions
-==========
-
-.. autoexception:: webexteamssdkException()
-    :show-inheritance:
-    :members:
-
-.. autoexception:: ApiError()
-    :show-inheritance:
-    :members:
-
-.. autoexception:: RateLimitError()
-    :show-inheritance:
-    :members:
-
-
-.. _Spark Data Objects:
-
-Spark Data Objects
-==================
+Webex Teams Data Objects
+========================
 
 
 .. _Person:
@@ -256,6 +238,42 @@ Access Token
 
 .. autoclass:: AccessToken()
     :inherited-members:
+
+
+.. _Exceptions:
+
+Exceptions
+==========
+
+.. autoexception:: webexteamssdkException()
+    :show-inheritance:
+    :members:
+
+.. autoexception:: AccessTokenError()
+    :show-inheritance:
+    :members:
+
+.. autoexception:: ApiError()
+    :show-inheritance:
+    :members:
+
+.. autoexception:: MalformedResponse()
+    :show-inheritance:
+    :members:
+
+.. autoexception:: RateLimitError()
+    :show-inheritance:
+    :members:
+
+
+.. _Warnings:
+
+Warnings
+========
+
+.. autoexception:: RateLimitWarning()
+    :show-inheritance:
+    :members:
 
 
 *Copyright (c) 2016-2018 Cisco and/or its affiliates.*
