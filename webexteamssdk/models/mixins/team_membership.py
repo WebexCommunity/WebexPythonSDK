@@ -32,6 +32,8 @@ from __future__ import (
 
 from builtins import *
 
+from webexteamssdk.utils import WebexTeamsDateTime
+
 
 class TeamMembershipBasicPropertiesMixin(object):
     """Team Membership basic properties."""
@@ -74,4 +76,4 @@ class TeamMembershipBasicPropertiesMixin(object):
     @property
     def created(self):
         """The date and time the team membership was created."""
-        return self._json_data.get('created')
+        return WebexTeamsDateTime.strptime(self._json_data.get('created'))

@@ -82,13 +82,13 @@ def test_list_events_by_actor_id(api, events):
 
 
 def test_list_events_from(api, events):
-    datetime_string = min(event.created for event in events)
+    datetime_string = str(min(event.created for event in events))
     from_events = list(api.events.list(_from=datetime_string)[:5])
     assert are_valid_events(from_events)
 
 
 def test_list_events_to(api, events):
-    datetime_string = max(event.created for event in events)
+    datetime_string = str(max(event.created for event in events))
     to_events = list(api.events.list(to=datetime_string)[:5])
     assert are_valid_events(to_events)
 

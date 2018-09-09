@@ -32,6 +32,8 @@ from __future__ import (
 
 from builtins import *
 
+from webexteamssdk.utils import WebexTeamsDateTime
+
 
 class MessageBasicPropertiesMixin(object):
     """Message basic properties."""
@@ -89,4 +91,4 @@ class MessageBasicPropertiesMixin(object):
     @property
     def created(self):
         """The date and time the message was created."""
-        return self._json_data.get('created')
+        return WebexTeamsDateTime.strptime(self._json_data.get('created'))

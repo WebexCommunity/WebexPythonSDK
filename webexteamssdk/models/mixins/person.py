@@ -32,6 +32,8 @@ from __future__ import (
 
 from builtins import *
 
+from webexteamssdk.utils import WebexTeamsDateTime
+
 
 class PersonBasicPropertiesMixin(object):
     """Person basic properties."""
@@ -94,7 +96,7 @@ class PersonBasicPropertiesMixin(object):
     @property
     def created(self):
         """The date and time the person was created."""
-        return self._json_data.get('created')
+        return WebexTeamsDateTime.strptime(self._json_data.get('created'))
 
     @property
     def status(self):
@@ -104,7 +106,7 @@ class PersonBasicPropertiesMixin(object):
     @property
     def lastActivity(self):
         """The date and time of the person's last activity."""
-        return self._json_data.get('lastActivity')
+        return WebexTeamsDateTime.strptime(self._json_data.get('lastActivity'))
 
     @property
     def invitePending(self):

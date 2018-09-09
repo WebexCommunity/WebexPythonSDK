@@ -37,9 +37,11 @@ import sys
 import urllib.parse
 from builtins import *
 from collections import OrderedDict, namedtuple
+from datetime import datetime, timedelta, tzinfo
 
 from past.builtins import basestring
 
+from .config import WEBEX_TEAMS_DATETIME_FORMAT
 from .exceptions import (
     ApiError, RateLimitError,
 )
@@ -242,4 +244,42 @@ def json_dict(json_data):
         raise TypeError(
             "'json_data' must be a dictionary or valid JSON string; "
             "received: {!r}".format(json_data)
+        )
+
+
+class ZuluTimeZone(tzinfo):
+    """Zulu Time Zone."""
+
+    def tzname(self, dt):
+        """Time Zone Name."""
+        return "Z"
+
+    def utcoffset(self, dt):
+        """UTC Offset."""
+        return timedelta(0)
+
+    def dst(self, dt):
+        """Daylight Savings Time Offset."""
+        return timedelta(0)
+
+
+class WebexTeamsDateTime(datetime):
+    """Webex Teams formatted Python datetime."""
+
+    @classmethod
+    def strptime(cls, date_string, format=WEBEX_TEAMS_DATETIME_FORMAT):
+        """strptime with the Spark DateTime format as the default."""
+        return super(WebexTeamsDateTime, cls).strptime(
+            date_string, format
+        ).replace(tzinfo=ZuluTimeZone())
+
+    def strftime(self, fmt=WEBEX_TEAMS_DATETIME_FORMAT):
+        """strftime with the Spark DateTime format as the default."""
+        return super(WebexTeamsDateTime, self).strftime(fmt)
+
+    def __str__(self):
+        """Human readable string representation of this SparkDateTime."""
+        dt = self.astimezone(ZuluTimeZone())
+        return dt.strftime("%Y-%m-%dT%H:%M:%S.{:0=3}%Z").format(
+            self.microsecond // 1000
         )

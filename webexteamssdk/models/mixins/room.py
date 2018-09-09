@@ -32,6 +32,8 @@ from __future__ import (
 
 from builtins import *
 
+from webexteamssdk.utils import WebexTeamsDateTime
+
 
 class RoomBasicPropertiesMixin(object):
     """Room basic properties."""
@@ -59,12 +61,12 @@ class RoomBasicPropertiesMixin(object):
     @property
     def lastActivity(self):
         """The date and time when the room was last active."""
-        return self._json_data.get('lastActivity')
+        return WebexTeamsDateTime.strptime(self._json_data.get('lastActivity'))
 
     @property
     def created(self):
         """The date and time when the room was created."""
-        return self._json_data.get('created')
+        return WebexTeamsDateTime.strptime(self._json_data.get('created'))
 
     @property
     def creatorId(self):

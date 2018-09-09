@@ -163,7 +163,7 @@ def test_list_messages_before_datetime(api, group_room,
                                        group_room_markdown_message):
     message_list = list(api.messages.list(
         roomId=group_room.id,
-        before=group_room_markdown_message.created,
+        before=str(group_room_markdown_message.created),
     ))
     assert len(message_list) >= 1
     assert are_valid_messages(message_list)

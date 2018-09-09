@@ -32,6 +32,8 @@ from __future__ import (
 
 from builtins import *
 
+from webexteamssdk.utils import WebexTeamsDateTime
+
 
 class EventBasicPropertiesMixin(object):
     """Event basic properties."""
@@ -59,4 +61,4 @@ class EventBasicPropertiesMixin(object):
     @property
     def created(self):
         """The date and time the event was performed."""
-        return self._json_data.get('created')
+        return WebexTeamsDateTime.strptime(self._json_data.get('created'))
