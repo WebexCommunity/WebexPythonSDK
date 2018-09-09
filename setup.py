@@ -29,7 +29,7 @@ PACKAGE_KEYWORDS = [
 ]
 
 PACKAGE_CLASSIFIERS = [
-    'Development Status :: 4 - Beta',
+    'Development Status :: 5 - Production/Stable',
     'Intended Audience :: Developers',
     'Intended Audience :: System Administrators',
     'Intended Audience :: Telecommunications Industry',
@@ -41,6 +41,7 @@ PACKAGE_CLASSIFIERS = [
     'Programming Language :: Python :: 3',
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
+    'Programming Language :: Python :: 3.7',
     'Topic :: Communications',
     'Topic :: Communications :: Chat'
 ]
