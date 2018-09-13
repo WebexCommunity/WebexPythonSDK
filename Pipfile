@@ -8,12 +8,9 @@ name = "pypi"
 
 [dev-packages]
 versioneer = "*"
-sphinx = "*"
+sphinx = ">=1.8.0"
 sphinx-rtd-theme = "*"
 pytest = "*"
 flake8 = "*"
 twine = "*"
 ipython = "*"
-
-[pipenv]
-allow_prereleases = true

@@ -10,10 +10,13 @@ cd "$(dirname "$0")/.."
 
 
 echo "==> Updating project dependencies"
+
 echo "Update installed packages"
 pipenv update --dev
-#echo "Freeze package requirements"
-#pipenv run pip freeze > requirements.txt
+
+echo "Freeze package requirements"
+pipenv run pip freeze > requirements.lock
+
 echo "Update versioneer script(s)"
 rm versioneer.py
 pipenv run versioneer install
