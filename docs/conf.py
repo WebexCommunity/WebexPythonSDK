@@ -36,10 +36,9 @@ templates_path = ['_templates']
 pygments_style = 'sphinx'
 
 
-# autodoc_member_order = 'bysource'
+autodoc_member_order = 'bysource'
 # autodoc_default_flags = ['members', 'undoc-members']
 autodoc_default_options = {
-    'member-order': 'bysource',
     'members': None,
     'undoc-members': None,
 }
