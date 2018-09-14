@@ -112,4 +112,8 @@ class WebhookBasicPropertiesMixin(object):
     @property
     def created(self):
         """Creation date and time in ISO8601 format."""
-        return WebexTeamsDateTime.strptime(self._json_data.get('created'))
+        created = self._json_data.get('created')
+        if created:
+            return WebexTeamsDateTime.strptime(created)
+        else:
+            return None

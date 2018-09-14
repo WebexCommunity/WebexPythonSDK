@@ -76,4 +76,8 @@ class TeamMembershipBasicPropertiesMixin(object):
     @property
     def created(self):
         """The date and time the team membership was created."""
-        return WebexTeamsDateTime.strptime(self._json_data.get('created'))
+        created = self._json_data.get('created')
+        if created:
+            return WebexTeamsDateTime.strptime(created)
+        else:
+            return None

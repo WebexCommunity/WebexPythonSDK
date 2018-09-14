@@ -96,7 +96,11 @@ class PersonBasicPropertiesMixin(object):
     @property
     def created(self):
         """The date and time the person was created."""
-        return WebexTeamsDateTime.strptime(self._json_data.get('created'))
+        created = self._json_data.get('created')
+        if created:
+            return WebexTeamsDateTime.strptime(created)
+        else:
+            return None
 
     @property
     def status(self):
@@ -106,7 +110,11 @@ class PersonBasicPropertiesMixin(object):
     @property
     def lastActivity(self):
         """The date and time of the person's last activity."""
-        return WebexTeamsDateTime.strptime(self._json_data.get('lastActivity'))
+        last_activity = self._json_data.get('lastActivity')
+        if last_activity:
+            return WebexTeamsDateTime.strptime(last_activity)
+        else:
+            return None
 
     @property
     def invitePending(self):

@@ -61,4 +61,8 @@ class EventBasicPropertiesMixin(object):
     @property
     def created(self):
         """The date and time the event was performed."""
-        return WebexTeamsDateTime.strptime(self._json_data.get('created'))
+        created = self._json_data.get('created')
+        if created:
+            return WebexTeamsDateTime.strptime(created)
+        else:
+            return None
