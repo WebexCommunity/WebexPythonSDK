@@ -36,6 +36,7 @@ templates_path = ['_templates']
 pygments_style = 'sphinx'
 
 
+add_module_names = False
 autodoc_member_order = 'bysource'
 # autodoc_default_flags = ['members', 'undoc-members']
 autodoc_default_options = {

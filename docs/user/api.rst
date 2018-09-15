@@ -10,13 +10,15 @@ User API Doc
 WebexTeamsAPI
 =============
 
-The :class:`WebexTeamsAPI` class is the main interface for the package. All of
-the Webex Teams APIs (people, rooms, etc.) and their API endpoints have been wrapped
-and hierarchically organized underneath the :class:`WebexTeamsAPI` class.
+The :class:`WebexTeamsAPI` class creates "connection objects" for working with the Webex Teams APIs and hierarchically organizes the Webex Teams APIs and their endpoints underneath these connection objects.
+
+
+.. include:: api_structure_table.rst
+
 
 .. autoclass:: WebexTeamsAPI()
     :members:
-    :exclude-members: access_token, base_url, timeout
+    :exclude-members: access_token, base_url
 
     .. automethod:: WebexTeamsAPI.__init__
 

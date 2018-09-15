@@ -149,7 +149,7 @@ ready to start making API calls.
 It really is that easy.
 
 All of the calls have been wrapped and represented as native Python method
-calls, like :meth:`WebexTeamsAPI.people.me()` which gets the person details
+calls, like :meth:`WebexTeamsAPI.people.me() <webexteamssdk.api.people.PeopleAPI.me>` which gets the person details
 for the authenticated user (the user who's access token you are using) - see
 the `https://api.ciscospark.com/v1/people/me
 <https://developer.webex.com/endpoint-people-me-get.html>`_ API endpoint
@@ -165,31 +165,8 @@ parameters, is available in the :ref:`User API Doc`, and a brief summary of the
 structure is provided here.
 
 
-+-----------------------+-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|:class:`WebexTeamsAPI` | :ref:`people`           | :meth:`~PeopleAPI.list` :meth:`~PeopleAPI.create` :meth:`~PeopleAPI.get` :meth:`~PeopleAPI.update` :meth:`~PeopleAPI.me`                                                  |
-+-----------------------+-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                       | :ref:`rooms`            | :meth:`~RoomsAPI.list` :meth:`~RoomsAPI.create` :meth:`~RoomsAPI.get` :meth:`~RoomsAPI.update` :meth:`~RoomsAPI.delete`                                                   |
-+-----------------------+-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                       | :ref:`memberships`      | :meth:`~MembershipsAPI.list` :meth:`~MembershipsAPI.create` :meth:`~MembershipsAPI.get` :meth:`~MembershipsAPI.update` :meth:`~MembershipsAPI.delete`                     |
-+-----------------------+-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                       | :ref:`messages`         | :meth:`~MessagesAPI.list` :meth:`~MessagesAPI.create` :meth:`~MessagesAPI.get` :meth:`~MessagesAPI.delete`                                                                |
-+-----------------------+-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                       | :ref:`teams`            | :meth:`~TeamsAPI.list` :meth:`~TeamsAPI.create` :meth:`~TeamsAPI.get` :meth:`~TeamsAPI.update` :meth:`~TeamsAPI.delete`                                                   |
-+-----------------------+-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                       | :ref:`team_memberships` | :meth:`~TeamMembershipsAPI.list` :meth:`~TeamMembershipsAPI.create` :meth:`~TeamMembershipsAPI.get` :meth:`~TeamMembershipsAPI.update` :meth:`~TeamMembershipsAPI.delete` |
-+-----------------------+-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                       | :ref:`webhooks`         | :meth:`~WebhooksAPI.list` :meth:`~WebhooksAPI.create` :meth:`~WebhooksAPI.get` :meth:`~WebhooksAPI.update` :meth:`~WebhooksAPI.delete`                                    |
-+-----------------------+-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                       | :ref:`organizations`    | :meth:`~OrganizationsAPI.list` :meth:`~OrganizationsAPI.create`                                                                                                           |
-+-----------------------+-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                       | :ref:`licenses`         | :meth:`~LicensesAPI.list` :meth:`~LicensesAPI.create`                                                                                                                     |
-+-----------------------+-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                       | :ref:`roles`            | :meth:`~RolesAPI.list` :meth:`~RolesAPI.create`                                                                                                                           |
-+-----------------------+-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                       | :ref:`events`           | :meth:`~EventsAPI.list` :meth:`~EventsAPI.get`                                                                                                                            |
-+-----------------------+-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                       | :ref:`access_tokens`    | :meth:`~AccessTokensAPI.get` :meth:`~AccessTokensAPI.refresh`                                                                                                             |
-+-----------------------+-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+.. include:: api_structure_table.rst
+
 
 You can easily access and call any of these methods directly from your
 :class:`WebexTeamsAPI` connection object:

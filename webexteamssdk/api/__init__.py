@@ -56,30 +56,6 @@ class WebexTeamsAPI(object):
 
     WebexTeamsAPI wraps all of the individual Webex Teams APIs and represents
     them in a simple hierarchical structure.
-
-    :WebexTeamsAPI: :class:`people <PeopleAPI>`
-
-                    :class:`rooms <RoomsAPI>`
-
-                    :class:`memberships <MembershipsAPI>`
-
-                    :class:`messages <MessagesAPI>`
-
-                    :class:`teams <TeamsAPI>`
-
-                    :class:`team_memberships <TeamMembershipsAPI>`
-
-                    :class:`webhooks <WebhooksAPI>`
-
-                    :class:`organizations <OrganizationsAPI>`
-
-                    :class:`licenses <LicensesAPI>`
-
-                    :class:`roles <RolesAPI>`
-
-                    :class:`events <EventsAPI>`
-
-                    :class:`access_tokens <AccessTokensAPI>`
     """
 
     def __init__(self, access_token=None, base_url=DEFAULT_BASE_URL,
