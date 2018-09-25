@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""A setuptools based setup module."""
+"""webexteamssdk setup module."""
 
 
 import os
