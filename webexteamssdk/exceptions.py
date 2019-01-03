@@ -53,7 +53,10 @@ class AccessTokenError(webexteamssdkException):
 
 
 class ApiError(webexteamssdkException):
-    """Errors returned by requests to the Webex Teams cloud APIs."""
+    """Errors returned in response to requests sent to the Webex Teams APIs.
+
+    Several data attributes are available for inspection.
+    """
 
     def __init__(self, response):
         assert isinstance(response, requests.Response)
