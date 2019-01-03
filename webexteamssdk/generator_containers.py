@@ -80,7 +80,7 @@ class GeneratorContainer(object):
     def __repr__(self):
         """A string representation of this object."""
         return '<GeneratorContainer {func_name}({arguments})>'.format(
-            func_name=self.generator_function.__qualname__,
+            func_name=self.generator_function.__name__,
             arguments=", ".join(
                 str(key) + '=' + repr(value)
                 for key, value in self.arguments.items()
