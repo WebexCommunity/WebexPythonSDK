@@ -29,15 +29,20 @@ from __future__ import (
     print_function,
     unicode_literals,
 )
+from builtins import *
 
+import logging
 import sys
 import textwrap
-from builtins import *
+from json import JSONDecodeError
 
 import requests
 from past.builtins import basestring
 
 from .response_codes import RESPONSE_CODES
+
+
+logger = logging.getLogger(__name__)
 
 
 def _to_unicode(string):
@@ -135,36 +140,47 @@ class ApiError(webexteamssdkException):
     def __init__(self, response):
         assert isinstance(response, requests.Response)
 
-        # Extended exception data attributes
-        self.request = response.request
-        """The :class:`requests.PreparedRequest` of the API call."""
-
+        # Extended exception attributes
         self.response = response
         """The :class:`requests.Response` object returned from the API call."""
 
-        # Error message
-        response_code = response.status_code
-        response_reason = " " + response.reason if response.reason else ""
-        description = RESPONSE_CODES.get(
-            response_code,
-            "Unknown Response Code",
-        )
-        detail = _response_to_string(response)
+        self.request = self.response.request
+        """The :class:`requests.PreparedRequest` of the API call."""
+
+        self.status_code = self.response.status_code
+        """The HTTP status code from the API response."""
+
+        self.status = self.response.reason
+        """The HTTP status from the API response."""
+
+        self.details = None
+        """The parsed JSON details from the API response."""
+        if "application/json" in \
+                self.response.headers.get("Content-Type", "").lower():
+            try:
+                self.details = self.response.json()
+            except JSONDecodeError:
+                logger.warning("Error parsing JSON response body")
+
+        self.message = self.details.get("message") if self.details else None
+        """The error message from the parsed API response."""
+
+        self.description = RESPONSE_CODES.get(self.status_code)
+        """A description of the HTTP Response Code from the API docs."""
 
         super(ApiError, self).__init__(
-            "Response Code [{}]{} - {}\n{}"
-            "".format(
-                response_code,
-                response_reason,
-                description,
-                detail
+            "[{status_code}]{status} - {message}".format(
+                status_code=self.status_code,
+                status=" " + self.status if self.status else "",
+                message=self.message or self.description or "Unknown Error",
             )
         )
 
-
-class MalformedResponse(webexteamssdkException):
-    """Raised when a malformed response is received from Webex Teams."""
-    pass
+    def __repr__(self):
+        return "<{exception_name} [{status_code}]>".format(
+            exception_name=self.__class__.__name__,
+            status_code=self.status_code,
+        )
 
 
 class RateLimitError(ApiError):
@@ -175,17 +191,18 @@ class RateLimitError(ApiError):
     """
 
     def __init__(self, response):
-        super(RateLimitError, self).__init__(response)
+        assert isinstance(response, requests.Response)
 
-        # Extended exception data attributes
+        # Extended exception attributes
         self.retry_after = max(1, int(response.headers.get('Retry-After', 15)))
         """The `Retry-After` time period (in seconds) provided by Webex Teams.
 
         Defaults to 15 seconds if the response `Retry-After` header isn't
         present in the response headers, and defaults to a minimum wait time of
         1 second if Webex Teams returns a `Retry-After` header of 0 seconds.
-
         """
+
+        super(RateLimitError, self).__init__(response)
 
 
 class RateLimitWarning(UserWarning):
@@ -196,18 +213,20 @@ class RateLimitWarning(UserWarning):
     """
 
     def __init__(self, response):
-        super(RateLimitWarning, self).__init__()
+        assert isinstance(response, requests.Response)
+
+        # Extended warning attributes
         self.retry_after = max(1, int(response.headers.get('Retry-After', 15)))
         """The `Retry-After` time period (in seconds) provided by Webex Teams.
 
         Defaults to 15 seconds if the response `Retry-After` header isn't
         present in the response headers, and defaults to a minimum wait time of
         1 second if Webex Teams returns a `Retry-After` header of 0 seconds.
-
         """
 
-    def __str__(self):
-        """Webex Teams rate-limit exceeded warning message."""
-        return "Rate-limit response received; the request will " \
-               "automatically be retried in {0} seconds." \
-               "".format(self.retry_after)
+        super(RateLimitWarning, self).__init__()
+
+
+class MalformedResponse(webexteamssdkException):
+    """Raised when a malformed response is received from Webex Teams."""
+    pass
