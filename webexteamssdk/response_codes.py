@@ -32,10 +32,9 @@ from __future__ import (
 
 
 RESPONSE_CODES = {
-    200: "OK",
-    204: "Member deleted.",
-    400: "The request was invalid or cannot be otherwise served. An "
-         "accompanying error message will explain further.",
+    200: "Successful request with body content.",
+    204: "Successful request without body content.",
+    400: "The request was invalid or cannot be otherwise served.",
     401: "Authentication credentials were missing or incorrect.",
     403: "The request is understood, but it has been refused or access is not "
          "allowed.",
@@ -47,11 +46,15 @@ RESPONSE_CODES = {
     409: "The request could not be processed because it conflicts with some "
          "established rule of the system. For example, a person may not be "
          "added to a room more than once.",
+    415: "The request was made to a resource without specifying a media type "
+         "or used a media type that is not supported.",
     429: "Too many requests have been sent in a given amount of time and the "
          "request has been rate limited. A Retry-After header should be "
          "present that specifies how many seconds you need to wait before a "
          "successful request can be made.",
-    500: "Something went wrong on the server.",
+    500: "Something went wrong on the server. If the issue persists, feel "
+         "free to contact the Webex Developer Support team "
+         "(https://developer.webex.com/support).",
     502: "The server received an invalid response from an upstream server "
          "while processing the request. Try again later.",
     503: "Server is overloaded with requests. Try again later."
