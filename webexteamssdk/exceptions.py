@@ -32,7 +32,6 @@ from __future__ import (
 
 import logging
 from builtins import *
-from json import JSONDecodeError
 
 import requests
 
@@ -80,7 +79,7 @@ class ApiError(webexteamssdkException):
                 self.response.headers.get("Content-Type", "").lower():
             try:
                 self.details = self.response.json()
-            except JSONDecodeError:
+            except ValueError:
                 logger.warning("Error parsing JSON response body")
 
         self.message = self.details.get("message") if self.details else None
