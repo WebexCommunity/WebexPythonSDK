@@ -29,99 +29,17 @@ from __future__ import (
     print_function,
     unicode_literals,
 )
-from builtins import *
 
 import logging
-import sys
-import textwrap
+from builtins import *
 from json import JSONDecodeError
 
 import requests
-from past.builtins import basestring
 
 from .response_codes import RESPONSE_CODES
 
 
 logger = logging.getLogger(__name__)
-
-
-def _to_unicode(string):
-    """Convert a string (bytes, str or unicode) to unicode."""
-    assert isinstance(string, basestring)
-    if sys.version_info[0] >= 3:
-        if isinstance(string, bytes):
-            return string.decode('utf-8')
-        else:
-            return string
-    else:
-        if isinstance(string, str):
-            return string.decode('utf-8')
-        else:
-            return string
-
-
-def _sanitize(header_tuple):
-    """Sanitize request headers.
-
-    Remove authentication `Bearer` token.
-    """
-    header, value = header_tuple
-
-    if (header.lower().strip() == "Authorization".lower().strip()
-            and "Bearer".lower().strip() in value.lower().strip()):
-        return header, "Bearer <redacted>"
-
-    else:
-        return header_tuple
-
-
-def _response_to_string(response):
-    """Render a response object as a human readable string."""
-    assert isinstance(response, requests.Response)
-    request = response.request
-
-    section_header = "{title:-^79}"
-
-    # Prepare request components
-    req = textwrap.fill("{} {}".format(request.method, request.url),
-                        width=79,
-                        subsequent_indent=' ' * (len(request.method) + 1))
-    req_headers = [
-        textwrap.fill("{}: {}".format(*_sanitize(header)),
-                      width=79,
-                      subsequent_indent=' ' * 4)
-        for header in request.headers.items()
-    ]
-    req_body = (textwrap.fill(_to_unicode(request.body), width=79)
-                if request.body else "")
-
-    # Prepare response components
-    resp = textwrap.fill("{} {}".format(response.status_code,
-                                        response.reason
-                                        if response.reason else ""),
-                         width=79,
-                         subsequent_indent=' ' * (len(request.method) + 1))
-    resp_headers = [
-        textwrap.fill("{}: {}".format(*header), width=79,
-                      subsequent_indent=' ' * 4)
-        for header in response.headers.items()
-    ]
-    resp_body = textwrap.fill(response.text, width=79) if response.text else ""
-
-    # Return the combined string
-    return "\n".join([
-        section_header.format(title="Request"),
-        req,
-        "\n".join(req_headers),
-        "",
-        req_body,
-        "",
-        section_header.format(title="Response"),
-        resp,
-        "\n".join(resp_headers),
-        "",
-        resp_body,
-    ])
 
 
 class webexteamssdkException(Exception):
