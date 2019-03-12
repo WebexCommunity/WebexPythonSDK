@@ -50,6 +50,7 @@ INSTALLATION_REQUIREMENTS = [
     'future',
     'requests>=2.4.2',
     'requests-toolbelt',
+    'PyJWT'
 ]
 
 

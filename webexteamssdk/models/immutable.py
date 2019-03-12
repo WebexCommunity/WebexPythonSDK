@@ -54,6 +54,7 @@ from .mixins.team import TeamBasicPropertiesMixin
 from .mixins.team_membership import TeamMembershipBasicPropertiesMixin
 from .mixins.webhook import WebhookBasicPropertiesMixin
 from .mixins.webhook_event import WebhookEventBasicPropertiesMixin
+from .mixins.guest_issuer_token import GuestIssuerTokenBasicPropertiesMixin
 
 
 class ImmutableData(object):
@@ -228,6 +229,9 @@ class WebhookEvent(ImmutableData, WebhookEventBasicPropertiesMixin):
         """The event resource data."""
         return ImmutableData(self._json_data.get('data'))
 
+class GuestIssuerToken(ImmutableData, GuestIssuerTokenBasicPropertiesMixin):
+    """Webex Teams Guest Issuer Token data model"""
+
 
 immutable_data_models = defaultdict(
     lambda: ImmutableData,
@@ -244,6 +248,7 @@ immutable_data_models = defaultdict(
     team_membership=TeamMembership,
     webhook=Webhook,
     webhook_event=WebhookEvent,
+    guest_issuer_token=GuestIssuerToken,
 )
 
 

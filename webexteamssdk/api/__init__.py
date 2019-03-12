@@ -45,6 +45,7 @@ from .rooms import RoomsAPI
 from .team_memberships import TeamMembershipsAPI
 from .teams import TeamsAPI
 from .webhooks import WebhooksAPI
+from .guest_issuer import GuestIssuerAPI
 
 
 class WebexTeamsAPI(object):
@@ -143,6 +144,7 @@ class WebexTeamsAPI(object):
             single_request_timeout=single_request_timeout
         )
         self.events = EventsAPI(self._session, object_factory)
+        self.guest_issuer = GuestIssuerAPI(self._session, object_factory)
 
     @property
     def access_token(self):
