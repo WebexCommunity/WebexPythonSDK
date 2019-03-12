@@ -229,6 +229,7 @@ class WebhookEvent(ImmutableData, WebhookEventBasicPropertiesMixin):
         """The event resource data."""
         return ImmutableData(self._json_data.get('data'))
 
+
 class GuestIssuerToken(ImmutableData, GuestIssuerTokenBasicPropertiesMixin):
     """Webex Teams Guest Issuer Token data model"""
 

@@ -76,11 +76,11 @@ def temp_directory():
 
 @pytest.fixture("session")
 def local_file(temp_directory):
-        file = download_file(WEBEX_TEAMS_TEST_FILE_URL, temp_directory)
+    file = download_file(WEBEX_TEAMS_TEST_FILE_URL, temp_directory)
 
-        yield file
+    yield file
 
-        os.remove(file)
+    os.remove(file)
 
 
 @pytest.fixture(scope="session")

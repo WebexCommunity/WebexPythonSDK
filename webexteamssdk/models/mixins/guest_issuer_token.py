@@ -31,6 +31,7 @@ from __future__ import (
 
 from builtins import *
 
+
 class GuestIssuerTokenBasicPropertiesMixin(object):
     """Guest issuer token basic properties"""
 

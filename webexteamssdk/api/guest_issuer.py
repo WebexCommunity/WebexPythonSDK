@@ -50,6 +50,7 @@ import requests
 API_ENDPOINT = 'jwt'
 OBJECT_TYPE = 'guest_issuer_token'
 
+
 class GuestIssuerAPI(object):
     """Webex Teams Guest Issuer API.
 
@@ -94,7 +95,6 @@ class GuestIssuerAPI(object):
             TypeError: If the parameter types are incorrect
             ApiError: If the webex teams cloud returns an error.
         """
-        #ToDo(mneiding): Check types
 
         payload = {
             "sub": subject,
