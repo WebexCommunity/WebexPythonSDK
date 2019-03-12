@@ -95,6 +95,11 @@ class GuestIssuerAPI(object):
             TypeError: If the parameter types are incorrect
             ApiError: If the webex teams cloud returns an error.
         """
+        check_type(subject, basestring)
+        check_type(displayName, basestring)
+        check_type(issuerToken, basestring)
+        check_type(expiration, basestring)
+        check_type(secret, basestring)
 
         payload = {
             "sub": subject,
