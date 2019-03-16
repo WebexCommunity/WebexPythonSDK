@@ -127,6 +127,7 @@ def open_local_file(file_path):
                          file_object=file_object,
                          content_type=content_type)
 
+
 def check_all_not_none(l):
     """Checks if all the elements in the list are not none.
 
@@ -142,6 +143,8 @@ def check_all_not_none(l):
             return false
 
     return true
+
+
 def check_type(o, acceptable_types, may_be_none=True):
     """Object is an instance of one of the acceptable types or None.
 

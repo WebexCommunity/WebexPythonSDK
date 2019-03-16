@@ -47,7 +47,6 @@ from .teams import TeamsAPI
 from .webhooks import WebhooksAPI
 
 
-
 class WebexTeamsAPI(object):
     """Webex Teams API wrapper.
 
@@ -70,7 +69,8 @@ class WebexTeamsAPI(object):
         """Create a new WebexTeamsAPI object.
 
         An access token must be used when interacting with the Webex Teams API.
-        This package supports thre methods for you to provide that access token:
+        This package supports three methods for you to provide that access
+        token:
 
           1. You may manually specify the access token via the `access_token`
              argument, when creating a new WebexTeamsAPI object.
@@ -103,8 +103,8 @@ class WebexTeamsAPI(object):
                 upon creation in the portal.
             client_secret(basestring): The client secret of your integration.
                 Provided upon creation in the portal.
-            oauth_code(basestring): The oauth authorization code provided by the
-                user oauth process.
+            oauth_code(basestring): The oauth authorization code provided by
+                the user oauth process.
             oauth_redirect_uri(basestring): The redirect URI used in the user
                 OAuth process.
 
@@ -134,7 +134,7 @@ class WebexTeamsAPI(object):
         self.access_tokens = AccessTokensAPI(
             self.base_url, object_factory,
             single_request_timeout=single_request_timeout
-            )
+        )
         if not access_token and check_all_not_none(oauth_param_list):
             access_token = self.access_tokens.get(client_id=client_id,
                                                   client_secret=client_secret,
