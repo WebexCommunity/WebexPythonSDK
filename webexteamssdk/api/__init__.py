@@ -32,7 +32,7 @@ from webexteamssdk.environment import WEBEX_TEAMS_ACCESS_TOKEN
 from webexteamssdk.exceptions import AccessTokenError
 from webexteamssdk.models.immutable import immutable_data_factory
 from webexteamssdk.restsession import RestSession
-from webexteamssdk.utils import check_type
+from webexteamssdk.utils import check_type, check_all_not_none
 from .access_tokens import AccessTokensAPI
 from .events import EventsAPI
 from .licenses import LicensesAPI
@@ -45,6 +45,7 @@ from .rooms import RoomsAPI
 from .team_memberships import TeamMembershipsAPI
 from .teams import TeamsAPI
 from .webhooks import WebhooksAPI
+
 
 
 class WebexTeamsAPI(object):
@@ -61,17 +62,24 @@ class WebexTeamsAPI(object):
     def __init__(self, access_token=None, base_url=DEFAULT_BASE_URL,
                  single_request_timeout=DEFAULT_SINGLE_REQUEST_TIMEOUT,
                  wait_on_rate_limit=DEFAULT_WAIT_ON_RATE_LIMIT,
-                 object_factory=immutable_data_factory):
+                 object_factory=immutable_data_factory,
+                 client_id=None,
+                 client_secret=None,
+                 oauth_code=None,
+                 redirect_uri=None):
         """Create a new WebexTeamsAPI object.
 
         An access token must be used when interacting with the Webex Teams API.
-        This package supports two methods for you to provide that access token:
+        This package supports thre methods for you to provide that access token:
 
           1. You may manually specify the access token via the `access_token`
              argument, when creating a new WebexTeamsAPI object.
 
           2. If an access_token argument is not supplied, the package checks
              for a WEBEX_TEAMS_ACCESS_TOKEN environment variable.
+
+          3. Provide the parameters (client_id, client_secret, oauth_code and
+             oauth_redirect_uri) from your oauth flow.
 
         An AccessTokenError is raised if an access token is not provided
         via one of these two methods.
@@ -91,6 +99,14 @@ class WebexTeamsAPI(object):
                 webexteamssdk.config.DEFAULT_WAIT_ON_RATE_LIMIT.
             object_factory(callable): The factory function to use to create
                 Python objects from the returned Webex Teams JSON data objects.
+            client_id(basestring): The client id of your integration. Provided
+                upon creation in the portal.
+            client_secret(basestring): The client secret of your integration.
+                Provided upon creation in the portal.
+            oauth_code(basestring): The oauth authorization code provided by the
+                user oauth process.
+            oauth_redirect_uri(basestring): The redirect URI used in the user
+                OAuth process.
 
         Returns:
             WebexTeamsAPI: A new WebexTeamsAPI object.
@@ -105,8 +121,26 @@ class WebexTeamsAPI(object):
         check_type(base_url, basestring)
         check_type(single_request_timeout, int)
         check_type(wait_on_rate_limit, bool)
+        check_type(client_id, basestring, may_be_none=True)
+        check_type(client_secret, basestring, may_be_none=True)
+        check_type(oauth_code, basestring, may_be_none=True)
+        check_type(redirect_uri, basestring, may_be_none=True)
 
         access_token = access_token or WEBEX_TEAMS_ACCESS_TOKEN
+
+        # Check if the user has provided the required oauth parameters
+        oauth_param_list = [client_id, client_secret, oauth_code, redirect_uri]
+        # Init AccessTokensAPI earlier to use for oauth requests
+        self.access_tokens = AccessTokensAPI(
+            self.base_url, object_factory,
+            single_request_timeout=single_request_timeout
+            )
+        if not access_token and check_all_not_none(oauth_param_list):
+            access_token = self.access_tokens.get(client_id=client_id,
+                                                  client_secret=client_secret,
+                                                  code=oauth_code,
+                                                  redirect_uri=redirect_uri
+                                                  ).access_token
         if not access_token:
             raise AccessTokenError(
                 "You must provide a Webex Teams access token to interact with "
@@ -138,10 +172,6 @@ class WebexTeamsAPI(object):
         self.organizations = OrganizationsAPI(self._session, object_factory)
         self.licenses = LicensesAPI(self._session, object_factory)
         self.roles = RolesAPI(self._session, object_factory)
-        self.access_tokens = AccessTokensAPI(
-            self.base_url, object_factory,
-            single_request_timeout=single_request_timeout
-        )
         self.events = EventsAPI(self._session, object_factory)
 
     @property
