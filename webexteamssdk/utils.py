@@ -140,9 +140,9 @@ def check_all_not_none(l):
     """
     for o in l:
         if o is None:
-            return false
+            return False
 
-    return true
+    return True
 
 
 def check_type(o, acceptable_types, may_be_none=True):
