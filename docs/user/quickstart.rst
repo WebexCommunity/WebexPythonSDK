@@ -443,7 +443,7 @@ contain all of the returned objects.
     >>> rooms_list = list(rooms_iterable)
 
 
-*Copyright (c) 2016-2018 Cisco and/or its affiliates.*
+*Copyright (c) 2016-2019 Cisco and/or its affiliates.*
 
 
 .. _Webex Teams: https://www.webex.com/products/teams/index.html
