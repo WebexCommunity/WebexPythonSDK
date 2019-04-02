@@ -151,7 +151,7 @@ webexteamssdk License
 .. include:: ../../LICENSE
 
 
-*Copyright (c) 2016-2018 Cisco and/or its affiliates.*
+*Copyright (c) 2016-2019 Cisco and/or its affiliates.*
 
 
 .. _MIT Open Source License: https://opensource.org/licenses/MIT

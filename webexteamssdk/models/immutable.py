@@ -8,7 +8,7 @@ The ImmutableData class models any JSON object passed to it as a string or
 Python dictionary as a native Python object; providing attribute access using
 native dot-syntax (`object.attribute`).
 
-Copyright (c) 2016-2018 Cisco and/or its affiliates.
+Copyright (c) 2016-2019 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -54,6 +54,7 @@ from .mixins.team import TeamBasicPropertiesMixin
 from .mixins.team_membership import TeamMembershipBasicPropertiesMixin
 from .mixins.webhook import WebhookBasicPropertiesMixin
 from .mixins.webhook_event import WebhookEventBasicPropertiesMixin
+from .mixins.guest_issuer_token import GuestIssuerTokenBasicPropertiesMixin
 
 
 class ImmutableData(object):
@@ -229,6 +230,10 @@ class WebhookEvent(ImmutableData, WebhookEventBasicPropertiesMixin):
         return ImmutableData(self._json_data.get('data'))
 
 
+class GuestIssuerToken(ImmutableData, GuestIssuerTokenBasicPropertiesMixin):
+    """Webex Teams Guest Issuer Token data model"""
+
+
 immutable_data_models = defaultdict(
     lambda: ImmutableData,
     access_token=AccessToken,
@@ -244,6 +249,7 @@ immutable_data_models = defaultdict(
     team_membership=TeamMembership,
     webhook=Webhook,
     webhook_event=WebhookEvent,
+    guest_issuer_token=GuestIssuerToken,
 )
 
 

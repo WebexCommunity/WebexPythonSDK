@@ -22,7 +22,7 @@ script.
 
 This script supports Python versions 2 and 3.
 
-Copyright (c) 2016-2018 Cisco and/or its affiliates.
+Copyright (c) 2016-2019 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -57,7 +57,7 @@ from builtins import *
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
 __contributors__ = ["Brad Bester <brbester@cisco.com>"]
-__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__copyright__ = "Copyright (c) 2016-2019 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 

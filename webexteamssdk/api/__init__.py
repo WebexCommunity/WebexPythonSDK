@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams API wrappers.
 
-Copyright (c) 2016-2018 Cisco and/or its affiliates.
+Copyright (c) 2016-2019 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -45,6 +45,7 @@ from .rooms import RoomsAPI
 from .team_memberships import TeamMembershipsAPI
 from .teams import TeamsAPI
 from .webhooks import WebhooksAPI
+from .guest_issuer import GuestIssuerAPI
 
 
 class WebexTeamsAPI(object):
@@ -143,6 +144,7 @@ class WebexTeamsAPI(object):
             single_request_timeout=single_request_timeout
         )
         self.events = EventsAPI(self._session, object_factory)
+        self.guest_issuer = GuestIssuerAPI(self._session, object_factory)
 
     @property
     def access_token(self):

@@ -46,6 +46,13 @@ import os
 from webexteamssdk import WebexTeamsAPI
 
 
+__author__ = "Jeff Levensailor"
+__author_email__ = "jeff@levensailor.com"
+__contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
+__copyright__ = "Copyright (c) 2016-2019 Cisco and/or its affiliates."
+__license__ = "MIT"
+
+
 ROOM_ID = "<your_room_id>"
 FILE_PATH = "<the_path_to_the_local_file>"
 

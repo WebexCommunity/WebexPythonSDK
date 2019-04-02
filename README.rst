@@ -154,7 +154,7 @@ Contribution
 webexteamssdk_ is a community development projects.  Feedback, thoughts, ideas, and code contributions are welcome!  Please see the `Contributing`_ guide for more information.
 
 
-*Copyright (c) 2016-2018 Cisco and/or its affiliates.*
+*Copyright (c) 2016-2019 Cisco and/or its affiliates.*
 
 
 .. _ciscosparkapi: https://github.com/CiscoDevNet/ciscosparkapi/tree/ciscosparkapi
