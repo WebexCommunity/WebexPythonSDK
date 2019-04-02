@@ -16,7 +16,7 @@ from builtins import *
 
 import webexteamssdk
 
-__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__copyright__ = "Copyright (c) 2016-2019 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 

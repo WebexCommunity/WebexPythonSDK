@@ -10,7 +10,7 @@ from setuptools import find_packages, setup
 import versioneer
 
 
-__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__copyright__ = "Copyright (c) 2016-2019 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
@@ -50,6 +50,7 @@ INSTALLATION_REQUIREMENTS = [
     'future',
     'requests>=2.4.2',
     'requests-toolbelt',
+    'PyJWT'
 ]
 
 

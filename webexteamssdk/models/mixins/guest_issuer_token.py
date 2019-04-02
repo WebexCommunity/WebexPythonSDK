@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Community-developed Python SDK for the Webex Teams APIs.
+"""Webex Teams Guest-Issuer data model.
 
 Copyright (c) 2016-2019 Cisco and/or its affiliates.
 
@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from __future__ import (
     absolute_import,
     division,
@@ -30,33 +29,16 @@ from __future__ import (
     unicode_literals,
 )
 
-import logging
-
-from ._metadata import *
-from ._version import get_versions
-from .api import WebexTeamsAPI
-from .exceptions import (
-    AccessTokenError, ApiError, MalformedResponse, RateLimitError,
-    RateLimitWarning, webexteamssdkException,
-)
-from .models.dictionary import dict_data_factory
-from .models.immutable import (
-    AccessToken, Event, License, Membership, Message, Organization, Person,
-    Role, Room, Team, TeamMembership, Webhook, WebhookEvent,
-    immutable_data_factory,
-)
-from .models.simple import SimpleDataModel, simple_data_factory
-from .utils import WebexTeamsDateTime
+from builtins import *
 
 
-__version__ = get_versions()['version']
-del get_versions
+class GuestIssuerTokenBasicPropertiesMixin(object):
+    """Guest issuer token basic properties"""
 
+    @property
+    def access_token(self):
+        return self._json_data.get('token')
 
-# Initialize Package Logging
-logger = logging.getLogger(__name__)
-logger.addHandler(logging.NullHandler())
-
-from ._version import get_versions
-__version__ = get_versions()['version']
-del get_versions
+    @property
+    def expires_in(self):
+        return self._json_data.get('expiresIn')

@@ -8,7 +8,7 @@ Functions:
     generator_container: Function decorator for wrapping a generator function
         in a GeneratorContainer.
 
-Copyright (c) 2016-2018 Cisco and/or its affiliates.
+Copyright (c) 2016-2019 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -80,7 +80,7 @@ class GeneratorContainer(object):
     def __repr__(self):
         """A string representation of this object."""
         return '<GeneratorContainer {func_name}({arguments})>'.format(
-            func_name=self.generator_function.__qualname__,
+            func_name=self.generator_function.__name__,
             arguments=", ".join(
                 str(key) + '=' + repr(value)
                 for key, value in self.arguments.items()

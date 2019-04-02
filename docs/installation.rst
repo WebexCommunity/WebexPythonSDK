@@ -58,7 +58,7 @@ command:
     $ python setup.py install
 
 
-*Copyright (c) 2016-2018 Cisco and/or its affiliates.*
+*Copyright (c) 2016-2019 Cisco and/or its affiliates.*
 
 
 .. _Python Package Index (PyPI): https://pypi.python.org/pypi/webexteamssdk
