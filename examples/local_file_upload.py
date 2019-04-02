@@ -1,10 +1,21 @@
 #!/usr/bin/env python
 #  -*- coding: utf-8 -*-
-""" Script to demonstrate the use of webexteamssdk for the people API
+"""Demo script showing how to upload a local file.
 
-The package natively retrieves your Webex Teams access token from the
+A simple script showing how to upload a local file when creating a message in
+a Webex Teams space.
+
+You upload a file by using the `files=` parameter of the
+`WebexTeamsAPI.messages.create()` method, which expects to receive a list
+containing a single string with the path to file to be attached to the created
+message (Example: `files=["./image.png"]`).  The files parameter receives a
+list to allow for future expansion; however today, only one file may be
+included when creating a message via the Webex Teams APIs.
+
+The WebexTeamsSDK natively retrieves your Webex Teams access token from the
 WEBEX_TEAMS_ACCESS_TOKEN environment variable.  You must have this environment
 variable set to run this script.
+
 
 Copyright (c) 2016-2019 Cisco and/or its affiliates.
 
@@ -28,45 +39,42 @@ SOFTWARE.
 """
 
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
-from builtins import *
+from __future__ import print_function
 
-
-__author__ = "Jose Bogarín Solano"
-__author_email__ = "jose@bogarin.co.cr"
-__contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
-__copyright__ = "Copyright (c) 2016-2019 Cisco and/or its affiliates."
-__license__ = "MIT"
+import os
 
 from webexteamssdk import WebexTeamsAPI
 
 
+__author__ = "Jeff Levensailor"
+__author_email__ = "jeff@levensailor.com"
+__contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
+__copyright__ = "Copyright (c) 2016-2019 Cisco and/or its affiliates."
+__license__ = "MIT"
+
+
+ROOM_ID = "<your_room_id>"
+FILE_PATH = "<the_path_to_the_local_file>"
+
+
 # Create a WebexTeamsAPI connection object; uses your WEBEX_TEAMS_ACCESS_TOKEN
-# environment variable
 api = WebexTeamsAPI()
 
 
-# Get my user information
-print("Get my information ...")
-me = api.people.me()
-print(me)
+# Let's make sure the file exists
+if not os.path.isfile(FILE_PATH):
+    print("ERROR: File {} does not exist.".format(FILE_PATH))
 
 
-# Get my user information using my id
-print("Get my information but using id ...")
-me_by_id = api.people.get(me.id)
-print(me_by_id)
+# Not a requirement but to be completely clear let's make sure we are using
+# an absolute path.
+abs_path = os.path.abspath(FILE_PATH)
 
 
-# Get my user information using id
-print("Get the list of people I know...")
-# Creates a generator container (iterable) that lists the people I know
-people = api.people.list(displayName="Jose")
-# Return the displayName of every person found
-for person in people:
-    print(person.displayName)
+# The files parameter expects to receive a list containing a single string with
+# the path to the file to be uploaded.
+file_list = [abs_path]
+
+
+# It takes just a single statement to upload the file and create the message
+api.messages.create(roomId=ROOM_ID, files=file_list)

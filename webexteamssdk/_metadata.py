@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Package metadata.
 
-Copyright (c) 2016-2018 Cisco and/or its affiliates.
+Copyright (c) 2016-2019 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,5 +29,5 @@ __url__ = 'https://github.com/CiscoDevNet/webexteamssdk'
 __download_url__ = 'https://pypi.python.org/pypi/webexteamssdk'
 __author__ = 'Chris Lunsford'
 __author_email__ = 'chrlunsf@cisco.com'
-__copyright__ = "Copyright (c) 2016-2018 Cisco Systems, Inc."
+__copyright__ = "Copyright (c) 2016-2019 Cisco Systems, Inc."
 __license__ = "MIT"

@@ -22,7 +22,7 @@ NOTE:  While this script is written to support Python versions 2 and 3, as of
 the time of this writing web.py (v0.38) only supports Python 2.
 Therefore this script only supports Python 2.
 
-Copyright (c) 2016-2018 Cisco and/or its affiliates.
+Copyright (c) 2016-2019 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -57,7 +57,7 @@ from builtins import *
 __author__ = "Brad Bester"
 __author_email__ = "brbester@cisco.com"
 __contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
-__copyright__ = "Copyright (c) 2016-2018 Cisco and/or its affiliates."
+__copyright__ = "Copyright (c) 2016-2019 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
