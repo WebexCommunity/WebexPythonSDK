@@ -32,9 +32,10 @@ from webexteamssdk.environment import WEBEX_TEAMS_ACCESS_TOKEN
 from webexteamssdk.exceptions import AccessTokenError
 from webexteamssdk.models.immutable import immutable_data_factory
 from webexteamssdk.restsession import RestSession
-from webexteamssdk.utils import check_type, check_all_not_none
+from webexteamssdk.utils import check_type
 from .access_tokens import AccessTokensAPI
 from .events import EventsAPI
+from .guest_issuer import GuestIssuerAPI
 from .licenses import LicensesAPI
 from .memberships import MembershipsAPI
 from .messages import MessagesAPI
@@ -45,7 +46,6 @@ from .rooms import RoomsAPI
 from .team_memberships import TeamMembershipsAPI
 from .teams import TeamsAPI
 from .webhooks import WebhooksAPI
-from .guest_issuer import GuestIssuerAPI
 
 
 class WebexTeamsAPI(object):
@@ -129,19 +129,24 @@ class WebexTeamsAPI(object):
 
         access_token = access_token or WEBEX_TEAMS_ACCESS_TOKEN
 
-        # Check if the user has provided the required oauth parameters
-        oauth_param_list = [client_id, client_secret, oauth_code, redirect_uri]
-        # Init AccessTokensAPI earlier to use for oauth requests
+        # Init AccessTokensAPI wrapper early to use for oauth requests
         self.access_tokens = AccessTokensAPI(
             self.base_url, object_factory,
             single_request_timeout=single_request_timeout
         )
-        if not access_token and check_all_not_none(oauth_param_list):
-            access_token = self.access_tokens.get(client_id=client_id,
-                                                  client_secret=client_secret,
-                                                  code=oauth_code,
-                                                  redirect_uri=redirect_uri
-                                                  ).access_token
+
+        # Check if the user has provided the required oauth parameters
+        oauth_param_list = [client_id, client_secret, oauth_code, redirect_uri]
+        if not access_token and all(oauth_param_list):
+            access_token = self.access_tokens.get(
+                client_id=client_id,
+                client_secret=client_secret,
+                code=oauth_code,
+                redirect_uri=redirect_uri
+            ).access_token
+
+        # If an access token hasn't been provided as a parameter, environment
+        # variable, or obtained via an OAuth exchange raise an error.
         if not access_token:
             raise AccessTokenError(
                 "You must provide a Webex Teams access token to interact with "

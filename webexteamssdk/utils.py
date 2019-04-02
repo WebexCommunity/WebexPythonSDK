@@ -128,23 +128,6 @@ def open_local_file(file_path):
                          content_type=content_type)
 
 
-def check_all_not_none(l):
-    """Checks if all the elements in the list are not none.
-
-    Args:
-        l(list): A list of objects that should be checked
-
-    Returns:
-        boolean: True if all list items are not none, false otherwise
-
-    """
-    for o in l:
-        if o is None:
-            return False
-
-    return True
-
-
 def check_type(o, acceptable_types, may_be_none=True):
     """Object is an instance of one of the acceptable types or None.
 
