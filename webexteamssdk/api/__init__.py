@@ -131,8 +131,8 @@ class WebexTeamsAPI(object):
 
         # Init AccessTokensAPI wrapper early to use for oauth requests
         self.access_tokens = AccessTokensAPI(
-            self.base_url, object_factory,
-            single_request_timeout=single_request_timeout
+            base_url, object_factory,
+            single_request_timeout=single_request_timeout,
         )
 
         # Check if the user has provided the required oauth parameters
