@@ -20,7 +20,7 @@ webexteamssdk
 
 Looking for ``ciscosparkapi``?  You are in the right place.  ``ciscosparkapi`` is now ``webexteamssdk``!  It still has all of the native and natural Webex Teams Python functionality that you love and now we have made room for even more functionality to be added in the future.
 
-We will maintain the ``ciscosparkapi`` package (bug fixes, etc.) in the `ciscosparkapi`_ branch of this repository and continue to publish package updates with these fixes to PyPI (through the;nd of 2019). Maintaining the ``ciscosparkapi`` package should keep your code and projects up and running while giving you 12+ months to migrate your code to the new ``webexteamssdk`` library.
+We will maintain the ``ciscosparkapi`` package (bug fixes, etc.) in the `ciscosparkapi`_ branch of this repository and continue to publish package updates with these fixes to PyPI (through the end of 2019). Maintaining the ``ciscosparkapi`` package should keep your code and projects up and running while giving you 12+ months to migrate your code to the new ``webexteamssdk`` library.
 
 *Migration Note:* Migrating should be easy.  The ``WebexTeamsAPI`` class and the Python objects returned by the API calls are nearly identical to their ``CiscoSparkAPI`` predecessors.  Does the word "nearly" scare you?  Here are some specifics:
 
