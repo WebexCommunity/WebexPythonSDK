@@ -134,6 +134,21 @@ object.
     >>> chris_api = WebexTeamsAPI(access_token=chris_at)
     >>> veronica_api = WebexTeamsAPI(access_token=veronica_at)
 
+If you authenticate a user via a OAuth flow you can also initialize a api object
+directly by providing the OAuth information.
+
+.. code-block:: python
+
+    >>> from webexteamssdk import WebexTeamsAPI
+    >>> client_id = "<from oauth>"
+    >>> client_secret = "<from oauth>"
+    >>> oauth_code = "<from oauth>"
+    >>> redirect_uri = "<from oauth>"
+    >>> api = WebexTeamsAPI(client_id=client_id,
+                            client_secret=client_secret,
+                            oauth_code=oauth_code,
+                            redirect_uri=redirect_uri
+                           )
 
 Making API Calls
 ----------------
