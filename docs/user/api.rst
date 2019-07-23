@@ -102,7 +102,6 @@ roles
 
 .. autoclass:: webexteamssdk.api.roles.RolesAPI()
 
-
 .. _events:
 
 events
@@ -118,6 +117,12 @@ access_tokens
 
 .. autoclass:: webexteamssdk.api.access_tokens.AccessTokensAPI()
 
+.. _guest_issuer:
+
+guest_issuer
+------------
+
+.. autoclass:: webexteamssdk.api.guest_issuer.GuestIssuerAPI()
 
 .. _Webex Teams Data Objects:
 
@@ -240,7 +245,6 @@ Access Token
 
 .. autoclass:: AccessToken()
     :inherited-members:
-
 
 .. _Exceptions:
 
