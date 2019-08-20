@@ -38,22 +38,37 @@ class WebhookEventBasicPropertiesMixin(object):
 
     @property
     def id(self):
-        """Webhook ID."""
+        """A unique identifier for the webhook."""
         return self._json_data.get('id')
 
     @property
     def name(self):
-        """A user-friendly name for this webhook."""
+        """A user-friendly name for the webhook."""
         return self._json_data.get('name')
 
     @property
     def resource(self):
-        """The resource type for the webhook."""
+        """The resource type for the webhook.
+
+        Creating a webhook requires 'read' scope on the resource the webhook
+        is for.
+
+        Webhook Resource Enum:
+            `memberships`: The Memberships resource
+            `messages`: The Messages resource
+            `rooms`: The Rooms resource
+        """
         return self._json_data.get('resource')
 
     @property
     def event(self):
-        """The event type for the webhook."""
+        """The event type for the webhook.
+
+        Webhook Event Type Enum:
+            `created`: An object was created
+            `updated`: An object was updated
+            `deleted`: An object was deleted
+        """
         return self._json_data.get('event')
 
     @property
@@ -68,12 +83,12 @@ class WebhookEventBasicPropertiesMixin(object):
 
     @property
     def createdBy(self):
-        """The ID of the person that added the webhook."""
+        """The ID of the person that created the webhook."""
         return self._json_data.get('createdBy')
 
     @property
     def appId(self):
-        """Identifies the application that added the webhook."""
+        """The ID of the application that created the webhook."""
         return self._json_data.get('appId')
 
     @property
@@ -85,15 +100,19 @@ class WebhookEventBasicPropertiesMixin(object):
         organization will receive events that are visible to anyone in the
         organization.
 
+        Webhook Owned By Enum:
+            `org`
+            `creator`
         """
         return self._json_data.get('ownedBy')
 
     @property
     def status(self):
-        """Indicates if the webhook is active.
+        """The status of the webhook.
 
-        A webhook that cannot reach your URL is disabled.
-
+        Webhook Status Enum:
+            `active`: The webhook is active
+            `inactive`: The webhook is inactive
         """
         return self._json_data.get('status')
 

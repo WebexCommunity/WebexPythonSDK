@@ -180,6 +180,15 @@ class AccessToken(ImmutableData, AccessTokenBasicPropertiesMixin):
 class Event(ImmutableData, EventBasicPropertiesMixin):
     """Webex Teams Event data model."""
 
+    @property
+    def data(self):
+        """The event’s data representation.
+
+        This object will contain the event's resource, such as memberships or
+        messages, at the time the event took place.
+        """
+        return ImmutableData(self._json_data.get('data'))
+
 
 class License(ImmutableData, LicenseBasicPropertiesMixin):
     """Webex Teams License data model."""

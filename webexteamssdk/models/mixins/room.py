@@ -40,7 +40,7 @@ class RoomBasicPropertiesMixin(object):
 
     @property
     def id(self):
-        """The rooms's unique ID."""
+        """A unique identifier for the room."""
         return self._json_data.get('id')
 
     @property
@@ -50,17 +50,28 @@ class RoomBasicPropertiesMixin(object):
 
     @property
     def type(self):
-        """The type of room (i.e. 'group', 'direct' etc.)."""
+        """The room type.
+
+        Room Type Enum:
+            `direct`: 1:1 room
+
+            `group`: Group room
+        """
         return self._json_data.get('type')
 
     @property
     def isLocked(self):
-        """Whether or not the room is locked and controlled by moderator(s)."""
+        """Whether the room is moderated (locked) or not."""
         return self._json_data.get('isLocked')
 
     @property
+    def teamId(self):
+        """The ID for the team with which this room is associated."""
+        return self._json_data.get('teamId')
+
+    @property
     def lastActivity(self):
-        """The date and time when the room was last active."""
+        """The date and time of the room's last activity."""
         last_activity = self._json_data.get('lastActivity')
         if last_activity:
             return WebexTeamsDateTime.strptime(last_activity)
@@ -68,20 +79,15 @@ class RoomBasicPropertiesMixin(object):
             return None
 
     @property
+    def creatorId(self):
+        """The ID of the person who created this room."""
+        return self._json_data.get('creatorId')
+
+    @property
     def created(self):
-        """The date and time when the room was created."""
+        """The date and time the room was created."""
         created = self._json_data.get('created')
         if created:
             return WebexTeamsDateTime.strptime(created)
         else:
             return None
-
-    @property
-    def creatorId(self):
-        """The ID of the person who created the room."""
-        return self._json_data.get('creatorId')
-
-    @property
-    def teamId(self):
-        """The ID for the team with which this room is associated."""
-        return self._json_data.get('teamId')

@@ -40,13 +40,18 @@ class TeamBasicPropertiesMixin(object):
 
     @property
     def id(self):
-        """The team's unique ID."""
+        """A unique identifier for the team."""
         return self._json_data.get('id')
 
     @property
     def name(self):
         """A user-friendly name for the team."""
         return self._json_data.get('name')
+
+    @property
+    def creatorId(self):
+        """The ID of the person who created the team."""
+        return self._json_data.get('creatorId')
 
     @property
     def created(self):
@@ -56,8 +61,3 @@ class TeamBasicPropertiesMixin(object):
             return WebexTeamsDateTime.strptime(created)
         else:
             return None
-
-    @property
-    def creatorId(self):
-        """The ID of the person who created the team."""
-        return self._json_data.get('creatorId')

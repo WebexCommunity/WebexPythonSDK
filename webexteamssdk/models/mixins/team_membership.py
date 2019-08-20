@@ -40,17 +40,17 @@ class TeamMembershipBasicPropertiesMixin(object):
 
     @property
     def id(self):
-        """The team membership's unique ID."""
+        """A unique identifier for the team membership."""
         return self._json_data.get('id')
 
     @property
     def teamId(self):
-        """The ID of the team."""
+        """The team ID."""
         return self._json_data.get('teamId')
 
     @property
     def personId(self):
-        """The ID of the person."""
+        """The person ID."""
         return self._json_data.get('personId')
 
     @property
@@ -65,17 +65,17 @@ class TeamMembershipBasicPropertiesMixin(object):
 
     @property
     def personOrgId(self):
-        """The ID of the organization that the person is associated with."""
+        """The organization ID of the person."""
         return self._json_data.get('personOrgId')
 
     @property
     def isModerator(self):
-        """Person is a moderator for the team."""
+        """Whether or not the participant is a team moderator."""
         return self._json_data.get('isModerator')
 
     @property
     def created(self):
-        """The date and time the team membership was created."""
+        """The date and time when the team membership was created."""
         created = self._json_data.get('created')
         if created:
             return WebexTeamsDateTime.strptime(created)

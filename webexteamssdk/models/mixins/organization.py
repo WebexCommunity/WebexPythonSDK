@@ -40,17 +40,17 @@ class OrganizationBasicPropertiesMixin(object):
 
     @property
     def id(self):
-        """The unique ID for the Organization."""
+        """A unique identifier for the organization."""
         return self._json_data.get('id')
 
     @property
     def displayName(self):
-        """The human-friendly display name of the Organization."""
+        """Full name of the organization."""
         return self._json_data.get('displayName')
 
     @property
     def created(self):
-        """Creation date and time in ISO8601 format."""
+        """The date and time the organization was created."""
         created = self._json_data.get('created')
         if created:
             return WebexTeamsDateTime.strptime(created)

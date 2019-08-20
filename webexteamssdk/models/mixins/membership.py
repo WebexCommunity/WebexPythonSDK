@@ -32,6 +32,8 @@ from __future__ import (
 
 from builtins import *
 
+import warnings
+
 from webexteamssdk.utils import WebexTeamsDateTime
 
 
@@ -40,17 +42,17 @@ class MembershipBasicPropertiesMixin(object):
 
     @property
     def id(self):
-        """The membership's unique ID."""
+        """A unique identifier for the membership."""
         return self._json_data.get('id')
 
     @property
     def roomId(self):
-        """The ID of the room."""
+        """The room ID."""
         return self._json_data.get('roomId')
 
     @property
     def personId(self):
-        """The ID of the person."""
+        """The person ID."""
         return self._json_data.get('personId')
 
     @property
@@ -65,22 +67,26 @@ class MembershipBasicPropertiesMixin(object):
 
     @property
     def personOrgId(self):
-        """The ID of the organization that the person is associated with."""
+        """The organization ID of the person."""
         return self._json_data.get('personOrgId')
 
     @property
     def isModerator(self):
-        """Person is a moderator for the room."""
+        """Whether or not the participant is a room moderator."""
         return self._json_data.get('isModerator')
 
     @property
     def isMonitor(self):
-        """Person is a monitor for the room."""
+        """Whether or not the participant is a monitoring bot (deprecated)."""
+        warnings.warn(
+            "The `isMonitor` attribute has been deprecated.",
+            DeprecationWarning,
+        )
         return self._json_data.get('isMonitor')
 
     @property
     def created(self):
-        """The date and time the membership was created."""
+        """The date and time when the membership was created."""
         created = self._json_data.get('created')
         if created:
             return WebexTeamsDateTime.strptime(created)
