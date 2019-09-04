@@ -99,7 +99,8 @@ class RestSession(object):
 
     def __init__(self, access_token, base_url,
                  single_request_timeout=DEFAULT_SINGLE_REQUEST_TIMEOUT,
-                 wait_on_rate_limit=DEFAULT_WAIT_ON_RATE_LIMIT):
+                 wait_on_rate_limit=DEFAULT_WAIT_ON_RATE_LIMIT,
+                 proxy_dict=None):
         """Initialize a new RestSession object.
 
         Args:
@@ -111,6 +112,8 @@ class RestSession(object):
                 HTTP REST API request.
             wait_on_rate_limit(bool): Enable or disable automatic rate-limit
                 handling.
+            proxy_dict(dict): Dictionary of proxies passed on to the requests 
+                session.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -120,6 +123,7 @@ class RestSession(object):
         check_type(base_url, basestring, may_be_none=False)
         check_type(single_request_timeout, int)
         check_type(wait_on_rate_limit, bool, may_be_none=False)
+        check_type(proxy_dict, dict, may_be_none=True)
 
         super(RestSession, self).__init__()
 
@@ -131,6 +135,9 @@ class RestSession(object):
 
         # Initialize a new `requests` session
         self._req_session = requests.session()
+
+        if proxy_dict is not None:
+            self._req_session.proxies.update(proxy_dict)
 
         # Update the headers of the `requests` session
         self.update_headers({'Authorization': 'Bearer ' + access_token,
