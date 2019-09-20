@@ -154,6 +154,7 @@ You can also pass a proxy configuration upon initialization in case you are behi
 documentation on Proxies <https://2.python-requests.org/en/master/user/advanced/#proxies>`_ for details.
 
 .. code-block:: python
+
     >>> from webexteamssdk import WebexTeamsAPI
     >>> proxy = {'https': 'http://<proxy_ip>:<proxy_port>'}
     >>> api = WebexTeamsAPI(access_token=<your_access_token>, proxies=proxy)
