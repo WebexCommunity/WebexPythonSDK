@@ -112,7 +112,7 @@ class RestSession(object):
                 HTTP REST API request.
             wait_on_rate_limit(bool): Enable or disable automatic rate-limit
                 handling.
-            proxies(dict): Dictionary of proxies passed on to the requests 
+            proxies(dict): Dictionary of proxies passed on to the requests
                 session.
 
         Raises:

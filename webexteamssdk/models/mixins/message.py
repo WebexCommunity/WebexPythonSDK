@@ -88,12 +88,11 @@ class MessageBasicPropertiesMixin(object):
         """The email address of the message author."""
         return self._json_data.get('personEmail')
 
-
     @property
     def mentionedPeople(self):
         """People IDs for anyone mentioned in the message."""
         return self._json_data.get('mentionedPeople')
-    
+
     @property
     def mentionedGroups(self):
         """Group names for the groups mentioned in the message."""

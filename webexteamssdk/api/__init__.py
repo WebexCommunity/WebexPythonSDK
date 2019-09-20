@@ -109,7 +109,7 @@ class WebexTeamsAPI(object):
                 the user oauth process.
             oauth_redirect_uri(basestring): The redirect URI used in the user
                 OAuth process.
-            proxies(dict): Dictionary of proxies passed on to the requests 
+            proxies(dict): Dictionary of proxies passed on to the requests
                 session.
 
         Returns:
@@ -166,7 +166,7 @@ class WebexTeamsAPI(object):
             access_token=access_token,
             base_url=base_url,
             single_request_timeout=single_request_timeout,
-            wait_on_rate_limit=wait_on_rate_limit, 
+            wait_on_rate_limit=wait_on_rate_limit,
             proxies=proxies
         )
 
