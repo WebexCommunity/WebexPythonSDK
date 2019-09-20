@@ -150,12 +150,13 @@ directly by providing the OAuth information.
                             redirect_uri=redirect_uri
                            )
 
-You can also pass a proxy configuration upon initialization in case you are behind a firewall. 
+You can also pass a proxy configuration upon initialization in case you are behind a firewall.  See the `requests
+documentation on Proxies <https://2.python-requests.org/en/master/user/advanced/#proxies>`_ for details.
 
 .. code-block:: python
     >>> from webexteamssdk import WebexTeamsAPI
-    >>> proxy = {'https': '<proxy_ip>:<proxy_port>'}
-    >>> api = WebexTeamsAPI(access_token=<your_access_token>, proxy_dict=proxy)
+    >>> proxy = {'https': 'http://<proxy_ip>:<proxy_port>'}
+    >>> api = WebexTeamsAPI(access_token=<your_access_token>, proxies=proxy)
 
 
 Making API Calls

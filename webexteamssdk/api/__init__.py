@@ -67,7 +67,7 @@ class WebexTeamsAPI(object):
                  client_secret=None,
                  oauth_code=None,
                  redirect_uri=None,
-                 proxy_dict=None):
+                 proxies=None):
         """Create a new WebexTeamsAPI object.
 
         An access token must be used when interacting with the Webex Teams API.
@@ -109,7 +109,7 @@ class WebexTeamsAPI(object):
                 the user oauth process.
             oauth_redirect_uri(basestring): The redirect URI used in the user
                 OAuth process.
-            proxy_dict(dict): Dictionary of proxies passed on to the requests 
+            proxies(dict): Dictionary of proxies passed on to the requests 
                 session.
 
         Returns:
@@ -129,7 +129,7 @@ class WebexTeamsAPI(object):
         check_type(client_secret, basestring, may_be_none=True)
         check_type(oauth_code, basestring, may_be_none=True)
         check_type(redirect_uri, basestring, may_be_none=True)
-        check_type(proxy_dict, dict, may_be_none=True)
+        check_type(proxies, dict, may_be_none=True)
 
         access_token = access_token or WEBEX_TEAMS_ACCESS_TOKEN
 
@@ -167,7 +167,7 @@ class WebexTeamsAPI(object):
             base_url=base_url,
             single_request_timeout=single_request_timeout,
             wait_on_rate_limit=wait_on_rate_limit, 
-            proxy_dict=proxy_dict
+            proxies=proxies
         )
 
         # API wrappers
