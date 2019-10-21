@@ -472,16 +472,16 @@ contain all of the returned objects.
 Extending the API with bound methods
 ------------------------------------
 
-Extending the API is simple by binding your own methods to the top level API. By binding a method to
-the WebexTeamsAPI, you can extend functionality and leverage all of the objects and quality of life
-features.
+As the Webex Teams API is developed and features are added, it may be necessary to add functions to access those features.
+Extending the API is simple by binding your own methods to the top level API instance. By binding a method, you can 
+extend functionality and leverage all of the objects and quality of life features of WebexTeamsAPI.
 
 .. code-block:: python
 
-    >>> new_function():
+    >>> new_method():
         ...     pass
-    >>> WebexTeamsAPI().new_function = new_function
-    >>> output = WebexTeamsAPI.new_function(params)
+    >>> WebexTeamsAPI().new_method = new_method
+    >>> output = WebexTeamsAPI.new_method(params)
 
 
 *Copyright (c) 2016-2019 Cisco and/or its affiliates.*
