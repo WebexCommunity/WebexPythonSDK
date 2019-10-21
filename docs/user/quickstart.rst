@@ -468,6 +468,20 @@ contain all of the returned objects.
     >>> rooms_list = list(rooms_iterable)
 
 
+
+Extending the API with bound methods
+------------------------------------
+
+Extending the API is simple by binding your own methods to the top level API. By binding a method to
+the WebexTeamsAPI, you can extend functionality and leverage all of the objects and quality of life
+features.
+
+.. code-block:: python
+    >>> new_function():
+        ...     pass
+    >>> WebexTeamsAPI().new_function = new_function
+    >>> output = WebexTeamsAPI.new_function(params)
+
 *Copyright (c) 2016-2019 Cisco and/or its affiliates.*
 
 
