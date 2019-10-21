@@ -478,11 +478,13 @@ extend functionality and leverage all of the objects and quality of life feature
 
 .. code-block:: python
 
-    >>> new_method(self, params):
-        ...     json_obj = self._session.get('/example/action/' + params)
+    >>> new_method(self, param):
+        ...     json_obj = self._session.get('/example/action/' + param)
         ...     return json_obj
-    >>> WebexTeamsAPI().new_method = new_method
-    >>> output = WebexTeamsAPI.new_method(params)
+    
+    >>> api = WebexTeamsAPI()
+    >>> api.new_method = new_method
+    >>> output = WebexTeamsAPI.new_method(param)
 
 
 *Copyright (c) 2016-2019 Cisco and/or its affiliates.*
