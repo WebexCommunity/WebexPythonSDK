@@ -477,10 +477,12 @@ the WebexTeamsAPI, you can extend functionality and leverage all of the objects 
 features.
 
 .. code-block:: python
+
     >>> new_function():
         ...     pass
     >>> WebexTeamsAPI().new_function = new_function
     >>> output = WebexTeamsAPI.new_function(params)
+
 
 *Copyright (c) 2016-2019 Cisco and/or its affiliates.*
 
