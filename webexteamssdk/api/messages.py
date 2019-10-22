@@ -135,7 +135,7 @@ class MessagesAPI(object):
             yield self._object_factory(OBJECT_TYPE, item)
 
     def create(self, roomId=None, toPersonId=None, toPersonEmail=None,
-               text=None, markdown=None, files=None, **request_parameters):
+               text=None, markdown=None, files=None, attachments=None, **request_parameters):
         """Post a message, and optionally a attachment, to a room.
 
         The files parameter is a list, which accepts multiple values to allow
@@ -174,6 +174,7 @@ class MessagesAPI(object):
         check_type(text, basestring)
         check_type(markdown, basestring)
         check_type(files, list)
+        check_type(attachments, list)
         if files:
             if len(files) != 1:
                 raise ValueError("The length of the `files` list is greater "
@@ -192,6 +193,7 @@ class MessagesAPI(object):
             text=text,
             markdown=markdown,
             files=files,
+            attachments=attachments,
         )
 
         # API request
