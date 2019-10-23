@@ -188,6 +188,14 @@ class MessagesAPI(object):
                                  "message.")
             check_type(files[0], basestring)
 
+        if attachments:
+            for attachment in attachments:
+                try:
+                    content_type_exists = attachment['contentType']
+                except Exception as e:
+                    # ensure a valid header is loaded for cards
+                    attachment['contentType'] = 'application/vnd.microsoft.card.adaptive'
+
         post_data = dict_from_items_with_values(
             request_parameters,
             roomId=roomId,
