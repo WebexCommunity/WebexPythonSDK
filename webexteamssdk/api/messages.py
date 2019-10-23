@@ -154,6 +154,9 @@ class MessagesAPI(object):
             markdown(basestring): The message, in markdown format.
             files(`list`): A list of public URL(s) or local path(s) to files to
                 be posted into the room. Only one file is allowed per message.
+            attachments(`list`): A list comprised of properly formatted button
+                and card data structure.  This can be found at 
+                https://docs.microsoft.com/en-us/adaptive-cards/sdk/designer
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
