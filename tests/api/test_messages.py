@@ -23,7 +23,7 @@ SOFTWARE.
 """
 
 import itertools
-
+import json, pathlib
 import pytest
 
 import webexteamssdk
@@ -50,6 +50,25 @@ def direct_message_by_email(api, test_people):
         toPersonEmail=person.emails[0],
         text=create_string("Message"),
     )
+
+    yield message
+
+    api.messages.delete(message.id)
+
+
+@pytest.fixture(scope="session")
+def direct_message_by_email_with_card(api, test_people):
+    attachments = []
+    attachment = {}
+    attachment['contentType'] = "application/vnd.microsoft.card.adaptive"
+    attachment["content"] = json.loads(open(pathlib.Path(__file__).parent / 'example_card.json').read())
+    attachments.append(attachment)
+    person = test_people["member_added_by_email"]
+    message = api.messages.create(
+        toPersonEmail=person.emails[0],
+        text=create_string("Message"),
+        attachments=attachments
+                )
 
     yield message
 
@@ -137,8 +156,8 @@ def group_room_messages(api, group_room,
 
 
 @pytest.fixture(scope="session")
-def direct_messages(api, direct_message_by_email, direct_message_by_id):
-    return [direct_message_by_email, direct_message_by_id]
+def direct_messages(api, direct_message_by_email, direct_message_by_id, direct_message_by_email_with_card):
+    return [direct_message_by_email, direct_message_by_id, direct_message_by_email_with_card]
 
 
 # Tests
@@ -189,6 +208,10 @@ def test_list_messages_mentioning_me(api, group_room,
 
 def test_create_direct_messages_by_email(direct_message_by_email):
     assert is_valid_message(direct_message_by_email)
+
+
+def test_create_direct_messages_by_email_with_card(direct_message_by_email_with_card):
+    assert is_valid_message(direct_message_by_email_with_card)
 
 
 def test_create_direct_messages_by_id(direct_message_by_id):
