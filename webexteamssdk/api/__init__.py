@@ -34,6 +34,7 @@ from webexteamssdk.models.immutable import immutable_data_factory
 from webexteamssdk.restsession import RestSession
 from webexteamssdk.utils import check_type
 from .access_tokens import AccessTokensAPI
+from .attachment_actions import AttachmentActionsAPI
 from .events import EventsAPI
 from .guest_issuer import GuestIssuerAPI
 from .licenses import LicensesAPI
@@ -171,6 +172,7 @@ class WebexTeamsAPI(object):
         )
 
         # API wrappers
+        self.attachment_actions = AttachmentActionsAPI(self._session, object_factory)
         self.people = PeopleAPI(self._session, object_factory)
         self.rooms = RoomsAPI(self._session, object_factory)
         self.memberships = MembershipsAPI(self._session, object_factory)
