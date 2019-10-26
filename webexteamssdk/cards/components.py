@@ -23,11 +23,23 @@ SOFTWARE.
 """
 
 from .abstract_components import Serializable
+from .utils import check_type
 
 class MediaSource(Serializable):
+    """Defines the source of a Media element."""
     def __init__(self,
                  mimeType,
                  url):
+        """Create a new MediaSource
+
+        Args:
+            mimeType(str): Mime type of the associated media(i.e. 'video/mp4')
+            url(str): URL of the media.
+        """
+        # Check types
+        check_type(mimeType, str, False, False)
+        check_type(url, str, False, False)
+
         self.mimeType = mimeType
         self.url = url
 
