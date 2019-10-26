@@ -39,8 +39,9 @@ from ..generator_containers import generator_container
 from ..restsession import RestSession
 from ..utils import (
     check_type, dict_from_items_with_values, is_local_file, is_web_url,
-    open_local_file,
+    open_local_file, make_card_attachment
 )
+from ..cards.card import AdaptiveCard
 
 
 API_ENDPOINT = 'messages'
@@ -135,7 +136,7 @@ class MessagesAPI(object):
             yield self._object_factory(OBJECT_TYPE, item)
 
     def create(self, roomId=None, toPersonId=None, toPersonEmail=None,
-               text=None, markdown=None, files=None, **request_parameters):
+               text=None, markdown=None, files=None, cards=None, **request_parameters):
         """Post a message, and optionally a attachment, to a room.
 
         The files parameter is a list, which accepts multiple values to allow
@@ -154,6 +155,8 @@ class MessagesAPI(object):
             markdown(basestring): The message, in markdown format.
             files(`list`): A list of public URL(s) or local path(s) to files to
                 be posted into the room. Only one file is allowed per message.
+            cards(`list`): A list of adaptive cards objects that will be send
+                with this message.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
@@ -174,6 +177,7 @@ class MessagesAPI(object):
         check_type(text, basestring)
         check_type(markdown, basestring)
         check_type(files, list)
+        check_type(cards, (list, AdaptiveCard))
         if files:
             if len(files) != 1:
                 raise ValueError("The length of the `files` list is greater "
@@ -193,6 +197,17 @@ class MessagesAPI(object):
             markdown=markdown,
             files=files,
         )
+
+        # Add cards
+        if cards is not None:
+            cards_list = []
+
+            if isinstance(cards, list):
+                cards_list = [make_card_attachment(c) for c in cards]
+            else:
+                cards_list = [make_card_attachment(cards)]
+
+            post_data['attachments'] = cards_list
 
         # API request
         if not files or is_web_url(files[0]):
