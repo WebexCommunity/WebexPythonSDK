@@ -40,22 +40,22 @@ class AttachmentActionBasicPropertiesMixin(object):
 
     @property
     def id(self):
-        """The unique identifier for the attachment action."""
+        """A unique identifier for the action."""
         return self._json_data.get('id')
 
     @property
     def personId(self):
-        """The ID of the person who performed the attachment action."""
+        """The ID of the person who performed the action."""
         return self._json_data.get('personId')
 
     @property
     def roomId(self):
-        """The room ID of the attachment action."""
+        """The ID of the room the action was performed within."""
         return self._json_data.get('roomId')
 
     @property
     def type(self):
-        """The type of attachment action.
+        """The type of action performed.
 
         Attachment action enum:
             'submit': submit filled in inputs
@@ -64,17 +64,17 @@ class AttachmentActionBasicPropertiesMixin(object):
 
     @property
     def messageId(self):
-        """The ID of parent message the attachment action was performed on."""
+        """The parent message the attachment action was performed on."""
         return self._json_data.get('messageId')
 
     @property
     def inputs(self):
-        """The attachment action's inputs"""
+        """The action's inputs."""
         return self._json_data('inputs')
 
     @property
     def created(self):
-        """The date and time the attachment action was created."""
+        """The date and time the action was created."""
         created = self._json_data.get('created')
         if created:
             return WebexTeamsDateTime.strptime(created)
