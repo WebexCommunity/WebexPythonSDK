@@ -177,16 +177,16 @@ class MessagesAPI(object):
         check_type(text, basestring, optional=True)
         check_type(markdown, basestring, optional=True)
         check_type(files, list, optional=True)
-        check_type(attachments, list)
+        check_type(attachments, list, optional=True)
         if files:
             if len(files) != 1:
                 raise ValueError("The length of the `files` list is greater "
-                                 "than one (1, optional=True). The files parameter is a "
+                                 "than one (1). The files parameter is a "
                                  "list, which accepts multiple values to "
                                  "allow for future expansion, but currently "
                                  "only one file may be included with the "
                                  "message.")
-            check_type(files[0], basestring, optional=True)
+            check_type(files[0], basestring)
 
         if attachments:
             for attachment in attachments:

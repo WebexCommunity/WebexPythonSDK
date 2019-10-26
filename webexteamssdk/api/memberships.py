@@ -248,4 +248,4 @@ class MembershipsAPI(object):
         check_type(membershipId, basestring)
 
         # API request
-        self._session.delete(API_ENDPOINT + '/' + membershipId, optional=True)
+        self._session.delete(API_ENDPOINT + '/' + membershipId)

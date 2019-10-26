@@ -161,12 +161,12 @@ class RestSession(object):
     @single_request_timeout.setter
     def single_request_timeout(self, value):
         """The timeout (seconds) for a single HTTP REST API request."""
-        check_type(value, int)
+        check_type(value, int, optional=True)
         assert value is None or value > 0
         self._single_request_timeout = value
 
     @property
-    def wait_on_rate_limit(self, optional=True):
+    def wait_on_rate_limit(self):
         """Automatic rate-limit handling.
 
         This setting enables or disables automatic rate-limit handling.  When
