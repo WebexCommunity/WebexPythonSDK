@@ -43,6 +43,7 @@ class TestWebexTeamsSDK:
         # Data Models
         assert hasattr(webexteamssdk, "dict_data_factory")
         assert hasattr(webexteamssdk, "AccessToken")
+        assert hasattr(webexteamssdk, "AttachmentAction")
         assert hasattr(webexteamssdk, "Event")
         assert hasattr(webexteamssdk, "License")
         assert hasattr(webexteamssdk, "Membership")

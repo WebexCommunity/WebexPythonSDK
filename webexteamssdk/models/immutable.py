@@ -42,6 +42,7 @@ from collections import defaultdict
 
 from webexteamssdk.utils import json_dict
 from .mixins.access_token import AccessTokenBasicPropertiesMixin
+from .mixins.attachment_action import AttachmentActionBasicPropertiesMixin
 from .mixins.event import EventBasicPropertiesMixin
 from .mixins.license import LicenseBasicPropertiesMixin
 from .mixins.membership import MembershipBasicPropertiesMixin
@@ -230,6 +231,10 @@ class Webhook(ImmutableData, WebhookBasicPropertiesMixin):
     """Webex Teams Webhook data model."""
 
 
+class AttachmentAction(ImmutableData, AttachmentActionBasicPropertiesMixin):
+    """Webex Attachment Actions data model"""
+
+
 class WebhookEvent(ImmutableData, WebhookEventBasicPropertiesMixin):
     """Webex Teams Webhook-Events data model."""
 
@@ -246,6 +251,7 @@ class GuestIssuerToken(ImmutableData, GuestIssuerTokenBasicPropertiesMixin):
 immutable_data_models = defaultdict(
     lambda: ImmutableData,
     access_token=AccessToken,
+    attachment_action=AttachmentAction,
     event=Event,
     license=License,
     membership=Membership,

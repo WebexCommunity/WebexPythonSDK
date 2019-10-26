@@ -29,6 +29,7 @@ import pytest
 import webexteamssdk
 from tests.environment import WEBEX_TEAMS_ACCESS_TOKEN
 from webexteamssdk.api.access_tokens import AccessTokensAPI
+from webexteamssdk.api.attachment_actions import AttachmentActionsAPI
 from webexteamssdk.api.events import EventsAPI
 from webexteamssdk.api.licenses import LicensesAPI
 from webexteamssdk.api.memberships import MembershipsAPI
@@ -131,6 +132,10 @@ def test_non_default_wait_on_rate_limit():
 
 def test_access_tokens_api_object_creation(api):
     assert isinstance(api.access_tokens, AccessTokensAPI)
+
+
+def test_attachment_actions_api_object_creation(api):
+    assert isinstance(api.attachment_actions, AttachmentActionsAPI)
 
 
 def test_events_api_object_creation(api):
