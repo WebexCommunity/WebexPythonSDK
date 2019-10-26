@@ -68,11 +68,18 @@ class AdaptiveCard(Serializable):
         self.selectAction = selectAction
         self.fallbackText = fallbackText
         self.lang = lang
-        self.schema = "http://adaptivecards.io/schemas/adaptive-card.json"
 
         super().__init__(serializable_properties=[
                             'body', 'actions', 'selectAction'
                          ],
                          simple_properties=[
-                            'version', 'fallbackText', 'lang', 'schema', 'type'
+                            'version', 'fallbackText', 'lang', 'type'
                          ])
+    def to_dict(self):
+        # We need to overwrite the to_dict method to add the $schema
+        # property that can't be specified the normal way due to the
+        # $ in the beginning
+        ret = super().to_dict()
+        ret["$schema"] = "http://adaptivecards.io/schemas/adaptive-card.json"
+
+        return ret
