@@ -25,6 +25,7 @@ SOFTWARE.
 from .abstract_components import Serializable
 from .utils import check_type
 from .options import BlockElementHeight, Spacing
+from .actions import OpenUrl, ShowCard, Submit
 
 class MediaSource(Serializable):
     """Defines the source of a Media element."""
@@ -76,7 +77,7 @@ class Media(Serializable):
         check_type(separator, bool, False, True)
         check_type(spacing, Spacing, False, True)
         check_type(id, str, False, True)
-        
+
         self.type = "Media"
         self.sources = sources #Needs to be a list of media sources
         self.poster = poster
@@ -92,6 +93,8 @@ class Media(Serializable):
                             'separator', 'spacing', 'id'
                          ])
 class Image(Serializable):
+    """Displays a image object"""
+
     def __init__(self,
                  url,
                  altText=None,
@@ -105,6 +108,38 @@ class Image(Serializable):
                  seperator=None,
                  spacing=None,
                  id=None):
+        """Create a new image component
+
+        Args:
+            url(str): The URL to the image
+            altText(str): Alternative text describing the image
+            backgroundColor(str): Background color for transparent images.
+            height(str, BlockElementHeight): Height of the image either as a
+                pixel value(i.e. '50px') or as an instance of BlockElementHeight
+            horizontalAlignmnet(HorizontalAlignment): Controls how the component
+                is positioned within its parent.
+            selectAction(OpenUrl, Submit): Option that is caried out when the
+                card is selected.
+            size(ImageSize): Controls the approximate size of the image.
+            style(ImageStyle): The display style of this image.
+            width(str): Width of the image as a pixel value (i.e. '50px')
+            separator(bool): Draw a separating line when set to true
+            spacing(Spacing): Specify the spacing of this component
+            id(str): The id of this component
+
+        """
+        check_type(url, str, False, False)
+        check_type(altText, str, False, True)
+        check_type(backgroundColor, str, False, True)
+        check_type(height, (str, BlockElementHeight), False, True)
+        check_type(horizontalAlignment, horizontalAlignment, False, True)
+        check_type(selectAction, (OpenUrl, Submit), False, True)
+        check_type(size, ImageSize, False, True)
+        check_type(style, ImageStyle, False, True)
+        check_style(width, str, False, True)
+        check_style(separator, bool, False, True)
+        check_style(spacing, Spacing, False, True)
+        check_style(id, str, False, True)
 
         self.type = "Image"
         self.url = url

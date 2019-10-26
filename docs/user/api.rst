@@ -277,5 +277,93 @@ Warnings
     :show-inheritance:
     :members:
 
+.. _CardsAPI:
+
+Cards and Buttons
+=================
+
+.. autoclass:: webexteamssdk.cards.card.AdaptiveCard()
+
+Components
+----------
+
+.. autoclass:: webexteamssdk.cards.components.Image()
+   :members:
+
+   .. automethod:: __init__
+
+.. autoclass:: webexteamssdk.cards.components.TextBlock()
+   :members:
+
+   .. automethod:: __init__
+
+.. autoclass:: webexteamssdk.cards.components.Column()
+
+.. autoclass:: webexteamssdk.cards.components.Fact()
+
+.. autoclass:: webexteamssdk.cards.components.Choice()
+
+Options
+-------
+
+.. autoclass:: webexteamssdk.cards.options.VerticalContentAlignment()
+
+.. autoclass:: webexteamssdk.cards.options.Colors()
+
+.. autoclass:: webexteamssdk.cards.options.HorizontalAlignment()
+
+.. autoclass:: webexteamssdk.cards.options.FontSize()
+
+.. autoclass:: webexteamssdk.cards.options.FontWeight()
+
+.. autoclass:: webexteamssdk.cards.options.BlockElementHeight()
+
+.. autoclass:: webexteamssdk.cards.options.Spacing()
+
+.. autoclass:: webexteamssdk.cards.options.ImageSize()
+
+.. autoclass:: webexteamssdk.cards.options.ImageStyle()
+
+.. autoclass:: webexteamssdk.cards.options.ContainerStyle()
+
+.. autoclass:: webexteamssdk.cards.options.TextInputStyle()
+
+.. autoclass:: webexteamssdk.cards.options.ChoiceInputStyle()
+
+
+Container
+---------
+
+.. autoclass:: webexteamssdk.cards.container.Container()
+
+.. autoclass:: webexteamssdk.cards.container.ColumnSet()
+
+.. autoclass:: webexteamssdk.cards.container.FactSet()
+
+.. autoclass:: webexteamssdk.cards.container.ImageSet()
+
+Inputs
+------
+
+.. autoclass:: webexteamssdk.cards.inputs.Text()
+
+.. autoclass:: webexteamssdk.cards.inputs.Number()
+
+.. autoclass:: webexteamssdk.cards.inputs.Date()
+
+.. autoclass:: webexteamssdk.cards.inputs.Time()
+
+.. autoclass:: webexteamssdk.cards.inputs.Toggle()
+
+.. autoclass:: webexteamssdk.cards.inputs.Choices()
+
+Actions
+-------
+
+.. autoclass:: webexteamssdk.cards.actions.OpenUrl
+
+.. autoclass:: webexteamssdk.cards.actions.Submit
+
+.. autoclass:: webexteamssdk.cards.actions.ShowCard
 
 *Copyright (c) 2016-2019 Cisco and/or its affiliates.*
