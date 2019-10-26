@@ -65,7 +65,7 @@ class WebhooksAPI(object):
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(session, RestSession)
+        check_type(session, RestSession, optional=True)
 
         super(WebhooksAPI, self).__init__()
 
@@ -101,7 +101,7 @@ class WebhooksAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(max, int)
+        check_type(max, int, optional=True)
 
         params = dict_from_items_with_values(
             request_parameters,
@@ -142,8 +142,8 @@ class WebhooksAPI(object):
         check_type(targetUrl, basestring, optional=False)
         check_type(resource, basestring, optional=False)
         check_type(event, basestring, optional=False)
-        check_type(filter, basestring)
-        check_type(secret, basestring)
+        check_type(filter, basestring, optional=True)
+        check_type(secret, basestring, optional=True)
 
         post_data = dict_from_items_with_values(
             request_parameters,
@@ -206,8 +206,8 @@ class WebhooksAPI(object):
 
         """
         check_type(webhookId, basestring, optional=False)
-        check_type(name, basestring)
-        check_type(targetUrl, basestring)
+        check_type(name, basestring, optional=True)
+        check_type(targetUrl, basestring, optional=True)
 
         put_data = dict_from_items_with_values(
             request_parameters,

@@ -65,7 +65,7 @@ class PeopleAPI(object):
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(session, RestSession)
+        check_type(session, RestSession, optional=True)
 
         super(PeopleAPI, self).__init__()
 
@@ -108,11 +108,11 @@ class PeopleAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(id, basestring)
-        check_type(email, basestring)
-        check_type(displayName, basestring)
-        check_type(orgId, basestring)
-        check_type(max, int)
+        check_type(id, basestring, optional=True)
+        check_type(email, basestring, optional=True)
+        check_type(displayName, basestring, optional=True)
+        check_type(orgId, basestring, optional=True)
+        check_type(max, int, optional=True)
 
         params = dict_from_items_with_values(
             request_parameters,
@@ -162,13 +162,13 @@ class PeopleAPI(object):
 
         """
         check_type(emails, list, optional=False)
-        check_type(displayName, basestring)
-        check_type(firstName, basestring)
-        check_type(lastName, basestring)
-        check_type(avatar, basestring)
-        check_type(orgId, basestring)
-        check_type(roles, list)
-        check_type(licenses, list)
+        check_type(displayName, basestring, optional=True)
+        check_type(firstName, basestring, optional=True)
+        check_type(lastName, basestring, optional=True)
+        check_type(avatar, basestring, optional=True)
+        check_type(orgId, basestring, optional=True)
+        check_type(roles, list, optional=True)
+        check_type(licenses, list, optional=True)
 
         post_data = dict_from_items_with_values(
             request_parameters,
@@ -249,14 +249,14 @@ class PeopleAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(emails, list)
-        check_type(displayName, basestring)
-        check_type(firstName, basestring)
-        check_type(lastName, basestring)
-        check_type(avatar, basestring)
-        check_type(orgId, basestring)
-        check_type(roles, list)
-        check_type(licenses, list)
+        check_type(emails, list, optional=True)
+        check_type(displayName, basestring, optional=True)
+        check_type(firstName, basestring, optional=True)
+        check_type(lastName, basestring, optional=True)
+        check_type(avatar, basestring, optional=True)
+        check_type(orgId, basestring, optional=True)
+        check_type(roles, list, optional=True)
+        check_type(licenses, list, optional=True)
 
         put_data = dict_from_items_with_values(
             request_parameters,

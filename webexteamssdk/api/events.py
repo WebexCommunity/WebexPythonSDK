@@ -118,12 +118,12 @@ class EventsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(resource, basestring)
-        check_type(type, basestring)
-        check_type(actorId, basestring)
-        check_type(_from, basestring)
-        check_type(to, basestring)
-        check_type(max, int)
+        check_type(resource, basestring, optional=True)
+        check_type(type, basestring, optional=True)
+        check_type(actorId, basestring, optional=True)
+        check_type(_from, basestring, optional=True)
+        check_type(to, basestring, optional=True)
+        check_type(max, int, optional=True)
 
         params = dict_from_items_with_values(
             request_parameters,

@@ -112,10 +112,10 @@ class RoomsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(teamId, basestring)
-        check_type(type, basestring)
-        check_type(sortBy, basestring)
-        check_type(max, int)
+        check_type(teamId, basestring, optional=True)
+        check_type(type, basestring, optional=True)
+        check_type(sortBy, basestring, optional=True)
+        check_type(max, int, optional=True)
 
         params = dict_from_items_with_values(
             request_parameters,
@@ -152,8 +152,8 @@ class RoomsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(title, basestring)
-        check_type(teamId, basestring)
+        check_type(title, basestring, optional=True)
+        check_type(teamId, basestring, optional=True)
 
         post_data = dict_from_items_with_values(
             request_parameters,
@@ -207,7 +207,7 @@ class RoomsAPI(object):
 
         """
         check_type(roomId, basestring, optional=False)
-        check_type(roomId, basestring)
+        check_type(roomId, basestring, optional=True)
 
         put_data = dict_from_items_with_values(
             request_parameters,

@@ -128,7 +128,7 @@ def open_local_file(file_path):
                          content_type=content_type)
 
 
-def check_type(obj, acceptable_types, optional=True):
+def check_type(obj, acceptable_types, optional=False):
     """Object is an instance of one of the acceptable types or None.
 
     Args:

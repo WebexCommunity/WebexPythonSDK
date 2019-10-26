@@ -101,7 +101,7 @@ class TeamsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(max, int)
+        check_type(max, int, optional=True)
 
         params = dict_from_items_with_values(
             request_parameters,
@@ -186,7 +186,7 @@ class TeamsAPI(object):
 
         """
         check_type(teamId, basestring, optional=False)
-        check_type(name, basestring)
+        check_type(name, basestring, optional=True)
 
         put_data = dict_from_items_with_values(
             request_parameters,

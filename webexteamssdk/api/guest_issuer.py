@@ -69,7 +69,7 @@ class GuestIssuerAPI(object):
         Raises:
             TypeError: If the parameter types are incorrect
         """
-        check_type(session, RestSession)
+        check_type(session, RestSession, optional=True)
 
         super(GuestIssuerAPI, self).__init__()
 
@@ -95,11 +95,11 @@ class GuestIssuerAPI(object):
             TypeError: If the parameter types are incorrect
             ApiError: If the webex teams cloud returns an error.
         """
-        check_type(subject, basestring)
-        check_type(displayName, basestring)
-        check_type(issuerToken, basestring)
-        check_type(expiration, basestring)
-        check_type(secret, basestring)
+        check_type(subject, basestring, optional=True)
+        check_type(displayName, basestring, optional=True)
+        check_type(issuerToken, basestring, optional=True)
+        check_type(expiration, basestring, optional=True)
+        check_type(secret, basestring, optional=True)
 
         payload = {
             "sub": subject,

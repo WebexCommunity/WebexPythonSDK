@@ -65,7 +65,7 @@ class TeamMembershipsAPI(object):
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(session, RestSession)
+        check_type(session, RestSession, optional=True)
 
         super(TeamMembershipsAPI, self).__init__()
 
@@ -103,7 +103,7 @@ class TeamMembershipsAPI(object):
 
         """
         check_type(teamId, basestring, optional=False)
-        check_type(max, int)
+        check_type(max, int, optional=True)
 
         params = dict_from_items_with_values(
             request_parameters,
@@ -144,9 +144,9 @@ class TeamMembershipsAPI(object):
 
         """
         check_type(teamId, basestring, optional=False)
-        check_type(personId, basestring)
-        check_type(personEmail, basestring)
-        check_type(isModerator, bool)
+        check_type(personId, basestring, optional=True)
+        check_type(personEmail, basestring, optional=True)
+        check_type(isModerator, bool, optional=True)
 
         post_data = dict_from_items_with_values(
             request_parameters,
@@ -204,7 +204,7 @@ class TeamMembershipsAPI(object):
 
         """
         check_type(membershipId, basestring, optional=False)
-        check_type(isModerator, bool)
+        check_type(isModerator, bool, optional=True)
 
         put_data = dict_from_items_with_values(
             request_parameters,

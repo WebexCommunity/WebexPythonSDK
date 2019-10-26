@@ -65,7 +65,7 @@ class MembershipsAPI(object):
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(session, RestSession)
+        check_type(session, RestSession, optional=True)
 
         super(MembershipsAPI, self).__init__()
 
@@ -115,10 +115,10 @@ class MembershipsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(roomId, basestring)
-        check_type(personId, basestring)
-        check_type(personEmail, basestring)
-        check_type(max, int)
+        check_type(roomId, basestring, optional=True)
+        check_type(personId, basestring, optional=True)
+        check_type(personEmail, basestring, optional=True)
+        check_type(max, int, optional=True)
 
         params = dict_from_items_with_values(
             request_parameters,
@@ -160,9 +160,9 @@ class MembershipsAPI(object):
 
         """
         check_type(roomId, basestring, optional=False)
-        check_type(personId, basestring)
-        check_type(personEmail, basestring)
-        check_type(isModerator, bool)
+        check_type(personId, basestring, optional=True)
+        check_type(personEmail, basestring, optional=True)
+        check_type(isModerator, bool, optional=True)
 
         post_data = dict_from_items_with_values(
             request_parameters,
@@ -220,7 +220,7 @@ class MembershipsAPI(object):
 
         """
         check_type(membershipId, basestring, optional=False)
-        check_type(isModerator, bool)
+        check_type(isModerator, bool, optional=True)
 
         put_data = dict_from_items_with_values(
             request_parameters,
@@ -248,4 +248,4 @@ class MembershipsAPI(object):
         check_type(membershipId, basestring)
 
         # API request
-        self._session.delete(API_ENDPOINT + '/' + membershipId)
+        self._session.delete(API_ENDPOINT + '/' + membershipId, optional=True)

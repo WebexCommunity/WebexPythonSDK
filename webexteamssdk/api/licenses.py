@@ -93,7 +93,7 @@ class LicensesAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(orgId, basestring)
+        check_type(orgId, basestring, optional=True)
 
         params = dict_from_items_with_values(
             request_parameters,

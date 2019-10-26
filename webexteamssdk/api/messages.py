@@ -113,10 +113,10 @@ class MessagesAPI(object):
 
         """
         check_type(roomId, basestring, optional=False)
-        check_type(mentionedPeople, basestring)
-        check_type(before, basestring)
-        check_type(beforeMessage, basestring)
-        check_type(max, int)
+        check_type(mentionedPeople, basestring, optional=True)
+        check_type(before, basestring, optional=True)
+        check_type(beforeMessage, basestring, optional=True)
+        check_type(max, int, optional=True)
 
         params = dict_from_items_with_values(
             request_parameters,
@@ -171,22 +171,22 @@ class MessagesAPI(object):
                 contain a valid URL or path to a local file.
 
         """
-        check_type(roomId, basestring)
-        check_type(toPersonId, basestring)
-        check_type(toPersonEmail, basestring)
-        check_type(text, basestring)
-        check_type(markdown, basestring)
-        check_type(files, list)
+        check_type(roomId, basestring, optional=True)
+        check_type(toPersonId, basestring, optional=True)
+        check_type(toPersonEmail, basestring, optional=True)
+        check_type(text, basestring, optional=True)
+        check_type(markdown, basestring, optional=True)
+        check_type(files, list, optional=True)
         check_type(attachments, list)
         if files:
             if len(files) != 1:
                 raise ValueError("The length of the `files` list is greater "
-                                 "than one (1). The files parameter is a "
+                                 "than one (1, optional=True). The files parameter is a "
                                  "list, which accepts multiple values to "
                                  "allow for future expansion, but currently "
                                  "only one file may be included with the "
                                  "message.")
-            check_type(files[0], basestring)
+            check_type(files[0], basestring, optional=True)
 
         if attachments:
             for attachment in attachments:

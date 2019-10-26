@@ -121,7 +121,7 @@ class RestSession(object):
         """
         check_type(access_token, basestring, optional=False)
         check_type(base_url, basestring, optional=False)
-        check_type(single_request_timeout, int)
+        check_type(single_request_timeout, int, optional=True)
         check_type(wait_on_rate_limit, bool, optional=False)
         check_type(proxies, dict, optional=True)
 
@@ -166,7 +166,7 @@ class RestSession(object):
         self._single_request_timeout = value
 
     @property
-    def wait_on_rate_limit(self):
+    def wait_on_rate_limit(self, optional=True):
         """Automatic rate-limit handling.
 
         This setting enables or disables automatic rate-limit handling.  When
@@ -284,7 +284,7 @@ class RestSession(object):
 
         """
         check_type(url, basestring, optional=False)
-        check_type(params, dict)
+        check_type(params, dict, optional=True)
 
         # Expected response code
         erc = kwargs.pop('erc', EXPECTED_RESPONSE_CODE['GET'])
@@ -310,7 +310,7 @@ class RestSession(object):
 
         """
         check_type(url, basestring, optional=False)
-        check_type(params, dict)
+        check_type(params, dict, optional=True)
 
         # Expected response code
         erc = kwargs.pop('erc', EXPECTED_RESPONSE_CODE['GET'])

@@ -122,10 +122,10 @@ class WebexTeamsAPI(object):
                 access_token argument or an environment variable.
 
         """
-        check_type(access_token, basestring)
-        check_type(base_url, basestring)
-        check_type(single_request_timeout, int)
-        check_type(wait_on_rate_limit, bool)
+        check_type(access_token, basestring, optional=True)
+        check_type(base_url, basestring, optional=True)
+        check_type(single_request_timeout, int, optional=True)
+        check_type(wait_on_rate_limit, bool, optional=True)
         check_type(client_id, basestring, optional=True)
         check_type(client_secret, basestring, optional=True)
         check_type(oauth_code, basestring, optional=True)

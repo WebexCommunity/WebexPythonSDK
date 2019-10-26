@@ -80,7 +80,7 @@ class AccessTokensAPI(object):
 
         """
         check_type(base_url, basestring, optional=False)
-        check_type(single_request_timeout, int)
+        check_type(single_request_timeout, int, optional=True)
 
         super(AccessTokensAPI, self).__init__()
 
