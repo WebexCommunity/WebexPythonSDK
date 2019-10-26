@@ -69,7 +69,7 @@ class GuestIssuerAPI(object):
         Raises:
             TypeError: If the parameter types are incorrect
         """
-        check_type(session, RestSession, optional=True)
+        check_type(session, RestSession)
 
         super(GuestIssuerAPI, self).__init__()
 

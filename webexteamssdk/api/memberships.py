@@ -65,7 +65,7 @@ class MembershipsAPI(object):
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(session, RestSession, optional=True)
+        check_type(session, RestSession)
 
         super(MembershipsAPI, self).__init__()
 
