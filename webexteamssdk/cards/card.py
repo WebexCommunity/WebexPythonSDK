@@ -23,6 +23,9 @@ SOFTWARE.
 """
 
 from .abstract_components import Serializable
+from .actions import OpenUrl, ShowCard, Submit
+
+from .utils import check_type
 
 class AdaptiveCard(Serializable):
     """AdaptiveCard class that represents a adaptive card python object.
@@ -34,7 +37,6 @@ class AdaptiveCard(Serializable):
     def __init__(self, body=None,
                        actions=None,
                        selectAction=None,
-                       style=None,
                        fallbackText=None,
                        lang=None):
         """Creates a new adaptive card object.
@@ -52,12 +54,11 @@ class AdaptiveCard(Serializable):
                 used for localization of date/time functions
 
         """
-        super().__init__(serializable_properties=[
-                            'body', 'actions', 'selectAction', 'style'
-                         ],
-                         simple_properties=[
-                            'version', 'fallbackText', 'lang', 'schema', 'type'
-                         ])
+        # Check types
+        check_type(actions, (ShowCard, Submit, OpenUrl), True, True)
+        check_type(selectAction, (Submit, OpenUrl), False, True)
+        check_type(fallbackText, str, False, True)
+        check_type(lang, str, False, True)
 
         # Set properties
         self.type = "AdaptiveCard"
@@ -65,7 +66,13 @@ class AdaptiveCard(Serializable):
         self.body = body
         self.actions = actions
         self.selectAction = selectAction
-        self.style = style
         self.fallbackText = fallbackText
         self.lang = lang
         self.schema = "http://adaptivecards.io/schemas/adaptive-card.json"
+
+        super().__init__(serializable_properties=[
+                            'body', 'actions', 'selectAction'
+                         ],
+                         simple_properties=[
+                            'version', 'fallbackText', 'lang', 'schema', 'type'
+                         ])
