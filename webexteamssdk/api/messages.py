@@ -135,7 +135,7 @@ class MessagesAPI(object):
             yield self._object_factory(OBJECT_TYPE, item)
 
     def create(self, roomId=None, toPersonId=None, toPersonEmail=None,
-               text=None, markdown=None, files=None, **request_parameters):
+               text=None, markdown=None, files=None, attachments=None, **request_parameters):
         """Post a message, and optionally a attachment, to a room.
 
         The files parameter is a list, which accepts multiple values to allow
@@ -154,6 +154,9 @@ class MessagesAPI(object):
             markdown(basestring): The message, in markdown format.
             files(`list`): A list of public URL(s) or local path(s) to files to
                 be posted into the room. Only one file is allowed per message.
+            attachments(`list`): A list comprised of properly formatted button
+                and card data structure.  This can be found at 
+                https://docs.microsoft.com/en-us/adaptive-cards/sdk/designer
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
@@ -174,6 +177,7 @@ class MessagesAPI(object):
         check_type(text, basestring)
         check_type(markdown, basestring)
         check_type(files, list)
+        check_type(attachments, list)
         if files:
             if len(files) != 1:
                 raise ValueError("The length of the `files` list is greater "
@@ -184,6 +188,14 @@ class MessagesAPI(object):
                                  "message.")
             check_type(files[0], basestring)
 
+        if attachments:
+            for attachment in attachments:
+                try:
+                    content_type_exists = attachment['contentType']
+                except Exception as e:
+                    # ensure a valid header is loaded for cards
+                    attachment['contentType'] = 'application/vnd.microsoft.card.adaptive'
+
         post_data = dict_from_items_with_values(
             request_parameters,
             roomId=roomId,
@@ -192,6 +204,7 @@ class MessagesAPI(object):
             text=text,
             markdown=markdown,
             files=files,
+            attachments=attachments,
         )
 
         # API request
