@@ -62,7 +62,7 @@ class OrganizationsAPI(object):
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(session, RestSession, optional=False)
+        check_type(session, RestSession)
 
         super(OrganizationsAPI, self).__init__()
 
@@ -111,7 +111,7 @@ class OrganizationsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(orgId, basestring, optional=False)
+        check_type(orgId, basestring)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + '/' + orgId)

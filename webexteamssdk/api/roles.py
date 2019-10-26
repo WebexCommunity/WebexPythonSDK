@@ -65,7 +65,7 @@ class RolesAPI(object):
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(session, RestSession, optional=False)
+        check_type(session, RestSession)
 
         super(RolesAPI, self).__init__()
 
@@ -113,7 +113,7 @@ class RolesAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(roleId, basestring, optional=False)
+        check_type(roleId, basestring)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + '/' + roleId)

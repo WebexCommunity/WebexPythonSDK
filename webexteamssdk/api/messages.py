@@ -66,7 +66,7 @@ class MessagesAPI(object):
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(session, RestSession, optional=False)
+        check_type(session, RestSession)
         super(MessagesAPI, self).__init__()
         self._session = session
         self._object_factory = object_factory
@@ -112,7 +112,7 @@ class MessagesAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(roomId, basestring, optional=False)
+        check_type(roomId, basestring)
         check_type(mentionedPeople, basestring, optional=True)
         check_type(before, basestring, optional=True)
         check_type(beforeMessage, basestring, optional=True)
@@ -246,7 +246,7 @@ class MessagesAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(messageId, basestring, optional=False)
+        check_type(messageId, basestring)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + '/' + messageId)
@@ -265,7 +265,7 @@ class MessagesAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(messageId, basestring, optional=False)
+        check_type(messageId, basestring)
 
         # API request
         self._session.delete(API_ENDPOINT + '/' + messageId)

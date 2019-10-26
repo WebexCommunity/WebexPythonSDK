@@ -119,10 +119,10 @@ class RestSession(object):
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(access_token, basestring, optional=False)
-        check_type(base_url, basestring, optional=False)
+        check_type(access_token, basestring)
+        check_type(base_url, basestring)
         check_type(single_request_timeout, int, optional=True)
-        check_type(wait_on_rate_limit, bool, optional=False)
+        check_type(wait_on_rate_limit, bool)
         check_type(proxies, dict, optional=True)
 
         super(RestSession, self).__init__()
@@ -180,7 +180,7 @@ class RestSession(object):
     @wait_on_rate_limit.setter
     def wait_on_rate_limit(self, value):
         """Enable or disable automatic rate-limit handling."""
-        check_type(value, bool, optional=False)
+        check_type(value, bool)
         self._wait_on_rate_limit = value
 
     @property
@@ -200,7 +200,7 @@ class RestSession(object):
              headers(dict): Updates to the current session headers.
 
         """
-        check_type(headers, dict, optional=False)
+        check_type(headers, dict)
         self._req_session.headers.update(headers)
 
     def abs_url(self, url):
@@ -283,7 +283,7 @@ class RestSession(object):
                 returned by the Webex Teams API endpoint.
 
         """
-        check_type(url, basestring, optional=False)
+        check_type(url, basestring)
         check_type(params, dict, optional=True)
 
         # Expected response code
@@ -309,7 +309,7 @@ class RestSession(object):
                 returned by the Webex Teams API endpoint.
 
         """
-        check_type(url, basestring, optional=False)
+        check_type(url, basestring)
         check_type(params, dict, optional=True)
 
         # Expected response code
@@ -391,7 +391,7 @@ class RestSession(object):
                 returned by the Webex Teams API endpoint.
 
         """
-        check_type(url, basestring, optional=False)
+        check_type(url, basestring)
 
         # Expected response code
         erc = kwargs.pop('erc', EXPECTED_RESPONSE_CODE['POST'])
@@ -416,7 +416,7 @@ class RestSession(object):
                 returned by the Webex Teams API endpoint.
 
         """
-        check_type(url, basestring, optional=False)
+        check_type(url, basestring)
 
         # Expected response code
         erc = kwargs.pop('erc', EXPECTED_RESPONSE_CODE['PUT'])
@@ -439,7 +439,7 @@ class RestSession(object):
                 returned by the Webex Teams API endpoint.
 
         """
-        check_type(url, basestring, optional=False)
+        check_type(url, basestring)
 
         # Expected response code
         erc = kwargs.pop('erc', EXPECTED_RESPONSE_CODE['DELETE'])

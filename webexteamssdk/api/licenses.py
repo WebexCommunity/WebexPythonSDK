@@ -65,7 +65,7 @@ class LicensesAPI(object):
             TypeError: If the input object is not a dictionary or string.
 
         """
-        check_type(session, RestSession, optional=False)
+        check_type(session, RestSession)
 
         super(LicensesAPI, self).__init__()
 
@@ -122,7 +122,7 @@ class LicensesAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(licenseId, basestring, optional=False)
+        check_type(licenseId, basestring)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + '/' + licenseId)
