@@ -138,10 +138,10 @@ class WebhooksAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(name, basestring, may_be_none=False)
-        check_type(targetUrl, basestring, may_be_none=False)
-        check_type(resource, basestring, may_be_none=False)
-        check_type(event, basestring, may_be_none=False)
+        check_type(name, basestring, optional=False)
+        check_type(targetUrl, basestring, optional=False)
+        check_type(resource, basestring, optional=False)
+        check_type(event, basestring, optional=False)
         check_type(filter, basestring)
         check_type(secret, basestring)
 
@@ -176,7 +176,7 @@ class WebhooksAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(webhookId, basestring, may_be_none=False)
+        check_type(webhookId, basestring, optional=False)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + '/' + webhookId)
@@ -205,7 +205,7 @@ class WebhooksAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(webhookId, basestring, may_be_none=False)
+        check_type(webhookId, basestring, optional=False)
         check_type(name, basestring)
         check_type(targetUrl, basestring)
 
@@ -233,7 +233,7 @@ class WebhooksAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(webhookId, basestring, may_be_none=False)
+        check_type(webhookId, basestring, optional=False)
 
         # API request
         self._session.delete(API_ENDPOINT + '/' + webhookId)

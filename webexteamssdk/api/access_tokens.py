@@ -79,7 +79,7 @@ class AccessTokensAPI(object):
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(base_url, basestring, may_be_none=False)
+        check_type(base_url, basestring, optional=False)
         check_type(single_request_timeout, int)
 
         super(AccessTokensAPI, self).__init__()
@@ -125,10 +125,10 @@ class AccessTokensAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(client_id, basestring, may_be_none=False)
-        check_type(client_secret, basestring, may_be_none=False)
-        check_type(code, basestring, may_be_none=False)
-        check_type(redirect_uri, basestring, may_be_none=False)
+        check_type(client_id, basestring, optional=False)
+        check_type(client_secret, basestring, optional=False)
+        check_type(code, basestring, optional=False)
+        check_type(redirect_uri, basestring, optional=False)
 
         post_data = dict_from_items_with_values(
             grant_type="authorization_code",
@@ -166,9 +166,9 @@ class AccessTokensAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(client_id, basestring, may_be_none=False)
-        check_type(client_secret, basestring, may_be_none=False)
-        check_type(refresh_token, basestring, may_be_none=False)
+        check_type(client_id, basestring, optional=False)
+        check_type(client_secret, basestring, optional=False)
+        check_type(refresh_token, basestring, optional=False)
 
         post_data = dict_from_items_with_values(
             grant_type="refresh_token",

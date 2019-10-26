@@ -65,7 +65,7 @@ class RoomsAPI(object):
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(session, RestSession, may_be_none=False)
+        check_type(session, RestSession, optional=False)
 
         super(RoomsAPI, self).__init__()
 
@@ -181,7 +181,7 @@ class RoomsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(roomId, basestring, may_be_none=False)
+        check_type(roomId, basestring, optional=False)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + '/' + roomId)
@@ -206,7 +206,7 @@ class RoomsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(roomId, basestring, may_be_none=False)
+        check_type(roomId, basestring, optional=False)
         check_type(roomId, basestring)
 
         put_data = dict_from_items_with_values(
@@ -232,7 +232,7 @@ class RoomsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(roomId, basestring, may_be_none=False)
+        check_type(roomId, basestring, optional=False)
 
         # API request
         self._session.delete(API_ENDPOINT + '/' + roomId)

@@ -65,7 +65,7 @@ class EventsAPI(object):
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(session, RestSession, may_be_none=False)
+        check_type(session, RestSession, optional=False)
 
         super(EventsAPI, self).__init__()
 
@@ -159,7 +159,7 @@ class EventsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(eventId, basestring, may_be_none=False)
+        check_type(eventId, basestring, optional=False)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + '/' + eventId)

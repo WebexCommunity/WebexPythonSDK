@@ -66,7 +66,7 @@ class MessagesAPI(object):
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(session, RestSession, may_be_none=False)
+        check_type(session, RestSession, optional=False)
         super(MessagesAPI, self).__init__()
         self._session = session
         self._object_factory = object_factory
@@ -112,7 +112,7 @@ class MessagesAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(roomId, basestring, may_be_none=False)
+        check_type(roomId, basestring, optional=False)
         check_type(mentionedPeople, basestring)
         check_type(before, basestring)
         check_type(beforeMessage, basestring)
@@ -155,7 +155,7 @@ class MessagesAPI(object):
             files(`list`): A list of public URL(s) or local path(s) to files to
                 be posted into the room. Only one file is allowed per message.
             attachments(`list`): A list comprised of properly formatted button
-                and card data structure.  This can be found at 
+                and card data structure.  This can be found at
                 https://docs.microsoft.com/en-us/adaptive-cards/sdk/designer
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
@@ -246,7 +246,7 @@ class MessagesAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(messageId, basestring, may_be_none=False)
+        check_type(messageId, basestring, optional=False)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + '/' + messageId)
@@ -265,7 +265,7 @@ class MessagesAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(messageId, basestring, may_be_none=False)
+        check_type(messageId, basestring, optional=False)
 
         # API request
         self._session.delete(API_ENDPOINT + '/' + messageId)

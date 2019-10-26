@@ -126,11 +126,11 @@ class WebexTeamsAPI(object):
         check_type(base_url, basestring)
         check_type(single_request_timeout, int)
         check_type(wait_on_rate_limit, bool)
-        check_type(client_id, basestring, may_be_none=True)
-        check_type(client_secret, basestring, may_be_none=True)
-        check_type(oauth_code, basestring, may_be_none=True)
-        check_type(redirect_uri, basestring, may_be_none=True)
-        check_type(proxies, dict, may_be_none=True)
+        check_type(client_id, basestring, optional=True)
+        check_type(client_secret, basestring, optional=True)
+        check_type(oauth_code, basestring, optional=True)
+        check_type(redirect_uri, basestring, optional=True)
+        check_type(proxies, dict, optional=True)
 
         access_token = access_token or WEBEX_TEAMS_ACCESS_TOKEN
 

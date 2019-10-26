@@ -159,7 +159,7 @@ class MembershipsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(roomId, basestring, may_be_none=False)
+        check_type(roomId, basestring, optional=False)
         check_type(personId, basestring)
         check_type(personEmail, basestring)
         check_type(isModerator, bool)
@@ -193,7 +193,7 @@ class MembershipsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(membershipId, basestring, may_be_none=False)
+        check_type(membershipId, basestring, optional=False)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + '/' + membershipId)
@@ -219,7 +219,7 @@ class MembershipsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(membershipId, basestring, may_be_none=False)
+        check_type(membershipId, basestring, optional=False)
         check_type(isModerator, bool)
 
         put_data = dict_from_items_with_values(

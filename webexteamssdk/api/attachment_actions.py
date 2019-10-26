@@ -66,7 +66,7 @@ class AttachmentActionsAPI(object):
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(session, RestSession, may_be_none=False)
+        check_type(session, RestSession, optional=False)
         super(AttachmentActionsAPI, self).__init__()
         self._session = session
         self._object_factory = object_factory
@@ -96,9 +96,9 @@ class AttachmentActionsAPI(object):
 
         """
 
-        check_type(type, basestring, may_be_none=False)
-        check_type(messageId, basestring, may_be_none=False)
-        check_type(inputs, dict, may_be_none=False)
+        check_type(type, basestring, optional=False)
+        check_type(messageId, basestring, optional=False)
+        check_type(inputs, dict, optional=False)
 
         post_data = dict_from_items_with_values(
             request_parameters,
@@ -128,7 +128,7 @@ class AttachmentActionsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(attachmentId, basestring, may_be_none=False)
+        check_type(attachmentId, basestring, optional=False)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + '/' + attachmentId)

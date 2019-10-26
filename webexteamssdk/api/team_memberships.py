@@ -102,7 +102,7 @@ class TeamMembershipsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(teamId, basestring, may_be_none=False)
+        check_type(teamId, basestring, optional=False)
         check_type(max, int)
 
         params = dict_from_items_with_values(
@@ -143,7 +143,7 @@ class TeamMembershipsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(teamId, basestring, may_be_none=False)
+        check_type(teamId, basestring, optional=False)
         check_type(personId, basestring)
         check_type(personEmail, basestring)
         check_type(isModerator, bool)
@@ -177,7 +177,7 @@ class TeamMembershipsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(membershipId, basestring, may_be_none=False)
+        check_type(membershipId, basestring, optional=False)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + '/' + membershipId)
@@ -203,7 +203,7 @@ class TeamMembershipsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(membershipId, basestring, may_be_none=False)
+        check_type(membershipId, basestring, optional=False)
         check_type(isModerator, bool)
 
         put_data = dict_from_items_with_values(
@@ -229,7 +229,7 @@ class TeamMembershipsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(membershipId, basestring, may_be_none=False)
+        check_type(membershipId, basestring, optional=False)
 
         # API request
         self._session.delete(API_ENDPOINT + '/' + membershipId)

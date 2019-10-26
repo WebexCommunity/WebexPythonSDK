@@ -65,7 +65,7 @@ class TeamsAPI(object):
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(session, RestSession, may_be_none=False)
+        check_type(session, RestSession, optional=False)
 
         super(TeamsAPI, self).__init__()
 
@@ -133,7 +133,7 @@ class TeamsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(name, basestring, may_be_none=False)
+        check_type(name, basestring, optional=False)
 
         post_data = dict_from_items_with_values(
             request_parameters,
@@ -160,7 +160,7 @@ class TeamsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(teamId, basestring, may_be_none=False)
+        check_type(teamId, basestring, optional=False)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + '/' + teamId)
@@ -185,7 +185,7 @@ class TeamsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(teamId, basestring, may_be_none=False)
+        check_type(teamId, basestring, optional=False)
         check_type(name, basestring)
 
         put_data = dict_from_items_with_values(
@@ -211,7 +211,7 @@ class TeamsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(teamId, basestring, may_be_none=False)
+        check_type(teamId, basestring, optional=False)
 
         # API request
         self._session.delete(API_ENDPOINT + '/' + teamId)

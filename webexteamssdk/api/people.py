@@ -161,7 +161,7 @@ class PeopleAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(emails, list, may_be_none=False)
+        check_type(emails, list, optional=False)
         check_type(displayName, basestring)
         check_type(firstName, basestring)
         check_type(lastName, basestring)
@@ -202,7 +202,7 @@ class PeopleAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(personId, basestring, may_be_none=False)
+        check_type(personId, basestring, optional=False)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + '/' + personId)
@@ -290,7 +290,7 @@ class PeopleAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(personId, basestring, may_be_none=False)
+        check_type(personId, basestring, optional=False)
 
         # API request
         self._session.delete(API_ENDPOINT + '/' + personId)
