@@ -1,7 +1,7 @@
 alabaster==0.7.12
 appnope==0.1.0
 atomicwrites==1.3.0
-attrs==19.1.0
+attrs==19.3.0
 Babel==2.7.0
 backcall==0.1.0
 bleach==3.1.0
@@ -11,14 +11,14 @@ decorator==4.4.0
 docutils==0.15.2
 entrypoints==0.3
 flake8==3.7.8
-future==0.17.1
+future==0.18.1
 idna==2.8
 imagesize==1.1.0
 importlib-metadata==0.23
-ipython==7.8.0
+ipython==7.9.0
 ipython-genutils==0.2.0
 jedi==0.15.1
-Jinja2==2.10.1
+Jinja2==2.10.3
 MarkupSafe==1.1.1
 mccabe==0.6.1
 more-itertools==7.2.0
@@ -28,7 +28,7 @@ pexpect==4.7.0
 pickleshare==0.7.5
 pkginfo==1.5.0.1
 pluggy==0.13.0
-prompt-toolkit==2.0.9
+prompt-toolkit==2.0.10
 ptyprocess==0.6.0
 py==1.8.0
 pycodestyle==2.5.0
@@ -36,14 +36,14 @@ pyflakes==2.1.1
 Pygments==2.4.2
 PyJWT==1.7.1
 pyparsing==2.4.2
-pytest==5.1.2
-pytz==2019.2
+pytest==5.2.2
+pytz==2019.3
 readme-renderer==24.0
 requests==2.22.0
 requests-toolbelt==0.9.1
 six==1.12.0
-snowballstemmer==1.9.1
-Sphinx==2.2.0
+snowballstemmer==2.0.0
+Sphinx==2.2.1
 sphinx-rtd-theme==0.4.3
 sphinxcontrib-applehelp==1.0.1
 sphinxcontrib-devhelp==1.0.1
@@ -52,11 +52,11 @@ sphinxcontrib-jsmath==1.0.1
 sphinxcontrib-qthelp==1.0.2
 sphinxcontrib-serializinghtml==1.1.3
 tqdm==4.36.1
-traitlets==4.3.2
-twine==1.15.0
-urllib3==1.25.5
+traitlets==4.3.3
+twine==2.0.0
+urllib3==1.25.6
 versioneer==0.18
 wcwidth==0.1.7
 webencodings==0.5.1
--e git+https://github.com/CiscoDevNet/webexteamssdk.git@61b5ccc82fc860c1fc7ceec5eb3744dd4a0e6759#egg=webexteamssdk
+-e git+https://github.com/CiscoDevNet/webexteamssdk.git@cfa5e7d1b7af3f821bb0451efbdbb10bb68fe014#egg=webexteamssdk
 zipp==0.6.0
