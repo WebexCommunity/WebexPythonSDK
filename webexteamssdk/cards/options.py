@@ -10,6 +10,11 @@ class AbstractOption(Enum):
     def __repr__(self):
         return self.to_value()
 
+class VerticalContentAlignment:
+    TOP = 1
+    CENTER = 2
+    BOTTOM = 3
+
 class Colors(AbstractOption):
     DEFAULT = 1
     DARK = 2
@@ -48,3 +53,28 @@ class Spacing(AbstractOption):
     LARGE = 5
     EXTRALARGE = 6
     PADDING = 7
+
+class ImageSize(AbstractOption):
+    AUTO = 1
+    STRETCH = 2
+    SMALL = 3
+    MEDIUM = 4
+    LARGE = 5
+
+class ImageStyle(AbstractOption):
+    DEFAULT = 1
+    PERSON = 2
+
+class ContainerStyle(AbstractOption):
+    DEFAULT = 1
+    EMPHASIS = 2
+
+class TextInputStyle(AbstractOption):
+    TEXT = 1
+    TEL = 2
+    URL = 3
+    EMAIL = 4
+
+class ChoiceInputStyle(AbstractOption):
+    COMPACT = 1
+    EXPANDED = 2
