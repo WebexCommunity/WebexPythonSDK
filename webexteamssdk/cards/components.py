@@ -24,13 +24,14 @@ SOFTWARE.
 
 from .abstract_components import Serializable
 from .utils import check_type
+from .options import BlockElementHeight, Spacing
 
 class MediaSource(Serializable):
     """Defines the source of a Media element."""
     def __init__(self,
                  mimeType,
                  url):
-        """Create a new MediaSource
+        """Create a new MediaSource component.
 
         Args:
             mimeType(str): Mime type of the associated media(i.e. 'video/mp4')
@@ -47,6 +48,7 @@ class MediaSource(Serializable):
                          simple_properties=['mimeType', 'url'])
 
 class Media(Serializable):
+    """Displays a media player for audio or video content"""
     def __init__(self,
                  sources,
                  poster=None,
@@ -55,6 +57,26 @@ class Media(Serializable):
                  separator=None,
                  spacing=None,
                  id=None):
+        """Create a new Media component.
+
+        Args:
+            sources(list): A list of media sources to be played
+            poster(str): The url to the image that is displayed before playing
+            altText(str): Alternative text for this component
+            height(BlockElementHeight): The height of this block element
+            separator(bool): Draw a separating line when set to true
+            spacing(Spacing): Specify the spacing of this component
+            id(str): The id of this component
+        """
+        # Check types
+        check_type(sources, MediaSource, True, False)
+        check_type(poster, str, False, True)
+        check_type(altText, str, False, True)
+        check_type(height, BlockElementHeight, False, True)
+        check_type(separator, bool, False, True)
+        check_type(spacing, Spacing, False, True)
+        check_type(id, str, False, True)
+        
         self.type = "Media"
         self.sources = sources #Needs to be a list of media sources
         self.poster = poster
