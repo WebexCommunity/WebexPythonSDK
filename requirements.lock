@@ -58,5 +58,5 @@ urllib3==1.25.6
 versioneer==0.18
 wcwidth==0.1.7
 webencodings==0.5.1
--e git+https://github.com/CiscoDevNet/webexteamssdk.git@cfa5e7d1b7af3f821bb0451efbdbb10bb68fe014#egg=webexteamssdk
+-e git+https://github.com/CiscoDevNet/webexteamssdk.git@7dcfc63d84f6fcc6009d9ec52dba7c68eaab4d2f#egg=webexteamssdk
 zipp==0.6.0

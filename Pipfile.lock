@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a11399259d0fc426cd71b421127439897233304f27e7630678b30061cfba3510"
+            "sha256": "f501f12c797edb3647818ad301bf55c8b4a9a9830017be53554259e9f459e97c"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -27,10 +27,6 @@
                 "sha256:fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"
             ],
             "version": "==3.0.4"
-        },
-        "e1839a8": {
-            "editable": true,
-            "path": "."
         },
         "future": {
             "hashes": [
@@ -72,6 +68,10 @@
                 "sha256:9a107b99a5393caf59c7aa3c1249c16e6879447533d0887f4336dde834c7be86"
             ],
             "version": "==1.25.6"
+        },
+        "webexteamssdk": {
+            "editable": true,
+            "path": "."
         }
     },
     "develop": {
