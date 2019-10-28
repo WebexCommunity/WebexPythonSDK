@@ -24,7 +24,7 @@ SOFTWARE.
 
 from .abstract_components import Serializable
 from .utils import check_type
-from .options import BlockElementHeight, Spacing
+from .options import BlockElementHeight, Spacing, ImageSize, ImageStyle
 from .actions import OpenUrl, ShowCard, Submit
 
 class MediaSource(Serializable):
@@ -105,7 +105,7 @@ class Image(Serializable):
                  size=None,
                  style=None,
                  width=None,
-                 seperator=None,
+                 separator=None,
                  spacing=None,
                  id=None):
         """Create a new image component
@@ -136,10 +136,10 @@ class Image(Serializable):
         check_type(selectAction, (OpenUrl, Submit), False, True)
         check_type(size, ImageSize, False, True)
         check_type(style, ImageStyle, False, True)
-        check_style(width, str, False, True)
-        check_style(separator, bool, False, True)
-        check_style(spacing, Spacing, False, True)
-        check_style(id, str, False, True)
+        check_type(width, str, False, True)
+        check_type(separator, bool, False, True)
+        check_type(spacing, Spacing, False, True)
+        check_type(id, str, False, True)
 
         self.type = "Image"
         self.url = url
@@ -151,7 +151,7 @@ class Image(Serializable):
         self.size = size
         self.style = style
         self.width = width
-        self.seperator = seperator
+        self.separator = separator
         self.spacing = spacing
         self.id = id
 
