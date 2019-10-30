@@ -128,38 +128,41 @@ def open_local_file(file_path):
                          content_type=content_type)
 
 
-def check_type(o, acceptable_types, may_be_none=True):
+def check_type(obj, acceptable_types, optional=False):
     """Object is an instance of one of the acceptable types or None.
 
     Args:
-        o: The object to be inspected.
+        obj: The object to be inspected.
         acceptable_types: A type or tuple of acceptable types.
-        may_be_none(bool): Whether or not the object may be None.
+        optional(bool): Whether or not the object may be None.
+
+    Returns:
+        bool: True if the object is an instance of one of the acceptable types.
 
     Raises:
-        TypeError: If the object is None and may_be_none=False, or if the
-            object is not an instance of one of the acceptable types.
+        TypeError: If the object is not an instance of one of the acceptable
+            types, or if the object is None and optional=False.
 
     """
     if not isinstance(acceptable_types, tuple):
         acceptable_types = (acceptable_types,)
 
-    if may_be_none and o is None:
-        # Object is None, and that is OK!
-        pass
-    elif isinstance(o, acceptable_types):
+    if isinstance(obj, acceptable_types):
         # Object is an instance of an acceptable type.
-        pass
+        return True
+    elif optional and obj is None:
+        # Object is None, and that is OK!
+        return True
     else:
         # Object is something else.
         error_message = (
             "We were expecting to receive an instance of one of the following "
-            "types: {types}{none}; but instead we received {o} which is a "
-            "{o_type}.".format(
+            "types: {types}{none}; but instead we received {obj} which is a "
+            "{obj_type}.".format(
                 types=", ".join([repr(t.__name__) for t in acceptable_types]),
-                none="or 'None'" if may_be_none else "",
-                o=o,
-                o_type=repr(type(o).__name__)
+                none="or 'None'" if optional else "",
+                obj=obj,
+                obj_type=repr(type(obj).__name__)
             )
         )
         raise TypeError(error_message)

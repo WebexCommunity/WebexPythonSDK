@@ -66,7 +66,7 @@ class MessagesAPI(object):
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(session, RestSession, may_be_none=False)
+        check_type(session, RestSession)
         super(MessagesAPI, self).__init__()
         self._session = session
         self._object_factory = object_factory
@@ -112,11 +112,11 @@ class MessagesAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(roomId, basestring, may_be_none=False)
-        check_type(mentionedPeople, basestring)
-        check_type(before, basestring)
-        check_type(beforeMessage, basestring)
-        check_type(max, int)
+        check_type(roomId, basestring)
+        check_type(mentionedPeople, basestring, optional=True)
+        check_type(before, basestring, optional=True)
+        check_type(beforeMessage, basestring, optional=True)
+        check_type(max, int, optional=True)
 
         params = dict_from_items_with_values(
             request_parameters,
@@ -135,8 +135,9 @@ class MessagesAPI(object):
             yield self._object_factory(OBJECT_TYPE, item)
 
     def create(self, roomId=None, toPersonId=None, toPersonEmail=None,
-               text=None, markdown=None, files=None, attachments=None, **request_parameters):
-        """Post a message, and optionally a attachment, to a room.
+               text=None, markdown=None, files=None, attachments=None,
+               **request_parameters):
+        """Post a message to a room.
 
         The files parameter is a list, which accepts multiple values to allow
         for future expansion, but currently only one file may be included with
@@ -152,11 +153,10 @@ class MessagesAPI(object):
                 specified this parameter may be optionally used to provide
                 alternate text for UI clients that do not support rich text.
             markdown(basestring): The message, in markdown format.
-            files(`list`): A list of public URL(s) or local path(s) to files to
+            files(list): A list of public URL(s) or local path(s) to files to
                 be posted into the room. Only one file is allowed per message.
-            attachments(`list`): A list comprised of properly formatted button
-                and card data structure.  This can be found at 
-                https://docs.microsoft.com/en-us/adaptive-cards/sdk/designer
+            attachments(list): Content attachments to attach to the message.
+                See the Cards Guide for more information.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
@@ -171,30 +171,31 @@ class MessagesAPI(object):
                 contain a valid URL or path to a local file.
 
         """
-        check_type(roomId, basestring)
-        check_type(toPersonId, basestring)
-        check_type(toPersonEmail, basestring)
-        check_type(text, basestring)
-        check_type(markdown, basestring)
-        check_type(files, list)
-        check_type(attachments, list)
+        check_type(roomId, basestring, optional=True)
+        check_type(toPersonId, basestring, optional=True)
+        check_type(toPersonEmail, basestring, optional=True)
+        check_type(text, basestring, optional=True)
+        check_type(markdown, basestring, optional=True)
+        check_type(files, list, optional=True)
+        check_type(attachments, list, optional=True)
+
         if files:
-            if len(files) != 1:
-                raise ValueError("The length of the `files` list is greater "
-                                 "than one (1). The files parameter is a "
-                                 "list, which accepts multiple values to "
+            if len(files) > 1:
+                raise ValueError("The `files` parameter should be a list with "
+                                 "exactly one (1) item. The files parameter "
+                                 "is a list, which accepts multiple values to "
                                  "allow for future expansion, but currently "
                                  "only one file may be included with the "
                                  "message.")
             check_type(files[0], basestring)
+        else:
+            files = None
 
         if attachments:
             for attachment in attachments:
-                try:
-                    content_type_exists = attachment['contentType']
-                except Exception as e:
-                    # ensure a valid header is loaded for cards
-                    attachment['contentType'] = 'application/vnd.microsoft.card.adaptive'
+                check_type(attachment, dict)
+        else:
+            attachments = None
 
         post_data = dict_from_items_with_values(
             request_parameters,
@@ -246,7 +247,7 @@ class MessagesAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(messageId, basestring, may_be_none=False)
+        check_type(messageId, basestring)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + '/' + messageId)
@@ -265,7 +266,7 @@ class MessagesAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(messageId, basestring, may_be_none=False)
+        check_type(messageId, basestring)
 
         # API request
         self._session.delete(API_ENDPOINT + '/' + messageId)

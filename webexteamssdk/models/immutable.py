@@ -178,6 +178,10 @@ class AccessToken(ImmutableData, AccessTokenBasicPropertiesMixin):
     """Webex Teams Access-Token data model."""
 
 
+class AttachmentAction(ImmutableData, AttachmentActionBasicPropertiesMixin):
+    """Webex Attachment Actions data model"""
+
+
 class Event(ImmutableData, EventBasicPropertiesMixin):
     """Webex Teams Event data model."""
 
@@ -229,10 +233,6 @@ class TeamMembership(ImmutableData, TeamMembershipBasicPropertiesMixin):
 
 class Webhook(ImmutableData, WebhookBasicPropertiesMixin):
     """Webex Teams Webhook data model."""
-
-
-class AttachmentAction(ImmutableData, AttachmentActionBasicPropertiesMixin):
-    """Webex Attachment Actions data model"""
 
 
 class WebhookEvent(ImmutableData, WebhookEventBasicPropertiesMixin):

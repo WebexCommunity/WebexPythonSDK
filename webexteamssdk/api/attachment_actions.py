@@ -33,14 +33,10 @@ from __future__ import (
 from builtins import *
 
 from past.builtins import basestring
-from requests_toolbelt import MultipartEncoder
 
-from ..generator_containers import generator_container
+from ..models.immutable import AttachmentAction
 from ..restsession import RestSession
-from ..utils import (
-    check_type, dict_from_items_with_values, is_local_file, is_web_url,
-    open_local_file,
-)
+from ..utils import check_type, dict_from_items_with_values
 
 
 API_ENDPOINT = 'attachment/actions'
@@ -56,7 +52,7 @@ class AttachmentActionsAPI(object):
     """
 
     def __init__(self, session, object_factory):
-        """Init a new AttachmentActionsAPI object with the provided RestSession.
+        """Initialize a new AttachmentActionsAPI object.
 
         Args:
             session(RestSession): The RESTful session object to be used for
@@ -66,26 +62,25 @@ class AttachmentActionsAPI(object):
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(session, RestSession, may_be_none=False)
+        check_type(session, RestSession)
         super(AttachmentActionsAPI, self).__init__()
         self._session = session
         self._object_factory = object_factory
 
-    def create(self, type=None, messageId=None, inputs=None,
-               **request_parameters):
-        """Create an attachment action.
+    def create(self, type, messageId, inputs, **request_parameters):
+        """Create a new attachment action.
 
         Args:
-            type(attachment action enum): The type of attachment action.
-            messageId(basestring): The ID of parent message the attachment
-                action is to be performed on.
-            inputs(dict): inputs to attachment fields
+            type(basestring): The type of action to perform.
+            messageId(basestring): The ID of the message which contains the
+                attachment.
+            inputs(dict): The attachment action's inputs.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
         Returns:
-            Attachment action: A attachment action object with the details
-            of the created attachment action.
+            AttachmentAction: A attachment action object with the details of
+            the created attachment action.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -95,10 +90,9 @@ class AttachmentActionsAPI(object):
                 contain a valid URL or path to a local file.
 
         """
-
-        check_type(type, basestring, may_be_none=False)
-        check_type(messageId, basestring, may_be_none=False)
-        check_type(inputs, dict, may_be_none=False)
+        check_type(type, basestring)
+        check_type(messageId, basestring)
+        check_type(inputs, dict)
 
         post_data = dict_from_items_with_values(
             request_parameters,
@@ -128,7 +122,7 @@ class AttachmentActionsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(attachmentId, basestring, may_be_none=False)
+        check_type(attachmentId, basestring)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + '/' + attachmentId)
