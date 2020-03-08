@@ -57,11 +57,20 @@ def attachment_action_create(api, test_people, attachment_actions_card):
     message = api.messages.create(
         toPersonEmail=person.emails[0],
         text=create_string("Message"),
-        attachments=[attachment_actions_card],
+        attachments=[
+            {
+                "contentType": "application/vnd.microsoft.card.adaptive",
+                "content": attachment_actions_card,
+            }
+        ],
     )
     attachment_action = api.attachment_actions.create(
-        type="submit", messageId=message.id,
-        inputs={"Name": person.displayName, "Email": person.emails[0]}
+        type="submit",
+        messageId=message.id,
+        inputs={
+            "Name": person.displayName,
+            "Email": person.emails[0],
+        }
     )
 
     yield attachment_action
