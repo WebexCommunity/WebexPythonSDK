@@ -25,9 +25,9 @@ SOFTWARE.
 import os
 
 import pytest
+import requests
 
 import webexteamssdk
-from tests.environment import WEBEX_TEAMS_ACCESS_TOKEN
 from webexteamssdk.api.access_tokens import AccessTokensAPI
 from webexteamssdk.api.attachment_actions import AttachmentActionsAPI
 from webexteamssdk.api.events import EventsAPI
@@ -47,11 +47,24 @@ from webexteamssdk.config import (
 )
 
 
+# Constants
+WEBEX_TOKEN_KEEPER_URL = os.environ.get("WEBEX_TOKEN_KEEPER_URL", "")
+
+
 # Fixtures
 
 @pytest.fixture(scope="session")
 def access_token():
-    return WEBEX_TEAMS_ACCESS_TOKEN
+    if WEBEX_TOKEN_KEEPER_URL:
+        response = requests.get(WEBEX_TOKEN_KEEPER_URL)
+        response.raise_for_status()
+        access_token = response.json().get("access_token")
+    else:
+        access_token = os.environ.get(ACCESS_TOKEN_ENVIRONMENT_VARIABLE, "")
+
+    os.environ[ACCESS_TOKEN_ENVIRONMENT_VARIABLE] = access_token
+
+    return access_token
 
 
 @pytest.fixture
@@ -62,8 +75,8 @@ def unset_access_token(access_token):
 
 
 @pytest.fixture(scope="session")
-def api():
-    return webexteamssdk.WebexTeamsAPI()
+def api(access_token):
+    return webexteamssdk.WebexTeamsAPI(access_token=access_token)
 
 
 # Tests
@@ -89,23 +102,27 @@ def test_create_with_access_token_argument(access_token):
     assert isinstance(connection_object, webexteamssdk.WebexTeamsAPI)
 
 
+@pytest.mark.usefixtures("access_token")
 def test_default_base_url():
     connection_object = webexteamssdk.WebexTeamsAPI()
     assert connection_object.base_url == DEFAULT_BASE_URL
 
 
+@pytest.mark.usefixtures("access_token")
 def test_custom_base_url():
     custom_url = "https://custom.domain.com/v1/"
     connection_object = webexteamssdk.WebexTeamsAPI(base_url=custom_url)
     assert connection_object.base_url == custom_url
 
 
+@pytest.mark.usefixtures("access_token")
 def test_default_single_request_timeout():
     connection_object = webexteamssdk.WebexTeamsAPI()
     assert connection_object.single_request_timeout == \
         DEFAULT_SINGLE_REQUEST_TIMEOUT
 
 
+@pytest.mark.usefixtures("access_token")
 def test_custom_single_request_timeout():
     custom_timeout = 10
     connection_object = webexteamssdk.WebexTeamsAPI(
@@ -114,12 +131,14 @@ def test_custom_single_request_timeout():
     assert connection_object.single_request_timeout == custom_timeout
 
 
+@pytest.mark.usefixtures("access_token")
 def test_default_wait_on_rate_limit():
     connection_object = webexteamssdk.WebexTeamsAPI()
     assert connection_object.wait_on_rate_limit == \
         DEFAULT_WAIT_ON_RATE_LIMIT
 
 
+@pytest.mark.usefixtures("access_token")
 def test_non_default_wait_on_rate_limit():
     connection_object = webexteamssdk.WebexTeamsAPI(
         wait_on_rate_limit=not DEFAULT_WAIT_ON_RATE_LIMIT
@@ -129,7 +148,6 @@ def test_non_default_wait_on_rate_limit():
 
 
 # Test creation of component API objects
-
 def test_access_tokens_api_object_creation(api):
     assert isinstance(api.access_tokens, AccessTokensAPI)
 
