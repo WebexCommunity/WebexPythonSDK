@@ -22,93 +22,63 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import itertools
+import json
+import os
 
 import pytest
 
 import webexteamssdk
-from tests.environment import WEBEX_TEAMS_TEST_FILE_URL
 from tests.utils import create_string
 
 
-# Helper Functions
+# Module Variables
+attachment_actions_card_path = os.path.abspath(
+    os.path.join(__file__, os.pardir, "attachment_actions_card.json")
+)
 
+
+# Helper Functions
 def is_valid_attachment_action(obj):
     return isinstance(obj, webexteamssdk.AttachmentAction) \
         and obj.id is not None
 
 
 # Fixtures
+@pytest.fixture(scope="session")
+def attachment_actions_card():
+    with open(attachment_actions_card_path) as file:
+        card = json.load(file)
+    return card
+
 
 @pytest.fixture(scope="session")
-def attachment_action_create(api, test_people):
+def attachment_action_create(api, test_people, attachment_actions_card):
     person = test_people["member_added_by_email"]
     message = api.messages.create(
         toPersonEmail=person.emails[0],
         text=create_string("Message"),
-        attachments=[{
-            "contentType": "application/vnd.microsoft.card.adaptive",
-            "content": {
-                "$schema": ("http://adaptivecards.io/schemas/"
-                            "adaptive-card.json"),
-                "type": "AdaptiveCard",
-                "version": "1.0",
-                "body": [{
-                    "type": "ColumnSet",
-                    "columns": [{
-                        "type": "Column",
-                        "width": 2,
-                        "items": [
-                            {
-                                "type": "TextBlock",
-                                "text": "Tell us about your problem",
-                                "weight": "bolder",
-                                "size": "medium"
-                            },
-                            {
-                                "type": "TextBlock",
-                                "text": "Your name",
-                                "wrap": True
-                            },
-                            {
-                                "type": "Input.Text",
-                                "id": "Name",
-                                "placeholder": "John Andersen"
-                            },
-                            {
-                                "type": "TextBlock",
-                                "text": "Your email",
-                                "wrap": True
-                            },
-                            {
-                                "type": "Input.Text",
-                                "id": "Email",
-                                "placeholder": "john.andersen@example.com",
-                                "style": "email"
-                            },
-                        ]
-                    }]
-                }],
-                "actions": [
-                    {
-                        "type": "Action.Submit",
-                        "title": "Submit"
-                    }
-                ]
+        attachments=[
+            {
+                "contentType": "application/vnd.microsoft.card.adaptive",
+                "content": attachment_actions_card,
             }
-        }]
+        ],
     )
     attachment_action = api.attachment_actions.create(
-        type="submit", messageId=message.id,
-        inputs={"Name": "test_name", "Email": "test_email"}
+        type="submit",
+        messageId=message.id,
+        inputs={
+            "Name": person.displayName,
+            "Email": person.emails[0],
+        }
     )
+
     yield attachment_action
 
     api.messages.delete(message.id)
 
+
 # Tests
-
-
 def test_attachment_actions_create(attachment_action_create):
     assert is_valid_attachment_action(attachment_action_create)
 
