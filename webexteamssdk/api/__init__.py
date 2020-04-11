@@ -34,6 +34,7 @@ from webexteamssdk.models.immutable import immutable_data_factory
 from webexteamssdk.restsession import RestSession
 from webexteamssdk.utils import check_type
 from .access_tokens import AccessTokensAPI
+from .attachment_actions import AttachmentActionsAPI
 from .events import EventsAPI
 from .guest_issuer import GuestIssuerAPI
 from .licenses import LicensesAPI
@@ -66,7 +67,8 @@ class WebexTeamsAPI(object):
                  client_id=None,
                  client_secret=None,
                  oauth_code=None,
-                 redirect_uri=None):
+                 redirect_uri=None,
+                 proxies=None):
         """Create a new WebexTeamsAPI object.
 
         An access token must be used when interacting with the Webex Teams API.
@@ -108,6 +110,8 @@ class WebexTeamsAPI(object):
                 the user oauth process.
             oauth_redirect_uri(basestring): The redirect URI used in the user
                 OAuth process.
+            proxies(dict): Dictionary of proxies passed on to the requests
+                session.
 
         Returns:
             WebexTeamsAPI: A new WebexTeamsAPI object.
@@ -118,14 +122,15 @@ class WebexTeamsAPI(object):
                 access_token argument or an environment variable.
 
         """
-        check_type(access_token, basestring)
-        check_type(base_url, basestring)
-        check_type(single_request_timeout, int)
-        check_type(wait_on_rate_limit, bool)
-        check_type(client_id, basestring, may_be_none=True)
-        check_type(client_secret, basestring, may_be_none=True)
-        check_type(oauth_code, basestring, may_be_none=True)
-        check_type(redirect_uri, basestring, may_be_none=True)
+        check_type(access_token, basestring, optional=True)
+        check_type(base_url, basestring, optional=True)
+        check_type(single_request_timeout, int, optional=True)
+        check_type(wait_on_rate_limit, bool, optional=True)
+        check_type(client_id, basestring, optional=True)
+        check_type(client_secret, basestring, optional=True)
+        check_type(oauth_code, basestring, optional=True)
+        check_type(redirect_uri, basestring, optional=True)
+        check_type(proxies, dict, optional=True)
 
         access_token = access_token or WEBEX_TEAMS_ACCESS_TOKEN
 
@@ -162,7 +167,8 @@ class WebexTeamsAPI(object):
             access_token=access_token,
             base_url=base_url,
             single_request_timeout=single_request_timeout,
-            wait_on_rate_limit=wait_on_rate_limit
+            wait_on_rate_limit=wait_on_rate_limit,
+            proxies=proxies
         )
 
         # API wrappers
@@ -172,6 +178,9 @@ class WebexTeamsAPI(object):
         self.messages = MessagesAPI(self._session, object_factory)
         self.teams = TeamsAPI(self._session, object_factory)
         self.team_memberships = TeamMembershipsAPI(
+            self._session, object_factory
+        )
+        self.attachment_actions = AttachmentActionsAPI(
             self._session, object_factory
         )
         self.webhooks = WebhooksAPI(self._session, object_factory)

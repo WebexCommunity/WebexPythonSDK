@@ -39,6 +39,7 @@ from tests.utils import download_file
 pytest_plugins = [
     'tests.test_webexteamssdk',
     'tests.api',
+    'tests.api.test_attachment_actions',
     'tests.api.test_licenses',
     'tests.api.test_memberships',
     'tests.api.test_messages',

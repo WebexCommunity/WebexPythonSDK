@@ -14,20 +14,20 @@ export PIP_REQUIRE_VIRTUALENV=true
 
 
 # Prefer use of a Pipfile and pipenv for dependency management
-if [ -f "Pipfile" ] && [ -n "$(pipenv --version 2>/dev/null)" ]; then
+if [[ -f "Pipfile" ]] && [[ -n "$(pipenv --version 2>/dev/null)" ]]; then
     echo "==> Installing Pipfile dependencies"
     pipenv install --dev --skip-lock
 
-elif [ -f "requirements.txt" ]; then
+elif [[ -f "requirements.txt" ]]; then
     echo "==> Installing requirements.txt dependencies"
 
     # Check for an active virtual environment, or look for one in the project directory
-    if [ -n "$(python -c 'import sys; print (sys.real_prefix)' 2>/dev/null)" ]; then
+    if [[ -n "$(python -c 'import sys; print (sys.real_prefix)' 2>/dev/null)" ]]; then
         echo "Installing packages in the active virtual environment"
-    elif [ -f "venv/bin/activate" ]; then
+    elif [[ -f "venv/bin/activate" ]]; then
         echo "Installing packages in the project's venv virtual environment"
         source venv/bin/activate
-    elif [ -f ".venv/bin/activate" ]; then
+    elif [[ -f ".venv/bin/activate" ]]; then
         echo "Installing packages in the project's .venv virtual environment"
         source .venv/bin/activate
     else

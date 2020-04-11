@@ -25,15 +25,6 @@ SOFTWARE.
 import os
 import string
 
-from webexteamssdk.config import ACCESS_TOKEN_ENVIRONMENT_VARIABLE
-
-
-WEBEX_TEAMS_ACCESS_TOKEN = os.getenv(ACCESS_TOKEN_ENVIRONMENT_VARIABLE)
-if WEBEX_TEAMS_ACCESS_TOKEN is None:
-    raise RuntimeError(
-        "You must set a {} environment variable to run the test suite"
-        "".format(ACCESS_TOKEN_ENVIRONMENT_VARIABLE)
-    )
 
 WEBEX_TEAMS_TEST_DOMAIN = os.getenv("WEBEX_TEAMS_TEST_DOMAIN")
 if WEBEX_TEAMS_TEST_DOMAIN is None:

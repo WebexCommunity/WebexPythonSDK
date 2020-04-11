@@ -23,6 +23,8 @@ SOFTWARE.
 """
 
 import itertools
+import json
+import os
 
 import pytest
 
@@ -31,8 +33,13 @@ from tests.environment import WEBEX_TEAMS_TEST_FILE_URL
 from tests.utils import create_string
 
 
-# Helper Functions
+# Module Variables
+adaptive_card_path = os.path.abspath(
+    os.path.join(__file__, os.pardir, "adaptive_card.json")
+)
 
+
+# Helper Functions
 def is_valid_message(obj):
     return isinstance(obj, webexteamssdk.Message) and obj.id is not None
 
@@ -42,6 +49,12 @@ def are_valid_messages(iterable):
 
 
 # Fixtures
+@pytest.fixture(scope="session")
+def adaptive_card():
+    with open(adaptive_card_path) as file:
+        card = json.load(file)
+    return card
+
 
 @pytest.fixture(scope="session")
 def direct_message_by_email(api, test_people):
@@ -49,6 +62,25 @@ def direct_message_by_email(api, test_people):
     message = api.messages.create(
         toPersonEmail=person.emails[0],
         text=create_string("Message"),
+    )
+
+    yield message
+
+    api.messages.delete(message.id)
+
+
+@pytest.fixture(scope="session")
+def direct_message_by_email_with_card(api, test_people, adaptive_card):
+    person = test_people["member_added_by_email"]
+    message = api.messages.create(
+        toPersonEmail=person.emails[0],
+        text=create_string("Message"),
+        attachments=[
+            {
+                "contentType": "application/vnd.microsoft.card.adaptive",
+                "content": adaptive_card,
+            }
+        ],
     )
 
     yield message
@@ -94,8 +126,12 @@ def group_room_text_message(group_room, send_group_room_message):
 
 
 @pytest.fixture(scope="session")
-def group_room_markdown_message(group_room, send_group_room_message, me,
-                                group_room_text_message):
+def group_room_markdown_message(
+    me,
+    group_room,
+    send_group_room_message,
+    group_room_text_message,
+):
     # Uses / depends-on group_room_text_message to ensure this message is
     # created after group_room_text_message, so that we can be sure that a
     # message exists 'before' this one - used to test 'before' list filters.
@@ -117,8 +153,12 @@ def group_room_message_with_file_by_url(group_room, send_group_room_message):
 
 
 @pytest.fixture(scope="session")
-def group_room_message_with_file_by_local_upload(api, group_room, local_file,
-                                                 send_group_room_message):
+def group_room_message_with_file_by_local_upload(
+    api,
+    group_room,
+    local_file,
+    send_group_room_message,
+):
     text = "File posted via URL"
     return send_group_room_message(
         room_id=group_room.id,
@@ -128,17 +168,48 @@ def group_room_message_with_file_by_local_upload(api, group_room, local_file,
 
 
 @pytest.fixture(scope="session")
-def group_room_messages(api, group_room,
-                        group_room_text_message,
-                        group_room_markdown_message,
-                        group_room_message_with_file_by_url,
-                        group_room_message_with_file_by_local_upload):
+def group_room_message_with_card(
+    api,
+    group_room,
+    adaptive_card,
+    send_group_room_message,
+):
+    return send_group_room_message(
+        room_id=group_room.id,
+        text=create_string("Message"),
+        attachments=[
+            {
+                "contentType": "application/vnd.microsoft.card.adaptive",
+                "content": adaptive_card,
+            }
+        ],
+    )
+
+
+@pytest.fixture(scope="session")
+def group_room_messages(
+    api,
+    group_room,
+    group_room_text_message,
+    group_room_markdown_message,
+    group_room_message_with_file_by_url,
+    group_room_message_with_file_by_local_upload,
+    group_room_message_with_card,
+):
     return list(api.messages.list(group_room.id))
 
 
 @pytest.fixture(scope="session")
-def direct_messages(api, direct_message_by_email, direct_message_by_id):
-    return [direct_message_by_email, direct_message_by_id]
+def direct_messages(
+    direct_message_by_email,
+    direct_message_by_id,
+    direct_message_by_email_with_card,
+):
+    return [
+        direct_message_by_email,
+        direct_message_by_id,
+        direct_message_by_email_with_card,
+    ]
 
 
 # Tests
@@ -189,6 +260,12 @@ def test_list_messages_mentioning_me(api, group_room,
 
 def test_create_direct_messages_by_email(direct_message_by_email):
     assert is_valid_message(direct_message_by_email)
+
+
+def test_create_direct_messages_by_email_with_card(
+    direct_message_by_email_with_card,
+):
+    assert is_valid_message(direct_message_by_email_with_card)
 
 
 def test_create_direct_messages_by_id(direct_message_by_id):

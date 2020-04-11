@@ -40,17 +40,22 @@ class MessageBasicPropertiesMixin(object):
 
     @property
     def id(self):
-        """The message's unique ID."""
+        """The unique identifier for the message."""
         return self._json_data.get('id')
 
     @property
     def roomId(self):
-        """The ID of the room."""
+        """The room ID of the message."""
         return self._json_data.get('roomId')
 
     @property
     def roomType(self):
-        """The type of room (i.e. 'group', 'direct' etc.)."""
+        """The type of room.
+
+        Room Type Enum:
+            `direct`: 1:1 room
+            `group`: Group room
+        """
         return self._json_data.get('roomType')
 
     @property
@@ -59,23 +64,8 @@ class MessageBasicPropertiesMixin(object):
         return self._json_data.get('text')
 
     @property
-    def files(self):
-        """Files attached to the the message (list of URLs)."""
-        return self._json_data.get('files')
-
-    @property
-    def personId(self):
-        """The person ID of the sender."""
-        return self._json_data.get('personId')
-
-    @property
-    def personEmail(self):
-        """The email address of the sender."""
-        return self._json_data.get('personEmail')
-
-    @property
     def markdown(self):
-        """The message, in markdown format."""
+        """The message, in Markdown format."""
         return self._json_data.get('markdown')
 
     @property
@@ -84,9 +74,29 @@ class MessageBasicPropertiesMixin(object):
         return self._json_data.get('html')
 
     @property
+    def files(self):
+        """Public URLs for files attached to the message."""
+        return self._json_data.get('files')
+
+    @property
+    def personId(self):
+        """The person ID of the message author."""
+        return self._json_data.get('personId')
+
+    @property
+    def personEmail(self):
+        """The email address of the message author."""
+        return self._json_data.get('personEmail')
+
+    @property
     def mentionedPeople(self):
-        """The list of IDs of people mentioned in the message."""
+        """People IDs for anyone mentioned in the message."""
         return self._json_data.get('mentionedPeople')
+
+    @property
+    def mentionedGroups(self):
+        """Group names for the groups mentioned in the message."""
+        return self._json_data.get('mentionedGroups')
 
     @property
     def created(self):

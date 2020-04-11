@@ -55,3 +55,5 @@
 |                       | :ref:`access_tokens`    | :meth:`get() <webeteamssdk.api.access_tokens.AccessTokensAPI.get>`              |
 |                       |                         | :meth:`refresh() <webeteamssdk.api.access_tokens.AccessTokensAPI.refresh>`      |
 +-----------------------+-------------------------+---------------------------------------------------------------------------------+
+|                       | :ref:`guest_issuer`     | :meth:`create() <webexteamssdk.api.guest_issuer.create>`                        |
++-----------------------+-------------------------+---------------------------------------------------------------------------------+

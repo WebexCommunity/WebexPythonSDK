@@ -134,6 +134,31 @@ object.
     >>> chris_api = WebexTeamsAPI(access_token=chris_at)
     >>> veronica_api = WebexTeamsAPI(access_token=veronica_at)
 
+If you authenticate a user via a OAuth flow you can also initialize a api object
+directly by providing the OAuth information.
+
+.. code-block:: python
+
+    >>> from webexteamssdk import WebexTeamsAPI
+    >>> client_id = "<from oauth>"
+    >>> client_secret = "<from oauth>"
+    >>> oauth_code = "<from oauth>"
+    >>> redirect_uri = "<from oauth>"
+    >>> api = WebexTeamsAPI(client_id=client_id,
+                            client_secret=client_secret,
+                            oauth_code=oauth_code,
+                            redirect_uri=redirect_uri
+                           )
+
+You can also pass a proxy configuration upon initialization in case you are behind a firewall.  See the `requests
+documentation on Proxies <https://2.python-requests.org/en/master/user/advanced/#proxies>`_ for details.
+
+.. code-block:: python
+
+    >>> from webexteamssdk import WebexTeamsAPI
+    >>> proxy = {'https': 'http://<proxy_ip>:<proxy_port>'}
+    >>> api = WebexTeamsAPI(access_token=<your_access_token>, proxies=proxy)
+
 
 Making API Calls
 ----------------
@@ -441,6 +466,25 @@ contain all of the returned objects.
 
     >>> rooms_iterable = api.rooms.list()
     >>> rooms_list = list(rooms_iterable)
+
+
+
+Extending the API with bound methods
+------------------------------------
+
+As the Webex Teams API is developed and features are added, it may be necessary to extend the webexteamssdk to access those features.
+Extending the API is simple by binding your own methods to the WebexTeamsAPI connection object. By binding a method, you can 
+extend functionality and leverage all of the objects and quality of life features of webexteamssdk.
+
+.. code-block:: python
+
+    >>> new_method(self, param):
+        ...     json_obj = self._session.get('/example/action/' + param)
+        ...     return json_obj
+    
+    >>> api = WebexTeamsAPI()
+    >>> api.new_method = new_method
+    >>> output = WebexTeamsAPI.new_method(param)
 
 
 *Copyright (c) 2016-2019 Cisco and/or its affiliates.*

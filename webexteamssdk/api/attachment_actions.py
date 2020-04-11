@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Licenses API wrapper.
+"""Webex Teams Messages API wrapper.
 
 Copyright (c) 2016-2019 Cisco and/or its affiliates.
 
@@ -34,98 +34,98 @@ from builtins import *
 
 from past.builtins import basestring
 
-from ..generator_containers import generator_container
+from ..models.immutable import AttachmentAction
 from ..restsession import RestSession
-from ..utils import (
-    check_type,
-    dict_from_items_with_values,
-)
+from ..utils import check_type, dict_from_items_with_values
 
 
-API_ENDPOINT = 'licenses'
-OBJECT_TYPE = 'license'
+API_ENDPOINT = 'attachment/actions'
+OBJECT_TYPE = 'attachment_action'
 
 
-class LicensesAPI(object):
-    """Webex Teams Licenses API.
+class AttachmentActionsAPI(object):
+    """Webex Teams Attachment Actions API.
 
-    Wraps the Webex Teams Licenses API and exposes the API as native Python
-    methods that return native Python objects.
+    Wraps the Webex Teams Attachment Actions API and exposes the API as
+    native Python methods that return native Python objects.
 
     """
 
     def __init__(self, session, object_factory):
-        """Initialize a new LicensesAPI object with the provided RestSession.
+        """Initialize a new AttachmentActionsAPI object.
 
         Args:
             session(RestSession): The RESTful session object to be used for
                 API calls to the Webex Teams service.
 
         Raises:
-            TypeError: If the input object is not a dictionary or string.
+            TypeError: If the parameter types are incorrect.
 
         """
         check_type(session, RestSession)
-
-        super(LicensesAPI, self).__init__()
-
+        super(AttachmentActionsAPI, self).__init__()
         self._session = session
         self._object_factory = object_factory
 
-    @generator_container
-    def list(self, orgId=None, **request_parameters):
-        """List all licenses for a given organization.
-
-        If no orgId is specified, the default is the organization of the
-        authenticated user.
+    def create(self, type, messageId, inputs, **request_parameters):
+        """Create a new attachment action.
 
         Args:
-            orgId(basestring): Specify the organization, by ID.
+            type(basestring): The type of action to perform.
+            messageId(basestring): The ID of the message which contains the
+                attachment.
+            inputs(dict): The attachment action's inputs.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
         Returns:
-            GeneratorContainer: A GeneratorContainer which, when iterated,
-            yields the licenses returned by the Webex Teams query.
+            AttachmentAction: A attachment action object with the details of
+            the created attachment action.
 
         Raises:
             TypeError: If the parameter types are incorrect.
             ApiError: If the Webex Teams cloud returns an error.
+            ValueError: If the files parameter is a list of length > 1, or if
+                the string in the list (the only element in the list) does not
+                contain a valid URL or path to a local file.
 
         """
-        check_type(orgId, basestring, optional=True)
+        check_type(type, basestring)
+        check_type(messageId, basestring)
+        check_type(inputs, dict)
 
-        params = dict_from_items_with_values(
+        post_data = dict_from_items_with_values(
             request_parameters,
-            orgId=orgId,
+            type=type,
+            messageId=messageId,
+            inputs=inputs
         )
 
-        # API request - get items
-        items = self._session.get_items(API_ENDPOINT, params=params)
+        json_data = self._session.post(API_ENDPOINT, json=post_data)
 
-        # Yield license objects created from the returned JSON objects
-        for item in items:
-            yield self._object_factory(OBJECT_TYPE, item)
+        # Return a attachment action object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
-    def get(self, licenseId):
-        """Get the details of a License, by ID.
+    def get(self, attachmentId):
+        """Get the details of a attachment action, by ID.
 
         Args:
-            licenseId(basestring): The ID of the License to be retrieved.
+            attachmentId(basestring): The ID of the attachment action to be
+            retrieved.
 
         Returns:
-            License: A License object with the details of the requested
-            License.
+            AttachmentAction: A Attachment Action object with the details of
+            the requested attachment action.
 
         Raises:
             TypeError: If the parameter types are incorrect.
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(licenseId, basestring)
+        check_type(attachmentId, basestring)
 
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/' + licenseId)
+        json_data = self._session.get(API_ENDPOINT + '/' + attachmentId)
 
-        # Return a license object created from the returned JSON object
+        # Return a message object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)

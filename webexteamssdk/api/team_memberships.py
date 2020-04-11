@@ -102,8 +102,8 @@ class TeamMembershipsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(teamId, basestring, may_be_none=False)
-        check_type(max, int)
+        check_type(teamId, basestring)
+        check_type(max, int, optional=True)
 
         params = dict_from_items_with_values(
             request_parameters,
@@ -143,10 +143,10 @@ class TeamMembershipsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(teamId, basestring, may_be_none=False)
-        check_type(personId, basestring)
-        check_type(personEmail, basestring)
-        check_type(isModerator, bool)
+        check_type(teamId, basestring)
+        check_type(personId, basestring, optional=True)
+        check_type(personEmail, basestring, optional=True)
+        check_type(isModerator, bool, optional=True)
 
         post_data = dict_from_items_with_values(
             request_parameters,
@@ -177,7 +177,7 @@ class TeamMembershipsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(membershipId, basestring, may_be_none=False)
+        check_type(membershipId, basestring)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + '/' + membershipId)
@@ -203,8 +203,8 @@ class TeamMembershipsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(membershipId, basestring, may_be_none=False)
-        check_type(isModerator, bool)
+        check_type(membershipId, basestring)
+        check_type(isModerator, bool, optional=True)
 
         put_data = dict_from_items_with_values(
             request_parameters,
@@ -229,7 +229,7 @@ class TeamMembershipsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(membershipId, basestring, may_be_none=False)
+        check_type(membershipId, basestring)
 
         # API request
         self._session.delete(API_ENDPOINT + '/' + membershipId)

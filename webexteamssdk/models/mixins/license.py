@@ -38,20 +38,20 @@ class LicenseBasicPropertiesMixin(object):
 
     @property
     def id(self):
-        """The unique ID for the License."""
+        """A unique identifier for the license."""
         return self._json_data.get('id')
 
     @property
     def name(self):
-        """The name of the License."""
+        """Name of the licensed feature."""
         return self._json_data.get('name')
 
     @property
     def totalUnits(self):
-        """The total number of license units."""
+        """Total number of license units allocated."""
         return self._json_data.get('totalUnits')
 
     @property
     def consumedUnits(self):
-        """The total number of license units consumed."""
+        """Total number of license units consumed."""
         return self._json_data.get('consumedUnits')

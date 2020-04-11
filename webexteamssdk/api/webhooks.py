@@ -101,7 +101,7 @@ class WebhooksAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(max, int)
+        check_type(max, int, optional=True)
 
         params = dict_from_items_with_values(
             request_parameters,
@@ -138,12 +138,12 @@ class WebhooksAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(name, basestring, may_be_none=False)
-        check_type(targetUrl, basestring, may_be_none=False)
-        check_type(resource, basestring, may_be_none=False)
-        check_type(event, basestring, may_be_none=False)
-        check_type(filter, basestring)
-        check_type(secret, basestring)
+        check_type(name, basestring)
+        check_type(targetUrl, basestring)
+        check_type(resource, basestring)
+        check_type(event, basestring)
+        check_type(filter, basestring, optional=True)
+        check_type(secret, basestring, optional=True)
 
         post_data = dict_from_items_with_values(
             request_parameters,
@@ -176,7 +176,7 @@ class WebhooksAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(webhookId, basestring, may_be_none=False)
+        check_type(webhookId, basestring)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + '/' + webhookId)
@@ -205,9 +205,9 @@ class WebhooksAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(webhookId, basestring, may_be_none=False)
-        check_type(name, basestring)
-        check_type(targetUrl, basestring)
+        check_type(webhookId, basestring)
+        check_type(name, basestring, optional=True)
+        check_type(targetUrl, basestring, optional=True)
 
         put_data = dict_from_items_with_values(
             request_parameters,
@@ -233,7 +233,7 @@ class WebhooksAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(webhookId, basestring, may_be_none=False)
+        check_type(webhookId, basestring)
 
         # API request
         self._session.delete(API_ENDPOINT + '/' + webhookId)
