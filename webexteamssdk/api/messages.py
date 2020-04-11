@@ -39,8 +39,9 @@ from ..generator_containers import generator_container
 from ..restsession import RestSession
 from ..utils import (
     check_type, dict_from_items_with_values, is_local_file, is_web_url,
-    open_local_file,
+    open_local_file, make_card_attachment
 )
+from ..cards.card import AdaptiveCard
 
 
 API_ENDPOINT = 'messages'
@@ -207,6 +208,17 @@ class MessagesAPI(object):
             files=files,
             attachments=attachments,
         )
+
+        # Add cards
+        if cards is not None:
+            cards_list = []
+
+            if isinstance(cards, list):
+                cards_list = [make_card_attachment(c) for c in cards]
+            else:
+                cards_list = [make_card_attachment(cards)]
+
+            post_data['attachments'] = cards_list
 
         # API request
         if not files or is_web_url(files[0]):

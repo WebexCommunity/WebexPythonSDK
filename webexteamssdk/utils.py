@@ -257,6 +257,22 @@ def json_dict(json_data):
             "received: {!r}".format(json_data)
         )
 
+def make_card_attachment(card):
+    """Given a card, makes a card attachment by attaching the correct
+       content type and content.
+
+      Args:
+        card(AdaptiveCard): Adaptive Card object that should be attached
+
+      Returns:
+        A Python dictionary containing the card attachment dictionary
+    """
+    ret = {
+        "contentType": "application/vnd.microsoft.card.adaptive",
+        "content": card.to_dict()
+    }
+
+    return ret
 
 class ZuluTimeZone(tzinfo):
     """Zulu Time Zone."""
