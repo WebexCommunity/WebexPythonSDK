@@ -69,7 +69,7 @@ class AttachmentActionBasicPropertiesMixin(object):
 
     @property
     def inputs(self):
-        """The action's inputs."""
+        """The attachment action's inputs"""
         return self._json_data.get('inputs')
 
     @property
