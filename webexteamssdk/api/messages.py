@@ -39,9 +39,8 @@ from ..generator_containers import generator_container
 from ..restsession import RestSession
 from ..utils import (
     check_type, dict_from_items_with_values, is_local_file, is_web_url,
-    open_local_file, make_card_attachment
+    make_card_attachment, open_local_file,
 )
-from ..cards.card import AdaptiveCard
 
 
 API_ENDPOINT = 'messages'
