@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Access-Tokens API wrapper.
+"""Webex Teams Adaptive Card actions.
 
 Copyright (c) 2016-2019 Cisco and/or its affiliates.
 
@@ -22,39 +22,48 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from .abstract_components import Serializable
+from .adaptive_card_component import AdaptiveCardComponent
 
-class OpenUrl(Serializable):
-    def __init__(self, url, title=None,
-                            iconURL=None):
-        self.type = "Action.OpenUrl"
+
+class OpenUrl(AdaptiveCardComponent):
+    """Open URL Action."""
+    type = "Action.OpenUrl"
+
+    def __init__(self, url, title=None, iconURL=None):
         self.title = title
         self.iconURL = iconURL
 
-        super().__init__(serializable_properties=[],
-                         simple_properties=['type', 'title', 'iconURL'])
+        super().__init__(
+            serializable_properties=[],
+            simple_properties=['type', 'title', 'iconURL'],
+        )
 
-class Submit(Serializable):
-    def __init__(self, data=None,
-                       title=None,
-                       iconURL=None,
-                       ):
-        self.type = "Action.Submit"
+
+class Submit(AdaptiveCardComponent):
+    """Submit Action."""
+    type = "Action.Submit"
+
+    def __init__(self, data=None, title=None, iconURL=None):
         self.data = data
         self.title = title
         self.iconURL = iconURL
 
-        super().__init__(serializable_properties=['data'],
-                         simple_properties=['title', 'iconURL', 'type'])
+        super().__init__(
+            serializable_properties=['data'],
+            simple_properties=['title', 'iconURL', 'type'],
+        )
 
-class ShowCard(Serializable):
-    def __init__(self, card=None,
-                       title=None,
-                       iconURL=None):
-        self.type = "Action.ShowCard"
+
+class ShowCard(AdaptiveCardComponent):
+    """Show Card Action."""
+    type = "Action.ShowCard"
+
+    def __init__(self, card=None, title=None, iconURL=None):
         self.card = card
         self.title = title
         self.iconURL = iconURL
 
-        super().__init__(serializable_properties=['card'],
-                         simple_properties=['title', 'type', 'iconURL'])
+        super().__init__(
+            serializable_properties=['card'],
+            simple_properties=['title', 'type', 'iconURL'],
+        )
