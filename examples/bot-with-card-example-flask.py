@@ -325,9 +325,6 @@ def main():
         # Start the Flask web server
         flask_app.run(host="0.0.0.0", port=port)
 
-    except KeyboardInterrupt:
-        print("You pressed Ctrl+C! Shutting down.")
-
     finally:
         print("Cleaning up webhooks...")
         delete_webhooks_with_name()
