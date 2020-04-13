@@ -5,7 +5,7 @@ card, and handling the events generated when a user hits the Submit button.
 
 A bot must be created and pointed to this server in the My Apps section of
 https://developer.webex.com.  The bot's Access Token should be added as a
-'WEBEX_TEAMS_ACCESS_TOKEN' environment variable on the web server hosting this
+"WEBEX_TEAMS_ACCESS_TOKEN" environment variable on the web server hosting this
 script.
 
 This script must expose a public IP address in order to receive notifications
@@ -29,8 +29,7 @@ response to any messages it will post a simple form filling card.  In response
 to a user submitting a form, the details of that response will be posted in
 the space.
 
-This script should supports Python versions 2 and 3, but it has only been
-tested with version 3.
+This script should support Python versions 3 only.
 
 Copyright (c) 2016-2020 Cisco and/or its affiliates.
 
@@ -54,34 +53,22 @@ SOFTWARE.
 """
 
 
-# Use future for Python v2 and v3 compatibility
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
-from builtins import *
+import os
+import sys
+from urllib.parse import urljoin
+
+from flask import Flask, request
+
+from webexteamssdk import WebexTeamsAPI, Webhook
 
 
+# Script metadata
 __author__ = "JP Shipherd"
 __author_email__ = "jshipher@cisco.com"
 __contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
 __copyright__ = "Copyright (c) 2016-2020 Cisco and/or its affiliates."
 __license__ = "MIT"
 
-from flask import Flask, request
-from signal import signal, SIGINT
-import requests
-import sys
-
-from webexteamssdk import WebexTeamsAPI, Webhook
-
-# Find and import urljoin
-if sys.version_info[0] < 3:
-    from urlparse import urljoin
-else:
-    from urllib.parse import urljoin
 
 # Constants
 WEBHOOK_NAME = "botWithCardExampleWebhook"
@@ -94,10 +81,10 @@ CARDS_WEBHOOK_EVENT = "created"
 # Adaptive Card Design Schema for a sample form.
 # To learn more about designing and working with buttons and cards,
 # checkout https://developer.webex.com/docs/api/guides/cards
-card_content = {
+CARD_CONTENT = {
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
     "type": "AdaptiveCard",
-    "version": "1.0",
+    "version": "1.1",
     "body": [
         {
             "type": "TextBlock",
@@ -107,9 +94,10 @@ card_content = {
         },
         {
             "type": "TextBlock",
-            "text": "This **Input.Text** element collects some free from text.  \
-              Designers can use attributes like `isMutiline`, `maxLength` and `placeholder` \
-                to shape the way that users enter text in a form.",
+            "text": "This **Input.Text** element collects some free from "
+                    "text. Designers can use attributes like `isMutiline`, "
+                    "`maxLength` and `placeholder to shape the way that users "
+                    "enter text in a form.",
             "wrap": True
         },
         {
@@ -121,9 +109,9 @@ card_content = {
         },
         {
             "type": "TextBlock",
-            "text": "This **Input.Number** element collects a number.  \
-              Designers can use the `max`, `min` and `placeholder` attributes \
-                to control the input options.",
+            "text": "This **Input.Number** element collects a number. "
+                    "Designers can use the `max`, `min` and `placeholder` "
+                    "attributes to control the input options.",
             "wrap": True
         },
         {
@@ -135,10 +123,12 @@ card_content = {
         },
         {
             "type": "TextBlock",
-            "text": "The **Input.ChoiceSet** element provides a variety of ways that users \
-              can choose from a set of options.   This is the default view, but designers can \
-                use the `style` and `isMutiSelect` attributes to change the way it works.  \
-                  The choices are defined in an array attribute called `choices`.",
+            "text": "The **Input.ChoiceSet** element provides a variety of "
+                    "ways that users can choose from a set of options. This "
+                    "is the default view, but designers can use the `style` "
+                    "and `isMutiSelect` attributes to change the way it "
+                    "works. The choices are defined in an array attribute "
+                    "called `choices`.",
             "wrap": True
         },
         {
@@ -179,40 +169,40 @@ card_content = {
     ]
 }
 
-# Read required environment variables
-import os
-port = 0
-webhook_url = ""
-try:
-    webhook_url = os.environ['WEBHOOK_URL']
-    port = int(os.environ['PORT'])
-    os.environ['WEBEX_TEAMS_ACCESS_TOKEN']
-except KeyError:
-    print('''
-    Missing required environment variable.  You must set:
-    * WEBEX_TEAMS_ACCESS_TOKEN -- Access token for a Webex bot\n
-    * WEBHOOK_URL -- URL for Webex Webhooks (ie: https://2fXX9c.ngrok.io)
-    * PORT - Port for Webhook URL (ie: the port param passed to ngrok)
-    '''
-         )
-    sys.exit
+
+# Module variables
+webhook_url = os.environ.get("WEBHOOK_URL", "")
+port = int(os.environ.get("PORT", 0))
+access_token = os.environ.get("WEBEX_TEAMS_ACCESS_TOKEN", "")
+if not all((webhook_url, port, access_token)):
+    print(
+        """Missing required environment variable.  You must set:
+        * WEBHOOK_URL -- URL for Webex Webhooks (ie: https://2fXX9c.ngrok.io)
+        * PORT - Port for Webhook URL (ie: the port param passed to ngrok)
+        * WEBEX_TEAMS_ACCESS_TOKEN -- Access token for a Webex bot
+        """
+    )
+    sys.exit()
 
 # Initialize the environment
 # Create the web application instance
 flask_app = Flask(__name__)
 # Create the Webex Teams API connection object
 api = WebexTeamsAPI()
+# Get the details for the account who's access token we are using
+me = api.people.me()
 
 
 # Helper functions
-def delete_webhooks_with_name(api):
-    """List all webhooks and delete ours."""
+def delete_webhooks_with_name():
+    """List all webhooks and delete webhooks created by this script."""
     for webhook in api.webhooks.list():
         if webhook.name == WEBHOOK_NAME:
             print("Deleting Webhook:", webhook.name, webhook.targetUrl)
             api.webhooks.delete(webhook.id)
 
-def create_webhooks(api, webhook_url):
+
+def create_webhooks(webhook_url):
     """Create the Webex Teams webhooks we need for our bot."""
     print("Creating Message Created Webhook...")
     webhook = api.webhooks.create(
@@ -234,7 +224,8 @@ def create_webhooks(api, webhook_url):
     print(webhook)
     print("Webhook successfully created.")
 
-def respond_to_button_press(api, webhook):
+
+def respond_to_button_press(webhook):
     """Respond to a button press on the card we posted"""
 
     # Some server side debugging
@@ -242,89 +233,105 @@ def respond_to_button_press(api, webhook):
     attachment_action = api.attachment_actions.get(webhook.data.id)
     person = api.people.get(attachment_action.personId)
     message_id = attachment_action.messageId
-    print("NEW BUTTON PRESS IN ROOM '{}'".format(room.title))
-    print("FROM '{}'".format(person.displayName))
+    print(
+        f"""
+        NEW BUTTON PRESS IN ROOM '{room.title}'
+        FROM '{person.displayName}'
+        """
+    )
 
     api.messages.create(
         room.id,
         parentId=message_id,
-        markdown=f'This is the data sent from the button press.  A more robust app would do something cool with this:\n```\n{attachment_action.to_json(indent=2)}\n```'
+        markdown=f"This is the data sent from the button press.  A more "
+                 f"robust app would do something cool with this:\n"
+                 f"```\n{attachment_action.to_json(indent=2)}\n```"
     )
 
-def respond_to_message(api, webhook):
+
+def respond_to_message(webhook):
     """Respond to a message to our bot"""
 
     # Some server side debugging
     room = api.rooms.get(webhook.data.roomId)
     message = api.messages.get(webhook.data.id)
     person = api.people.get(message.personId)
-    print("NEW MESSAGE IN ROOM '{}'".format(room.title))
-    print("FROM '{}'".format(person.displayName))
-    print("MESSAGE '{}'\n".format(message.text))
+    print(
+        f"""
+        NEW MESSAGE IN ROOM '{room.title}'
+        FROM '{person.displayName}'
+        MESSAGE '{message.text}'
+        """
+    )
 
     # This is a VERY IMPORTANT loop prevention control step.
     # If you respond to all messages...  You will respond to the messages
     # that the bot posts and thereby create a loop condition.
-    me = api.people.me()
     if message.personId == me.id:
         # Message was sent by me (bot); do not respond.
-        return 'OK'
+        return "OK"
 
     else:
         # Message was sent by someone else; parse message and respond.
-        api.messages.create(room.id, text="All I do is post a sample card.  Here it is:")
+        api.messages.create(
+            room.id,
+            text="All I do is post a sample card. Here it is:",
+        )
         api.messages.create(
             room.id,
             text="If you see this your client cannot render cards",
             attachments=[{
                 "contentType": "application/vnd.microsoft.card.adaptive",
-                "content": card_content
-            }]
+                "content": CARD_CONTENT
+            }],
         )
-        return 'OK'
+        return "OK"
 
-# Signal handler to clean up webhooks when we shutdown
-def signal_handler(sig, frame):
-    """Cleanup webhooks on shutdown"""
-    print('You pressed Ctrl+C! Cleaning up webhooks...')
-    delete_webhooks_with_name(api)
-    sys.exit(0)
 
 # Core bot functionality
 # Webex will post to this server when a message is created for the bot
 # or when a user clicks on an Action.Submit button in a card posted by this bot
 # Your Webex Teams webhook should point to http://<serverip>:<port>/events
-@flask_app.route('/events', methods=["POST"])
+@flask_app.route("/events", methods=["POST"])
 def webex_teams_webhook_events():
     """Respond to inbound webhook JSON HTTP POST from Webex Teams."""
     # Create a Webhook object from the JSON data
     webhook_obj = Webhook(request.json)
 
     # Handle a new message event
-    if webhook_obj.resource == MESSAGE_WEBHOOK_RESOURCE and \
-        webhook_obj.event == MESSAGE_WEBHOOK_EVENT:
-        respond_to_message(api, webhook_obj)
+    if (webhook_obj.resource == MESSAGE_WEBHOOK_RESOURCE
+            and webhook_obj.event == MESSAGE_WEBHOOK_EVENT):
+        respond_to_message(webhook_obj)
 
     # Handle an Action.Submit button press event
-    elif webhook_obj.resource == CARDS_WEBHOOK_RESOURCE and \
-        webhook_obj.event == CARDS_WEBHOOK_EVENT:
-        respond_to_button_press(api, webhook_obj)
+    elif (webhook_obj.resource == CARDS_WEBHOOK_RESOURCE
+          and webhook_obj.event == CARDS_WEBHOOK_EVENT):
+        respond_to_button_press(webhook_obj)
 
     # Ignore anything else (which should never happen
     else:
-        print("IGNORING UNEXPECTED WEBHOOK:")
-        print(webhook_obj)
+        print(f"IGNORING UNEXPECTED WEBHOOK:\n{webhook_obj}")
 
-    return 'OK'
+    return "OK"
 
 
 def main():
-    # Tell Python to run the handler() function when SIGINT is recieved
-    signal(SIGINT, signal_handler)
-    delete_webhooks_with_name(api)
-    create_webhooks(api, webhook_url)
-    # Start the Flask web server
-    flask_app.run(host='0.0.0.0', port=port)
+    # Delete preexisting webhooks created by this script
+    delete_webhooks_with_name()
 
-if __name__ == '__main__':
+    create_webhooks(webhook_url)
+
+    try:
+        # Start the Flask web server
+        flask_app.run(host="0.0.0.0", port=port)
+
+    except KeyboardInterrupt:
+        print("You pressed Ctrl+C! Shutting down.")
+
+    finally:
+        print("Cleaning up webhooks...")
+        delete_webhooks_with_name()
+
+
+if __name__ == "__main__":
     main()
