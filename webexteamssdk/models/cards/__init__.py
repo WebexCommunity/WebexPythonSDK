@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Test suite environment variables.
+"""Webex Teams Adaptive Cards data models.
 
 Copyright (c) 2016-2019 Cisco and/or its affiliates.
 
@@ -22,35 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import os
-import string
-
-
-WEBEX_TEAMS_TEST_DOMAIN = os.getenv("WEBEX_TEAMS_TEST_DOMAIN")
-if WEBEX_TEAMS_TEST_DOMAIN is None:
-    raise RuntimeError(
-        "You must set a {} environment variable to run the test suite"
-        "".format("WEBEX_TEAMS_TEST_DOMAIN")
-    )
-
-WEBEX_TEAMS_TEST_ID_START = int(os.getenv("WEBEX_TEAMS_TEST_ID_START"))
-if WEBEX_TEAMS_TEST_ID_START is None:
-    raise RuntimeError(
-        "You must set a {} environment variable to run the test suite"
-        "".format("WEBEX_TEAMS_TEST_ID_START")
-    )
-
-WEBEX_TEAMS_TEST_FILE_URL = os.getenv("WEBEX_TEAMS_TEST_FILE_URL")
-if WEBEX_TEAMS_TEST_FILE_URL is None:
-    raise RuntimeError(
-        "You must set a {} environment variable to run the test suite"
-        "".format("WEBEX_TEAMS_TEST_FILE_URL")
-    )
-
-WEBEX_TEAMS_TEST_STRING_PREFIX = os.getenv(
-    "WEBEX_TEAMS_TEST_STRING_PREFIX", default="webexteamssdk py.test",
+from .adaptive_card_component import AdaptiveCardComponent
+from .card import AdaptiveCard
+from .components import (
+    Choice, Column, Fact, Image, Media, MediaSource,
+    TextBlock,
 )
-
-WEBEX_TEAMS_TEST_STRING_TEMPLATE = string.Template(os.getenv(
-    "WEBEX_TEAMS_TEST_STRING_TEMPLATE", default="$prefix $item [$datetime]",
-))
+from .container import ColumnSet, Container, FactSet, ImageSet
+from .inputs import Choices, Date, Number, Text, Time, Toggle
+from .options import (
+    BlockElementHeight, ChoiceInputStyle, Colors,
+    ContainerStyle, FontSize, FontWeight, HorizontalAlignment, ImageSize,
+    ImageStyle, Spacing, TextInputStyle, VerticalContentAlignment,
+)

@@ -35,11 +35,12 @@ from builtins import *
 from past.builtins import basestring
 from requests_toolbelt import MultipartEncoder
 
+from webexteamssdk.models.cards import AdaptiveCard
 from ..generator_containers import generator_container
 from ..restsession import RestSession
 from ..utils import (
     check_type, dict_from_items_with_values, is_local_file, is_web_url,
-    open_local_file,
+    make_attachment, open_local_file,
 )
 
 
@@ -191,11 +192,13 @@ class MessagesAPI(object):
         else:
             files = None
 
+        # Process and serialize attachments
         if attachments:
-            for attachment in attachments:
-                check_type(attachment, dict)
-        else:
-            attachments = None
+            for item, attachment in enumerate(attachments):
+                check_type(attachment, (dict, AdaptiveCard))
+
+                if isinstance(attachments, AdaptiveCard):
+                    attachments[item] = make_attachment(attachment)
 
         post_data = dict_from_items_with_values(
             request_parameters,

@@ -33,6 +33,7 @@ The User Guide
     user/intro
     user/quickstart
     user/api
+    user/cards
 
 
 The Development Community

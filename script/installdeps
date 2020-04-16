@@ -16,7 +16,7 @@ export PIP_REQUIRE_VIRTUALENV=true
 # Prefer use of a Pipfile and pipenv for dependency management
 if [[ -f "Pipfile" ]] && [[ -n "$(pipenv --version 2>/dev/null)" ]]; then
     echo "==> Installing Pipfile dependencies"
-    pipenv install --dev
+    pipenv install --dev --skip-lock
 
 elif [[ -f "requirements.txt" ]]; then
     echo "==> Installing requirements.txt dependencies"
