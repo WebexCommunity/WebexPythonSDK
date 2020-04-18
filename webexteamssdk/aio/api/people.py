@@ -30,11 +30,11 @@ from webexteamssdk.aio.utils import (
 )
 
 
-API_ENDPOINT = 'people'
-OBJECT_TYPE = 'person'
+API_ENDPOINT = "people"
+OBJECT_TYPE = "person"
 
 
-class AsyncPeopleAPI():
+class AsyncPeopleAPI:
     """Webex Teams People API.
 
     Wraps the Webex Teams People API and exposes the API as native Python
@@ -42,7 +42,7 @@ class AsyncPeopleAPI():
 
     """
 
-    def __init__(self, session:AsyncRestSession, object_factory):
+    def __init__(self, session: AsyncRestSession, object_factory):
         """Initialize a new PeopleAPI object with the provided RestSession.
 
         Args:
@@ -61,8 +61,15 @@ class AsyncPeopleAPI():
         self._object_factory = object_factory
 
     @generator_container
-    async def list(self, email=None, displayName=None, id=None, orgId=None, max=None,
-             **request_parameters):
+    async def list(
+        self,
+        email=None,
+        displayName=None,
+        id=None,
+        orgId=None,
+        max=None,
+        **request_parameters
+    ):
         """List people
 
         This method supports Webex Teams's implementation of RFC5988 Web
@@ -118,9 +125,18 @@ class AsyncPeopleAPI():
         for item in items:
             yield self._object_factory(OBJECT_TYPE, item)
 
-    async def create(self, emails, displayName=None, firstName=None, lastName=None,
-               avatar=None, orgId=None, roles=None, licenses=None,
-               **request_parameters):
+    async def create(
+        self,
+        emails,
+        displayName=None,
+        firstName=None,
+        lastName=None,
+        avatar=None,
+        orgId=None,
+        roles=None,
+        licenses=None,
+        **request_parameters
+    ):
         """Create a new user account for a given organization
 
         Only an admin can create a new user account.
@@ -193,14 +209,24 @@ class AsyncPeopleAPI():
         check_type(personId, str)
 
         # API request
-        json_data = await self._session.get(API_ENDPOINT + '/' + personId)
+        json_data = await self._session.get(API_ENDPOINT + "/" + personId)
 
         # Return a person object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
 
-    async def update(self, personId, emails=None, displayName=None, firstName=None,
-               lastName=None, avatar=None, orgId=None, roles=None,
-               licenses=None, **request_parameters):
+    async def update(
+        self,
+        personId,
+        emails=None,
+        displayName=None,
+        firstName=None,
+        lastName=None,
+        avatar=None,
+        orgId=None,
+        roles=None,
+        licenses=None,
+        **request_parameters
+    ):
         """Update details for a person, by ID.
 
         Only an admin can update a person's details.
@@ -259,8 +285,9 @@ class AsyncPeopleAPI():
         )
 
         # API request
-        json_data = await self._session.put(API_ENDPOINT + '/' + personId,
-                                      json=put_data)
+        json_data = await self._session.put(
+            API_ENDPOINT + "/" + personId, json=put_data
+        )
 
         # Return a person object created from the returned JSON object
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -281,7 +308,7 @@ class AsyncPeopleAPI():
         check_type(personId, str)
 
         # API request
-        await self._session.delete(API_ENDPOINT + '/' + personId)
+        await self._session.delete(API_ENDPOINT + "/" + personId)
 
     async def me(self):
         """Get the details of the person accessing the API.
@@ -291,7 +318,7 @@ class AsyncPeopleAPI():
 
         """
         # API request
-        json_data = await self._session.get(API_ENDPOINT + '/me')
+        json_data = await self._session.get(API_ENDPOINT + "/me")
 
         # Return a person object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)

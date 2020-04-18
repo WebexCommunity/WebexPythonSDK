@@ -31,11 +31,11 @@ from webexteamssdk.aio.utils import (
 )
 
 
-API_ENDPOINT = 'licenses'
-OBJECT_TYPE = 'license'
+API_ENDPOINT = "licenses"
+OBJECT_TYPE = "license"
 
 
-class AsyncLicensesAPI():
+class AsyncLicensesAPI:
     """Webex Teams Licenses API.
 
     Wraps the Webex Teams Licenses API and exposes the API as native Python
@@ -43,7 +43,7 @@ class AsyncLicensesAPI():
 
     """
 
-    def __init__(self, session:AsyncRestSession, object_factory):
+    def __init__(self, session: AsyncRestSession, object_factory):
         """Initialize a new LicensesAPI object with the provided RestSession.
 
         Args:
@@ -84,10 +84,7 @@ class AsyncLicensesAPI():
         """
         check_type(orgId, str, optional=True)
 
-        params = dict_from_items_with_values(
-            request_parameters,
-            orgId=orgId,
-        )
+        params = dict_from_items_with_values(request_parameters, orgId=orgId,)
 
         # API request - get items
         items = await self._session.get_items(API_ENDPOINT, params=params)
@@ -114,7 +111,7 @@ class AsyncLicensesAPI():
         check_type(licenseId, str)
 
         # API request
-        json_data = await self._session.get(API_ENDPOINT + '/' + licenseId)
+        json_data = await self._session.get(API_ENDPOINT + "/" + licenseId)
 
         # Return a license object created from the returned JSON object
         return self._object_factory(OBJECT_TYPE, json_data)

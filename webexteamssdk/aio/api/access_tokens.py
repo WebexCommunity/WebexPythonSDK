@@ -43,11 +43,11 @@ __copyright__ = "Copyright (c) 2016-2019 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-API_ENDPOINT = 'access_token'
-OBJECT_TYPE = 'access_token'
+API_ENDPOINT = "access_token"
+OBJECT_TYPE = "access_token"
 
 
-class AsyncAccessTokensAPI():
+class AsyncAccessTokensAPI:
     """Webex Teams Access-Tokens API.
 
     Wraps the Webex Teams Access-Tokens API and exposes the API as native
@@ -127,9 +127,10 @@ class AsyncAccessTokensAPI():
         )
 
         # API request
-        response = await aiohttp.request.post(self._endpoint_url, data=post_data,
-                                 **self._request_kwargs)
-        await async_check_response_code(response, EXPECTED_RESPONSE_CODE['POST'])
+        response = await aiohttp.request.post(
+            self._endpoint_url, data=post_data, **self._request_kwargs
+        )
+        await async_check_response_code(response, EXPECTED_RESPONSE_CODE["POST"])
         json_data = await async_extract_and_parse_json(response)
 
         # Return a access_token object created from the response JSON data
@@ -166,9 +167,10 @@ class AsyncAccessTokensAPI():
         )
 
         # API request
-        response = await aiohttp.requests.post(self._endpoint_url, data=post_data,
-                                 **self._request_kwargs)
-        await async_check_response_code(response, EXPECTED_RESPONSE_CODE['POST'])
+        response = await aiohttp.requests.post(
+            self._endpoint_url, data=post_data, **self._request_kwargs
+        )
+        await async_check_response_code(response, EXPECTED_RESPONSE_CODE["POST"])
         json_data = await async_extract_and_parse_json(response)
 
         # Return a AccessToken object created from the response JSON data

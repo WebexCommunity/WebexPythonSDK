@@ -30,7 +30,10 @@ from builtins import *
 import aiohttp
 import asyncio
 
-from webexteamssdk.config import DEFAULT_SINGLE_REQUEST_TIMEOUT, DEFAULT_WAIT_ON_RATE_LIMIT
+from webexteamssdk.config import (
+    DEFAULT_SINGLE_REQUEST_TIMEOUT,
+    DEFAULT_WAIT_ON_RATE_LIMIT,
+)
 from webexteamssdk.exceptions import MalformedResponse
 from webexteamssdk.aio.exceptions import (
     AsyncRateLimitError,
@@ -46,13 +49,15 @@ from webexteamssdk.aio.utils import (
     validate_base_url,
 )
 
-async def on_request_start(
-        session, trace_config_ctx, params):
+
+async def on_request_start(session, trace_config_ctx, params):
     print("Starting request")
     print(trace_config_ctx.trace_request_ctx)
 
+
 async def on_request_end(session, trace_config_ctx, params):
     print("Ending request")
+
 
 trace_config = aiohttp.TraceConfig()
 trace_config.on_request_start.append(on_request_start)
@@ -149,7 +154,8 @@ class AsyncRestSession:
         self._wait_on_rate_limit = wait_on_rate_limit
 
         # Initialize a new `requests` session
-        self._req_session = aiohttp.ClientSession(trace_configs=[trace_config],
+        self._req_session = aiohttp.ClientSession(
+            trace_configs=[trace_config],
             timeout=aiohttp.ClientTimeout(total=single_request_timeout),
         )
 
@@ -163,8 +169,12 @@ class AsyncRestSession:
         else:
             self.proxy = None
 
-        self.update_headers({'Authorization': 'Bearer ' + access_token,
-                             'Content-type': 'application/json;charset=utf-8'})
+        self.update_headers(
+            {
+                "Authorization": "Bearer " + access_token,
+                "Content-type": "application/json;charset=utf-8",
+            }
+        )
 
     @property
     def base_url(self):

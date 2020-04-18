@@ -28,16 +28,20 @@ from webexteamssdk.models.cards import AdaptiveCard
 from webexteamssdk.generator_containers import generator_container
 from webexteamssdk.aio.restsession import AsyncRestSession
 from webexteamssdk.aio.utils import (
-    check_type, dict_from_items_with_values, is_local_file, is_web_url,
-    make_attachment, open_local_file,
+    check_type,
+    dict_from_items_with_values,
+    is_local_file,
+    is_web_url,
+    make_attachment,
+    open_local_file,
 )
 
 
-API_ENDPOINT = 'messages'
-OBJECT_TYPE = 'message'
+API_ENDPOINT = "messages"
+OBJECT_TYPE = "message"
 
 
-class AsyncMessagesAPI():
+class AsyncMessagesAPI:
     """Webex Teams Messages API.
 
     Wraps the Webex Teams Messages API and exposes the API as native Python
@@ -45,7 +49,7 @@ class AsyncMessagesAPI():
 
     """
 
-    def __init__(self, session:AsyncRestSession, object_factory):
+    def __init__(self, session: AsyncRestSession, object_factory):
         """Init a new MessagesAPI object with the provided RestSession.
 
         Args:
@@ -62,8 +66,15 @@ class AsyncMessagesAPI():
         self._object_factory = object_factory
 
     @generator_container
-    async def list(self, roomId, mentionedPeople=None, before=None,
-             beforeMessage=None, max=None, **request_parameters):
+    async def list(
+        self,
+        roomId,
+        mentionedPeople=None,
+        before=None,
+        beforeMessage=None,
+        max=None,
+        **request_parameters,
+    ):
         """Lists messages in a room.
 
         Each message will include content attachments if present.
@@ -124,9 +135,17 @@ class AsyncMessagesAPI():
         for item in items:
             yield self._object_factory(OBJECT_TYPE, item)
 
-    async def create(self, roomId=None, toPersonId=None, toPersonEmail=None,
-               text=None, markdown=None, files=None, attachments=None,
-               **request_parameters):
+    async def create(
+        self,
+        roomId=None,
+        toPersonId=None,
+        toPersonEmail=None,
+        text=None,
+        markdown=None,
+        files=None,
+        attachments=None,
+        **request_parameters,
+    ):
         """Post a message to a room.
 
         The files parameter is a list, which accepts multiple values to allow
@@ -171,12 +190,14 @@ class AsyncMessagesAPI():
 
         if files:
             if len(files) > 1:
-                raise ValueError("The `files` parameter should be a list with "
-                                 "exactly one (1) item. The files parameter "
-                                 "is a list, which accepts multiple values to "
-                                 "allow for future expansion, but currently "
-                                 "only one file may be included with the "
-                                 "message.")
+                raise ValueError(
+                    "The `files` parameter should be a list with "
+                    "exactly one (1) item. The files parameter "
+                    "is a list, which accepts multiple values to "
+                    "allow for future expansion, but currently "
+                    "only one file may be included with the "
+                    "message."
+                )
             check_type(files[0], str)
         else:
             files = None
@@ -208,23 +229,31 @@ class AsyncMessagesAPI():
         elif is_local_file(files[0]):
             # Multipart MIME post
             try:
-                post_data.pop("files",None)
-                post_data.pop("attachements",None)
+                post_data.pop("files", None)
+                post_data.pop("attachements", None)
                 file = open_local_file(files[0])
                 with aiohttp.MultipartWriter() as mpwriter:
                     payload = mpwriter.append(file.file_object)
-                    payload.headers["Content-Disposition"]=f"form-data; name=\"files\"; filename=\"{file.file_name}\""
-                    for k,v in post_data.items():            
+                    payload.headers[
+                        "Content-Disposition"
+                    ] = f'form-data; name="files"; filename="{file.file_name}"'
+                    for k, v in post_data.items():
                         payload = mpwriter.append(v)
-                        payload.headers["Content-Disposition"]=f"form-data; name=\"{k}\""
-                
-                json_data = await self._session.post(API_ENDPOINT,
-                                                headers={"Content-type":f"multipart/form-data; boundary={mpwriter.boundary}"},
-                                                data=mpwriter)           
+                        payload.headers[
+                            "Content-Disposition"
+                        ] = f'form-data; name="{k}"'
+
+                json_data = await self._session.post(
+                    API_ENDPOINT,
+                    headers={
+                        "Content-type": f"multipart/form-data; boundary={mpwriter.boundary}"
+                    },
+                    data=mpwriter,
+                )
             finally:
                 if not file.file_object.closed:
                     file.file_object.close()
-            #try:
+            # try:
             #    file = open_local_file(files[0])
             #    post_data.pop("files",None)
             #    post_data.pop("attachements",None)
@@ -234,12 +263,14 @@ class AsyncMessagesAPI():
             #    json_data = await self._session.post(API_ENDPOINT,
             #                                   headers=headers,
             #                                   data=data)
-            #finally:
+            # finally:
             #    file.file_object.close()
 
         else:
-            raise ValueError("The `files` parameter does not contain a vaild "
-                             "URL or path to a local file.")
+            raise ValueError(
+                "The `files` parameter does not contain a vaild "
+                "URL or path to a local file."
+            )
 
         # Return a message object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -262,7 +293,7 @@ class AsyncMessagesAPI():
         check_type(messageId, str)
 
         # API request
-        json_data = await self._session.get(API_ENDPOINT + '/' + messageId)
+        json_data = await self._session.get(API_ENDPOINT + "/" + messageId)
 
         # Return a message object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -281,4 +312,4 @@ class AsyncMessagesAPI():
         check_type(messageId, str)
 
         # API request
-        await self._session.delete(API_ENDPOINT + '/' + messageId)
+        await self._session.delete(API_ENDPOINT + "/" + messageId)

@@ -30,11 +30,11 @@ from webexteamssdk.aio.utils import (
 )
 
 
-API_ENDPOINT = 'events'
-OBJECT_TYPE = 'event'
+API_ENDPOINT = "events"
+OBJECT_TYPE = "event"
 
 
-class AsyncEventsAPI():
+class AsyncEventsAPI:
     """Webex Teams Events API.
 
     Wraps the Webex Teams Events API and exposes the API as native Python
@@ -42,7 +42,7 @@ class AsyncEventsAPI():
 
     """
 
-    def __init__(self, session:AsyncRestSession, object_factory):
+    def __init__(self, session: AsyncRestSession, object_factory):
         """Initialize a new EventsAPI object with the provided RestSession.
 
         Args:
@@ -61,8 +61,16 @@ class AsyncEventsAPI():
         self._object_factory = object_factory
 
     @generator_container
-    async def list(self, resource=None, type=None, actorId=None, _from=None, to=None,
-             max=None, **request_parameters):
+    async def list(
+        self,
+        resource=None,
+        type=None,
+        actorId=None,
+        _from=None,
+        to=None,
+        max=None,
+        **request_parameters
+    ):
         """List events.
 
         List events in your organization. Several query parameters are
@@ -150,7 +158,7 @@ class AsyncEventsAPI():
         check_type(eventId, str)
 
         # API request
-        json_data = await self._session.get(API_ENDPOINT + '/' + eventId)
+        json_data = await self._session.get(API_ENDPOINT + "/" + eventId)
 
         # Return a room object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)

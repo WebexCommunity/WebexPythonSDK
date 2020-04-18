@@ -31,11 +31,11 @@ from webexteamssdk.aio.utils import (
 )
 
 
-API_ENDPOINT = 'webhooks'
-OBJECT_TYPE = 'webhook'
+API_ENDPOINT = "webhooks"
+OBJECT_TYPE = "webhook"
 
 
-class AsyncWebhooksAPI():
+class AsyncWebhooksAPI:
     """Webex Teams Webhooks API.
 
     Wraps the Webex Teams Webhooks API and exposes the API as native Python
@@ -43,7 +43,7 @@ class AsyncWebhooksAPI():
 
     """
 
-    def __init__(self, session:AsyncRestSession, object_factory):
+    def __init__(self, session: AsyncRestSession, object_factory):
         """Initialize a new WebhooksAPI object with the provided RestSession.
 
         Args:
@@ -92,10 +92,7 @@ class AsyncWebhooksAPI():
         """
         check_type(max, int, optional=True)
 
-        params = dict_from_items_with_values(
-            request_parameters,
-            max=max,
-        )
+        params = dict_from_items_with_values(request_parameters, max=max,)
 
         # API request - get items
         items = await self._session.get_items(API_ENDPOINT, params=params)
@@ -104,8 +101,16 @@ class AsyncWebhooksAPI():
         for item in items:
             yield self._object_factory(OBJECT_TYPE, item)
 
-    async def create(self, name, targetUrl, resource, event,
-               filter=None, secret=None, **request_parameters):
+    async def create(
+        self,
+        name,
+        targetUrl,
+        resource,
+        event,
+        filter=None,
+        secret=None,
+        **request_parameters
+    ):
         """Create a webhook.
 
         Args:
@@ -168,13 +173,12 @@ class AsyncWebhooksAPI():
         check_type(webhookId, str)
 
         # API request
-        json_data = await self._session.get(API_ENDPOINT + '/' + webhookId)
+        json_data = await self._session.get(API_ENDPOINT + "/" + webhookId)
 
         # Return a webhook object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
 
-    async def update(self, webhookId, name=None, targetUrl=None,
-               **request_parameters):
+    async def update(self, webhookId, name=None, targetUrl=None, **request_parameters):
         """Update a webhook, by ID.
 
         Args:
@@ -199,14 +203,13 @@ class AsyncWebhooksAPI():
         check_type(targetUrl, str, optional=True)
 
         put_data = dict_from_items_with_values(
-            request_parameters,
-            name=name,
-            targetUrl=targetUrl,
+            request_parameters, name=name, targetUrl=targetUrl,
         )
 
         # API request
-        json_data = await self._session.put(API_ENDPOINT + '/' + webhookId,
-                                      json=put_data)
+        json_data = await self._session.put(
+            API_ENDPOINT + "/" + webhookId, json=put_data
+        )
 
         # Return a webhook object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -225,4 +228,4 @@ class AsyncWebhooksAPI():
         check_type(webhookId, str)
 
         # API request
-        await self._session.delete(API_ENDPOINT + '/' + webhookId)
+        await self._session.delete(API_ENDPOINT + "/" + webhookId)

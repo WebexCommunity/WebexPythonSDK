@@ -27,7 +27,7 @@ from webexteamssdk.aio.restsession import AsyncRestSession
 from webexteamssdk.aio.utils import (
     check_type,
     dict_from_items_with_values,
-    async_check_response_code
+    async_check_response_code,
 )
 from webexteamssdk.response_codes import EXPECTED_RESPONSE_CODE
 
@@ -36,11 +36,11 @@ import jwt
 import base64
 import requests
 
-API_ENDPOINT = 'jwt'
-OBJECT_TYPE = 'guest_issuer_token'
+API_ENDPOINT = "jwt"
+OBJECT_TYPE = "guest_issuer_token"
 
 
-class AsyncGuestIssuerAPI():
+class AsyncGuestIssuerAPI:
     """Webex Teams Guest Issuer API.
 
     Wraps the Webex Teams Guest Issuer API and exposes the API as native
@@ -48,7 +48,7 @@ class AsyncGuestIssuerAPI():
 
     """
 
-    def __init__(self, session:AsyncRestSession, object_factory):
+    def __init__(self, session: AsyncRestSession, object_factory):
         """Initialize a new GuestIssuerAPI object with the provided RestSession
 
         Args:
@@ -94,17 +94,15 @@ class AsyncGuestIssuerAPI():
             "sub": subject,
             "name": displayName,
             "iss": issuerToken,
-            "exp": expiration
+            "exp": expiration,
         }
 
         key = base64.b64decode(secret)
-        jwt_token = jwt.encode(payload, key, algorithm='HS256')
+        jwt_token = jwt.encode(payload, key, algorithm="HS256")
 
         url = self._session.base_url + API_ENDPOINT + "/" + "login"
-        headers = {
-            'Authorization': "Bearer " + jwt_token.decode('utf-8')
-        }
+        headers = {"Authorization": "Bearer " + jwt_token.decode("utf-8")}
         response = requests.post(url, headers=headers)
-        async_check_response_code(response, EXPECTED_RESPONSE_CODE['GET'])
+        async_check_response_code(response, EXPECTED_RESPONSE_CODE["GET"])
 
         return self._object_factory(OBJECT_TYPE, response.json())

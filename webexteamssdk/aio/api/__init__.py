@@ -23,7 +23,8 @@ SOFTWARE.
 """
 
 from webexteamssdk.config import (
-    DEFAULT_BASE_URL, DEFAULT_SINGLE_REQUEST_TIMEOUT,
+    DEFAULT_BASE_URL,
+    DEFAULT_SINGLE_REQUEST_TIMEOUT,
     DEFAULT_WAIT_ON_RATE_LIMIT,
 )
 from webexteamssdk.environment import WEBEX_TEAMS_ACCESS_TOKEN
@@ -47,7 +48,7 @@ from .teams import AsyncTeamsAPI
 from .webhooks import AsyncWebhooksAPI
 
 
-class AsyncWebexTeamsAPI():
+class AsyncWebexTeamsAPI:
     """Webex Teams API wrapper.
 
     Creates a 'session' for all API calls through a created WebexTeamsAPI
@@ -58,15 +59,19 @@ class AsyncWebexTeamsAPI():
     them in a simple hierarchical structure.
     """
 
-    def __init__(self, access_token=None, base_url=DEFAULT_BASE_URL,
-                 single_request_timeout=DEFAULT_SINGLE_REQUEST_TIMEOUT,
-                 wait_on_rate_limit=DEFAULT_WAIT_ON_RATE_LIMIT,
-                 object_factory=immutable_data_factory,
-                 client_id=None,
-                 client_secret=None,
-                 oauth_code=None,
-                 redirect_uri=None,
-                 proxies=None):
+    def __init__(
+        self,
+        access_token=None,
+        base_url=DEFAULT_BASE_URL,
+        single_request_timeout=DEFAULT_SINGLE_REQUEST_TIMEOUT,
+        wait_on_rate_limit=DEFAULT_WAIT_ON_RATE_LIMIT,
+        object_factory=immutable_data_factory,
+        client_id=None,
+        client_secret=None,
+        oauth_code=None,
+        redirect_uri=None,
+        proxies=None,
+    ):
         """Create a new WebexTeamsAPI object.
 
         An access token must be used when interacting with the Webex Teams API.
@@ -134,8 +139,7 @@ class AsyncWebexTeamsAPI():
 
         # Init AccessTokensAPI wrapper early to use for oauth requests
         self.access_tokens = AsyncAccessTokensAPI(
-            base_url, object_factory,
-            single_request_timeout=single_request_timeout,
+            base_url, object_factory, single_request_timeout=single_request_timeout,
         )
 
         # Check if the user has provided the required oauth parameters
@@ -145,7 +149,7 @@ class AsyncWebexTeamsAPI():
                 client_id=client_id,
                 client_secret=client_secret,
                 code=oauth_code,
-                redirect_uri=redirect_uri
+                redirect_uri=redirect_uri,
             ).access_token
 
         # If an access token hasn't been provided as a parameter, environment
@@ -166,7 +170,7 @@ class AsyncWebexTeamsAPI():
             base_url=base_url,
             single_request_timeout=single_request_timeout,
             wait_on_rate_limit=wait_on_rate_limit,
-            proxies=proxies
+            proxies=proxies,
         )
 
         # API wrappers
@@ -175,9 +179,7 @@ class AsyncWebexTeamsAPI():
         self.memberships = AsyncMembershipsAPI(self._session, object_factory)
         self.messages = AsyncMessagesAPI(self._session, object_factory)
         self.teams = AsyncTeamsAPI(self._session, object_factory)
-        self.team_memberships = AsyncTeamMembershipsAPI(
-            self._session, object_factory
-        )
+        self.team_memberships = AsyncTeamMembershipsAPI(self._session, object_factory)
         self.attachment_actions = AsyncAttachmentActionsAPI(
             self._session, object_factory
         )

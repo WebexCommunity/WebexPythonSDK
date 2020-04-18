@@ -31,6 +31,7 @@ from webexteamssdk.exceptions import webexteamssdkException
 
 logger = logging.getLogger(__name__)
 
+
 class AsyncApiError(webexteamssdkException):
     """Errors returned in response to requests sent to the Webex Teams APIs.
 
@@ -118,6 +119,7 @@ class AsyncRateLimitWarning(UserWarning):
         """
 
         super().__init__()
+
 
 async def prepare_async_api_error(
     exception_type: Type[AsyncApiError], response: aiohttp.ClientResponse

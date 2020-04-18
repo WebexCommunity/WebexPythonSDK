@@ -27,11 +27,11 @@ from webexteamssdk.aio.restsession import AsyncRestSession
 from webexteamssdk.utils import check_type, dict_from_items_with_values
 
 
-API_ENDPOINT = 'attachment/actions'
-OBJECT_TYPE = 'attachment_action'
+API_ENDPOINT = "attachment/actions"
+OBJECT_TYPE = "attachment_action"
 
 
-class AsyncAttachmentActionsAPI():
+class AsyncAttachmentActionsAPI:
     """Webex Teams Attachment Actions API.
 
     Wraps the Webex Teams Attachment Actions API and exposes the API as
@@ -39,7 +39,7 @@ class AsyncAttachmentActionsAPI():
 
     """
 
-    def __init__(self, session:AsyncRestSession, object_factory):
+    def __init__(self, session: AsyncRestSession, object_factory):
         """Initialize a new AttachmentActionsAPI object.
 
         Args:
@@ -83,10 +83,7 @@ class AsyncAttachmentActionsAPI():
         check_type(inputs, dict)
 
         post_data = dict_from_items_with_values(
-            request_parameters,
-            type=type,
-            messageId=messageId,
-            inputs=inputs
+            request_parameters, type=type, messageId=messageId, inputs=inputs
         )
 
         json_data = await self._session.post(API_ENDPOINT, json=post_data)
@@ -113,7 +110,7 @@ class AsyncAttachmentActionsAPI():
         check_type(attachmentId, str)
 
         # API request
-        json_data = await self._session.get(API_ENDPOINT + '/' + attachmentId)
+        json_data = await self._session.get(API_ENDPOINT + "/" + attachmentId)
 
         # Return a message object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)

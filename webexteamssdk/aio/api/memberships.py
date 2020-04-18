@@ -30,11 +30,11 @@ from webexteamssdk.aio.utils import (
 )
 
 
-API_ENDPOINT = 'memberships'
-OBJECT_TYPE = 'membership'
+API_ENDPOINT = "memberships"
+OBJECT_TYPE = "membership"
 
 
-class AsyncMembershipsAPI():
+class AsyncMembershipsAPI:
     """Webex Teams Memberships API.
 
     Wraps the Webex Teams Memberships API and exposes the API as native Python
@@ -42,7 +42,7 @@ class AsyncMembershipsAPI():
 
     """
 
-    def __init__(self, session:AsyncRestSession, object_factory):
+    def __init__(self, session: AsyncRestSession, object_factory):
         """Init a new MembershipsAPI object with the provided RestSession.
 
         Args:
@@ -61,8 +61,14 @@ class AsyncMembershipsAPI():
         self._object_factory = object_factory
 
     @generator_container
-    async def list(self, roomId=None, personId=None, personEmail=None, max=None,
-             **request_parameters):
+    async def list(
+        self,
+        roomId=None,
+        personId=None,
+        personEmail=None,
+        max=None,
+        **request_parameters
+    ):
         """List room memberships.
 
         By default, lists memberships for rooms to which the authenticated user
@@ -123,8 +129,14 @@ class AsyncMembershipsAPI():
         for item in items:
             yield self._object_factory(OBJECT_TYPE, item)
 
-    async def create(self, roomId, personId=None, personEmail=None,
-               isModerator=False, **request_parameters):
+    async def create(
+        self,
+        roomId,
+        personId=None,
+        personEmail=None,
+        isModerator=False,
+        **request_parameters
+    ):
         """Add someone to a room by Person ID or email address.
 
         Add someone to a room by Person ID or email address; optionally
@@ -184,7 +196,7 @@ class AsyncMembershipsAPI():
         check_type(membershipId, str)
 
         # API request
-        json_data = await self._session.get(API_ENDPOINT + '/' + membershipId)
+        json_data = await self._session.get(API_ENDPOINT + "/" + membershipId)
 
         # Return a membership object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -211,13 +223,13 @@ class AsyncMembershipsAPI():
         check_type(isModerator, bool, optional=True)
 
         put_data = dict_from_items_with_values(
-            request_parameters,
-            isModerator=isModerator,
+            request_parameters, isModerator=isModerator,
         )
 
         # API request
-        json_data = await self._session.put(API_ENDPOINT + '/' + membershipId,
-                                      json=put_data)
+        json_data = await self._session.put(
+            API_ENDPOINT + "/" + membershipId, json=put_data
+        )
 
         # Return a membership object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -236,4 +248,4 @@ class AsyncMembershipsAPI():
         check_type(membershipId, str)
 
         # API request
-        await self._session.delete(API_ENDPOINT + '/' + membershipId)
+        await self._session.delete(API_ENDPOINT + "/" + membershipId)

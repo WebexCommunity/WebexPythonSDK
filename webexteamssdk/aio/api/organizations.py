@@ -27,11 +27,11 @@ from webexteamssdk.aio.restsession import AsyncRestSession
 from webexteamssdk.utils import check_type, dict_from_items_with_values
 
 
-API_ENDPOINT = 'organizations'
-OBJECT_TYPE = 'organization'
+API_ENDPOINT = "organizations"
+OBJECT_TYPE = "organization"
 
 
-class AsyncOrganizationsAPI():
+class AsyncOrganizationsAPI:
     """Webex Teams Organizations API.
 
     Wraps the Webex Teams Organizations API and exposes the API as native
@@ -39,7 +39,7 @@ class AsyncOrganizationsAPI():
 
     """
 
-    def __init__(self, session:AsyncRestSession, object_factory):
+    def __init__(self, session: AsyncRestSession, object_factory):
         """Init a new OrganizationsAPI object with the provided RestSession.
 
         Args:
@@ -75,10 +75,7 @@ class AsyncOrganizationsAPI():
 
         """
         # API request - get items
-        items = await self._session.get_items(
-            API_ENDPOINT,
-            params=request_parameters
-        )
+        items = await self._session.get_items(API_ENDPOINT, params=request_parameters)
 
         # Yield organization objects created from the returned JSON objects
         for item in items:
@@ -102,7 +99,7 @@ class AsyncOrganizationsAPI():
         check_type(orgId, str)
 
         # API request
-        json_data = await self._session.get(API_ENDPOINT + '/' + orgId)
+        json_data = await self._session.get(API_ENDPOINT + "/" + orgId)
 
         # Return a organization object created from the returned JSON object
         return self._object_factory(OBJECT_TYPE, json_data)

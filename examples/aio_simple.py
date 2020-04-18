@@ -34,13 +34,14 @@ SOFTWARE.
 
 import asyncio
 from webexteamssdk.aio import AsyncWebexTeamsAPI
-import logging
+
 
 DEMO_ROOM_NAME = "webexteamssdk.aio Demo Room"
 DEMO_PEOPLE = ["test01@cmlccie.com", "test02@cmlccie.com"]
 DEMO_MESSAGE = u"Webex Teams rocks!  \ud83d\ude0e"
-DEMO_FILE_URL = \
+DEMO_FILE_URL = (
     "https://www.webex.com/content/dam/wbx/us/images/dg-integ/teams_icon.png"
+)
 
 
 async def main():
@@ -56,15 +57,19 @@ async def main():
 
         for _ in range(5):
             # Build a list of rooms with the name DEMO_ROOM_NAME
-            existing_demo_rooms = [room async for room in rooms if room.title == DEMO_ROOM_NAME]
+            existing_demo_rooms = [
+                room async for room in rooms if room.title == DEMO_ROOM_NAME
+            ]
             if existing_demo_rooms:
-                print("Found {} existing room(s); deleting them."
-                      "".format(len(existing_demo_rooms)))
+                print(
+                    "Found {} existing room(s); deleting them."
+                    "".format(len(existing_demo_rooms))
+                )
                 for room in existing_demo_rooms:
                     # Delete the room
                     await api.rooms.delete(room.id)
                     print("Room '{}' deleted.".format(room.id))
-        
+
         for _ in range(2):
             # Create a new demo room
             demo_room = await api.rooms.create(DEMO_ROOM_NAME)
@@ -88,5 +93,6 @@ async def main():
             # Print the message details (formatted JSON)
             print(message)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     asyncio.run(main())

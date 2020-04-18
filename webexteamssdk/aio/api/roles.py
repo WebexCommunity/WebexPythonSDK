@@ -30,11 +30,11 @@ from webexteamssdk.aio.utils import (
 )
 
 
-API_ENDPOINT = 'roles'
-OBJECT_TYPE = 'role'
+API_ENDPOINT = "roles"
+OBJECT_TYPE = "role"
 
 
-class AsyncRolesAPI():
+class AsyncRolesAPI:
     """Webex Teams Roles API.
 
     Wraps the Webex Teams Roles API and exposes the API as native Python
@@ -42,7 +42,7 @@ class AsyncRolesAPI():
 
     """
 
-    def __init__(self, session:AsyncRestSession, object_factory):
+    def __init__(self, session: AsyncRestSession, object_factory):
         """Initialize a new RolesAPI object with the provided RestSession.
 
         Args:
@@ -78,10 +78,7 @@ class AsyncRolesAPI():
 
         """
         # API request - get items
-        items = await self._session.get_items(
-            API_ENDPOINT,
-            params=request_parameters
-        )
+        items = await self._session.get_items(API_ENDPOINT, params=request_parameters)
 
         # Yield role objects created from the returned JSON objects
         for item in items:
@@ -104,7 +101,7 @@ class AsyncRolesAPI():
         check_type(roleId, str)
 
         # API request
-        json_data = await self._session.get(API_ENDPOINT + '/' + roleId)
+        json_data = await self._session.get(API_ENDPOINT + "/" + roleId)
 
         # Return a role object created from the returned JSON object
         return self._object_factory(OBJECT_TYPE, json_data)

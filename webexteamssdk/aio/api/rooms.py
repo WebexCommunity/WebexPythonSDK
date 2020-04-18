@@ -32,11 +32,11 @@ from webexteamssdk.aio.utils import (
 )
 
 
-API_ENDPOINT = 'rooms'
-OBJECT_TYPE = 'room'
+API_ENDPOINT = "rooms"
+OBJECT_TYPE = "room"
 
 
-class AsyncRoomsAPI():
+class AsyncRoomsAPI:
     """Webex Teams Rooms API.
 
     Wraps the Webex Teams Rooms API and exposes the API as native Python
@@ -44,7 +44,7 @@ class AsyncRoomsAPI():
 
     """
 
-    def __init__(self, session:AsyncRestSession, object_factory):
+    def __init__(self, session: AsyncRestSession, object_factory):
         """Initialize a new RoomsAPI object with the provided RestSession.
 
         Args:
@@ -62,8 +62,9 @@ class AsyncRoomsAPI():
         self._session = session
         self._object_factory = object_factory
 
-    async def list(self, teamId=None, type=None, sortBy=None, max=None,
-             **request_parameters):
+    async def list(
+        self, teamId=None, type=None, sortBy=None, max=None, **request_parameters
+    ):
         """List rooms.
 
         By default, lists rooms to which the authenticated user belongs.
@@ -107,11 +108,7 @@ class AsyncRoomsAPI():
         check_type(max, int, optional=True)
 
         params = dict_from_items_with_values(
-            request_parameters,
-            teamId=teamId,
-            type=type,
-            sortBy=sortBy,
-            max=max,
+            request_parameters, teamId=teamId, type=type, sortBy=sortBy, max=max,
         )
 
         # API request - get items
@@ -145,9 +142,7 @@ class AsyncRoomsAPI():
         check_type(teamId, str, optional=True)
 
         post_data = dict_from_items_with_values(
-            request_parameters,
-            title=title,
-            teamId=teamId,
+            request_parameters, title=title, teamId=teamId,
         )
 
         # API request
@@ -173,7 +168,7 @@ class AsyncRoomsAPI():
         check_type(roomId, str)
 
         # API request
-        json_data = await self._session.get(API_ENDPOINT + '/' + roomId)
+        json_data = await self._session.get(API_ENDPOINT + "/" + roomId)
 
         # Return a room object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -198,14 +193,10 @@ class AsyncRoomsAPI():
         check_type(roomId, str)
         check_type(roomId, str, optional=True)
 
-        put_data = dict_from_items_with_values(
-            request_parameters,
-            title=title,
-        )
+        put_data = dict_from_items_with_values(request_parameters, title=title,)
 
         # API request
-        json_data = await self._session.put(API_ENDPOINT + '/' + roomId,
-                                      json=put_data)
+        json_data = await self._session.put(API_ENDPOINT + "/" + roomId, json=put_data)
 
         # Return a room object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -224,4 +215,4 @@ class AsyncRoomsAPI():
         check_type(roomId, str)
 
         # API request
-        await self._session.delete(API_ENDPOINT + '/' + roomId)
+        await self._session.delete(API_ENDPOINT + "/" + roomId)
