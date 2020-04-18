@@ -6,3 +6,5 @@ flake8
 twine
 ipython
 aiohttp
+PyJWT
+future
