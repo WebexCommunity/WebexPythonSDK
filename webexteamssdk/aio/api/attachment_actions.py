@@ -50,7 +50,7 @@ class AsyncAttachmentActionsAPI():
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(session, RestSession)
+        check_type(session, AsyncRestSession)
         super().__init__()
         self._session = session
         self._object_factory = object_factory

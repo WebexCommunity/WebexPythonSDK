@@ -78,4 +78,4 @@ async def async_extract_and_parse_json(response: aiohttp.ClientResponse) -> Orde
         The parsed JSON data as the appropriate native Python data type.
 
     """
-    return json.loads(response.text, object_hook=OrderedDict)
+    return await response.json()

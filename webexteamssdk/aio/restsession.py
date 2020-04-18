@@ -31,7 +31,7 @@ import aiohttp
 import asyncio
 
 from webexteamssdk.config import DEFAULT_SINGLE_REQUEST_TIMEOUT, DEFAULT_WAIT_ON_RATE_LIMIT
-from webexteamssdk.aio.exceptions import MalformedResponse
+from webexteamssdk.exceptions import MalformedResponse
 from webexteamssdk.aio.exceptions import (
     AsyncRateLimitError,
     AsyncRateLimitWarning,
@@ -39,13 +39,24 @@ from webexteamssdk.aio.exceptions import (
 )
 
 from webexteamssdk.response_codes import EXPECTED_RESPONSE_CODE
-from webexteamssdk.utils import (
-    check_response_code,
+from webexteamssdk.aio.utils import (
+    async_check_response_code,
     check_type,
-    extract_and_parse_json,
+    async_extract_and_parse_json,
     validate_base_url,
 )
 
+async def on_request_start(
+        session, trace_config_ctx, params):
+    print("Starting request")
+    print(trace_config_ctx.trace_request_ctx)
+
+async def on_request_end(session, trace_config_ctx, params):
+    print("Ending request")
+
+trace_config = aiohttp.TraceConfig()
+trace_config.on_request_start.append(on_request_start)
+trace_config.on_request_end.append(on_request_end)
 
 # Helper Functions
 def _fix_next_url(next_url: str) -> str:
@@ -138,8 +149,7 @@ class AsyncRestSession:
         self._wait_on_rate_limit = wait_on_rate_limit
 
         # Initialize a new `requests` session
-        self._req_session = aiohttp.ClientSession(
-            headers=self._headers,
+        self._req_session = aiohttp.ClientSession(trace_configs=[trace_config],
             timeout=aiohttp.ClientTimeout(total=single_request_timeout),
         )
 
@@ -150,6 +160,11 @@ class AsyncRestSession:
                 "http" in proxies.keys()
             ):  # use the http proxy as fallback, even for https
                 self.proxy = proxies["http"]
+        else:
+            self.proxy = None
+
+        self.update_headers({'Authorization': 'Bearer ' + access_token,
+                             'Content-type': 'application/json;charset=utf-8'})
 
     @property
     def base_url(self):
@@ -257,12 +272,12 @@ class AsyncRestSession:
         while True:
             # Make the HTTP request to the API endpoint
             response = await self._req_session.request(
-                method, abs_url, headers=self._headers, **kwargs
+                method, abs_url, proxy=self.proxy, **kwargs
             )
 
             try:
                 # Check the response code for error conditions
-                async_check_response_code(response, erc)
+                await async_check_response_code(response, erc)
             except AsyncRateLimitError as e:
                 # Catch rate-limit errors
                 # Wait and retry if automatic rate-limit handling is enabled
@@ -452,3 +467,7 @@ class AsyncRestSession:
         erc = kwargs.pop("erc", EXPECTED_RESPONSE_CODE["DELETE"])
 
         await self.request("DELETE", url, erc, **kwargs)
+
+    async def close(self):
+        """ Closes the underlying connection session """
+        await self._req_session.close()

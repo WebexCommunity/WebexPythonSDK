@@ -31,20 +31,6 @@ from webexteamssdk.exceptions import webexteamssdkException
 
 logger = logging.getLogger(__name__)
 
-
-async def prepare_async_api_error(
-    exception_type: Type[AsyncApiError], response: aiohttp.ClientResponse
-) -> AsyncApiError:
-    details = None
-    if "application/json" in response.headers.get("Content-Type", "").lower():
-        try:
-            details = await self.response.json()
-        except ValueError:
-            logger.warning("Error parsing JSON response body")
-
-    return exception_type(response, details)
-
-
 class AsyncApiError(webexteamssdkException):
     """Errors returned in response to requests sent to the Webex Teams APIs.
 
@@ -58,7 +44,7 @@ class AsyncApiError(webexteamssdkException):
         self.response = response
         """The :class:`aiohttp.ClientResponse` object returned from the API call."""
 
-        self.request = self.response.request
+        self.request = self.response.request_info
         """The :class:`requests.PreparedRequest` of the API call."""
 
         self.status_code = self.response.status
@@ -132,3 +118,15 @@ class AsyncRateLimitWarning(UserWarning):
         """
 
         super().__init__()
+
+async def prepare_async_api_error(
+    exception_type: Type[AsyncApiError], response: aiohttp.ClientResponse
+) -> AsyncApiError:
+    details = None
+    if "application/json" in response.headers.get("Content-Type", "").lower():
+        try:
+            details = await response.json()
+        except ValueError:
+            logger.warning("Error parsing JSON response body")
+
+    return exception_type(response, details)

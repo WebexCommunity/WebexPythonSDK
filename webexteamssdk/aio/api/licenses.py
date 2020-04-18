@@ -54,7 +54,7 @@ class AsyncLicensesAPI():
             TypeError: If the input object is not a dictionary or string.
 
         """
-        check_type(session, RestSession)
+        check_type(session, AsyncRestSession)
 
         super().__init__()
 

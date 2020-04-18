@@ -22,7 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from webexteamssdk.generator_containers import generator_container
+from aiostream.core import operator
+
+from webexteamssdk.aio.generator_containers import async_generator_container
 from webexteamssdk.aio.restsession import AsyncRestSession
 from webexteamssdk.aio.utils import (
     check_type,
@@ -53,14 +55,13 @@ class AsyncRoomsAPI():
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(session, RestSession)
+        check_type(session, AsyncRestSession)
 
         super().__init__()
 
         self._session = session
         self._object_factory = object_factory
 
-    @generator_container
     async def list(self, teamId=None, type=None, sortBy=None, max=None,
              **request_parameters):
         """List rooms.
@@ -114,10 +115,10 @@ class AsyncRoomsAPI():
         )
 
         # API request - get items
-        items = await self._session.get_items(API_ENDPOINT, params=params)
+        items = self._session.get_items(API_ENDPOINT, params=params)
 
         # Yield room objects created from the returned items JSON objects
-        for item in items:
+        async for item in items:
             yield self._object_factory(OBJECT_TYPE, item)
 
     async def create(self, title, teamId=None, **request_parameters):

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from requests_toolbelt import MultipartEncoder
+import aiohttp
 
 from webexteamssdk.models.cards import AdaptiveCard
 from webexteamssdk.generator_containers import generator_container
@@ -56,7 +56,7 @@ class AsyncMessagesAPI():
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(session, RestSession)
+        check_type(session, AsyncRestSession)
         super().__init__()
         self._session = session
         self._object_factory = object_factory
@@ -208,14 +208,34 @@ class AsyncMessagesAPI():
         elif is_local_file(files[0]):
             # Multipart MIME post
             try:
-                post_data['files'] = open_local_file(files[0])
-                multipart_data = MultipartEncoder(post_data)
-                headers = {'Content-type': multipart_data.content_type}
+                post_data.pop("files",None)
+                post_data.pop("attachements",None)
+                file = open_local_file(files[0])
+                with aiohttp.MultipartWriter() as mpwriter:
+                    payload = mpwriter.append(file.file_object)
+                    payload.headers["Content-Disposition"]=f"form-data; name=\"files\"; filename=\"{file.file_name}\""
+                    for k,v in post_data.items():            
+                        payload = mpwriter.append(v)
+                        payload.headers["Content-Disposition"]=f"form-data; name=\"{k}\""
+                
                 json_data = await self._session.post(API_ENDPOINT,
-                                               headers=headers,
-                                               data=multipart_data)
+                                                headers={"Content-type":f"multipart/form-data; boundary={mpwriter.boundary}"},
+                                                data=mpwriter)           
             finally:
-                post_data['files'].file_object.close()
+                if not file.file_object.closed:
+                    file.file_object.close()
+            #try:
+            #    file = open_local_file(files[0])
+            #    post_data.pop("files",None)
+            #    post_data.pop("attachements",None)
+            #    data = aiohttp.FormData(post_data)
+            #    data.add_field('files',file.file_object, filename=file.file_name)
+            #    headers = {'Content-type': "multipart/form-data"}
+            #    json_data = await self._session.post(API_ENDPOINT,
+            #                                   headers=headers,
+            #                                   data=data)
+            #finally:
+            #    file.file_object.close()
 
         else:
             raise ValueError("The `files` parameter does not contain a vaild "

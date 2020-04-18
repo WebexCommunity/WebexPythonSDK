@@ -54,7 +54,7 @@ class AsyncWebhooksAPI():
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(session, RestSession)
+        check_type(session, AsyncRestSession)
 
         super().__init__()
 

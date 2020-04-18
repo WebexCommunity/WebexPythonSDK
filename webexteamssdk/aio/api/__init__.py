@@ -133,7 +133,7 @@ class AsyncWebexTeamsAPI():
         access_token = access_token or WEBEX_TEAMS_ACCESS_TOKEN
 
         # Init AccessTokensAPI wrapper early to use for oauth requests
-        self.access_tokens = AccessTokensAPI(
+        self.access_tokens = AsyncAccessTokensAPI(
             base_url, object_factory,
             single_request_timeout=single_request_timeout,
         )

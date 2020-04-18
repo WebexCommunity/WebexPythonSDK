@@ -89,7 +89,7 @@ class AsyncAccessTokensAPI():
         """Timeout in seconds for the API requests."""
         return self._single_request_timeout
 
-    async async def get(self, client_id, client_secret, code, redirect_uri):
+    async def get(self, client_id, client_secret, code, redirect_uri):
         """Exchange an Authorization Code for an Access Token.
 
         Exchange an Authorization Code for an Access Token that can be used to
