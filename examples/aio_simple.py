@@ -55,43 +55,42 @@ async def main():
         # a member
         rooms = api.rooms.list()
 
-        for _ in range(5):
-            # Build a list of rooms with the name DEMO_ROOM_NAME
-            existing_demo_rooms = [
-                room async for room in rooms if room.title == DEMO_ROOM_NAME
-            ]
-            if existing_demo_rooms:
-                print(
-                    "Found {} existing room(s); deleting them."
-                    "".format(len(existing_demo_rooms))
-                )
-                for room in existing_demo_rooms:
-                    # Delete the room
-                    await api.rooms.delete(room.id)
-                    print("Room '{}' deleted.".format(room.id))
 
-        for _ in range(2):
-            # Create a new demo room
-            demo_room = await api.rooms.create(DEMO_ROOM_NAME)
+        # Build a list of rooms with the name DEMO_ROOM_NAME
+        existing_demo_rooms = [
+            room async for room in rooms if room.title == DEMO_ROOM_NAME
+        ]
+        if existing_demo_rooms:
+            print(
+                "Found {} existing room(s); deleting them."
+                "".format(len(existing_demo_rooms))
+            )
+            for room in existing_demo_rooms:
+                # Delete the room
+                await api.rooms.delete(room.id)
+                print("Room '{}' deleted.".format(room.id))
+        return
+        # Create a new demo room
+        demo_room = await api.rooms.create(DEMO_ROOM_NAME)
 
-            # Print the room details (formatted JSON)
-            print(demo_room)
+        # Print the room details (formatted JSON)
+        print(demo_room)
 
-            for person_email in DEMO_PEOPLE:
-                # Add people to the room
-                await api.memberships.create(demo_room.id, personEmail=person_email)
+        for person_email in DEMO_PEOPLE:
+            # Add people to the room
+            await api.memberships.create(demo_room.id, personEmail=person_email)
 
-            # Create a message in the new room
-            message = await api.messages.create(demo_room.id, text=DEMO_MESSAGE)
+        # Create a message in the new room
+        message = await api.messages.create(demo_room.id, text=DEMO_MESSAGE)
 
-            # Print the message details (formatted JSON)
-            print(message)
+        # Print the message details (formatted JSON)
+        print(message)
 
-            # Post a file in the new room from test_url
-            message = await api.messages.create(demo_room.id, files=[DEMO_FILE_URL])
+        # Post a file in the new room from test_url
+        message = await api.messages.create(demo_room.id, files=[DEMO_FILE_URL])
 
-            # Print the message details (formatted JSON)
-            print(message)
+        # Print the message details (formatted JSON)
+        print(message)
 
 
 if __name__ == "__main__":

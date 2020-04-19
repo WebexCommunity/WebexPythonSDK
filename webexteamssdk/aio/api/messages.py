@@ -25,7 +25,8 @@ SOFTWARE.
 import aiohttp
 
 from webexteamssdk.models.cards import AdaptiveCard
-from webexteamssdk.generator_containers import generator_container
+from webexteamssdk.aio.generator_containers import async_generator_container
+
 from webexteamssdk.aio.restsession import AsyncRestSession
 from webexteamssdk.aio.utils import (
     check_type,
@@ -65,7 +66,7 @@ class AsyncMessagesAPI:
         self._session = session
         self._object_factory = object_factory
 
-    @generator_container
+    @async_generator_container
     async def list(
         self,
         roomId,
@@ -253,19 +254,6 @@ class AsyncMessagesAPI:
             finally:
                 if not file.file_object.closed:
                     file.file_object.close()
-            # try:
-            #    file = open_local_file(files[0])
-            #    post_data.pop("files",None)
-            #    post_data.pop("attachements",None)
-            #    data = aiohttp.FormData(post_data)
-            #    data.add_field('files',file.file_object, filename=file.file_name)
-            #    headers = {'Content-type': "multipart/form-data"}
-            #    json_data = await self._session.post(API_ENDPOINT,
-            #                                   headers=headers,
-            #                                   data=data)
-            # finally:
-            #    file.file_object.close()
-
         else:
             raise ValueError(
                 "The `files` parameter does not contain a vaild "

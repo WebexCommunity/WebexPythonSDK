@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from webexteamssdk.generator_containers import generator_container
+from webexteamssdk.aio.generator_containers import async_generator_container
 from webexteamssdk.aio.restsession import AsyncRestSession
 from webexteamssdk.aio.utils import (
     check_type,
@@ -60,7 +60,7 @@ class AsyncEventsAPI:
         self._session = session
         self._object_factory = object_factory
 
-    @generator_container
+    @async_generator_container
     async def list(
         self,
         resource=None,

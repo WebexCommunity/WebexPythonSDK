@@ -23,7 +23,8 @@ SOFTWARE.
 """
 
 
-from webexteamssdk.generator_containers import generator_container
+from webexteamssdk.aio.generator_containers import async_generator_container
+
 from webexteamssdk.aio.restsession import AsyncRestSession
 from webexteamssdk.aio.utils import (
     check_type,
@@ -61,7 +62,7 @@ class AsyncWebhooksAPI:
         self._session = session
         self._object_factory = object_factory
 
-    @generator_container
+    @async_generator_container
     async def list(self, max=None, **request_parameters):
         """List all of the authenticated user's webhooks.
 

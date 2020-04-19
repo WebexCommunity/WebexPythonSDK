@@ -30,22 +30,24 @@ from webexteamssdk.config import (
 from webexteamssdk.environment import WEBEX_TEAMS_ACCESS_TOKEN
 from webexteamssdk.exceptions import AccessTokenError
 from webexteamssdk.models.immutable import immutable_data_factory
+
 from webexteamssdk.aio.restsession import AsyncRestSession
+from webexteamssdk.aio.api.access_tokens import AsyncAccessTokensAPI
+from webexteamssdk.aio.api.attachment_actions import AsyncAttachmentActionsAPI
+from webexteamssdk.aio.api.events import AsyncEventsAPI
+from webexteamssdk.aio.api.guest_issuer import AsyncGuestIssuerAPI
+from webexteamssdk.aio.api.licenses import AsyncLicensesAPI
+from webexteamssdk.aio.api.memberships import AsyncMembershipsAPI
+from webexteamssdk.aio.api.messages import AsyncMessagesAPI
+from webexteamssdk.aio.api.organizations import AsyncOrganizationsAPI
+from webexteamssdk.aio.api.people import AsyncPeopleAPI
+from webexteamssdk.aio.api.roles import AsyncRolesAPI
+from webexteamssdk.aio.api.rooms import AsyncRoomsAPI
+from webexteamssdk.aio.api.team_memberships import AsyncTeamMembershipsAPI
+from webexteamssdk.aio.api.teams import AsyncTeamsAPI
+from webexteamssdk.aio.api.webhooks import AsyncWebhooksAPI
+
 from webexteamssdk.utils import check_type
-from .access_tokens import AsyncAccessTokensAPI
-from .attachment_actions import AsyncAttachmentActionsAPI
-from .events import AsyncEventsAPI
-from .guest_issuer import AsyncGuestIssuerAPI
-from .licenses import AsyncLicensesAPI
-from .memberships import AsyncMembershipsAPI
-from .messages import AsyncMessagesAPI
-from .organizations import AsyncOrganizationsAPI
-from .people import AsyncPeopleAPI
-from .roles import AsyncRolesAPI
-from .rooms import AsyncRoomsAPI
-from .team_memberships import AsyncTeamMembershipsAPI
-from .teams import AsyncTeamsAPI
-from .webhooks import AsyncWebhooksAPI
 
 
 class AsyncWebexTeamsAPI:

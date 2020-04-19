@@ -62,6 +62,7 @@ class AsyncRoomsAPI:
         self._session = session
         self._object_factory = object_factory
 
+    @async_generator_container
     async def list(
         self, teamId=None, type=None, sortBy=None, max=None, **request_parameters
     ):

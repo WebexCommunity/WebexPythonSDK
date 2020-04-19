@@ -49,20 +49,6 @@ from webexteamssdk.aio.utils import (
     validate_base_url,
 )
 
-
-async def on_request_start(session, trace_config_ctx, params):
-    print("Starting request")
-    print(trace_config_ctx.trace_request_ctx)
-
-
-async def on_request_end(session, trace_config_ctx, params):
-    print("Ending request")
-
-
-trace_config = aiohttp.TraceConfig()
-trace_config.on_request_start.append(on_request_start)
-trace_config.on_request_end.append(on_request_end)
-
 # Helper Functions
 def _fix_next_url(next_url: str) -> str:
     """Remove max=null parameter from URL.
@@ -153,9 +139,8 @@ class AsyncRestSession:
         self._single_request_timeout = single_request_timeout
         self._wait_on_rate_limit = wait_on_rate_limit
 
-        # Initialize a new `requests` session
+        # Initialize a new `aiohttp.ClientSession` session
         self._req_session = aiohttp.ClientSession(
-            trace_configs=[trace_config],
             timeout=aiohttp.ClientTimeout(total=single_request_timeout),
         )
 
