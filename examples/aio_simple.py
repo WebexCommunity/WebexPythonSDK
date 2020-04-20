@@ -69,7 +69,7 @@ async def main():
                 # Delete the room
                 await api.rooms.delete(room.id)
                 print("Room '{}' deleted.".format(room.id))
-        return
+
         # Create a new demo room
         demo_room = await api.rooms.create(DEMO_ROOM_NAME)
 
