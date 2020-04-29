@@ -47,6 +47,7 @@ from .rooms import RoomsAPI
 from .team_memberships import TeamMembershipsAPI
 from .teams import TeamsAPI
 from .webhooks import WebhooksAPI
+import os
 
 
 class WebexTeamsAPI(object):
@@ -68,7 +69,9 @@ class WebexTeamsAPI(object):
                  client_secret=None,
                  oauth_code=None,
                  redirect_uri=None,
-                 proxies=None):
+                 proxies=None,
+                 be_geo_id=None,
+                 caller=None):
         """Create a new WebexTeamsAPI object.
 
         An access token must be used when interacting with the Webex Teams API.
@@ -112,6 +115,12 @@ class WebexTeamsAPI(object):
                 OAuth process.
             proxies(dict): Dictionary of proxies passed on to the requests
                 session.
+            be_geo_id(basestring): Optional partner identifier for API usage
+                tracking.  Defaults to checking for a BE_GEO_ID environment
+                variable.
+            caller(basestring): Optional  identifier for API usage tracking.
+                Defaults to checking for a WEBEX_PYTHON_SDK_CALLER environment
+                variable.
 
         Returns:
             WebexTeamsAPI: A new WebexTeamsAPI object.
@@ -131,6 +140,8 @@ class WebexTeamsAPI(object):
         check_type(oauth_code, basestring, optional=True)
         check_type(redirect_uri, basestring, optional=True)
         check_type(proxies, dict, optional=True)
+        check_type(be_geo_id, basestring, optional=True)
+        check_type(caller, basestring, optional=True)
 
         access_token = access_token or WEBEX_TEAMS_ACCESS_TOKEN
 
@@ -150,6 +161,10 @@ class WebexTeamsAPI(object):
                 redirect_uri=redirect_uri
             ).access_token
 
+        # Set optional API metrics tracking variables from env vars if there
+        be_geo_id = be_geo_id or os.environ.get('BE_GEO_ID')
+        caller = caller or os.environ.get('WEBEX_PYTHON_SDK_CALLER')
+
         # If an access token hasn't been provided as a parameter, environment
         # variable, or obtained via an OAuth exchange raise an error.
         if not access_token:
@@ -168,7 +183,9 @@ class WebexTeamsAPI(object):
             base_url=base_url,
             single_request_timeout=single_request_timeout,
             wait_on_rate_limit=wait_on_rate_limit,
-            proxies=proxies
+            proxies=proxies,
+            be_geo_id=be_geo_id,
+            caller=caller
         )
 
         # API wrappers

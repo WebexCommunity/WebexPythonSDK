@@ -39,6 +39,10 @@ import warnings
 from builtins import *
 
 import requests
+import urllib
+import platform
+import sys
+import json
 from past.builtins import basestring
 
 from .config import DEFAULT_SINGLE_REQUEST_TIMEOUT, DEFAULT_WAIT_ON_RATE_LIMIT
@@ -48,6 +52,7 @@ from .utils import (
     check_response_code, check_type, extract_and_parse_json, validate_base_url,
 )
 
+from webexteamssdk._version import get_versions
 
 # Helper Functions
 def _fix_next_url(next_url):
@@ -100,7 +105,9 @@ class RestSession(object):
     def __init__(self, access_token, base_url,
                  single_request_timeout=DEFAULT_SINGLE_REQUEST_TIMEOUT,
                  wait_on_rate_limit=DEFAULT_WAIT_ON_RATE_LIMIT,
-                 proxies=None):
+                 proxies=None,
+                 be_geo_id=None,
+                 caller=None):
         """Initialize a new RestSession object.
 
         Args:
@@ -114,6 +121,12 @@ class RestSession(object):
                 handling.
             proxies(dict): Dictionary of proxies passed on to the requests
                 session.
+            be_geo_id(basestring): Optional partner identifier for API usage
+                tracking.  Defaults to checking for a BE_GEO_ID environment
+                variable.
+            caller(basestring): Optional  identifier for API usage tracking.
+                Defaults to checking for a WEBEX_PYTHON_SDK_CALLER environment
+                variable.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -139,9 +152,60 @@ class RestSession(object):
         if proxies is not None:
             self._req_session.proxies.update(proxies)
 
+        # Build a User-Agent header
+        ua_base = 'python-webexteams/' + get_versions()['version'] + ' '
+
+        # Generate extended portion of the User-Agent
+        ua_ext = {}
+
+        # Mimic pip system data collection per
+        # https://github.com/pypa/pip/blob/master/src/pip/_internal/network/session.py
+        ua_ext['implementation'] = {
+            "name": platform.python_implementation(),
+        }
+
+        if ua_ext["implementation"]["name"] == 'CPython':
+            ua_ext["implementation"]["version"] = platform.python_version()
+        elif ua_ext["implementation"]["name"] == 'PyPy':
+            if sys.pypy_version_info.releaselevel == 'final':
+                pypy_version_info = sys.pypy_version_info[:3]
+            else:
+                pypy_version_info = sys.pypy_version_info
+            ua_ext["implementation"]["version"] = ".".join(
+                [str(x) for x in pypy_version_info]
+            )
+        elif ua_ext["implementation"]["name"] == 'Jython':
+            ua_ext["implementation"]["version"] = platform.python_version()
+        elif ua_ext["implementation"]["name"] == 'IronPython':
+            ua_ext["implementation"]["version"] = platform.python_version()
+
+        if sys.platform.startswith("darwin") and platform.mac_ver()[0]:
+            dist = {"name": "macOS", "version": platform.mac_ver()[0]}
+            ua_ext["distro"] = dist
+
+        if platform.system():
+            ua_ext.setdefault("system", {})["name"] = platform.system()
+
+        if platform.release():
+            ua_ext.setdefault("system", {})["release"] = platform.release()
+
+        if platform.machine():
+            ua_ext["cpu"] = platform.machine()
+
+        if be_geo_id:
+            ua_ext["be_geo_id"] = be_geo_id
+
+        if caller:
+            ua_ext["caller"] = caller
+
+        # Override the default requests User-Agent but not other headers
+        new_ua = ua_base + urllib.parse.quote(json.dumps(ua_ext))
+        self._req_session.headers['User-Agent'] = new_ua
+
         # Update the headers of the `requests` session
         self.update_headers({'Authorization': 'Bearer ' + access_token,
                              'Content-type': 'application/json;charset=utf-8'})
+        print(self._req_session.headers)
 
     @property
     def base_url(self):
