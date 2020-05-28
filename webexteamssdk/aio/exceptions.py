@@ -106,7 +106,7 @@ class AsyncRateLimitWarning(UserWarning):
     be retried.
     """
 
-    def __init__(self, response: aiohttp.ClientResponse):
+    def __init__(self, response: aiohttp.ClientResponse, message_details):
         assert isinstance(response, aiohttp.ClientResponse)
 
         # Extended warning attributes
@@ -118,9 +118,39 @@ class AsyncRateLimitWarning(UserWarning):
         1 second if Webex Teams returns a `Retry-After` header of 0 seconds.
         """
 
-        super().__init__()
+        # Extended exception attributes
+        self.response = response
+        """The :class:`aiohttp.ClientResponse` object returned from the API call."""
 
+        self.request = self.response.request_info
+        """The :class:`requests.PreparedRequest` of the API call."""
 
+        self.status_code = self.response.status
+        """The HTTP status code from the API response."""
+
+        self.status = self.response.reason
+        """The HTTP status from the API response."""
+
+        self.details = message_details
+        """The parsed JSON details from the API response."""
+
+        self.message = self.details.get("message") if self.details else None
+        """The error message from the parsed API response."""
+
+        self.description = RESPONSE_CODES.get(self.status_code)
+        """A description of the HTTP Response Code from the API docs."""
+
+        super().__init__(
+            "[{status_code}]{status} - {message}".format(
+                status_code=self.status_code,
+                status=" " + self.status if self.status else "",
+                message=self.message or self.description or "Unknown Error",
+            )
+        )
+
+    def __str__(self):
+        return f"AsyncRateLimitWarning waiting {self.retry_after} seconds"
+    
 async def prepare_async_api_error(
     exception_type: Type[AsyncApiError], response: aiohttp.ClientResponse
 ) -> AsyncApiError:

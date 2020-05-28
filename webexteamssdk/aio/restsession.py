@@ -277,7 +277,7 @@ class AsyncRestSession:
                 # Catch rate-limit errors
                 # Wait and retry if automatic rate-limit handling is enabled
                 if self.wait_on_rate_limit:
-                    warnings.warn(AsyncRateLimitWarning(response))
+                    warnings.warn(await prepare_async_api_error(AsyncRateLimitWarning, response))
                     await asyncio.sleep(e.retry_after)
                     continue
                 else:
