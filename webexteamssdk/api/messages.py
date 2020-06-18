@@ -137,7 +137,7 @@ class MessagesAPI(object):
 
     def create(self, roomId=None, toPersonId=None, toPersonEmail=None,
                text=None, markdown=None, files=None, attachments=None,
-               **request_parameters):
+               parentId=None, **request_parameters):
         """Post a message to a room.
 
         The files parameter is a list, which accepts multiple values to allow
@@ -158,6 +158,8 @@ class MessagesAPI(object):
                 be posted into the room. Only one file is allowed per message.
             attachments(list): Content attachments to attach to the message.
                 See the Cards Guide for more information.
+            parentId(basestring): The parent message to reply to. This will
+                start or reply to a thread.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
@@ -179,6 +181,7 @@ class MessagesAPI(object):
         check_type(markdown, basestring, optional=True)
         check_type(files, list, optional=True)
         check_type(attachments, list, optional=True)
+        check_type(parentId, basestring, optional=True)
 
         if files:
             if len(files) > 1:
@@ -209,6 +212,7 @@ class MessagesAPI(object):
             markdown=markdown,
             files=files,
             attachments=attachments,
+            parentId=parentId
         )
 
         # API request
