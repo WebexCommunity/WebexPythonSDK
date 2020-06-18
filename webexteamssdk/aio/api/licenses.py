@@ -88,10 +88,10 @@ class AsyncLicensesAPI:
         params = dict_from_items_with_values(request_parameters, orgId=orgId,)
 
         # API request - get items
-        items = await self._session.get_items(API_ENDPOINT, params=params)
+        items = self._session.get_items(API_ENDPOINT, params=params)
 
         # Yield license objects created from the returned JSON objects
-        for item in items:
+        async for item in items:
             yield self._object_factory(OBJECT_TYPE, item)
 
     async def get(self, licenseId):

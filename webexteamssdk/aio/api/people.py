@@ -120,10 +120,10 @@ class AsyncPeopleAPI:
         )
 
         # API request - get items
-        items = await self._session.get_items(API_ENDPOINT, params=params)
+        items = self._session.get_items(API_ENDPOINT, params=params)
 
         # Yield person objects created from the returned items JSON objects
-        for item in items:
+        async for item in items:
             yield self._object_factory(OBJECT_TYPE, item)
 
     async def create(
