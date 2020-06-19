@@ -2,6 +2,9 @@
 | :class:`WebexTeamsAPI` | :ref:`access_tokens`      | :meth:`get() <webeteamssdk.api.access_tokens.AccessTokensAPI.get>`              |
 |                        |                           | :meth:`refresh() <webeteamssdk.api.access_tokens.AccessTokensAPI.refresh>`      |
 +------------------------+---------------------------+---------------------------------------------------------------------------------+
+|                        | :ref:`attachment_actions` | :meth:`create() <webexteamssdk.api.attachment_actions.create>`                  |
+|                        |                           | :meth:`get() <webexteamssdk.api.attachment_actions.get>`                        |
++------------------------+---------------------------+---------------------------------------------------------------------------------+
 |                        | :ref:`events`             | :meth:`list() <webeteamssdk.api.events.EventsAPI.list>`                         |
 |                        |                           | :meth:`get() <webeteamssdk.api.events.EventsAPI.get>`                           |
 +------------------------+---------------------------+---------------------------------------------------------------------------------+

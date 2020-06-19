@@ -32,7 +32,12 @@ access_tokens
 
 
 
+.. _attachment_actions
 
+attachment_actions
+------------------
+
+.. autoclass:: webexteamssdk.api.attachment_actions.AttachmentActionsAPI()
 
 
 .. _events:
@@ -152,8 +157,12 @@ Access Token
     :inherited-members:
 
 
+.. _Attachment Action:
 
+Attachment Action
+-----------------
 
+.. autoclass:: AttachmentAction()
     :inherited-members:
 
 
