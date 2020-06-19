@@ -99,6 +99,11 @@ class MessageBasicPropertiesMixin(object):
         return self._json_data.get('mentionedGroups')
 
     @property
+    def parentId(self):
+        """The unique identifier for the parent message."""
+        return self._json_data.get('parentId')
+
+    @property
     def created(self):
         """The date and time the message was created."""
         created = self._json_data.get('created')
