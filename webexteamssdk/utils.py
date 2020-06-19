@@ -116,7 +116,7 @@ def is_local_file(string):
     return os.path.isfile(string)
 
 
-def open_local_file(file_path):
+def open_local_file(file_path) -> EncodableFile:
     """Open the file and return an EncodableFile tuple."""
     assert isinstance(file_path, basestring)
     assert is_local_file(file_path)
