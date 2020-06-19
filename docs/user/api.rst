@@ -107,20 +107,20 @@ rooms
 .. autoclass:: webexteamssdk.api.rooms.RoomsAPI()
 
 
-.. _team_memberships:
-
-team_memberships
-----------------
-
-.. autoclass:: webexteamssdk.api.team_memberships.TeamMembershipsAPI()
-
-
 .. _teams:
 
 teams
 -----
 
 .. autoclass:: webexteamssdk.api.teams.TeamsAPI()
+
+
+.. _team_memberships:
+
+team_memberships
+----------------
+
+.. autoclass:: webexteamssdk.api.team_memberships.TeamMembershipsAPI()
 
 
 .. _webhooks:
@@ -137,21 +137,50 @@ Webex Teams Data Objects
 ========================
 
 
-.. _Person:
+.. _Access Token:
 
-Person
-------
+Access Token
+------------
 
-.. autoclass:: Person()
+.. autoclass:: AccessToken()
     :inherited-members:
 
 
-.. _Room:
+.. _Admin_Audit_Event:
 
-Room
-----
 
-.. autoclass:: Room()
+    :inherited-members:
+
+
+
+
+    :inherited-members:
+
+
+.. _Event:
+
+Event
+-----
+
+.. autoclass:: Event()
+    :inherited-members:
+
+
+.. _Guest_Issuer_Token:
+
+Guest Issuer Token
+------------------
+
+.. autoclass:: GuestIssuerToken()
+    :inherited-members:
+
+
+.. _License:
+
+License
+-------
+
+.. autoclass:: License()
     :inherited-members:
 
 
@@ -170,6 +199,42 @@ Message
 -------
 
 .. autoclass:: Message()
+    :inherited-members:
+
+
+.. _Organization:
+
+Organization
+------------
+
+.. autoclass:: Organization()
+    :inherited-members:
+
+
+.. _Person:
+
+Person
+------
+
+.. autoclass:: Person()
+    :inherited-members:
+
+
+.. _Role:
+
+Role
+----
+
+.. autoclass:: Role()
+    :inherited-members:
+
+
+.. _Room:
+
+Room
+----
+
+.. autoclass:: Room()
     :inherited-members:
 
 
@@ -208,50 +273,6 @@ Webhook Event
 .. autoclass:: WebhookEvent()
     :inherited-members:
 
-
-.. _Organization:
-
-Organization
-------------
-
-.. autoclass:: Organization()
-    :inherited-members:
-
-
-.. _License:
-
-License
--------
-
-.. autoclass:: License()
-    :inherited-members:
-
-
-.. _Role:
-
-Role
-----
-
-.. autoclass:: Role()
-    :inherited-members:
-
-
-.. _Event:
-
-Event
------
-
-.. autoclass:: Event()
-    :inherited-members:
-
-
-.. _Access Token:
-
-Access Token
-------------
-
-.. autoclass:: AccessToken()
-    :inherited-members:
 
 .. _Exceptions:
 
