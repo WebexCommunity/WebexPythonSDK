@@ -23,20 +23,40 @@ The :class:`WebexTeamsAPI` class creates "connection objects" for working with t
     .. automethod:: WebexTeamsAPI.__init__
 
 
-.. _people:
+.. _access_tokens:
 
-people
+access_tokens
+-------------
+
+.. autoclass:: webexteamssdk.api.access_tokens.AccessTokensAPI()
+
+
+
+
+
+
+.. _events:
+
+events
 ------
 
-.. autoclass:: webexteamssdk.api.people.PeopleAPI()
+.. autoclass:: webexteamssdk.api.events.EventsAPI()
 
 
-.. _rooms:
+.. _guest_issuer:
 
-rooms
------
+guest_issuer
+------------
 
-.. autoclass:: webexteamssdk.api.rooms.RoomsAPI()
+.. autoclass:: webexteamssdk.api.guest_issuer.GuestIssuerAPI()
+
+
+.. _licenses:
+
+licenses
+--------
+
+.. autoclass:: webexteamssdk.api.licenses.LicensesAPI()
 
 
 .. _memberships:
@@ -55,12 +75,36 @@ messages
 .. autoclass:: webexteamssdk.api.messages.MessagesAPI()
 
 
-.. _teams:
+.. _organizations:
 
-teams
+organizations
+-------------
+
+.. autoclass:: webexteamssdk.api.organizations.OrganizationsAPI()
+
+
+.. _people:
+
+people
+------
+
+.. autoclass:: webexteamssdk.api.people.PeopleAPI()
+
+
+.. _roles:
+
+roles
 -----
 
-.. autoclass:: webexteamssdk.api.teams.TeamsAPI()
+.. autoclass:: webexteamssdk.api.roles.RolesAPI()
+
+
+.. _rooms:
+
+rooms
+-----
+
+.. autoclass:: webexteamssdk.api.rooms.RoomsAPI()
 
 
 .. _team_memberships:
@@ -71,6 +115,14 @@ team_memberships
 .. autoclass:: webexteamssdk.api.team_memberships.TeamMembershipsAPI()
 
 
+.. _teams:
+
+teams
+-----
+
+.. autoclass:: webexteamssdk.api.teams.TeamsAPI()
+
+
 .. _webhooks:
 
 webhooks
@@ -78,51 +130,6 @@ webhooks
 
 .. autoclass:: webexteamssdk.api.webhooks.WebhooksAPI()
 
-
-.. _organizations:
-
-organizations
--------------
-
-.. autoclass:: webexteamssdk.api.organizations.OrganizationsAPI()
-
-
-.. _licenses:
-
-licenses
---------
-
-.. autoclass:: webexteamssdk.api.licenses.LicensesAPI()
-
-
-.. _roles:
-
-roles
------
-
-.. autoclass:: webexteamssdk.api.roles.RolesAPI()
-
-.. _events:
-
-events
-------
-
-.. autoclass:: webexteamssdk.api.events.EventsAPI()
-
-
-.. _access_tokens:
-
-access_tokens
--------------
-
-.. autoclass:: webexteamssdk.api.access_tokens.AccessTokensAPI()
-
-.. _guest_issuer:
-
-guest_issuer
-------------
-
-.. autoclass:: webexteamssdk.api.guest_issuer.GuestIssuerAPI()
 
 .. _Webex Teams Data Objects:
 
