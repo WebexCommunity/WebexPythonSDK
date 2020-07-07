@@ -20,4 +20,4 @@ done
 
 
 # Run the test suite
-script/test
+script/test tests
