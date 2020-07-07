@@ -42,9 +42,9 @@ from .exceptions import (
 )
 from .models.dictionary import dict_data_factory
 from .models.immutable import (
-    AccessToken, AttachmentAction, Event, immutable_data_factory, License,
-    Membership, Message, Organization, Person, Role, Room, Team,
-    TeamMembership, Webhook, WebhookEvent,
+    AccessToken, AdminAuditEvent, AttachmentAction, Event,
+    immutable_data_factory, License, Membership, Message, Organization, Person,
+    Role, Room, Team, TeamMembership, Webhook, WebhookEvent,
 )
 from .models.simple import simple_data_factory, SimpleDataModel
 from .utils import WebexTeamsDateTime

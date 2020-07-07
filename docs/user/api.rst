@@ -31,6 +31,13 @@ access_tokens
 .. autoclass:: webexteamssdk.api.access_tokens.AccessTokensAPI()
 
 
+.. _admin_audit_events:
+
+admin_audit_events
+------------------
+
+.. autoclass:: webexteamssdk.api.admin_audit_events.AdminAuditEventsAPI()
+
 
 .. _attachment_actions
 
@@ -153,7 +160,10 @@ Access Token
 
 .. _Admin_Audit_Event:
 
+Admin Audit Event
+-----------------
 
+.. autoclass:: AdminAuditEvent()
     :inherited-members:
 
 

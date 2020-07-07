@@ -2,6 +2,8 @@
 | :class:`WebexTeamsAPI` | :ref:`access_tokens`      | :meth:`get() <webeteamssdk.api.access_tokens.AccessTokensAPI.get>`              |
 |                        |                           | :meth:`refresh() <webeteamssdk.api.access_tokens.AccessTokensAPI.refresh>`      |
 +------------------------+---------------------------+---------------------------------------------------------------------------------+
+|                        | :ref:`admin_audit_events` | :meth:`list() <webexteamssdk.api.admin_audit_events.list>`                      |
++------------------------+---------------------------+---------------------------------------------------------------------------------+
 |                        | :ref:`attachment_actions` | :meth:`create() <webexteamssdk.api.attachment_actions.create>`                  |
 |                        |                           | :meth:`get() <webexteamssdk.api.attachment_actions.get>`                        |
 +------------------------+---------------------------+---------------------------------------------------------------------------------+

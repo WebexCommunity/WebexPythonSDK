@@ -30,20 +30,24 @@ SOFTWARE.
 """
 
 from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
+    absolute_import, absolute_import, division, division,
+    print_function, print_function, unicode_literals, unicode_literals,
 )
 
 from builtins import *
+
 import json
 from collections import defaultdict
 
 from webexteamssdk.utils import json_dict
 from .mixins.access_token import AccessTokenBasicPropertiesMixin
+from .mixins.admin_audit_event import (
+    AdminAuditEventBasicPropertiesMixin,
+    AdminAuditEventDataBasicPropertiesMixin,
+)
 from .mixins.attachment_action import AttachmentActionBasicPropertiesMixin
 from .mixins.event import EventBasicPropertiesMixin
+from .mixins.guest_issuer_token import GuestIssuerTokenBasicPropertiesMixin
 from .mixins.license import LicenseBasicPropertiesMixin
 from .mixins.membership import MembershipBasicPropertiesMixin
 from .mixins.message import MessageBasicPropertiesMixin
@@ -55,7 +59,6 @@ from .mixins.team import TeamBasicPropertiesMixin
 from .mixins.team_membership import TeamMembershipBasicPropertiesMixin
 from .mixins.webhook import WebhookBasicPropertiesMixin
 from .mixins.webhook_event import WebhookEventBasicPropertiesMixin
-from .mixins.guest_issuer_token import GuestIssuerTokenBasicPropertiesMixin
 
 
 class ImmutableData(object):
@@ -178,6 +181,20 @@ class AccessToken(ImmutableData, AccessTokenBasicPropertiesMixin):
     """Webex Teams Access-Token data model."""
 
 
+class AdminAuditEventData(ImmutableData,
+                          AdminAuditEventDataBasicPropertiesMixin):
+    """Webex Teams Admin Audit Event Data object data model."""
+
+
+class AdminAuditEvent(ImmutableData, AdminAuditEventBasicPropertiesMixin):
+    """Webex Teams Admin Audit Event data model."""
+
+    @property
+    def data(self):
+        """The event resource data."""
+        return AdminAuditEventData(self._json_data.get('data'))
+
+
 class AttachmentAction(ImmutableData, AttachmentActionBasicPropertiesMixin):
     """Webex Attachment Actions data model"""
 
@@ -251,6 +268,7 @@ class GuestIssuerToken(ImmutableData, GuestIssuerTokenBasicPropertiesMixin):
 immutable_data_models = defaultdict(
     lambda: ImmutableData,
     access_token=AccessToken,
+    admin_audit_event=AdminAuditEvent,
     attachment_action=AttachmentAction,
     event=Event,
     license=License,
