@@ -42,7 +42,7 @@ to_datetime_string = str(
 
 def is_valid_admin_audit_event(obj):
     return isinstance(obj, webexteamssdk.AdminAuditEvent) \
-           and obj.id is not None
+        and obj.id is not None
 
 
 def are_valid_admin_audit_events(iterable):
