@@ -22,8 +22,8 @@ for i in ${@}; do
         default=
         ;;
 
-        ratelimiting)
-        ratelimiting=true
+        slow)
+        slow=true
         default=
         ;;
 
@@ -47,12 +47,12 @@ fi
 
 # Run the test suite
 if [ ${default} ] || [ ${tests} ]; then
-    echo "==> Running the test suite"
-    py.test -s -m "not ratelimit"
+    echo "==> Running the test suite (excluding slow tests)"
+    py.test -s -m "not slow"
 fi
 
 # Run the rate-limit tests
-if [ ${ratelimiting} ]; then
-    echo "==> Running the rate-limit tests"
-    py.test -s -m "ratelimit"
+if [ ${slow} ]; then
+    echo "==> Running the slow tests"
+    py.test -s -m "slow"
 fi

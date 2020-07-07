@@ -31,6 +31,7 @@ from __future__ import (
 )
 
 from future import standard_library
+
 standard_library.install_aliases()
 native_str = str
 
@@ -39,8 +40,9 @@ import mimetypes
 import os
 import sys
 import urllib.parse
+import warnings
 from builtins import *
-from collections import OrderedDict, namedtuple
+from collections import namedtuple, OrderedDict
 from datetime import datetime, timedelta, tzinfo
 
 from past.builtins import basestring
@@ -309,7 +311,15 @@ class WebexTeamsDateTime(datetime):
 
     def __str__(self):
         """Human readable string representation of this WebexTeamsDateTime."""
-        dt = self.astimezone(ZuluTimeZone())
+        if self.tzinfo:
+            dt = self.astimezone(ZuluTimeZone())
+        else:
+            warnings.warn(UserWarning(
+                "Datetime {} does not have an associated timezone; assuming it"
+                "should be UTC/Zulu.".format(repr(self))
+            ))
+            dt = self.replace(tzinfo=ZuluTimeZone())
+
         return dt.strftime("%Y-%m-%dT%H:%M:%S.{:0=3}%Z").format(
             self.microsecond // 1000
         )

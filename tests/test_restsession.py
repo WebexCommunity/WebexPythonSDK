@@ -44,7 +44,7 @@ def rate_limit_detected(w):
 
 
 # Tests
-@pytest.mark.ratelimit
+@pytest.mark.slow
 def test_rate_limit_retry(api, list_of_rooms, add_rooms):
     # Save state and initialize test setup
     original_wait_on_rate_limit = api._session.wait_on_rate_limit

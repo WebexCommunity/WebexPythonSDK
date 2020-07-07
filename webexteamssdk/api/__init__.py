@@ -34,6 +34,7 @@ from webexteamssdk.models.immutable import immutable_data_factory
 from webexteamssdk.restsession import RestSession
 from webexteamssdk.utils import check_type
 from .access_tokens import AccessTokensAPI
+from .admin_audit_events import AdminAuditEventsAPI
 from .attachment_actions import AttachmentActionsAPI
 from .events import EventsAPI
 from .guest_issuer import GuestIssuerAPI
@@ -172,23 +173,26 @@ class WebexTeamsAPI(object):
         )
 
         # API wrappers
-        self.people = PeopleAPI(self._session, object_factory)
-        self.rooms = RoomsAPI(self._session, object_factory)
-        self.memberships = MembershipsAPI(self._session, object_factory)
-        self.messages = MessagesAPI(self._session, object_factory)
-        self.teams = TeamsAPI(self._session, object_factory)
-        self.team_memberships = TeamMembershipsAPI(
-            self._session, object_factory
+        self.admin_audit_events = AdminAuditEventsAPI(
+            self._session, object_factory,
         )
         self.attachment_actions = AttachmentActionsAPI(
-            self._session, object_factory
+            self._session, object_factory,
         )
-        self.webhooks = WebhooksAPI(self._session, object_factory)
-        self.organizations = OrganizationsAPI(self._session, object_factory)
-        self.licenses = LicensesAPI(self._session, object_factory)
-        self.roles = RolesAPI(self._session, object_factory)
         self.events = EventsAPI(self._session, object_factory)
         self.guest_issuer = GuestIssuerAPI(self._session, object_factory)
+        self.licenses = LicensesAPI(self._session, object_factory)
+        self.memberships = MembershipsAPI(self._session, object_factory)
+        self.messages = MessagesAPI(self._session, object_factory)
+        self.organizations = OrganizationsAPI(self._session, object_factory)
+        self.people = PeopleAPI(self._session, object_factory)
+        self.roles = RolesAPI(self._session, object_factory)
+        self.rooms = RoomsAPI(self._session, object_factory)
+        self.teams = TeamsAPI(self._session, object_factory)
+        self.team_memberships = TeamMembershipsAPI(
+            self._session, object_factory,
+        )
+        self.webhooks = WebhooksAPI(self._session, object_factory)
 
     @property
     def access_token(self):
