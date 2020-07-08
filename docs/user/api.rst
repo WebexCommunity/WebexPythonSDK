@@ -324,6 +324,14 @@ Exceptions
 Warnings
 ========
 
+.. autoexception:: webexteamssdkWarning()
+    :show-inheritance:
+    :members:
+
+.. autoexception:: ApiWarning()
+    :show-inheritance:
+    :members:
+
 .. autoexception:: RateLimitWarning()
     :show-inheritance:
     :members:

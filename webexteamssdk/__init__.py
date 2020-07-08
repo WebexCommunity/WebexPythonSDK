@@ -37,8 +37,8 @@ from ._metadata import *
 from ._version import get_versions
 from .api import WebexTeamsAPI
 from .exceptions import (
-    AccessTokenError, ApiError, MalformedResponse, RateLimitError,
-    RateLimitWarning, webexteamssdkException,
+    AccessTokenError, ApiError, ApiWarning, MalformedResponse, RateLimitError,
+    RateLimitWarning, webexteamssdkException, webexteamssdkWarning,
 )
 from .models.dictionary import dict_data_factory
 from .models.immutable import (
