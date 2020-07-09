@@ -25,6 +25,7 @@ SOFTWARE.
 import json
 import enum
 
+
 class AdaptiveCardComponent:
     """Base class for all Adaptive Card components.
 
@@ -65,7 +66,7 @@ class AdaptiveCardComponent:
             if property_value is not None:
                 if isinstance(property_value, enum.Enum):
                     property_value = str(property_value)
-                
+
                 serialized_data[property_name] = property_value
 
         # Recursively serialize sub-components
