@@ -230,3 +230,66 @@ class WebexTeamsAPI(object):
     def wait_on_rate_limit(self):
         """Automatic rate-limit handling enabled / disabled."""
         return self._session.wait_on_rate_limit
+
+    # Create a class attribute for the Access Tokens API that can be accessed
+    # before WebexTeamsAPI object is initialized.
+    access_tokens = AccessTokensAPI(
+        base_url=DEFAULT_BASE_URL,
+        object_factory=immutable_data_factory,
+        single_request_timeout=DEFAULT_SINGLE_REQUEST_TIMEOUT,
+    )
+
+    @classmethod
+    def from_oauth_code(cls, client_id, client_secret, code, redirect_uri):
+        """Create a new WebexTeamsAPI connection object using an OAuth code.
+
+        Exchange an Authorization Code for an Access Token, then use the access
+        token to create a new WebexTeamsAPI connection object.
+
+        Args:
+            client_id(basestring): Provided when you created your integration.
+            client_secret(basestring): Provided when you created your
+                integration.
+            code(basestring): The Authorization Code provided by the user
+                OAuth process.
+            redirect_uri(basestring): The redirect URI used in the user OAuth
+                process.
+
+        Returns:
+            AccessToken: An AccessToken object with the access token provided
+            by the Webex Teams cloud.
+
+        Raises:
+            TypeError: If the parameter types are incorrect.
+            ApiError: If the Webex Teams cloud returns an error.
+        """
+        token_obj = cls.access_tokens.get(client_id, client_secret, code,
+                                          redirect_uri)
+
+        return cls(access_token=token_obj.access_token)
+
+    @classmethod
+    def from_oauth_refresh(cls, client_id, client_secret, refresh_token):
+        """Create a new WebexTeamsAPI connection object using an OAuth refresh.
+
+        Exchange a refresh token for an Access Token, then use the access
+        token to create a new WebexTeamsAPI connection object.
+
+        Args:
+            client_id(basestring): Provided when you created your integration.
+            client_secret(basestring): Provided when you created your
+                integration.
+            refresh_token(basestring): Provided when you requested the Access
+                Token.
+
+        Returns:
+            AccessToken: With the access token provided by the Webex Teams
+            cloud.
+
+        Raises:
+            TypeError: If the parameter types are incorrect.
+            ApiError: If the Webex Teams cloud returns an error.
+        """
+        token_obj = cls.access_tokens.refresh(client_id, client_secret,
+                                              refresh_token)
+        return cls(access_token=token_obj.access_token)
