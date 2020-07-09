@@ -22,9 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from ._version import get_versions
-
-
 __title__ = 'webexteamssdk'
 __description__ = 'Community-developed Python SDK for the Webex Teams APIs'
 __url__ = 'https://github.com/CiscoDevNet/webexteamssdk'
@@ -34,5 +31,10 @@ __author_email__ = 'chrlunsf@cisco.com'
 __copyright__ = "Copyright (c) 2016-2019 Cisco Systems, Inc."
 __license__ = "MIT"
 
-__version__ = get_versions()['version']
-del get_versions
+
+# Only import the ._version module and compute the version when this module is
+# imported.
+if __name__ == "webexteamssdk._metadata":
+    from ._version import get_versions
+    __version__ = get_versions()['version']
+    del get_versions
