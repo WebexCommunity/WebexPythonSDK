@@ -44,7 +44,7 @@ from .exceptions import (
 )
 from .models.dictionary import dict_data_factory
 from .models.immutable import (
-    AccessToken, AdminAuditEvent, AttachmentAction, Event,
+    AccessToken, AdminAuditEvent, AttachmentAction, Event, GuestIssuerToken,
     immutable_data_factory, License, Membership, Message, Organization, Person,
     Role, Room, Team, TeamMembership, Webhook, WebhookEvent,
 )
