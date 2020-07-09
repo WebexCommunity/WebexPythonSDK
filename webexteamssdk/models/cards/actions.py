@@ -49,8 +49,8 @@ class Submit(AdaptiveCardComponent):
         self.iconURL = iconURL
 
         super().__init__(
-            serializable_properties=['data'],
-            simple_properties=['title', 'iconURL', 'type'],
+            serializable_properties=[],
+            simple_properties=['data', 'title', 'iconURL', 'type'],
         )
 
 

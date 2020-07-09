@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #  -*- coding: utf-8 -*-
 """A simple bot script, built on Flask, that demonstrates posting a
 card, and handling the events generated when a user hits the Submit button.
@@ -29,7 +29,7 @@ response to any messages it will post a simple form filling card.  In response
 to a user submitting a form, the details of that response will be posted in
 the space.
 
-This script should support Python versions 3 only.
+This script should support Python versions 3.6+ only.
 
 Copyright (c) 2016-2020 Cisco and/or its affiliates.
 

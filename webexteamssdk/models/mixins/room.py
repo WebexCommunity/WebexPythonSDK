@@ -84,6 +84,11 @@ class RoomBasicPropertiesMixin(object):
         return self._json_data.get('creatorId')
 
     @property
+    def ownerId(self):
+        """The ID of the organization which owns this room."""
+        return self._json_data.get('ownerId')
+
+    @property
     def created(self):
         """The date and time the room was created."""
         created = self._json_data.get('created')

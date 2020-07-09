@@ -46,6 +46,11 @@ class webexteamssdkException(Exception):
     pass
 
 
+class webexteamssdkWarning(webexteamssdkException, Warning):
+    """Base class for all webexteamssdk warnings."""
+    pass
+
+
 class AccessTokenError(webexteamssdkException):
     """Raised when an incorrect Webex Teams Access Token has been provided."""
     pass
@@ -73,6 +78,9 @@ class ApiError(webexteamssdkException):
         self.status = self.response.reason
         """The HTTP status from the API response."""
 
+        self.description = RESPONSE_CODES.get(self.status_code)
+        """A description of the HTTP Response Code from the API docs."""
+
         self.details = None
         """The parsed JSON details from the API response."""
         if "application/json" in \
@@ -85,22 +93,38 @@ class ApiError(webexteamssdkException):
         self.message = self.details.get("message") if self.details else None
         """The error message from the parsed API response."""
 
-        self.description = RESPONSE_CODES.get(self.status_code)
-        """A description of the HTTP Response Code from the API docs."""
+        self.tracking_id = (
+            self.details.get("trackingId") if self.details else None
+            or self.response.headers.get("trackingId")
+        )
+        """The Webex Tracking ID from the response."""
 
-        super(ApiError, self).__init__(
-            "[{status_code}]{status} - {message}".format(
+        self.error_message = (
+            "[{status_code}]{status} - {detail}{tracking_id}".format(
                 status_code=self.status_code,
                 status=" " + self.status if self.status else "",
-                message=self.message or self.description or "Unknown Error",
+                detail=self.message or self.description or "Unknown Error",
+                tracking_id=" [Tracking ID: " + self.tracking_id + "]"
+                            if self.tracking_id else "",
             )
         )
 
+        super(ApiError, self).__init__(self.error_message)
+
     def __repr__(self):
-        return "<{exception_name} [{status_code}]>".format(
+        return "<{exception_name} [{status_code}]{status}>".format(
             exception_name=self.__class__.__name__,
             status_code=self.status_code,
+            status=" " + self.status if self.status else "",
         )
+
+
+class ApiWarning(webexteamssdkWarning, ApiError):
+    """Warnings raised from API responses received from the Webex APIs.
+
+    Several data attributes are available for inspection.
+    """
+    pass
 
 
 class RateLimitError(ApiError):
@@ -125,26 +149,13 @@ class RateLimitError(ApiError):
         super(RateLimitError, self).__init__(response)
 
 
-class RateLimitWarning(UserWarning):
+class RateLimitWarning(ApiWarning, RateLimitError):
     """Webex Teams rate-limit exceeded warning.
 
     Raised when a rate-limit exceeded message is received and the request will
     be retried.
     """
-
-    def __init__(self, response):
-        assert isinstance(response, requests.Response)
-
-        # Extended warning attributes
-        self.retry_after = max(1, int(response.headers.get('Retry-After', 15)))
-        """The `Retry-After` time period (in seconds) provided by Webex Teams.
-
-        Defaults to 15 seconds if the response `Retry-After` header isn't
-        present in the response headers, and defaults to a minimum wait time of
-        1 second if Webex Teams returns a `Retry-After` header of 0 seconds.
-        """
-
-        super(RateLimitWarning, self).__init__()
+    pass
 
 
 class MalformedResponse(webexteamssdkException):

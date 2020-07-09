@@ -1,10 +1,30 @@
-sudo: false
 language: python
-python:
-  - "2.7"
-  - "3.5"
-  - "3.6"
-#  - "3.7"  It doesn't look like Travis is supporting v3.7 yet
-install: "script/setup"
-script: "script/ci"
 cache: pip
+
+install: script/setup
+
+jobs:
+  include:
+    - name: "Lint"
+      python: 3.8
+      script: script/test lint
+
+    - name: "Tests on Python 2.7"
+      python: 2.7
+      script: script/ci
+
+    - name: "Tests on Python 3.5"
+      python: 3.5
+      script: script/ci
+
+    - name: "Tests on Python 3.6"
+      python: 3.6
+      script: script/ci
+
+    - name: "Tests on Python 3.7"
+      python: 3.7
+      script: script/ci
+
+    - name: "Tests on Python 3.8"
+      python: 3.8
+      script: script/ci
