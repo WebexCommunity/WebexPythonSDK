@@ -23,6 +23,7 @@ SOFTWARE.
 """
 
 import json
+import enum
 
 
 class AdaptiveCardComponent:
@@ -63,7 +64,10 @@ class AdaptiveCardComponent:
             property_value = getattr(self, property_name, None)
 
             if property_value is not None:
-                serialized_data[property_name] = str(property_value)
+                if isinstance(property_value, enum.Enum):
+                    property_value = str(property_value)
+
+                serialized_data[property_name] = property_value
 
         # Recursively serialize sub-components
         for property_name in self.serializable_properties:

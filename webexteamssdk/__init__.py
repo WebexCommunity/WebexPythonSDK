@@ -33,12 +33,14 @@ from __future__ import (
 import logging
 
 import webexteamssdk.models.cards as cards
-from ._metadata import *
-from ._version import get_versions
+from ._metadata import (
+    __author__, __author_email__, __copyright__, __description__,
+    __download_url__, __license__, __title__, __url__, __version__,
+)
 from .api import WebexTeamsAPI
 from .exceptions import (
-    AccessTokenError, ApiError, MalformedResponse, RateLimitError,
-    RateLimitWarning, webexteamssdkException,
+    AccessTokenError, ApiError, ApiWarning, MalformedResponse, RateLimitError,
+    RateLimitWarning, webexteamssdkException, webexteamssdkWarning,
 )
 from .models.dictionary import dict_data_factory
 from .models.immutable import (
@@ -48,10 +50,6 @@ from .models.immutable import (
 )
 from .models.simple import simple_data_factory, SimpleDataModel
 from .utils import WebexTeamsDateTime
-
-
-__version__ = get_versions()['version']
-del get_versions
 
 
 # Initialize Package Logging
