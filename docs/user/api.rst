@@ -39,7 +39,7 @@ admin_audit_events
 .. autoclass:: webexteamssdk.api.admin_audit_events.AdminAuditEventsAPI()
 
 
-.. _attachment_actions
+.. _attachment_actions:
 
 attachment_actions
 ------------------
