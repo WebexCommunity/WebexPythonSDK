@@ -76,10 +76,10 @@ class AsyncOrganizationsAPI:
 
         """
         # API request - get items
-        items = await self._session.get_items(API_ENDPOINT, params=request_parameters)
+        items = self._session.get_items(API_ENDPOINT, params=request_parameters)
 
         # Yield organization objects created from the returned JSON objects
-        for item in items:
+        async for item in items:
             yield self._object_factory(OBJECT_TYPE, item)
 
     async def get(self, orgId):
