@@ -256,8 +256,8 @@ class WebexTeamsAPI(object):
                 process.
 
         Returns:
-            AccessToken: An AccessToken object with the access token provided
-            by the Webex Teams cloud.
+            WebexTeamsAPI: A new WebexTeamsAPI object initialized with the
+            access token from the OAuth Authentication Code exchange.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -283,8 +283,8 @@ class WebexTeamsAPI(object):
                 Token.
 
         Returns:
-            AccessToken: With the access token provided by the Webex Teams
-            cloud.
+            WebexTeamsAPI: A new WebexTeamsAPI object initialized with the
+            access token from the OAuth Refresh Token exchange.
 
         Raises:
             TypeError: If the parameter types are incorrect.
