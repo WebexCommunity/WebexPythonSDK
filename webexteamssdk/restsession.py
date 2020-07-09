@@ -30,21 +30,24 @@ from __future__ import (
     unicode_literals,
 )
 
+from builtins import *
+
 from future import standard_library
 standard_library.install_aliases()
 
-import time
-import urllib.parse
-import warnings
-from builtins import *
-
-import requests
-import urllib
+import json
+import logging
 import platform
 import sys
-import json
+import time
+import urllib
+import urllib.parse
+import warnings
+
+import requests
 from past.builtins import basestring
 
+from ._metadata import __title__, __version__
 from .config import DEFAULT_SINGLE_REQUEST_TIMEOUT, DEFAULT_WAIT_ON_RATE_LIMIT
 from .exceptions import MalformedResponse, RateLimitError, RateLimitWarning
 from .response_codes import EXPECTED_RESPONSE_CODE
@@ -52,27 +55,29 @@ from .utils import (
     check_response_code, check_type, extract_and_parse_json, validate_base_url,
 )
 
-from webexteamssdk._version import get_versions
+
+logger = logging.getLogger(__name__)
+
 
 # Helper Functions
 def _fix_next_url(next_url):
     """Remove max=null parameter from URL.
 
-    Patch for Webex Teams Defect: 'next' URL returned in the Link headers of
-    the responses contain an errant 'max=null' parameter, which  causes the
+    Patch for Webex Teams Defect: "next" URL returned in the Link headers of
+    the responses contain an errant "max=null" parameter, which  causes the
     next request (to this URL) to fail if the URL is requested as-is.
 
     This patch parses the next_url to remove the max=null parameter.
 
     Args:
-        next_url(basestring): The 'next' URL to be parsed and cleaned.
+        next_url(basestring): The "next" URL to be parsed and cleaned.
 
     Returns:
-        basestring: The clean URL to be used for the 'next' request.
+        basestring: The clean URL to be used for the "next" request.
 
     Raises:
         AssertionError: If the parameter types are incorrect.
-        ValueError: If 'next_url' does not contain a valid API endpoint URL
+        ValueError: If "next_url" does not contain a valid API endpoint URL
             (scheme, netloc and path).
 
     """
@@ -81,21 +86,87 @@ def _fix_next_url(next_url):
 
     if not parsed_url.scheme or not parsed_url.netloc or not parsed_url.path:
         raise ValueError(
-            "'next_url' must be a valid API endpoint URL, minimally "
+            "`next_url` must be a valid API endpoint URL, minimally "
             "containing a scheme, netloc and path."
         )
 
     if parsed_url.query:
-        query_list = parsed_url.query.split('&')
-        if 'max=null' in query_list:
-            query_list.remove('max=null')
+        query_list = parsed_url.query.split("&")
+        if "max=null" in query_list:
+            query_list.remove("max=null")
             warnings.warn("`max=null` still present in next-URL returned "
                           "from Webex Teams", RuntimeWarning)
-        new_query = '&'.join(query_list)
+        new_query = "&".join(query_list)
         parsed_url = list(parsed_url)
         parsed_url[4] = new_query
 
     return urllib.parse.urlunparse(parsed_url)
+
+
+def user_agent(be_geo_id=None, caller=None):
+    """Build a User-Agent HTTP header string."""
+
+    product = __title__
+    version = __version__
+
+    # Add platform data to comment portion of the User-Agent header.
+    # Inspired by PIP"s User-Agent header; serialize the data in JSON format.
+    # https://github.com/pypa/pip/blob/master/src/pip/_internal/network
+    data = dict()
+
+    # Python implementation
+    data["implementation"] = {
+        "name": platform.python_implementation(),
+    }
+
+    # Implementation version
+    if data["implementation"]["name"] == "CPython":
+        data["implementation"]["version"] = platform.python_version()
+
+    elif data["implementation"]["name"] == "PyPy":
+        if sys.pypy_version_info.releaselevel == "final":
+            pypy_version_info = sys.pypy_version_info[:3]
+        else:
+            pypy_version_info = sys.pypy_version_info
+        data["implementation"]["version"] = ".".join(
+            [str(x) for x in pypy_version_info]
+        )
+    elif data["implementation"]["name"] == "Jython":
+        data["implementation"]["version"] = platform.python_version()
+    elif data["implementation"]["name"] == "IronPython":
+        data["implementation"]["version"] = platform.python_version()
+
+    # Platform information
+    if sys.platform.startswith("darwin") and platform.mac_ver()[0]:
+        dist = {"name": "macOS", "version": platform.mac_ver()[0]}
+        data["distro"] = dist
+
+    if platform.system():
+        data.setdefault("system", {})["name"] = platform.system()
+
+    if platform.release():
+        data.setdefault("system", {})["release"] = platform.release()
+
+    if platform.machine():
+        data["cpu"] = platform.machine()
+
+    # Add self-identified organization information to the User-Agent Header.
+    if be_geo_id:
+        data["organization"]["be_geo_id"] = be_geo_id
+
+    if caller:
+        data["organization"]["caller"] = caller
+
+    # Create the User-Agent string
+    user_agent_string = "{product}/{version} {comment}".format(
+        product=product,
+        version=version,
+        comment=json.dumps(data),
+    )
+
+    logger.info("User-Agent: " + user_agent_string)
+
+    return user_agent_string
 
 
 # Main module interface
@@ -146,66 +217,18 @@ class RestSession(object):
         self._single_request_timeout = single_request_timeout
         self._wait_on_rate_limit = wait_on_rate_limit
 
-        # Initialize a new `requests` session
+        # Initialize a new session
         self._req_session = requests.session()
 
         if proxies is not None:
             self._req_session.proxies.update(proxies)
 
-        # Build a User-Agent header
-        ua_base = 'python-webexteams/' + get_versions()['version'] + ' '
-
-        # Generate extended portion of the User-Agent
-        ua_ext = {}
-
-        # Mimic pip system data collection per
-        # https://github.com/pypa/pip/blob/master/src/pip/_internal/network/session.py
-        ua_ext['implementation'] = {
-            "name": platform.python_implementation(),
-        }
-
-        if ua_ext["implementation"]["name"] == 'CPython':
-            ua_ext["implementation"]["version"] = platform.python_version()
-        elif ua_ext["implementation"]["name"] == 'PyPy':
-            if sys.pypy_version_info.releaselevel == 'final':
-                pypy_version_info = sys.pypy_version_info[:3]
-            else:
-                pypy_version_info = sys.pypy_version_info
-            ua_ext["implementation"]["version"] = ".".join(
-                [str(x) for x in pypy_version_info]
-            )
-        elif ua_ext["implementation"]["name"] == 'Jython':
-            ua_ext["implementation"]["version"] = platform.python_version()
-        elif ua_ext["implementation"]["name"] == 'IronPython':
-            ua_ext["implementation"]["version"] = platform.python_version()
-
-        if sys.platform.startswith("darwin") and platform.mac_ver()[0]:
-            dist = {"name": "macOS", "version": platform.mac_ver()[0]}
-            ua_ext["distro"] = dist
-
-        if platform.system():
-            ua_ext.setdefault("system", {})["name"] = platform.system()
-
-        if platform.release():
-            ua_ext.setdefault("system", {})["release"] = platform.release()
-
-        if platform.machine():
-            ua_ext["cpu"] = platform.machine()
-
-        if be_geo_id:
-            ua_ext["be_geo_id"] = be_geo_id
-
-        if caller:
-            ua_ext["caller"] = caller
-
-        # Override the default requests User-Agent but not other headers
-        new_ua = ua_base + urllib.parse.quote(json.dumps(ua_ext))
-        self._req_session.headers['User-Agent'] = new_ua
-
-        # Update the headers of the `requests` session
-        self.update_headers({'Authorization': 'Bearer ' + access_token,
-                             'Content-type': 'application/json;charset=utf-8'})
-        print(self._req_session.headers)
+        # Update the HTTP headers for the session
+        self.update_headers({
+            "Authorization": "Bearer " + access_token,
+            "Content-type": "application/json;charset=utf-8",
+            "User-Agent": user_agent(be_geo_id=be_geo_id, caller=caller),
+        })
 
     @property
     def base_url(self):
@@ -296,7 +319,7 @@ class RestSession(object):
             * Inspects response codes and raises exceptions as appropriate
 
         Args:
-            method(basestring): The request-method type ('GET', 'POST', etc.).
+            method(basestring): The request-method type ("GET", "POST", etc.).
             url(basestring): The URL of the API endpoint to be called.
             erc(int): The expected response code that should be returned by the
                 Webex Teams API endpoint to indicate success.
@@ -311,7 +334,7 @@ class RestSession(object):
         abs_url = self.abs_url(url)
 
         # Update request kwargs with session defaults
-        kwargs.setdefault('timeout', self.single_request_timeout)
+        kwargs.setdefault("timeout", self.single_request_timeout)
 
         while True:
             # Make the HTTP request to the API endpoint
@@ -352,9 +375,9 @@ class RestSession(object):
         check_type(params, dict, optional=True)
 
         # Expected response code
-        erc = kwargs.pop('erc', EXPECTED_RESPONSE_CODE['GET'])
+        erc = kwargs.pop("erc", EXPECTED_RESPONSE_CODE["GET"])
 
-        response = self.request('GET', url, erc, params=params, **kwargs)
+        response = self.request("GET", url, erc, params=params, **kwargs)
         return extract_and_parse_json(response)
 
     def get_pages(self, url, params=None, **kwargs):
@@ -378,25 +401,25 @@ class RestSession(object):
         check_type(params, dict, optional=True)
 
         # Expected response code
-        erc = kwargs.pop('erc', EXPECTED_RESPONSE_CODE['GET'])
+        erc = kwargs.pop("erc", EXPECTED_RESPONSE_CODE["GET"])
 
         # First request
-        response = self.request('GET', url, erc, params=params, **kwargs)
+        response = self.request("GET", url, erc, params=params, **kwargs)
 
         while True:
             yield extract_and_parse_json(response)
 
-            if response.links.get('next'):
-                next_url = response.links.get('next').get('url')
+            if response.links.get("next"):
+                next_url = response.links.get("next").get("url")
 
-                # Patch for Webex Teams 'max=null' in next URL bug.
+                # Patch for Webex Teams "max=null" in next URL bug.
                 # Testing shows that patch is no longer needed; raising a
                 # warnning if it is still taking effect;
                 # considering for future removal
                 next_url = _fix_next_url(next_url)
 
                 # Subsequent requests
-                response = self.request('GET', next_url, erc, **kwargs)
+                response = self.request("GET", next_url, erc, **kwargs)
 
             else:
                 break
@@ -404,7 +427,7 @@ class RestSession(object):
     def get_items(self, url, params=None, **kwargs):
         """Return a generator that GETs and yields individual JSON `items`.
 
-        Yields individual `items` from Webex Teams's top-level {'items': [...]}
+        Yields individual `items` from Webex Teams"s top-level {"items": [...]}
         JSON objects. Provides native support for RFC5988 Web Linking.  The
         generator will request additional pages as needed until all items have
         been returned.
@@ -420,7 +443,7 @@ class RestSession(object):
             ApiError: If anything other than the expected response code is
                 returned by the Webex Teams API endpoint.
             MalformedResponse: If the returned response does not contain a
-                top-level dictionary with an 'items' key.
+                top-level dictionary with an "items" key.
 
         """
         # Get generator for pages of JSON data
@@ -429,7 +452,7 @@ class RestSession(object):
         for json_page in pages:
             assert isinstance(json_page, dict)
 
-            items = json_page.get('items')
+            items = json_page.get("items")
 
             if items is None:
                 error_message = "'items' key not found in JSON data: " \
@@ -459,9 +482,9 @@ class RestSession(object):
         check_type(url, basestring)
 
         # Expected response code
-        erc = kwargs.pop('erc', EXPECTED_RESPONSE_CODE['POST'])
+        erc = kwargs.pop("erc", EXPECTED_RESPONSE_CODE["POST"])
 
-        response = self.request('POST', url, erc, json=json, data=data,
+        response = self.request("POST", url, erc, json=json, data=data,
                                 **kwargs)
         return extract_and_parse_json(response)
 
@@ -484,9 +507,9 @@ class RestSession(object):
         check_type(url, basestring)
 
         # Expected response code
-        erc = kwargs.pop('erc', EXPECTED_RESPONSE_CODE['PUT'])
+        erc = kwargs.pop("erc", EXPECTED_RESPONSE_CODE["PUT"])
 
-        response = self.request('PUT', url, erc, json=json, data=data,
+        response = self.request("PUT", url, erc, json=json, data=data,
                                 **kwargs)
         return extract_and_parse_json(response)
 
@@ -507,6 +530,6 @@ class RestSession(object):
         check_type(url, basestring)
 
         # Expected response code
-        erc = kwargs.pop('erc', EXPECTED_RESPONSE_CODE['DELETE'])
+        erc = kwargs.pop("erc", EXPECTED_RESPONSE_CODE["DELETE"])
 
-        self.request('DELETE', url, erc, **kwargs)
+        self.request("DELETE", url, erc, **kwargs)
