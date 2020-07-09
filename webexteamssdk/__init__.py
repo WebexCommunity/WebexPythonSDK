@@ -34,7 +34,6 @@ import logging
 
 import webexteamssdk.models.cards as cards
 from ._metadata import *
-from ._version import get_versions
 from .api import WebexTeamsAPI
 from .exceptions import (
     AccessTokenError, ApiError, MalformedResponse, RateLimitError,
@@ -48,10 +47,6 @@ from .models.immutable import (
 )
 from .models.simple import simple_data_factory, SimpleDataModel
 from .utils import WebexTeamsDateTime
-
-
-__version__ = get_versions()['version']
-del get_versions
 
 
 # Initialize Package Logging
