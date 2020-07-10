@@ -73,7 +73,7 @@ class WebhooksAPI(object):
         self._object_factory = object_factory
 
     @generator_container
-    def list(self, max=None, **request_parameters):
+    def list(self, max=100, **request_parameters):
         """List all of the authenticated user's webhooks.
 
         This method supports Webex Teams's implementation of RFC5988 Web
