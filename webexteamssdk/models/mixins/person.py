@@ -41,21 +41,21 @@ class PersonBasicPropertiesMixin(object):
     @property
     def id(self):
         """A unique identifier for the person."""
-        return self._json_data.get('id')
+        return self._json_data.get("id")
 
     @property
     def emails(self):
         """The email addresses of the person."""
-        return self._json_data.get('emails')
+        return self._json_data.get("emails")
 
     def phoneNumbers(self):
         """Phone numbers for the person."""
-        return self._json_data.get('phoneNumbers')
+        return self._json_data.get("phoneNumbers")
 
     @property
     def displayName(self):
         """The full name of the person."""
-        return self._json_data.get('displayName')
+        return self._json_data.get("displayName")
 
     @property
     def nickName(self):
@@ -64,43 +64,43 @@ class PersonBasicPropertiesMixin(object):
         If no nickname is configured for the person, this field will not be
         present.
         """
-        return self._json_data.get('nickName')
+        return self._json_data.get("nickName")
 
     @property
     def firstName(self):
         """The first name of the person."""
-        return self._json_data.get('firstName')
+        return self._json_data.get("firstName")
 
     @property
     def lastName(self):
         """The last name of the person."""
-        return self._json_data.get('lastName')
+        return self._json_data.get("lastName")
 
     @property
     def avatar(self):
-        """The URL to the person's avatar in PNG format."""
-        return self._json_data.get('avatar')
+        """The URL to the person"s avatar in PNG format."""
+        return self._json_data.get("avatar")
 
     @property
     def orgId(self):
         """The ID of the organization to which this person belongs."""
-        return self._json_data.get('orgId')
+        return self._json_data.get("orgId")
 
     @property
     def roles(self):
         """An array of role strings representing the roles to which this
         person belongs. """
-        return self._json_data.get('roles')
+        return self._json_data.get("roles")
 
     @property
     def licenses(self):
         """An array of license strings allocated to this person."""
-        return self._json_data.get('licenses')
+        return self._json_data.get("licenses")
 
     @property
     def created(self):
         """The date and time the person was created."""
-        created = self._json_data.get('created')
+        created = self._json_data.get("created")
         if created:
             return WebexTeamsDateTime.strptime(created)
         else:
@@ -109,7 +109,7 @@ class PersonBasicPropertiesMixin(object):
     @property
     def lastModified(self):
         """The date and time the person was last changed."""
-        last_modified = self._json_data.get('lastModified')
+        last_modified = self._json_data.get("lastModified")
         if last_modified:
             return WebexTeamsDateTime.strptime(last_modified)
         else:
@@ -122,13 +122,13 @@ class PersonBasicPropertiesMixin(object):
         If no timezone is configured on the account, this field will not be
         present.
         """
-        return self._json.get('timezone')
+        return self._json.get("timezone")
 
     @property
     def lastActivity(self):
-        """The date and time of the person's last activity within Webex
+        """The date and time of the person"s last activity within Webex
         Teams. """
-        last_activity = self._json_data.get('lastActivity')
+        last_activity = self._json_data.get("lastActivity")
         if last_activity:
             return WebexTeamsDateTime.strptime(last_activity)
         else:
@@ -160,7 +160,7 @@ class PersonBasicPropertiesMixin(object):
 
             `unknown`: The user’s status could not be determined
         """
-        return self._json_data.get('status')
+        return self._json_data.get("status")
 
     @property
     def invitePending(self):
@@ -173,7 +173,7 @@ class PersonBasicPropertiesMixin(object):
 
             `false`: An invite is not pending for this person
         """
-        return self._json_data.get('invitePending')
+        return self._json_data.get("invitePending")
 
     @property
     def loginEnabled(self):
@@ -182,9 +182,9 @@ class PersonBasicPropertiesMixin(object):
         Person Login Enabled Enum:
             `true`: The person can log into Webex Teams
 
-            'false': The person cannot log into Webex Teams
+            "false": The person cannot log into Webex Teams
         """
-        return self._json_data.get('loginEnabled')
+        return self._json_data.get("loginEnabled")
 
     @property
     def type(self):
@@ -193,5 +193,6 @@ class PersonBasicPropertiesMixin(object):
         Person Type Enum:
             `person`: Account belongs to a person
             `bot`: Account is a bot user
+            `appuser`: Account is a guest user
         """
-        return self._json_data.get('type')
+        return self._json_data.get("type")
