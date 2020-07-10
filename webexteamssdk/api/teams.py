@@ -73,7 +73,7 @@ class TeamsAPI(object):
         self._object_factory = object_factory
 
     @generator_container
-    def list(self, max=None, **request_parameters):
+    def list(self, max=100, **request_parameters):
         """List teams to which the authenticated user belongs.
 
         This method supports Webex Teams's implementation of RFC5988 Web
@@ -168,7 +168,7 @@ class TeamsAPI(object):
         # Return a team object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
 
-    def update(self, teamId, name=None, **request_parameters):
+    def update(self, teamId, name, **request_parameters):
         """Update details for a team, by ID.
 
         Args:
@@ -186,7 +186,7 @@ class TeamsAPI(object):
 
         """
         check_type(teamId, basestring)
-        check_type(name, basestring, optional=True)
+        check_type(name, basestring)
 
         put_data = dict_from_items_with_values(
             request_parameters,
