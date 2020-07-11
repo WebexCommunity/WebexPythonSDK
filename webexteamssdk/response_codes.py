@@ -46,10 +46,14 @@ RESPONSE_CODES = {
     409: "The request could not be processed because it conflicts with some "
          "established rule of the system. For example, a person may not be "
          "added to a room more than once.",
+    410: "The requested resource is no longer available.",
     415: "The request was made to a resource without specifying a media type "
          "or used a media type that is not supported.",
+    423: "The requested resource is temporarily unavailable. A `Retry-After` "
+         "header may be present that specifies how many seconds you need to "
+         "wait before attempting the request again.",
     429: "Too many requests have been sent in a given amount of time and the "
-         "request has been rate limited. A Retry-After header should be "
+         "request has been rate limited. A `Retry-After` header should be "
          "present that specifies how many seconds you need to wait before a "
          "successful request can be made.",
     500: "Something went wrong on the server. If the issue persists, feel "
@@ -63,8 +67,8 @@ RESPONSE_CODES = {
 RATE_LIMIT_RESPONSE_CODE = 429
 
 EXPECTED_RESPONSE_CODE = {
-    'GET': 200,
-    'POST': 200,
-    'PUT': 200,
-    'DELETE': 204
+    "GET": 200,
+    "POST": 200,
+    "PUT": 200,
+    "DELETE": 204
 }

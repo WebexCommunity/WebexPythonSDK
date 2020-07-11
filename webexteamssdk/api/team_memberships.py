@@ -73,7 +73,7 @@ class TeamMembershipsAPI(object):
         self._object_factory = object_factory
 
     @generator_container
-    def list(self, teamId, max=None, **request_parameters):
+    def list(self, teamId, max=100, **request_parameters):
         """List team memberships for a team, by ID.
 
         This method supports Webex Teams's implementation of RFC5988 Web

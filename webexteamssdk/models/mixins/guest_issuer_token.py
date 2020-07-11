@@ -36,9 +36,9 @@ class GuestIssuerTokenBasicPropertiesMixin(object):
     """Guest issuer token basic properties"""
 
     @property
-    def access_token(self):
-        return self._json_data.get('token')
+    def token(self):
+        return self._json_data.get("token")
 
     @property
-    def expires_in(self):
-        return self._json_data.get('expiresIn')
+    def expiresIn(self):
+        return self._json_data.get("expiresIn")

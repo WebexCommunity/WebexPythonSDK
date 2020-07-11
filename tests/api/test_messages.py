@@ -57,7 +57,7 @@ def adaptive_card():
 
 
 @pytest.fixture(scope="session")
-def direct_message_by_email(api, test_people):
+def direct_message_by_person_email(api, test_people):
     person = test_people["member_added_by_email"]
     message = api.messages.create(
         toPersonEmail=person.emails[0],
@@ -67,6 +67,16 @@ def direct_message_by_email(api, test_people):
     yield message
 
     api.messages.delete(message.id)
+
+
+@pytest.fixture(scope="session")
+def direct_message_reply_by_person_email(api, direct_message_by_person_email):
+    text = create_string("Reply Message")
+    return api.messages.create(
+        toPersonEmail=direct_message_by_person_email.toPersonEmail,
+        parentId=direct_message_by_person_email.id,
+        text=text,
+    )
 
 
 @pytest.fixture(scope="session")
@@ -89,7 +99,7 @@ def direct_message_by_email_with_card(api, test_people, adaptive_card):
 
 
 @pytest.fixture(scope="session")
-def direct_message_by_id(api, test_people):
+def direct_message_by_person_id(api, test_people):
     person = test_people["member_added_by_id"]
     message = api.messages.create(
         toPersonId=person.id,
@@ -99,6 +109,16 @@ def direct_message_by_id(api, test_people):
     yield message
 
     api.messages.delete(message.id)
+
+
+@pytest.fixture(scope="session")
+def direct_message_reply_by_person_id(api, direct_message_by_person_id):
+    text = create_string("Reply Message")
+    return api.messages.create(
+        toPersonId=direct_message_by_person_id.toPersonId,
+        parentId=direct_message_by_person_id.id,
+        text=text,
+    )
 
 
 @pytest.fixture(scope="session")
@@ -123,6 +143,16 @@ def send_group_room_message(api):
 def group_room_text_message(group_room, send_group_room_message):
     text = create_string("Message")
     return send_group_room_message(group_room.id, text=text)
+
+
+@pytest.fixture(scope="session")
+def group_room_message_reply_by_id(api, group_room, group_room_text_message):
+    text = create_string("Reply Message")
+    return api.messages.create(
+        # roomId=group_room.id,
+        parentId=group_room_text_message.id,
+        text=text,
+    )
 
 
 @pytest.fixture(scope="session")
@@ -201,13 +231,13 @@ def group_room_messages(
 
 @pytest.fixture(scope="session")
 def direct_messages(
-    direct_message_by_email,
-    direct_message_by_id,
+    direct_message_by_person_email,
+    direct_message_by_person_id,
     direct_message_by_email_with_card,
 ):
     return [
-        direct_message_by_email,
-        direct_message_by_id,
+        direct_message_by_person_email,
+        direct_message_by_person_id,
         direct_message_by_email_with_card,
     ]
 
@@ -258,8 +288,14 @@ def test_list_messages_mentioning_me(api, group_room,
     assert are_valid_messages(messages_list)
 
 
-def test_create_direct_messages_by_email(direct_message_by_email):
-    assert is_valid_message(direct_message_by_email)
+def test_create_direct_messages_by_email(direct_message_by_person_email):
+    assert is_valid_message(direct_message_by_person_email)
+
+
+def test_reply_to_direct_message_by_person_email(
+    direct_message_reply_by_person_email
+):
+    assert is_valid_message(direct_message_reply_by_person_email)
 
 
 def test_create_direct_messages_by_email_with_card(
@@ -268,11 +304,36 @@ def test_create_direct_messages_by_email_with_card(
     assert is_valid_message(direct_message_by_email_with_card)
 
 
-def test_create_direct_messages_by_id(direct_message_by_id):
-    assert is_valid_message(direct_message_by_id)
+def test_create_direct_messages_by_id(direct_message_by_person_id):
+    assert is_valid_message(direct_message_by_person_id)
+
+
+def test_reply_to_direct_message_by_person_id(
+    direct_message_reply_by_person_id
+):
+    assert is_valid_message(direct_message_reply_by_person_id)
+
+
+def test_list_direct_messages_by_person_id(api, direct_message_by_person_id):
+    messages = api.messages.list_direct(
+        personId=direct_message_by_person_id.toPersonId,
+    )
+    assert are_valid_messages(messages)
+
+
+def test_list_direct_messages_by_person_email(api,
+                                              direct_message_by_person_email):
+    messages = api.messages.list_direct(
+        personEmail=direct_message_by_person_email.toPersonEmail,
+    )
+    assert are_valid_messages(messages)
 
 
 def test_create_text_message(group_room_text_message):
+    assert is_valid_message(group_room_text_message)
+
+
+def test_create_reply_message(group_room_text_message):
     assert is_valid_message(group_room_text_message)
 
 

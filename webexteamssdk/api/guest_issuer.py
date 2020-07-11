@@ -47,8 +47,8 @@ import jwt
 import base64
 import requests
 
-API_ENDPOINT = 'jwt'
-OBJECT_TYPE = 'guest_issuer_token'
+API_ENDPOINT = "jwt"
+OBJECT_TYPE = "guest_issuer_token"
 
 
 class GuestIssuerAPI(object):
@@ -76,46 +76,57 @@ class GuestIssuerAPI(object):
         self._session = session
         self._object_factory = object_factory
 
-    def create(self, subject, displayName, issuerToken, expiration, secret):
+    def create(self, sub, name, iss, exp, secret):
         """Create a new guest issuer using the provided issuer token.
 
         This function returns a guest issuer with an api access token.
 
         Args:
-            subject(basestring): Unique and public identifier
-            displayName(basestring): Display Name of the guest user
-            issuerToken(basestring): Issuer token from developer hub
-            expiration(basestring): Expiration time as a unix timestamp
-            secret(basestring): The secret used to sign your guest issuers
+            sub(basestring): The subject of the token. This is your unique
+                and public identifier for the guest user. This claim may
+                contain only letters, numbers, and hyphens.
+            name(basestring): The display name of the guest user. This will be
+                the name shown in Webex Teams clients.
+            iss(basestring): The issuer of the token. Use the Guest
+                Issuer ID provided in My Webex Teams Apps.
+            exp(basestring): The exp time of the token, as a UNIX
+                timestamp in seconds. Use the lowest practical value for the
+                use of the token. This is not the exp time for the guest
+                user's session.
+            secret(basestring): Use the secret Webex provided you when you
+                created your Guest Issuer App. The secret will be used to sign
+                the token request.
 
         Returns:
-            GuestIssuerToken: A Guest Issuer with a valid access token.
+            GuestIssuerToken: A Guest Issuer token with a valid access token.
 
         Raises:
             TypeError: If the parameter types are incorrect
             ApiError: If the webex teams cloud returns an error.
         """
-        check_type(subject, basestring, optional=True)
-        check_type(displayName, basestring, optional=True)
-        check_type(issuerToken, basestring, optional=True)
-        check_type(expiration, basestring, optional=True)
-        check_type(secret, basestring, optional=True)
+        check_type(sub, basestring)
+        check_type(name, basestring)
+        check_type(iss, basestring)
+        check_type(exp, basestring)
+        check_type(secret, basestring)
 
         payload = {
-            "sub": subject,
-            "name": displayName,
-            "iss": issuerToken,
-            "exp": expiration
+            "sub": sub,
+            "name": name,
+            "iss": iss,
+            "exp": exp
         }
 
         key = base64.b64decode(secret)
-        jwt_token = jwt.encode(payload, key, algorithm='HS256')
+        jwt_token = jwt.encode(payload, key, algorithm="HS256")
 
-        url = self._session.base_url + API_ENDPOINT + "/" + "login"
         headers = {
-            'Authorization': "Bearer " + jwt_token.decode('utf-8')
+            "Authorization": "Bearer " + jwt_token.decode("utf-8")
         }
-        response = requests.post(url, headers=headers)
-        check_response_code(response, EXPECTED_RESPONSE_CODE['GET'])
 
-        return self._object_factory(OBJECT_TYPE, response.json())
+        json_data = self._session.post(
+            API_ENDPOINT + "/" + "login",
+            headers=headers
+        )
+
+        return self._object_factory(OBJECT_TYPE, json_data)

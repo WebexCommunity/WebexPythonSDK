@@ -22,6 +22,7 @@
 |                        |                           | :meth:`delete() <webeteamssdk.api.memberships.MembershipsAPI.delete>`           |
 +------------------------+---------------------------+---------------------------------------------------------------------------------+
 |                        | :ref:`messages`           | :meth:`list() <webeteamssdk.api.messages.MessagesAPI.list>`                     |
+|                        |                           | :meth:`list_direct() <webeteamssdk.api.messages.MessagesAPI.list_direct>`       |
 |                        |                           | :meth:`create() <webeteamssdk.api.messages.MessagesAPI.create>`                 |
 |                        |                           | :meth:`get() <webeteamssdk.api.messages.MessagesAPI.get>`                       |
 |                        |                           | :meth:`delete() <webeteamssdk.api.messages.MessagesAPI.delete>`                 |
