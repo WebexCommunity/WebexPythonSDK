@@ -118,6 +118,12 @@ rooms
 
 .. autoclass:: webexteamssdk.api.rooms.RoomsAPI()
 
+.. _room_meeting_details:
+
+room_meeting_details
+--------------------
+
+.. autoclass:: webexteamssdk.api.room_meeting_details.RoomMeetingDetailsAPI()
 
 .. _teams:
 
