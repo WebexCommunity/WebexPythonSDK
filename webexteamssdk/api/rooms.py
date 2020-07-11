@@ -73,7 +73,7 @@ class RoomsAPI(object):
         self._object_factory = object_factory
 
     @generator_container
-    def list(self, teamId=None, type=None, sortBy=None, max=None,
+    def list(self, teamId=None, type=None, sortBy=None, max=100,
              **request_parameters):
         """List rooms.
 
@@ -189,7 +189,7 @@ class RoomsAPI(object):
         # Return a room object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
 
-    def update(self, roomId, title=None, **request_parameters):
+    def update(self, roomId, title, **request_parameters):
         """Update details for a room, by ID.
 
         Args:
@@ -207,7 +207,7 @@ class RoomsAPI(object):
 
         """
         check_type(roomId, basestring)
-        check_type(roomId, basestring, optional=True)
+        check_type(roomId, basestring)
 
         put_data = dict_from_items_with_values(
             request_parameters,
