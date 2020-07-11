@@ -59,7 +59,7 @@ from .mixins.team import TeamBasicPropertiesMixin
 from .mixins.team_membership import TeamMembershipBasicPropertiesMixin
 from .mixins.webhook import WebhookBasicPropertiesMixin
 from .mixins.webhook_event import WebhookEventBasicPropertiesMixin
-
+from .mixins.room_meeting_details import RoomMeetingDetailsBasicPropertiesMixin
 
 class ImmutableData(object):
     """Model a Webex Teams JSON object as an immutable native Python object."""
@@ -239,6 +239,8 @@ class Role(ImmutableData, RoleBasicPropertiesMixin):
 class Room(ImmutableData, RoomBasicPropertiesMixin):
     """Webex Teams Room data model."""
 
+class RoomMeetingDetails(ImmutableData, RoomMeetingDetailsBasicPropertiesMixin):
+    """Webex Teams Room meeting details data model."""
 
 class Team(ImmutableData, TeamBasicPropertiesMixin):
     """Webex Teams Team data model."""
@@ -278,6 +280,7 @@ immutable_data_models = defaultdict(
     person=Person,
     role=Role,
     room=Room,
+    room_meeting_details=RoomMeetingDetails,
     team=Team,
     team_membership=TeamMembership,
     webhook=Webhook,
