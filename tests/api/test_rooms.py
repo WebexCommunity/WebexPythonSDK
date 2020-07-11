@@ -36,6 +36,11 @@ def is_valid_room(obj):
     return isinstance(obj, webexteamssdk.Room) and obj.id is not None
 
 
+def is_valid_room_meeting_info(obj):
+    return (isinstance(obj, webexteamssdk.RoomMeetingInfo)
+            and obj.roomId is not None)
+
+
 def are_valid_rooms(iterable):
     return all([is_valid_room(obj) for obj in iterable])
 
@@ -154,6 +159,11 @@ def test_create_team_room(team_room):
 def test_get_room_details(api, group_room):
     room = api.rooms.get(group_room.id)
     assert is_valid_room(room)
+
+
+def test_get_room_meeting_info(api, group_room):
+    room_meeting_info = api.rooms.get_meeting_info(group_room.id)
+    assert is_valid_room_meeting_info(room_meeting_info)
 
 
 def test_update_room_title(api, group_room):

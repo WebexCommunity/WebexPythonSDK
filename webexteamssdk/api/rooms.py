@@ -189,6 +189,32 @@ class RoomsAPI(object):
         # Return a room object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
 
+    def get_meeting_info(self, roomId):
+        """Get the meeting details for a room.
+
+        Args:
+            roomId(basestring): The unique identifier for the room.
+
+        Returns:
+            RoomMeetingInfo: A Room Meeting Info object with the meeting
+            details for the room such as the SIP address, meeting URL,
+            toll-free and toll dial-in numbers.
+
+        Raises:
+            TypeError: If the parameter types are incorrect.
+            ApiError: If the Webex Teams cloud returns an error.
+
+        """
+        check_type(roomId, basestring)
+
+        # API request
+        json_data = self._session.get(
+            API_ENDPOINT + '/' + roomId + '/meetingInfo',
+        )
+
+        # Return a room meeting info object created from the response JSON data
+        return self._object_factory("room_meeting_info", json_data)
+
     def update(self, roomId, title, **request_parameters):
         """Update details for a room, by ID.
 
