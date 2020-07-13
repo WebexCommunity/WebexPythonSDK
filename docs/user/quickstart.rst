@@ -473,7 +473,7 @@ Extending the API with bound methods
 ------------------------------------
 
 As the Webex Teams API is developed and features are added, it may be necessary to extend the webexteamssdk to access those features.
-Extending the API is simple by binding your own methods to the WebexTeamsAPI connection object. By binding a method, you can 
+Extending the API is simple by binding your own methods to the WebexTeamsAPI connection object. By binding a method, you can
 extend functionality and leverage all of the objects and quality of life features of webexteamssdk.
 
 .. code-block:: python
@@ -481,13 +481,13 @@ extend functionality and leverage all of the objects and quality of life feature
     >>> new_method(self, param):
         ...     json_obj = self._session.get('/example/action/' + param)
         ...     return json_obj
-    
+
     >>> api = WebexTeamsAPI()
     >>> api.new_method = new_method
     >>> output = WebexTeamsAPI.new_method(param)
 
 
-*Copyright (c) 2016-2019 Cisco and/or its affiliates.*
+*Copyright (c) 2016-2020 Cisco and/or its affiliates.*
 
 
 .. _Webex Teams: https://www.webex.com/products/teams/index.html
