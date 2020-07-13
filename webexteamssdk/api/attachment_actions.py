@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Messages API wrapper.
+"""Webex Teams Attachment Actions API wrapper.
 
-Copyright (c) 2016-2019 Cisco and/or its affiliates.
+Copyright (c) 2016-2020 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -106,12 +106,11 @@ class AttachmentActionsAPI(object):
         # Return a attachment action object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
 
-    def get(self, attachmentId):
-        """Get the details of a attachment action, by ID.
+    def get(self, id):
+        """Get the details for a attachment action, by ID.
 
         Args:
-            attachmentId(basestring): The ID of the attachment action to be
-            retrieved.
+            id(basestring): A unique identifier for the attachment action.
 
         Returns:
             AttachmentAction: A Attachment Action object with the details of
@@ -122,10 +121,10 @@ class AttachmentActionsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(attachmentId, basestring)
+        check_type(id, basestring)
 
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/' + attachmentId)
+        json_data = self._session.get(API_ENDPOINT + '/' + id)
 
         # Return a message object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Package configuration.
 
-Copyright (c) 2016-2019 Cisco and/or its affiliates.
+Copyright (c) 2016-2020 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,17 +24,17 @@ SOFTWARE.
 
 
 # Package Constants
-DEFAULT_BASE_URL = 'https://api.ciscospark.com/v1/'
+DEFAULT_BASE_URL = "https://webexapis.com/v1/"
 
 DEFAULT_SINGLE_REQUEST_TIMEOUT = 60
 
 DEFAULT_WAIT_ON_RATE_LIMIT = True
 
-ACCESS_TOKEN_ENVIRONMENT_VARIABLE = 'WEBEX_TEAMS_ACCESS_TOKEN'
+ACCESS_TOKEN_ENVIRONMENT_VARIABLE = "WEBEX_TEAMS_ACCESS_TOKEN"
 
 LEGACY_ACCESS_TOKEN_ENVIRONMENT_VARIABLES = [
-    'SPARK_ACCESS_TOKEN',
-    'CISCO_SPARK_ACCESS_TOKEN',
+    "SPARK_ACCESS_TOKEN",
+    "CISCO_SPARK_ACCESS_TOKEN",
 ]
 
 WEBEX_TEAMS_DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S.%fZ"

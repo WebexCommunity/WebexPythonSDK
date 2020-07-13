@@ -15,29 +15,22 @@ webexteamssdk
 .. image:: https://readthedocs.org/projects/webexteamssdk/badge/?version=latest
     :target: http://webexteamssdk.readthedocs.io/en/latest/?badge=latest
 
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 
 
-Looking for ``ciscosparkapi``?  You are in the right place.  ``ciscosparkapi`` is now ``webexteamssdk``!  It still has all of the native and natural Webex Teams Python functionality that you love and now we have made room for even more functionality to be added in the future.
+With release v1.6 we are wrapping up active development on the v1.x release and shifting our focus to the next major
+release v2!  Please see the work-in-progress `Release Plan`_ and contribute your ideas for v2.x enhancements by either
+opening enhancement issues_ or by joining our
+`webexteamssdk - Webex Teams SDK - Python Community Contributors <https://eurl.io/#BJ0A8gfOQ>`_ space and posting your
+ideas there.
 
-We will maintain the ``ciscosparkapi`` package (bug fixes, etc.) in the `ciscosparkapi`_ branch of this repository and continue to publish package updates with these fixes to PyPI (through the end of 2019). Maintaining the ``ciscosparkapi`` package should keep your code and projects up and running while giving you 12+ months to migrate your code to the new ``webexteamssdk`` library.
-
-*Migration Note:* Migrating should be easy.  The ``WebexTeamsAPI`` class and the Python objects returned by the API calls are nearly identical to their ``CiscoSparkAPI`` predecessors.  Does the word "nearly" scare you?  Here are some specifics:
-
-* The obvious top-level name change from ``CiscoSparkAPI`` to ``WebexTeamsAPI``.
-* ``WebexTeamsAPI``'s API structure: method and attribute names are *identical*.
-* The returned Python objects (now derivatives of an `ImmutableData` base class) are now immutable; so you can use them in sets and as keys in dictionaries.
-* ``WebexTeamsAPI`` converts object attributes that contain data-time strings (like a room's creation date) to Python ``datetime``'s (actually a derived class that has been customized to model the Webex Teams data-time format)
-
-There is also some new functionality under the hood that we will document, communicate, and generally make available in the future.
+------------------------------------------------------------------------------------------------------------------------
 
 
--------------------------------------------------------------------------------
+**webexteamssdk** is a *community developed* Python library for working with the Webex Teams APIs.  Our goal is to make
+working with Webex Teams in Python a *native* and *natural* experience!
 
-
-**webexteamssdk** is a *community developed* Python library for working with the Webex Teams APIs.  Our goal is to make working with Webex Teams in Python a *native* and *natural* experience!
-
-.. code-block:: python
+.. code-block:: Python
 
     from webexteamssdk import WebexTeamsAPI
 
@@ -64,7 +57,8 @@ There is also some new functionality under the hood that we will document, commu
                         files=["https://www.webex.com/content/dam/wbx/us/images/dg-integ/teams_icon.png"])
 
 
-That's more than 6 Webex Teams API calls in less than 23 lines of code (with comments and whitespace), and likely more than that since webexteamssdk handles pagination_ for you automatically!
+That's more than 6 Webex Teams API calls in less than 23 lines of code (with comments and whitespace), and likely more
+than that, since webexteamssdk handles pagination_ for you automatically!
 
 webexteamssdk makes your life better...  `Learn how!`__
 
@@ -78,7 +72,8 @@ webexteamssdk does all of this for you:
 
 * Transparently sources your Webex Teams access token from your local environment
 
-* Provides and uses default arguments and settings everywhere possible, so you don't have to think about things like API endpoint URLs, HTTP headers and JSON formats
+* Provides and uses default arguments and settings everywhere possible, so you don't have to think about things like API
+  endpoint URLs, HTTP headers and JSON formats
 
 * Represents all Webex Teams API interactions using native Python tools
 
@@ -108,7 +103,7 @@ Installing and upgrading webexteamssdk is easy:
 
     $ pip install webexteamssdk
 
-**Upgrading to the latest Version**
+**Upgrade to the latest version**
 
 .. code-block:: bash
 
@@ -137,15 +132,18 @@ __ Contribution_
 Release Notes
 -------------
 
-Please see the releases_ page for release notes on the incremental functionality and bug fixes incorporated into the published releases.
+Please see the releases_ page for release notes on the incremental functionality and bug fixes incorporated into the
+published releases.
 
 
 Questions, Support & Discussion
 -------------------------------
 
-webexteamssdk is a *community developed* and *community supported* project.  If you experience any issues using this package, please report them using the issues_ page.
+webexteamssdk is a *community developed* and *community-supported* project.  If you experience any issues using this
+package, please report them using the issues_ page.
 
-Please join the `Python Webex Teams Devs`__ Webex Teams space to ask questions, join the discussion, and share your projects and creations.
+Please join the `Python Webex Teams Devs`__ Webex Teams space to ask questions, join the discussion, and share your
+projects and creations.
 
 __ Community_
 
@@ -153,13 +151,26 @@ __ Community_
 Contribution
 ------------
 
-webexteamssdk_ is a community development projects.  Feedback, thoughts, ideas, and code contributions are welcome!  Please see the `Contributing`_ guide for more information.
+webexteamssdk_ is a community development project.  Feedback, thoughts, ideas, and code contributions are welcome!
+Please see the `Contributing`_ guide for more information.
 
 
-*Copyright (c) 2016-2019 Cisco and/or its affiliates.*
+History
+-------
+
+The Webex Teams SDK (webexteamssdk) library started as Cisco Spark API (ciscosparkapi). We updated the library's name in
+alignment with Cisco's re-brand of Cisco Spark to Webex Teams. The Cisco Spark API library has been deprecated and is no
+longer supported; however, its open-source codebase is still available in the `ciscosparkapi`_ branch of this
+repository.
+
+The development team may make additional name changes as the library evolves with the Webex APIs published on
+developer.webex.com.
 
 
-.. _ciscosparkapi: https://github.com/CiscoDevNet/ciscosparkapi/tree/ciscosparkapi
+*Copyright (c) 2016-2020 Cisco and/or its affiliates.*
+
+
+.. _Release Plan: https://github.com/CiscoDevNet/webexteamssdk/wiki/Release-Plans
 .. _Introduction: http://webexteamssdk.readthedocs.io/en/latest/user/intro.html
 .. _pagination: https://developer.webex.com/pagination.html
 .. _webexteamssdk.readthedocs.io: https://webexteamssdk.readthedocs.io
@@ -174,3 +185,4 @@ webexteamssdk_ is a community development projects.  Feedback, thoughts, ideas, 
 .. _the repository: webexteamssdk_
 .. _pull request: `pull requests`_
 .. _Contributing: https://github.com/CiscoDevNet/webexteamssdk/blob/master/docs/contributing.rst
+.. _ciscosparkapi: https://github.com/CiscoDevNet/ciscosparkapi/tree/ciscosparkapi

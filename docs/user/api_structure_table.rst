@@ -22,6 +22,7 @@
 |                        |                           | :meth:`delete() <webeteamssdk.api.memberships.MembershipsAPI.delete>`           |
 +------------------------+---------------------------+---------------------------------------------------------------------------------+
 |                        | :ref:`messages`           | :meth:`list() <webeteamssdk.api.messages.MessagesAPI.list>`                     |
+|                        |                           | :meth:`list_direct() <webeteamssdk.api.messages.MessagesAPI.list_direct>`       |
 |                        |                           | :meth:`create() <webeteamssdk.api.messages.MessagesAPI.create>`                 |
 |                        |                           | :meth:`get() <webeteamssdk.api.messages.MessagesAPI.get>`                       |
 |                        |                           | :meth:`delete() <webeteamssdk.api.messages.MessagesAPI.delete>`                 |
@@ -41,6 +42,7 @@
 |                        | :ref:`rooms`              | :meth:`list() <webeteamssdk.api.rooms.RoomsAPI.list>`                           |
 |                        |                           | :meth:`create() <webeteamssdk.api.rooms.RoomsAPI.create>`                       |
 |                        |                           | :meth:`get() <webeteamssdk.api.rooms.RoomsAPI.get>`                             |
+|                        |                           | :meth:`get_meeting_info() <webeteamssdk.api.rooms.RoomsAPI.get_meeting_info>`   |
 |                        |                           | :meth:`update() <webeteamssdk.api.rooms.RoomsAPI.update>`                       |
 |                        |                           | :meth:`delete() <webeteamssdk.api.rooms.RoomsAPI.delete>`                       |
 +------------------------+---------------------------+---------------------------------------------------------------------------------+

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams Webhooks API wrapper.
 
-Copyright (c) 2016-2019 Cisco and/or its affiliates.
+Copyright (c) 2016-2020 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -73,7 +73,7 @@ class WebhooksAPI(object):
         self._object_factory = object_factory
 
     @generator_container
-    def list(self, max=None, **request_parameters):
+    def list(self, max=100, **request_parameters):
         """List all of the authenticated user's webhooks.
 
         This method supports Webex Teams's implementation of RFC5988 Web

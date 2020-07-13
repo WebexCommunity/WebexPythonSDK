@@ -17,7 +17,7 @@ WEBEX_TEAMS_ACCESS_TOKEN environment variable.  You must have this environment
 variable set to run this script.
 
 
-Copyright (c) 2016-2019 Cisco and/or its affiliates.
+Copyright (c) 2016-2020 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -49,7 +49,7 @@ from webexteamssdk import WebexTeamsAPI
 __author__ = "Jeff Levensailor"
 __author_email__ = "jeff@levensailor.com"
 __contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
-__copyright__ = "Copyright (c) 2016-2019 Cisco and/or its affiliates."
+__copyright__ = "Copyright (c) 2016-2020 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 

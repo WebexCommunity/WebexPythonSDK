@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams People API wrapper.
 
-Copyright (c) 2016-2019 Cisco and/or its affiliates.
+Copyright (c) 2016-2020 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -75,7 +75,17 @@ class PeopleAPI(object):
     @generator_container
     def list(self, email=None, displayName=None, id=None, orgId=None, max=None,
              **request_parameters):
-        """List people
+        """List people in your organization.
+
+        For most users, either the `email` or `displayName` parameter is
+        required. Admin users can omit these fields and list all users in their
+        organization.
+
+        Response properties associated with a user's presence status, such as
+        `status` or `lastActivity`, will only be displayed for people within
+        your organization or an organization you manage. Presence information
+        will not be shown if the authenticated user has disabled status
+        sharing.
 
         This method supports Webex Teams's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator

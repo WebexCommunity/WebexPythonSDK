@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Community-developed Python SDK for the Webex Teams APIs.
 
-Copyright (c) 2016-2019 Cisco and/or its affiliates.
+Copyright (c) 2016-2020 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@ from .models.dictionary import dict_data_factory
 from .models.immutable import (
     AccessToken, AdminAuditEvent, AttachmentAction, Event, GuestIssuerToken,
     immutable_data_factory, License, Membership, Message, Organization, Person,
-    Role, Room, Team, TeamMembership, Webhook, WebhookEvent,
+    Role, Room, RoomMeetingInfo, Team, TeamMembership, Webhook, WebhookEvent,
 )
 from .models.simple import simple_data_factory, SimpleDataModel
 from .utils import WebexTeamsDateTime

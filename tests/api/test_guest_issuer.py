@@ -1,5 +1,5 @@
-#  -*- coding: utf-8 -*-
-"""Main entry point.
+# -*- coding: utf-8 -*-
+"""WebexTeamsAPI Licenses API fixtures and tests.
 
 Copyright (c) 2016-2020 Cisco and/or its affiliates.
 
@@ -22,19 +22,34 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+import os
+import time
 
-__author__ = "Jose Bogarín Solano"
-__author_email__ = "jose@bogarin.co.cr"
-__contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
-__copyright__ = "Copyright (c) 2016-2020 Cisco and/or its affiliates."
-__license__ = "MIT"
+import webexteamssdk
 
 
-from pyramid.config import Configurator
+TOKEN_EXPIRATION_SECONDS = 60 * 5
+WEBEX_TEAMS_GUEST_ISSUER_ID = os.environ.get("WEBEX_TEAMS_GUEST_ISSUER_ID")
+WEBEX_TEAMS_GUEST_ISSUER_SECRET = os.environ.get(
+    "WEBEX_TEAMS_GUEST_ISSUER_SECRET"
+)
 
 
-def main(global_config, **settings):
-    config = Configurator(settings=settings)
-    config.include("cornice")
-    config.scan("pyramidWebexTeamsBot.views")
-    return config.make_wsgi_app()
+# Helper Functions
+
+def is_valid_guest_issuer_token(obj):
+    return (isinstance(obj, webexteamssdk.GuestIssuerToken)
+            and obj.token is not None)
+
+
+# Tests
+
+def test_get_guest_issuer_token(api):
+    guest_issuer_token = api.guest_issuer.create(
+        sub="test-guest-user",
+        name="Test Guest User",
+        iss=WEBEX_TEAMS_GUEST_ISSUER_ID,
+        exp=str(int(time.time()) + TOKEN_EXPIRATION_SECONDS),
+        secret=WEBEX_TEAMS_GUEST_ISSUER_SECRET,
+    )
+    assert is_valid_guest_issuer_token(guest_issuer_token)

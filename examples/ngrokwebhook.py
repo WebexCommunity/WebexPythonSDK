@@ -13,7 +13,7 @@ Internet accesible ngrok url to localhost port 8080:
 To use script simply launch ngrok, and then launch this script.  After ngrok is
 killed, run this script a second time to remove webhook from Webex Teams.
 
-Copyright (c) 2016-2019 Cisco and/or its affiliates.
+Copyright (c) 2016-2020 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -48,7 +48,7 @@ from builtins import *
 __author__ = "Brad Bester"
 __author_email__ = "brbester@cisco.com"
 __contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
-__copyright__ = "Copyright (c) 2016-2019 Cisco and/or its affiliates."
+__copyright__ = "Copyright (c) 2016-2020 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 

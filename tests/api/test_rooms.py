@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """WebexTeamsAPI Rooms API fixtures and tests.
 
-Copyright (c) 2016-2019 Cisco and/or its affiliates.
+Copyright (c) 2016-2020 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,11 @@ from tests.utils import create_string
 
 def is_valid_room(obj):
     return isinstance(obj, webexteamssdk.Room) and obj.id is not None
+
+
+def is_valid_room_meeting_info(obj):
+    return (isinstance(obj, webexteamssdk.RoomMeetingInfo)
+            and obj.roomId is not None)
 
 
 def are_valid_rooms(iterable):
@@ -154,6 +159,11 @@ def test_create_team_room(team_room):
 def test_get_room_details(api, group_room):
     room = api.rooms.get(group_room.id)
     assert is_valid_room(room)
+
+
+def test_get_room_meeting_info(api, group_room):
+    room_meeting_info = api.rooms.get_meeting_info(group_room.id)
+    assert is_valid_room_meeting_info(room_meeting_info)
 
 
 def test_update_room_title(api, group_room):

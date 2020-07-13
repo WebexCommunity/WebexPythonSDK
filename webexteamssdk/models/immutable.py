@@ -8,7 +8,7 @@ The ImmutableData class models any JSON object passed to it as a string or
 Python dictionary as a native Python object; providing attribute access using
 native dot-syntax (`object.attribute`).
 
-Copyright (c) 2016-2019 Cisco and/or its affiliates.
+Copyright (c) 2016-2020 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -55,6 +55,7 @@ from .mixins.organization import OrganizationBasicPropertiesMixin
 from .mixins.person import PersonBasicPropertiesMixin
 from .mixins.role import RoleBasicPropertiesMixin
 from .mixins.room import RoomBasicPropertiesMixin
+from .mixins.room_meeting_info import RoomMeetingInfoBasicPropertiesMixin
 from .mixins.team import TeamBasicPropertiesMixin
 from .mixins.team_membership import TeamMembershipBasicPropertiesMixin
 from .mixins.webhook import WebhookBasicPropertiesMixin
@@ -240,6 +241,10 @@ class Room(ImmutableData, RoomBasicPropertiesMixin):
     """Webex Teams Room data model."""
 
 
+class RoomMeetingInfo(ImmutableData, RoomMeetingInfoBasicPropertiesMixin):
+    """Webex Teams Room Meeting Info data model."""
+
+
 class Team(ImmutableData, TeamBasicPropertiesMixin):
     """Webex Teams Team data model."""
 
@@ -278,6 +283,7 @@ immutable_data_models = defaultdict(
     person=Person,
     role=Role,
     room=Room,
+    room_meeting_info=RoomMeetingInfo,
     team=Team,
     team_membership=TeamMembership,
     webhook=Webhook,

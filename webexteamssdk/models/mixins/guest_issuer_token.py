@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams Guest-Issuer data model.
 
-Copyright (c) 2016-2019 Cisco and/or its affiliates.
+Copyright (c) 2016-2020 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -36,9 +36,9 @@ class GuestIssuerTokenBasicPropertiesMixin(object):
     """Guest issuer token basic properties"""
 
     @property
-    def access_token(self):
-        return self._json_data.get('token')
+    def token(self):
+        return self._json_data.get("token")
 
     @property
-    def expires_in(self):
-        return self._json_data.get('expiresIn')
+    def expiresIn(self):
+        return self._json_data.get("expiresIn")

@@ -257,6 +257,15 @@ Room
     :inherited-members:
 
 
+.. _RoomMeetingInfo:
+
+Room Meeting Info
+-----------------
+
+.. autoclass:: RoomMeetingInfo()
+    :inherited-members:
+
+
 .. _Team:
 
 Team
@@ -266,7 +275,7 @@ Team
     :inherited-members:
 
 
-.. _Team Membership:
+.. _TeamMembership:
 
 Team Membership
 ---------------
@@ -425,4 +434,4 @@ Actions
 
 .. autoclass:: webexteamssdk.cards.actions.ShowCard
 
-*Copyright (c) 2016-2019 Cisco and/or its affiliates.*
+*Copyright (c) 2016-2020 Cisco and/or its affiliates.*

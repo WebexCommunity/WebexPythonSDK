@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Access-Token data model.
+"""Webex Teams Room Meeting Info data model.
 
 Copyright (c) 2016-2020 Cisco and/or its affiliates.
 
@@ -33,25 +33,35 @@ from __future__ import (
 from builtins import *
 
 
-class AccessTokenBasicPropertiesMixin(object):
-    """Access Token basic properties."""
+class RoomMeetingInfoBasicPropertiesMixin(object):
+    """Room basic properties."""
 
     @property
-    def access_token(self):
-        """Webex Teams access token."""
-        return self._json_data.get('access_token')
+    def roomId(self):
+        """A unique identifier for the room."""
+        return self._json_data.get("roomId")
 
     @property
-    def expires_in(self):
-        """Access token expiry time (in seconds)."""
-        return self._json_data.get('expires_in')
+    def meetingLink(self):
+        """The Webex meeting URL for the room."""
+        return self._json_data.get("meetingLink")
 
     @property
-    def refresh_token(self):
-        """Refresh token used to request a new/refreshed access token."""
-        return self._json_data.get('refresh_token')
+    def sipAddress(self):
+        """The SIP address for the room."""
+        return self._json_data.get("sipAddress")
 
     @property
-    def refresh_token_expires_in(self):
-        """Refresh token expiry time (in seconds)."""
-        return self._json_data.get('refresh_token_expires_in')
+    def meetingNumber(self):
+        """The Webex meeting number for the room."""
+        return self._json_data.get("meetingNumber")
+
+    @property
+    def callInTollFreeNumber(self):
+        """The toll-free PSTN number for the room."""
+        return self._json_data.get("callInTollFreeNumber")
+
+    @property
+    def callInTollNumber(self):
+        """The toll (local) PSTN number for the room."""
+        return self._json_data.get("callInTollNumber")
