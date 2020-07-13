@@ -19,7 +19,7 @@ webexteamssdk
 
 
 With release v1.6 we are wrapping up active development on the v1.x release and shifting our focus to the next major
-release v2!  Please see the work-in-progress `Release Plan`__ and contribute your ideas for v2.x enhancements by either
+release v2!  Please see the work-in-progress `Release Plan`_ and contribute your ideas for v2.x enhancements by either
 opening enhancement issues_ or by joining our
 `webexteamssdk - Webex Teams SDK - Python Community Contributors <https://eurl.io/#BJ0A8gfOQ>`_ space and posting your
 ideas there.
@@ -160,15 +160,17 @@ History
 
 The Webex Teams SDK (webexteamssdk) library started as Cisco Spark API (ciscosparkapi). We updated the library's name in
 alignment with Cisco's re-brand of Cisco Spark to Webex Teams. The Cisco Spark API library has been deprecated and is no
-longer supported; however, its open-source codebase is still available in the `ciscosparkapi`_ branch of this repository.
+longer supported; however, its open-source codebase is still available in the `ciscosparkapi`_ branch of this
+repository.
 
-The development team may make additional name changes as the library evolves with the Webex APIs published on developer.webex.com.
+The development team may make additional name changes as the library evolves with the Webex APIs published on
+developer.webex.com.
 
 
 *Copyright (c) 2016-2020 Cisco and/or its affiliates.*
 
 
-.. _ciscosparkapi: https://github.com/CiscoDevNet/ciscosparkapi/tree/ciscosparkapi
+.. _Release Plan: https://github.com/CiscoDevNet/webexteamssdk/wiki/Release-Plans
 .. _Introduction: http://webexteamssdk.readthedocs.io/en/latest/user/intro.html
 .. _pagination: https://developer.webex.com/pagination.html
 .. _webexteamssdk.readthedocs.io: https://webexteamssdk.readthedocs.io
@@ -183,3 +185,4 @@ The development team may make additional name changes as the library evolves wit
 .. _the repository: webexteamssdk_
 .. _pull request: `pull requests`_
 .. _Contributing: https://github.com/CiscoDevNet/webexteamssdk/blob/master/docs/contributing.rst
+.. _ciscosparkapi: https://github.com/CiscoDevNet/ciscosparkapi/tree/ciscosparkapi
