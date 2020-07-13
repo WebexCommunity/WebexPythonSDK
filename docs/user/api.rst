@@ -257,6 +257,15 @@ Room
     :inherited-members:
 
 
+.. _RoomMeetingInfo:
+
+Room Meeting Info
+-----------------
+
+.. autoclass:: RoomMeetingInfo()
+    :inherited-members:
+
+
 .. _Team:
 
 Team
@@ -266,7 +275,7 @@ Team
     :inherited-members:
 
 
-.. _Team Membership:
+.. _TeamMembership:
 
 Team Membership
 ---------------
