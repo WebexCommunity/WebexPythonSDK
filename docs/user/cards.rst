@@ -31,7 +31,7 @@ Lets dive into a simple example that sends a card to a room
     card = AdaptiveCard(body=[greeting, first_name, age], actions=[submit])
 
     api = WebexTeamsAPI()
-    api.messages.create(text="fallback", roomId="...", cards=card)
+    api.messages.create(text="fallback", roomId="...", attachments=[card])
 
 The message we send with this code then looks like this in our Webex Teams
 client:
