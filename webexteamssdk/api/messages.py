@@ -200,7 +200,7 @@ class MessagesAPI(object):
             for item, attachment in enumerate(attachments):
                 check_type(attachment, (dict, AdaptiveCard))
 
-                if isinstance(attachments, AdaptiveCard):
+                if isinstance(attachment, AdaptiveCard):
                     attachments[item] = make_attachment(attachment)
 
         post_data = dict_from_items_with_values(
