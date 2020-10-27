@@ -72,7 +72,8 @@ class WebexTeamsAPI(object):
                  redirect_uri=None,
                  proxies=None,
                  be_geo_id=None,
-                 caller=None):
+                 caller=None,
+                 disable_ssl_verify=False):
         """Create a new WebexTeamsAPI object.
 
         An access token must be used when interacting with the Webex Teams API.
@@ -122,6 +123,9 @@ class WebexTeamsAPI(object):
             caller(basestring): Optional  identifier for API usage tracking.
                 Defaults to checking for a WEBEX_PYTHON_SDK_CALLER environment
                 variable.
+            disable_ssl_verify(bool): Optional boolean flag to disable ssl
+                verification. Defaults to False. If set to True, the requests
+                session won't verify ssl certs anymore.
 
         Returns:
             WebexTeamsAPI: A new WebexTeamsAPI object.
@@ -143,6 +147,7 @@ class WebexTeamsAPI(object):
         check_type(proxies, dict, optional=True)
         check_type(be_geo_id, basestring, optional=True)
         check_type(caller, basestring, optional=True)
+        check_type(disable_ssl_verify, bool, optional=True)
 
         access_token = access_token or WEBEX_TEAMS_ACCESS_TOKEN
 
@@ -186,7 +191,8 @@ class WebexTeamsAPI(object):
             wait_on_rate_limit=wait_on_rate_limit,
             proxies=proxies,
             be_geo_id=be_geo_id,
-            caller=caller
+            caller=caller,
+            disable_ssl_verify=disable_ssl_verify
         )
 
         # API wrappers
