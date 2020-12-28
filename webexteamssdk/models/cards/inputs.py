@@ -163,9 +163,9 @@ class Choices(AdaptiveCardComponent):
         self.spacing = spacing
 
         super().__init__(
-            serializable_properties=['choices'],
+            serializable_properties=[],
             simple_properties=[
                 'id', 'type', 'isMultiSelect', 'style', 'value', 'height',
-                'separator', 'spacing',
+                'separator', 'spacing','choices',
             ],
         )
