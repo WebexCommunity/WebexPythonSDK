@@ -233,7 +233,7 @@ class RoomsAPI(object):
 
         """
         check_type(roomId, basestring)
-        check_type(roomId, basestring)
+        check_type(title, basestring)
 
         put_data = dict_from_items_with_values(
             request_parameters,
