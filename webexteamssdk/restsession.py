@@ -150,6 +150,8 @@ def user_agent(be_geo_id=None, caller=None):
     if platform.machine():
         data["cpu"] = platform.machine()
 
+    data["organization"] = {}
+    
     # Add self-identified organization information to the User-Agent Header.
     if be_geo_id:
         data["organization"]["be_geo_id"] = be_geo_id
