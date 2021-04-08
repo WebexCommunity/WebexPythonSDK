@@ -180,7 +180,8 @@ class RestSession(object):
                  wait_on_rate_limit=DEFAULT_WAIT_ON_RATE_LIMIT,
                  proxies=None,
                  be_geo_id=None,
-                 caller=None):
+                 caller=None,
+                 disable_ssl_verify=False):
         """Initialize a new RestSession object.
 
         Args:
@@ -200,6 +201,9 @@ class RestSession(object):
             caller(basestring): Optional  identifier for API usage tracking.
                 Defaults to checking for a WEBEX_PYTHON_SDK_CALLER environment
                 variable.
+            disable_ssl_verify(bool): Optional boolean flag to disable ssl
+                verification. Defaults to False. If set to true, the requests
+                session won't verify ssl certs anymore.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -210,6 +214,7 @@ class RestSession(object):
         check_type(single_request_timeout, int, optional=True)
         check_type(wait_on_rate_limit, bool)
         check_type(proxies, dict, optional=True)
+        check_type(disable_ssl_verify, bool, optional=True)
 
         super(RestSession, self).__init__()
 
@@ -221,6 +226,11 @@ class RestSession(object):
 
         # Initialize a new session
         self._req_session = requests.session()
+
+        # Disable ssl cert verification if chosen by user
+        if disable_ssl_verify:
+            self._req_session.verify = False
+
 
         if proxies is not None:
             self._req_session.proxies.update(proxies)
