@@ -11,7 +11,7 @@ PKG_NAME      = webexteamssdk
 PYTHON        = python3
 
 RELATED_PKGS = webexteamssdk
-DEPENDENCIES = future requests>=2.4.2 requests-toolbelt PyJWT
+DEPENDENCIES = requests>=2.4.2 requests-toolbelt PyJWT
 
 help:
 	@echo "develop				Installs package into development mode"
