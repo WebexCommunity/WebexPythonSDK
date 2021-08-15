@@ -5,6 +5,11 @@ local/
 # Virtual Environments
 .venv/
 venv/
+bin/
+lib/
+lib64
+pyvenv.cfg
+share/
 
 
 # Test artifacts
@@ -22,3 +27,7 @@ dist/
 docs/_build/
 *.egg-info/
 .DS_Store
+
+
+# Misc
+=2.4.2
