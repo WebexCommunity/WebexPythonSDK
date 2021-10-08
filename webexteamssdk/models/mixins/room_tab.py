@@ -44,22 +44,6 @@ class RoomTabBasicPropertiesMixin(object):
         return self._json_data.get("id")
 
     @property
-    def room(self):
-        """A unique identifier for the room."""
-        return self._json_data.get("roomId")
-
-    @property
-    def roomType(self):
-        """The room type.
-
-        Room Type Enum:
-            `direct`: 1:1 room
-
-            `group`: Group room
-        """
-        return self._json_data.get("roomType")
-
-    @property
     def displayName(self):
         """User-friendly name for the room tab."""
         return self._json_data.get("displayName")
