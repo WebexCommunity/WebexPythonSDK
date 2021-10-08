@@ -151,7 +151,7 @@ def user_agent(be_geo_id=None, caller=None):
         data["cpu"] = platform.machine()
 
     data["organization"] = {}
-    
+
     # Add self-identified organization information to the User-Agent Header.
     if be_geo_id:
         data["organization"]["be_geo_id"] = be_geo_id
@@ -230,7 +230,6 @@ class RestSession(object):
         # Disable ssl cert verification if chosen by user
         if disable_ssl_verify:
             self._req_session.verify = False
-
 
         if proxies is not None:
             self._req_session.proxies.update(proxies)

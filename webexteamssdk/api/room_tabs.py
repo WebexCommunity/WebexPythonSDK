@@ -74,7 +74,8 @@ class RoomTabsAPI(object):
 
     @generator_container
     def list(self, roomId, **request_parameters):
-        """Lists all Room Tabs of a room. roomId query parameter is required to retrieve the response. 
+        """
+        Lists all Room Tabs of a room. roomId query parameter is required to retrieve the response.
 
         This method supports Webex Teams's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
@@ -121,7 +122,8 @@ class RoomTabsAPI(object):
 
         Args:
             roomId(basestring): A unique identifier for the room.
-            contentUrl(basestring): Content Url of the Room Tab. Needs to use the https protocol.
+            contentUrl(basestring): Content Url of the Room Tab.
+                Needs to use the https protocol.
             displayName(basestring): A user-friendly name for the room.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
@@ -178,7 +180,8 @@ class RoomTabsAPI(object):
         Args:
             roomTabId(basestring): The unique identifier for the Room Tab.
             roomId(basestring): The room ID.
-            contentUrl(basestring): Content Url of the Room Tab. Needs to use the https protocol.
+            contentUrl(basestring): Content Url of the Room Tab.
+                Needs to use the https protocol.
             displayName(basestring): A user-friendly name for the room.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
@@ -210,7 +213,6 @@ class RoomTabsAPI(object):
 
         # Return a room object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
-
 
     def delete(self, roomTabId):
         """Delete a room tab.
