@@ -150,27 +150,27 @@ class RoomTabsAPI(object):
         # Return a room object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
 
-    # def get(self, roomId):
-    #     """Get the details of a room tab, by ID.
+    def get(self, roomTabId):
+        """Get the details of a room tab, by ID.
 
-    #     Args:
-    #         roomId(basestring): The ID of the room to be retrieved.
+        Args:
+            roomTabId(basestring): The ID of the room tab to be retrieved.
 
-    #     Returns:
-    #         Room: A Room object with the details of the requested room.
+        Returns:
+            Room: A RoomTab object with the details of the requested room tab.
 
-    #     Raises:
-    #         TypeError: If the parameter types are incorrect.
-    #         ApiError: If the Webex Teams cloud returns an error.
+        Raises:
+            TypeError: If the parameter types are incorrect.
+            ApiError: If the Webex Teams cloud returns an error.
 
-    #     """
-    #     check_type(roomId, basestring)
+        """
+        check_type(roomTabId, basestring)
 
-    #     # API request
-    #     json_data = self._session.get(API_ENDPOINT + '/' + roomId)
+        # API request
+        json_data = self._session.get(API_ENDPOINT + '/' + roomTabId)
 
-    #     # Return a room object created from the response JSON data
-    #     return self._object_factory(OBJECT_TYPE, json_data)
+        # Return a room object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
 
     def update(self, roomTabId, roomId, contentUrl, displayName, **request_parameters):
         """Updates the content url of a Room Tab by ID.
