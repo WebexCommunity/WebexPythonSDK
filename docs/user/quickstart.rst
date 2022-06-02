@@ -26,9 +26,9 @@ requesting user.
 To get your personal access token:
 
     1. Login to `developer.webex.com`_
-    2. Click on Docs or browse to the `Getting Started <https://developer.webex.com/getting-started.html>`_ page
+    2. Click on Docs or browse to the `Getting Started <https://developer.webex.com/docs/getting-started>`_ page
     3. You will find your *personal access token* in the
-       `Authentication <https://developer.webex.com/getting-started.html#authentication>`_ section
+       `Authentication <https://developer.webex.com/docs/getting-started#accounts-and-authentication>`_ section
 
 .. image:: ../images/personal_access_token.png
 
