@@ -60,6 +60,7 @@ from .mixins.team import TeamBasicPropertiesMixin
 from .mixins.team_membership import TeamMembershipBasicPropertiesMixin
 from .mixins.webhook import WebhookBasicPropertiesMixin
 from .mixins.webhook_event import WebhookEventBasicPropertiesMixin
+from .mixins.recording import RecordingBasicPropertiesMixin
 
 
 class ImmutableData(object):
@@ -270,6 +271,10 @@ class GuestIssuerToken(ImmutableData, GuestIssuerTokenBasicPropertiesMixin):
     """Webex Teams Guest Issuer Token data model"""
 
 
+class Recording(ImmutableData, RecordingBasicPropertiesMixin):
+    """Webex Teams Recording data model"""
+
+
 immutable_data_models = defaultdict(
     lambda: ImmutableData,
     access_token=AccessToken,
@@ -289,6 +294,7 @@ immutable_data_models = defaultdict(
     webhook=Webhook,
     webhook_event=WebhookEvent,
     guest_issuer_token=GuestIssuerToken,
+    recording=Recording
 )
 
 

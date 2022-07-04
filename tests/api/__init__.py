@@ -45,6 +45,7 @@ from webexteamssdk.config import (
     ACCESS_TOKEN_ENVIRONMENT_VARIABLE, DEFAULT_BASE_URL,
     DEFAULT_SINGLE_REQUEST_TIMEOUT, DEFAULT_WAIT_ON_RATE_LIMIT,
 )
+from webexteamssdk.api.recordings import RecordingsAPI
 
 
 # Constants
@@ -198,3 +199,6 @@ def test_teams_api_object_creation(api):
 
 def test_webhooks_api_object_creation(api):
     assert isinstance(api.webhooks, WebhooksAPI)
+
+def test_recordings_api_object_creation(api):
+    assert isinstance(api.recordings, RecordingsAPI)
