@@ -200,5 +200,6 @@ def test_teams_api_object_creation(api):
 def test_webhooks_api_object_creation(api):
     assert isinstance(api.webhooks, WebhooksAPI)
 
+
 def test_recordings_api_object_creation(api):
     assert isinstance(api.recordings, RecordingsAPI)
