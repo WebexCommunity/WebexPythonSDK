@@ -172,7 +172,7 @@ developer.webex.com.
 
 .. _Release Plan: https://github.com/CiscoDevNet/webexteamssdk/wiki/Release-Plans
 .. _Introduction: http://webexteamssdk.readthedocs.io/en/latest/user/intro.html
-.. _pagination: https://developer.webex.com/pagination.html
+.. _pagination: https://developer.webex.com/docs/basics#pagination
 .. _webexteamssdk.readthedocs.io: https://webexteamssdk.readthedocs.io
 .. _Quickstart: http://webexteamssdk.readthedocs.io/en/latest/user/quickstart.html
 .. _examples: https://github.com/CiscoDevNet/webexteamssdk/tree/master/examples

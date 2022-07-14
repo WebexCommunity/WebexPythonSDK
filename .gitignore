@@ -1,6 +1,6 @@
 # Local Files
 local/
-
+.vscode/
 
 # Virtual Environments
 .venv/
