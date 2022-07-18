@@ -45,6 +45,7 @@ from .organizations import OrganizationsAPI
 from .people import PeopleAPI
 from .roles import RolesAPI
 from .rooms import RoomsAPI
+from .recordings import RecordingsAPI
 from .team_memberships import TeamMembershipsAPI
 from .teams import TeamsAPI
 from .webhooks import WebhooksAPI
@@ -216,6 +217,7 @@ class WebexTeamsAPI(object):
             self._session, object_factory,
         )
         self.webhooks = WebhooksAPI(self._session, object_factory)
+        self.recordings = RecordingsAPI(self._session, object_factory)
 
     @property
     def access_token(self):

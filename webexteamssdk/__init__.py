@@ -47,6 +47,7 @@ from .models.immutable import (
     AccessToken, AdminAuditEvent, AttachmentAction, Event, GuestIssuerToken,
     immutable_data_factory, License, Membership, Message, Organization, Person,
     Role, Room, RoomMeetingInfo, Team, TeamMembership, Webhook, WebhookEvent,
+    Recording
 )
 from .models.simple import simple_data_factory, SimpleDataModel
 from .utils import WebexTeamsDateTime

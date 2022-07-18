@@ -56,6 +56,7 @@ class TestWebexTeamsSDK:
         assert hasattr(webexteamssdk, "TeamMembership")
         assert hasattr(webexteamssdk, "Webhook")
         assert hasattr(webexteamssdk, "WebhookEvent")
+        assert hasattr(webexteamssdk, "Recording")
         assert hasattr(webexteamssdk, "immutable_data_factory")
         assert hasattr(webexteamssdk, "SimpleDataModel")
         assert hasattr(webexteamssdk, "simple_data_factory")
