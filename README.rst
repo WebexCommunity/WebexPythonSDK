@@ -1,8 +1,8 @@
 =============
-webexteamssdk
+WebexPythonSDK
 =============
 
-*Work with the Webex Teams APIs in native Python!*
+*Work with the Webex APIs in native Python!*
 
 .. image:: https://img.shields.io/badge/license-MIT-blue.svg
     :target: https://github.com/CiscoDevNet/webexteamssdk/blob/master/LICENSE
@@ -27,8 +27,8 @@ ideas there.
 ------------------------------------------------------------------------------------------------------------------------
 
 
-**webexteamssdk** is a *community developed* Python library for working with the Webex Teams APIs.  Our goal is to make
-working with Webex Teams in Python a *native* and *natural* experience!
+**WebexPythonSDK** is a *community developed* Python library for working with the Webex APIs.  Our goal is to make
+working with Webex in Python a *native* and *natural* experience!
 
 .. code-block:: Python
 
@@ -57,10 +57,10 @@ working with Webex Teams in Python a *native* and *natural* experience!
                         files=["https://www.webex.com/content/dam/wbx/us/images/dg-integ/teams_icon.png"])
 
 
-That's more than 6 Webex Teams API calls in less than 23 lines of code (with comments and whitespace), and likely more
-than that, since webexteamssdk handles pagination_ for you automatically!
+That's more than 6 Webex API calls in less than 23 lines of code (with comments and whitespace), and likely more
+than that, since WebexPythonSDK handles pagination_ for you automatically!
 
-webexteamssdk makes your life better...  `Learn how!`__
+WebexPythonSDK makes your life better...  `Learn how!`__
 
 __ Introduction_
 
@@ -68,16 +68,16 @@ __ Introduction_
 Features
 --------
 
-webexteamssdk does all of this for you:
+WebexPythonSDK does all of this for you:
 
-* Transparently sources your Webex Teams access token from your local environment
+* Transparently sources your Webex access token from your local environment
 
 * Provides and uses default arguments and settings everywhere possible, so you don't have to think about things like API
   endpoint URLs, HTTP headers and JSON formats
 
-* Represents all Webex Teams API interactions using native Python tools
+* Represents all Webex API interactions using native Python tools
 
-  * Authentication and Connection to the Webex Teams Cloud ==> **WebexTeamsAPI** "connection object"
+  * Authentication and Connection to the Webex Cloud ==> **WebexTeamsAPI** "connection object"
 
   * API Calls ==> Hierarchically organized methods underneath the **WebexTeamsAPI** 'Connection Object'
 
@@ -139,10 +139,10 @@ published releases.
 Questions, Support & Discussion
 -------------------------------
 
-webexteamssdk is a *community developed* and *community-supported* project.  If you experience any issues using this
+WebexPythonSDK is a *community developed* and *community-supported* project.  If you experience any issues using this
 package, please report them using the issues_ page.
 
-Please join the `Python Webex Teams Devs`__ Webex Teams space to ask questions, join the discussion, and share your
+Please join the `Python Webex Teams Devs`__ Webex space to ask questions, join the discussion, and share your
 projects and creations.
 
 __ Community_
@@ -151,15 +151,15 @@ __ Community_
 Contribution
 ------------
 
-webexteamssdk_ is a community development project.  Feedback, thoughts, ideas, and code contributions are welcome!
+WebexPythonSDK is a community development project.  Feedback, thoughts, ideas, and code contributions are welcome!
 Please see the `Contributing`_ guide for more information.
 
 
 History
 -------
 
-The Webex Teams SDK (webexteamssdk) library started as Cisco Spark API (ciscosparkapi). We updated the library's name in
-alignment with Cisco's re-brand of Cisco Spark to Webex Teams. The Cisco Spark API library has been deprecated and is no
+The Webex Python SDK (webexteamssdk) library started as Cisco Spark API (ciscosparkapi). We updated the library's name in
+alignment with Cisco's re-brand of Cisco Spark to Webex. The Cisco Spark API library has been deprecated and is no
 longer supported; however, its open-source codebase is still available in the `ciscosparkapi`_ branch of this
 repository.
 
