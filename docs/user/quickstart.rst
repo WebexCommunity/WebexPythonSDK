@@ -60,7 +60,7 @@ It can be as simple as setting it in your CLI before running your script...
 
 .. code-block:: bash
 
-    $ WEBEX_TEAMS_ACCESS_TOKEN=your_access_token_here
+    $ export WEBEX_TEAMS_ACCESS_TOKEN=your_access_token_here
     $ python myscript.py
 
 ...or putting your credentials in a shell script that you ``source`` when your
