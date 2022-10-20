@@ -54,7 +54,7 @@ update:
 list:
   properties:
     - name: id
-      description: Unique id for meeting invitee
+      description: Unique id for the meeting invitee
       type: basestring
     - name: email
       description: Email address for the meeting invitee
