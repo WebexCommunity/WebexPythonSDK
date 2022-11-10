@@ -38,7 +38,7 @@ class MeetingInviteeBasicPropertiesMixin(object):
     
     @property
     def id(self):
-        """Unique id for meeting invitee"""
+        """Unique id for the meeting invitee"""
         return self._json_data.get("id")
     
     @property
