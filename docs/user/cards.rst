@@ -4,23 +4,26 @@
 Cards and Buttons
 =================
 
-Webex Teams supports `AdaptiveCards <https://www.adaptivecards.io/>`_ to allow
+Webex supports `AdaptiveCards <https://www.adaptivecards.io/>`_ to allow
 new levels of interactivity for bots and integrations. You can read more about
 how cards and buttons work `in the official guide <https://developer.webex.com/docs/api/guides/cards>`_.
 
-In this guide I want to cover the abstraction build into the webexteamssdk that
+In this guide I want to cover the abstraction built into the webexteamssdk that
 lets you author adaptive cards in pure python without having to touch the
-underlying json of a adaptive card.
+underlying JSON of an adaptive card.
+
+Sending a card
+==============
 
 Lets dive into a simple example that sends a card to a room
 
 .. code-block:: python
 
     from webexteamssdk import WebexTeamsAPI
-    from webexteamssdk.cards.card import AdaptiveCard
-    from webexteamssdk.cards.inputs import Text, Number
-    from webexteamssdk.cards.components import TextBlock
-    from webexteamssdk.cards.actions import Submit
+    from webexteamssdk.models.cards.card import AdaptiveCard
+    from webexteamssdk.models.cards.inputs import Text, Number
+    from webexteamssdk.models.cards.components import TextBlock
+    from webexteamssdk.models.cards.actions import Submit
 
     greeting = TextBlock("Hey hello there! I am a adaptive card")
     first_name = Text('first_name', placeholder="First Name")
@@ -33,7 +36,7 @@ Lets dive into a simple example that sends a card to a room
     api = WebexTeamsAPI()
     api.messages.create(text="fallback", roomId="...", attachments=[card])
 
-The message we send with this code then looks like this in our Webex Teams
+The message we send with this code then looks like this in our Webex space
 client:
 
 .. image:: ../images/cards_sample.png
