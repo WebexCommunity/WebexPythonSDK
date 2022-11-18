@@ -40,3 +40,36 @@ The message we send with this code then looks like this in our Webex space
 client:
 
 .. image:: ../images/cards_sample.png
+
+
+Processing a card action
+=======================
+
+Adaptive card interactions are treated as "attachment actions". Once user interacts 
+with your card and submits an action, your app will receive a webhook from Webex. You 
+must `setup a webhook <api.rst#webhooks>`_ in advance with ``resource = "attachmentActions"`` 
+and ``event = "created"``.
+
+Webhook payload will contain a JSON:
+
+.. code-block:: json
+
+    {
+        "resource": "attachmentActions",
+        "event": "created",
+        "data": {
+            "id": "XYXYXY",
+            "type": "submit"
+        }
+    }
+
+Extract attachment action ID from ``['data']['id']`` and 
+use `attachment_actions.get() <api.rst#attachment_actions>`_ to get full information 
+about user action and any submitted data.
+
+.. code-block:: python
+
+    action = api.attachment_actions.get(webhookJson['data']['id'])
+
+    first_name = action.inputs['first_name']
+    age = action.inputs['age']
