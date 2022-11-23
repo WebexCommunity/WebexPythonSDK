@@ -44,7 +44,7 @@ import requests
 from webexteamssdk import WebexTeamsAPI
 
 # Parameters configured in Webex Integration
-OAUTH_CLIENT_ID = "your integration client ID"
+OAUTH_CLIENT_ID = "your integration Client ID"
 OAUTH_CLIENT_SECRET = "your integration Client Secret"
 OAUTH_CALLBACK_URI = "http://localhost:5000/callback"
 # Scopes are space-separated. Can use any subset of the configured scopes.
@@ -54,11 +54,16 @@ OAUTH_SCOPE = "spark:people_read meeting:schedules_read"
 oauth_authorizationUri = "https://webexapis.com/v1/authorize?"
 oauth_tokenUri = "https://webexapis.com/v1/access_token"
 
-
-# Get the ngrok public URI. It can be used instead of the localhost URI, as long
-# as it is also configured in the Webex integration
-r = requests.get("http://localhost:4040/api/tunnels")
-public_url = r.json()['tunnels'][0]['public_url']
+# On a local machine, this script will run even without a public callback URI.
+# But in reality the user is never on the same computer with the server. To
+# enablre remote user access, an Ngrok public URI has be used instead of the
+# local URI.
+# Uncomment the lines below to automatically get the public URI from
+# ngrok and use it instead of the local one. This public URI must also be
+# configured in the Webex Integration as a Redirect URI.
+#
+# r = requests.get("http://localhost:4040/api/tunnels")
+# public_url = r.json()['tunnels'][0]['public_url']
 # OAUTH_CALLBACK_URI = public_url + "/callback"
 
 # Create Flask app instance
@@ -68,19 +73,19 @@ app = Flask(__name__)
 app.secret_key = "very bad secret"
 
 
-# Welcome page. Link to auth from this page.
+# Welcome page. Link to auth from this page, or from anywhere else.
 @app.route("/")
 def root():
     print("/ requested")
     return ("""
             <p>Hey, this is Flask!</p>
-            <p>Click <a href="{}">here</a> to authenticate Webex integration.</p>
+            <p>Click <a href="{}">here</a> to authorize Webex Integration.</p>
             """.format(url_for("auth")))
 
 
 # OAuth Step 1 - Build authorization URL and redirect user.
-# Redirect the user/resource owner to the OAuth provider using an URL with a few
-# key OAuth parameters.
+# Redirect the user/resource owner to the OAuth provider (Webex) using an URI
+# with a few key OAuth parameters.
 @app.route("/auth")
 def auth():
     print("Authorization requested")
@@ -109,9 +114,9 @@ def auth():
 
 # OAuth Step 3 - Receive authoriation code and obtain access token.
 # The user has been redirected back from the provider to your registered
-# callback URL. With this redirection comes an authorization code included
-# in the redirect URL. We will use that code to obtain an access token.
-# The access token can be then used for any API calls within the authorized scopes.
+# callback URI. With this request comes an authorization code included in the
+# redirect URI. We will use that code to obtain an access token. The access
+# token can be then used for any API calls within the authorized scopes.
 @app.route("/callback", methods=["GET"])
 def callback():
     print("OAuth callback received")
@@ -136,7 +141,7 @@ def callback():
 
     # 1.
     # The API connection can be directly initialized with OAuth information. It
-    # will exchange the OAuth authorization code to access token behind the
+    # will exchange the OAuth authorization code to an access token behind the
     # scenes. It is the easiest, but the drawback is the refresh token is lost
     # and cannot be saved.
     api = WebexTeamsAPI(
