@@ -56,7 +56,7 @@ oauth_tokenUri = "https://webexapis.com/v1/access_token"
 
 # On a local machine, this script will run even without a public callback URI.
 # But in reality the user is never on the same computer with the server. To
-# enablre remote user access, an Ngrok public URI has be used instead of the
+# enable remote user access, an Ngrok public URI has to be used instead of the
 # local URI.
 # Uncomment the lines below to automatically get the public URI from
 # ngrok and use it instead of the local one. This public URI must also be
@@ -112,7 +112,7 @@ def auth():
 # This happens on the provider side.
 
 
-# OAuth Step 3 - Receive authoriation code and obtain access token.
+# OAuth Step 3 - Receive authorization code and obtain access token.
 # The user has been redirected back from the provider to your registered
 # callback URI. With this request comes an authorization code included in the
 # redirect URI. We will use that code to obtain an access token. The access
@@ -176,7 +176,7 @@ def callback():
 
     # 3.
     # Alternatively, can use requests to exchange authorization code to access
-    # token without usung the Webex SDK. Useful if your authorization process is
+    # token without using the Webex SDK. Useful if your authorization process is
     # separate from the token usage. Save tokens somewhere for later use.
     # oauth_data = {
     #     'grant_type': "authorization_code",
