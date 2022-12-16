@@ -43,11 +43,12 @@ client:
 
 
 Processing a card action
-=======================
+========================
+
 
 Adaptive card interactions are treated as "attachment actions". Once user interacts 
 with your card and submits an action, your app will receive a webhook from Webex. You 
-must `setup a webhook <api.rst#webhooks>`_ in advance with ``resource = "attachmentActions"`` 
+must :ref:`setup a webhook <webhooks>` in advance with ``resource = "attachmentActions"`` 
 and ``event = "created"``.
 
 Webhook payload will contain a JSON:
@@ -64,7 +65,7 @@ Webhook payload will contain a JSON:
     }
 
 Extract attachment action ID from ``['data']['id']`` and 
-use `attachment_actions.get() <api.rst#attachment_actions>`_ to get full information 
+use :ref:`attachment_actions.get() <attachment_actions>` to get full information 
 about user action and any submitted data.
 
 .. code-block:: python
