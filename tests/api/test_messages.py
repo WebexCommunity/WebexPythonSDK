@@ -362,3 +362,9 @@ def test_delete_message(api, group_room, send_group_room_message):
     api.messages.delete(message.id)
     with pytest.raises(webexteamssdk.ApiError):
         api.messages.get(message.id)
+
+def test_delete_message(api, group_room):
+    text = create_string("Edit this Message")
+    message = api.messages.create(group_room.id, text=text)
+    text = create_string("Message Edited")
+    assert text == api.messages.edit( message.id, group_room.id, text).text

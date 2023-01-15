@@ -338,3 +338,36 @@ class MessagesAPI(object):
 
         # API request
         self._session.delete(API_ENDPOINT + '/' + messageId)
+
+    def edit(self, messageId=None, roomId=None, text=None, markdown=None):
+        """Edit a message.
+
+        Args:
+            messageId(basestring): The ID of the message to be edit.
+            roomId(basestring): The room ID.
+            text(basestring): The message, in plain text. If `markdown` is
+                specified this parameter may be optionally used to provide
+                alternate text for UI clients that do not support rich text.
+            markdown(basestring): The message, in markdown format.
+
+        Raises:
+            TypeError: If the parameter types are incorrect.
+            ApiError: If the Webex Teams cloud returns an error.
+
+        """
+        check_type(messageId, basestring)
+        check_type(roomId, basestring, optional=True)
+        check_type(text, basestring, optional=True)
+        check_type(markdown, basestring, optional=True)
+
+        put_data = dict_from_items_with_values(
+            roomId=roomId,
+            text=text,
+            markdown=markdown,
+        )
+
+        # API request
+        json_data = self._session.put(API_ENDPOINT + '/' + messageId, json=put_data)
+
+        # Return a message object created from the response JSON data
+        return self._object_factory(OBJECT_TYPE, json_data)
