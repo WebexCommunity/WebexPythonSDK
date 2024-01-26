@@ -1,0 +1,57 @@
+name: MeetingTemplate
+endpoint: meetings/templates
+object_type: meetingTemplate
+methods:
+  - list
+  - get
+query_parameters:
+  - name: templateType
+    description: Meeting template types (meeting, webinar)
+    optional: True
+    type: basestring
+  - name: locale
+    description: Locale for the meeting template (i.e. en_US)
+    optional: True
+    type: basestring
+  - name: isDefault
+    description: Flag to indicate if default or non-default meeting templates are returned
+    optional: True
+    type: bool
+  - name: isStandard
+    description: Flag to indicate if standard or non-standard meeting templates are returned
+    optional: True
+    type: bool
+  - name: hostEmail
+    description: Email address of a meeting host (Requires admin-level scope)
+    optional: True
+    type: bool
+  - name: siteUrl
+    description: URL of the Webex site from which we are listing. 
+    optional: True
+    type: bool
+list:
+  properties:
+    - name: id
+      description: Unique id for meeting template
+      type: basestring
+    - name: name
+      description: Name of the meeting template
+      type: basestring
+    - name: locale
+      description: Locale for the meeting template
+      type: basestring
+    - name: siteUrl
+      description: Site URL for the meeting template
+      type: basestring
+    - name: templateType
+      description: Type of the meeting template (meeting, webinar)
+      type: basestring
+    - name: isDefault
+      description: Whether or not the meeting template is a default template
+      type: bool
+    - name: isStandard
+      description: Whether or not the meeting template is a standard template
+      type: bool
+    - name: meeting
+      description: Meeting object which is used to create a meeting by the meeting template. Please note that the meeting object should be used to create a meeting immediately.
+      type: dict
