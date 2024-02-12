@@ -132,9 +132,9 @@ class MessageBasicPropertiesMixin(object):
 
     @property
     def updated(self):
-        """The date and time the message was created."""
-        created = self._json_data.get("updated")
-        if created:
-            return WebexTeamsDateTime.strptime(created)
+        """The date and time the message was updated."""
+        updated = self._json_data.get("updated")
+        if updated:
+            return WebexTeamsDateTime.strptime(updated)
         else:
             return None

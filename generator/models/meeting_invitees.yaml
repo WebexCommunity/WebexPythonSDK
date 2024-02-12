@@ -1,0 +1,115 @@
+name: MeetingInvitee
+endpoint: meetingInvitees
+object_type: meetingInvitee
+methods:
+  - list
+  - get
+  - create
+  - delete
+  - update
+query_parameters:
+  - name: meetingId
+    description: Unique id of the meeting for which invitees are requested.
+    optional: False
+    type: basestring
+  - name: max
+    description: Limit the number of meeting invitees
+    optional: True
+    type: int
+  - name: hostEmail
+    description: Email address for the meeting host (requires admin scope)
+    optional: True
+    type: basestring
+  - name: panelist
+    description: Filter invitees or attendees based on their panelist status
+    optional: True
+    type: bool
+create:
+  required:
+    - meetingId
+    - email
+  optional:
+    - displayName
+    - coHost
+    - name: hostEmail
+      description: Email address for the meeting host (requires admin scope)
+      type: basestring
+    - name: sendEmail
+      description: If true, send an e-mail to the invitee
+      type: bool
+    - panelist
+update:
+  required:
+    - email
+  optional:
+    - displayName
+    - coHost
+    - name: hostEmail
+      description: Email address for the meeting host (requires admin scope)
+      type: basestring
+    - name: sendEmail
+      description: If true, send an e-mail to the invitee
+      type: bool
+    - panelist
+list:
+  properties:
+    - name: id
+      description: Unique id for the meeting invitee
+      type: basestring
+    - name: email
+      description: Email address for the meeting invitee
+      type: basestring
+    - name: displayName
+      description: Display name of the meeting invitee
+      type: basestring
+    - name: coHost
+      description: CoHost status of the invitee
+      type: bool
+    - name: meetingId
+      description: Unique id for the meeting that the invitee is part of
+      type: basestring
+    - name: panelist
+      description: Flag to indicate if the invitee is panelist or not
+      type: bool
+additional_code: >
+  def bulk(self, meetingId, hostEmail=None, items=None, **request_parameters):
+        """ Bulk insert meeting invitees
+
+        Args:
+          meetingId(basestring): Id of the meeting the invitees should be added to.
+          hostEmail(basestring): Email of the meeting host.
+          items(list): List of invitees. Each invitee is a dict with email as the
+            required key and displayName, coHost, sendEmail and panelist as optional
+            properties.
+          **request_parameters: Additional request parameters (provides
+                support for parameters that may be added in the future).
+        
+        Returns:
+          GeneratorContainer: A GeneratorContainer which, when iterated,
+            yields the meetingInvitees returned by the Webex query.
+
+        Raises:
+          TypeError: If the parameter types are incorrect.
+          ApiError: If the Webex Teams cloud returns an error.
+        """
+        check_type(meetingId, basestring)
+        check_type(hostEmail, basestring, optional=True)
+        check_type(items, list, optional=True)
+        
+        post_data = dict_from_items_with_values(
+            request_parameters,
+            meetingId=meetingId,
+            items=items,
+            hostEmail=hostEmail,
+        )
+
+        # API request
+        json_data = self._session.put(API_ENDPOINT + '/bulkInsert',
+                                      json=post_data)
+
+        # Return an object created from the response JSON data
+        for itm in json_data['items']:
+          yield self._object_factory(OBJECT_TYPE, itm)
+
+
+        

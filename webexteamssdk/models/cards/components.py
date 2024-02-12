@@ -24,7 +24,7 @@ SOFTWARE.
 
 from .actions import OpenUrl, Submit
 from .adaptive_card_component import AdaptiveCardComponent
-from .options import BlockElementHeight, ImageSize, ImageStyle, Spacing
+from .options import BlockElementHeight, ImageSize, ImageStyle, Spacing, HorizontalAlignment
 from .utils import check_type
 
 
@@ -126,7 +126,7 @@ class Image(AdaptiveCardComponent):
         check_type(altText, str, optional=True)
         check_type(backgroundColor, str, optional=True)
         check_type(height, (str, BlockElementHeight), optional=True)
-        check_type(horizontalAlignment, horizontalAlignment, optional=True)
+        check_type(horizontalAlignment, (str, HorizontalAlignment), optional=True)
         check_type(selectAction, (OpenUrl, Submit), optional=True)
         check_type(size, ImageSize, optional=True)
         check_type(style, ImageStyle, optional=True)

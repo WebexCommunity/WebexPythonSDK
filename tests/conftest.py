@@ -50,6 +50,7 @@ pytest_plugins = [
     'tests.api.test_teammemberships',
     'tests.api.test_teams',
     "tests.api.test_events",
+    "tests.api.test_recordings"
 ]
 
 email_template = string.Template("test${number}@" + WEBEX_TEAMS_TEST_DOMAIN)

@@ -1,0 +1,286 @@
+name: Meeting
+endpoint: meetings
+object_type: meeting
+methods:
+  - list
+  - get
+  - create
+  - delete
+  - update
+query_parameters:
+  - name: meetingNumber
+    description: Meeting number for the meeting objects being requested
+    optional: True
+    type: basestring
+  - name: webLink
+    description: URL encoded link to information page
+    optional: True
+    type: basestring
+  - name: roomId
+    description: Associated teams space room ID.
+    optional: True
+    type: basestring
+  - name: meetingType
+    description: Type of the meeting (meetingSeries, scheduledMeeting, meeting).
+    optional: True
+    type: basestring
+  - name: state
+    descriptiopn: State of the meeting (active, scheduled, ready, lobby, inProgress, ended, missed, expired)
+    optional: True
+    type: basestring
+  - name: scheduledType
+    description: Schedule type of this meeting (meeting, webinar, personalRoomMeeting)
+    optional: True
+    type: basestring
+  - name: participantEmail
+    description: E-Mail of a meeting participant.
+    optional: True
+    type: basestring
+  - name: current
+    description: Flag to retrieve the current scheduled meeting of a series.
+    optional: True
+    type: bool
+  - name: from_
+    requestName: from
+    description: Start date and time in ISO 8601 format
+    optional: True
+    type: basestring
+  - name: to
+    description: To date and time in ISO 8601 format
+    optional: True
+    type: basestring
+  - name: max
+    description: Limit the number of meetings in response.
+    optional: True
+    type: int
+  - name: hostEmail
+    description: Email address for the meeting host (Needs admin-level scope).
+    optional: True
+    type: basestring 
+  - name: siteUrl
+    description: URL of the webex site.
+    optional: True
+    type: basestring
+  - name: integrationTag
+    description: External tag set by integrations.
+    optional: True
+    type: basestring
+update:
+  required:
+    - title
+    - password
+    - start
+    - end
+  optional:
+    - agenda
+    - timezone
+    - recurrence
+    - enabledAutoRecordMeeting
+    - allowAnyUserToBeCoHost
+    - enabledJoinBeforeHost
+    - enableConnectAudioBeforeHost
+    - joinBeforeHostMinutes
+    - excludePassword
+    - publicMeeting
+    - reminderTime
+    - unlockedMeetingJoinSecurity
+    - sessionTypeId
+    - scheduledType
+    - enabledWebcastView
+    - panelistPassword
+    - enableAutomaticLock
+    - automaticLockMinutes
+    - allowFirstUserToBeCoHost
+    - allowAuthenticatedDevices
+    - name: sendEmail
+      description: Send an invite e-mail
+      type: bool
+    - hostEmail
+    - siteUrl
+    - meetingOptions
+    - integrationTags
+    - name: enabledBreakoutSessions
+      description: Flag to enable breakout sessions in this meeting.
+      type: bool
+create:
+  required:
+    - title
+    - start
+    - end
+  optional:
+    - name: templateId
+      description: Unique identifier for meeting template
+      type: basestring
+    - agenda
+    - password
+    - timezone
+    - recurrence
+    - enabledAutoRecordMeeting
+    - allowAnyUserToBeCoHost
+    - enabledJoinBeforeHost
+    - enableConnectAudioBeforeHost
+    - joinBeforeHostMinutes
+    - excludePassword
+    - publicMeeting
+    - reminderTime
+    - unlockedMeetingJoinSecurity
+    - sessionTypeId
+    - scheduledType
+    - enabledWebcastView
+    - panelistPassword
+    - enableAutomaticLock
+    - automaticLockMinutes
+    - allowFirstUserToBeCoHost
+    - allowAuthenticatedDevices
+    - name: invitees
+      description: List of invitee objects
+      type: list
+    - name: sendEmail
+      description: Send an invite e-mail
+      type: bool
+    - hostEmail
+    - siteUrl
+    - meetingOptions
+    - registration
+    - integrationTags
+    - simultaneousInterpretation
+    - name: enabledBreakoutSessions
+      description: Flag to enable breakout sessions in this meeting.
+      type: bool
+    - name: breakoutSessions
+      description: List of breakout sessions
+      type: list
+list:
+  properties:
+    - name: id
+      description: Unique identifier for the meeting
+      type: basestring
+    - name: meetingNumber
+      description: Meeting number (of series, scheduled meeting or instance)
+      type: basestring
+    - name: title
+      description: Title of the meeting
+      type: basestring
+    - name: agenda
+      description: Meeting agenda (Maximum 1300 characters)
+      type: basestring
+    - name: password
+      description: Password of the meeting
+      type: basestring
+    - name: phoneAndVideoSystemPassword
+      description: 8-digit numeric password to join via phone/device
+      type: basestring
+    - name: meetingType
+      description: "Type of this meeting (Values: meetingSeries, scheduledMeeting, meeting)"
+      type: basestring
+    - name: state
+      description: "State of the meeting (Values: active, scheduled, ready, lobby, inProgress, ended, missed, expired)"
+      type: basestring
+    - name: timezone
+      description: Time zone of start and end property in IANA time zone database format.
+      type: basestring
+    - name: start
+      description: Start time of the meeting in ISO 8601.
+      type: basestring
+    - name: end
+      description: End time of the meeting in ISO 8601.
+      type: basestring
+    - name: recurrence
+      description: Meeting recurrence according to RFC 2445
+      type: basestring
+    - name: hostUserId
+      description: Unique id of the meeting host.
+      type: basestring
+    - name: hostDisplayName
+      description: Display name for the meeting host
+      type: basestring
+    - name: hostEmail
+      description: Email address of the meeting host
+      type: basestring
+    - name: hostKey
+      description: Key for joining the meeting as host
+      type: basestring
+    - name: siteUrl
+      description: Site URL for the meeting
+      type: basestring
+    - name: webLink
+      description: Link to a meeting information page that launches the client
+      type: basestring
+    - name: sipAddress
+      description: SIP address for callback from a video system
+      type: basestring
+    - name: dialInIpAddress
+      description: IP address for callback from video system.
+      type: basestring
+    - name: roomId
+      description: Room ID of the associated webex space. Only in space meetings.
+      type: basestring
+    - name: enabledAutoRecordMeeting
+      description: Whether or not meeting is recorded automatically.
+      type: bool
+    - name: allowAnyUserToBeCoHost
+      description: Allow any attendee with host account on site to become co host
+      type: bool
+    - name: enabledJoinBeforeHost
+      description: Allow attendees to join before the host.
+      type: bool
+    - name: enableConnectAudioBeforeHost
+      description: Allow attendees to connect audio before the host joins.
+      type: bool
+    - name: joinBeforeHostMinutes
+      description: Number of minutes attendees can join before the start time.
+      type: int
+    - name: excludePassword
+      description: Exclude meeting password from meeting invite emails.
+      type: bool
+    - name: publicMeeting
+      description: Allow meeting to be listed on public calendar
+      type: bool
+    - name: reminderTime
+      description: Number of minutes before start time a reminder is send to the host
+      type: int
+    - name: unlockedMeetingJoinSecurity
+      description: Join settings for uninvited people
+      type: basestring
+    - name: sessionTypeId
+      description: Unique identifier for a meeting session type.
+      type: basestring
+    - name: scheduledType
+      description: Type of meeting (regular, webinar, meeting in personal room)
+      type: basestring
+    - name: enabledWebcastView
+      description: Whether or not webcast view is enabled
+      type: bool
+    - name: panelistPassword
+      description: Password for panelists of a webinar meeting
+      type: basestring
+    - name: phoneAndVideoSystemPanelistPassword
+      description: 8-digit numeric panelist pasword for phone/device usage
+      type: basestring
+    - name: enableAutomaticLock
+      description: Whether or not to automatically lock the meeting after start.
+      type: bool
+    - name: automaticLockMinutes
+      description: Number of minutes for the meeting to be automatically locked.
+      type: int
+    - name: allowFirstUserToBeCoHost
+      description: Allow the first joiner with host account on the meeting site to be co host.
+      type: bool
+    - name: allowAuthenticatedDevices
+      description: Whether or not to allow authenticated video devices in the meeting's organization to start or join the meeting
+      type: bool
+    - name: telephony
+      description: Information for callbacks from a meeting to phone or for joining via phone.
+      type: dict
+    - name: meetingOptions
+      description: Options for this meeting
+      type: dict
+    - name: registration
+      description: Meeting registration information.
+      type: dict
+    - name: integrationTags
+      description: List of external keys created by integrations
+      type: list
+    - name: simultaneousInterpretation
+      description: Simultaneous interpretation information for the meeting.
+      type: dict

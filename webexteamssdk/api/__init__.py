@@ -46,9 +46,14 @@ from .people import PeopleAPI
 from .roles import RolesAPI
 from .rooms import RoomsAPI
 from .room_tabs import RoomTabsAPI
+from .recordings import RecordingsAPI
 from .team_memberships import TeamMembershipsAPI
 from .teams import TeamsAPI
 from .webhooks import WebhooksAPI
+from .meetings import MeetingsAPI
+from .meeting_templates import MeetingTemplatesAPI
+from .meeting_invitees import MeetingInviteesAPI
+
 import os
 
 
@@ -218,7 +223,10 @@ class WebexTeamsAPI(object):
             self._session, object_factory,
         )
         self.webhooks = WebhooksAPI(self._session, object_factory)
-
+        self.recordings = RecordingsAPI(self._session, object_factory)
+        self.meetings = MeetingsAPI(self._session, object_factory)
+        self.meeting_templates = MeetingTemplatesAPI(self._session, object_factory)
+        self.meeting_invitees = MeetingInviteesAPI(self._session, object_factory)
     @property
     def access_token(self):
         """The access token used for API calls to the Webex Teams service."""

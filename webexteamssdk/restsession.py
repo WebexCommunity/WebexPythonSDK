@@ -60,7 +60,7 @@ logger = logging.getLogger(__name__)
 
 
 # Helper Functions
-def _fix_next_url(next_url):
+def _fix_next_url(next_url, params):
     """Remove max=null parameter from URL.
 
     Patch for Webex Teams Defect: "next" URL returned in the Link headers of
@@ -96,6 +96,10 @@ def _fix_next_url(next_url):
             query_list.remove("max=null")
             warnings.warn("`max=null` still present in next-URL returned "
                           "from Webex Teams", RuntimeWarning)
+        if params:
+            for k, v in params.items():
+                if not any(p.startswith('{}='.format(k)) for p in query_list):
+                    query_list.append('{}={}'.format(k, v))
         new_query = "&".join(query_list)
         parsed_url = list(parsed_url)
         parsed_url[4] = new_query
@@ -423,11 +427,13 @@ class RestSession(object):
             if response.links.get("next"):
                 next_url = response.links.get("next").get("url")
 
-                # Patch for Webex Teams "max=null" in next URL bug.
+                # Patch for Webex Teams "max=null" in next URL bug + missing
+                # params, like mentionedPeople, which can be mandatory for
+                # bots
                 # Testing shows that patch is no longer needed; raising a
                 # warnning if it is still taking effect;
                 # considering for future removal
-                next_url = _fix_next_url(next_url)
+                next_url = _fix_next_url(next_url, params)
 
                 # Subsequent requests
                 response = self.request("GET", next_url, erc, **kwargs)
