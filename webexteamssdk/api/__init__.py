@@ -45,6 +45,7 @@ from .organizations import OrganizationsAPI
 from .people import PeopleAPI
 from .roles import RolesAPI
 from .rooms import RoomsAPI
+from .room_tabs import RoomTabsAPI
 from .recordings import RecordingsAPI
 from .team_memberships import TeamMembershipsAPI
 from .teams import TeamsAPI
@@ -216,6 +217,7 @@ class WebexTeamsAPI(object):
         self.people = PeopleAPI(self._session, object_factory)
         self.roles = RolesAPI(self._session, object_factory)
         self.rooms = RoomsAPI(self._session, object_factory)
+        self.room_tabs = RoomTabsAPI(self._session, object_factory)
         self.teams = TeamsAPI(self._session, object_factory)
         self.team_memberships = TeamMembershipsAPI(
             self._session, object_factory,
