@@ -127,6 +127,11 @@ class MeetingBasicPropertiesMixin(object):
         return self._json_data.get("webLink")
     
     @property
+    def registerLink(self):
+        """Link to a page where attendees can register for the webinar. Only applies for webinars."""
+        return self._json_data.get("registerLink")
+    
+    @property
     def sipAddress(self):
         """SIP address for callback from a video system"""
         return self._json_data.get("sipAddress")
