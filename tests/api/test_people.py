@@ -70,7 +70,6 @@ def me(api):
 
 @pytest.fixture(scope="session")
 def get_test_person(api, get_new_email_address, me, licenses_dict):
-
     def inner_function():
         person_email = get_new_email_address()
         person = get_person_by_email(api, person_email)
@@ -83,7 +82,7 @@ def get_test_person(api, get_new_email_address, me, licenses_dict):
                 firstName="webexteamssdk",
                 lastName="webexteamssdk",
                 orgId=me.orgId,
-                licenses=[licenses_dict["Messaging"].id],
+                licenses=[licenses_dict["Advanced Messaging"].id],
             )
             return person
 
@@ -155,7 +154,7 @@ def temp_person(api, get_random_email_address, me, licenses_dict):
         firstName="webexteamssdk",
         lastName="webexteamssdk",
         orgId=me.orgId,
-        licenses=[licenses_dict["Messaging"].id],
+        licenses=[licenses_dict["Advanced Messaging"].id],
     )
 
     yield person
