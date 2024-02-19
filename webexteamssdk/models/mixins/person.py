@@ -88,13 +88,16 @@ class PersonBasicPropertiesMixin(object):
 
     @property
     def roles(self):
-        """An array of role strings representing the roles to which this
-        person belongs. """
+        """List of roles for the person.
+
+        An list of role strings representing the roles to which this
+        person belongs.
+        """
         return self._json_data.get("roles")
 
     @property
     def licenses(self):
-        """An array of license strings allocated to this person."""
+        """An list of license strings allocated to this person."""
         return self._json_data.get("licenses")
 
     @property
@@ -127,7 +130,7 @@ class PersonBasicPropertiesMixin(object):
     @property
     def lastActivity(self):
         """The date and time of the person"s last activity within Webex
-        Teams. """
+        Teams."""
         last_activity = self._json_data.get("lastActivity")
         if last_activity:
             return WebexTeamsDateTime.strptime(last_activity)

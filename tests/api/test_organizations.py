@@ -29,6 +29,7 @@ import webexteamssdk
 
 # Helper Functions
 
+
 def is_valid_organization(obj):
     return isinstance(obj, webexteamssdk.Organization) and obj.id is not None
 
@@ -39,12 +40,14 @@ def are_valid_organizations(iterable):
 
 # Fixtures
 
+
 @pytest.fixture(scope="session")
 def organizations_list(api):
     return list(api.organizations.list())
 
 
 # Tests
+
 
 def test_list_organizations(organizations_list):
     assert are_valid_organizations(organizations_list)

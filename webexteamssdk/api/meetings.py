@@ -42,8 +42,8 @@ from ..utils import (
 )
 
 
-API_ENDPOINT = 'meetings'
-OBJECT_TYPE = 'meeting'
+API_ENDPOINT = "meetings"
+OBJECT_TYPE = "meeting"
 
 
 class MeetingsAPI(object):
@@ -73,23 +73,25 @@ class MeetingsAPI(object):
         self._object_factory = object_factory
 
     @generator_container
-    def list(self, meetingNumber=None,
-                   webLink=None,
-                   roomId=None,
-                   meetingType=None,
-                   state=None,
-                   scheduledType=None,
-                   participantEmail=None,
-                   current=None,
-                   from_=None,
-                   to=None,
-                   max=None,
-                   hostEmail=None,
-                   siteUrl=None,
-                   integrationTag=None,
-                   headers={},
-             **request_parameters):
-
+    def list(
+        self,
+        meetingNumber=None,
+        webLink=None,
+        roomId=None,
+        meetingType=None,
+        state=None,
+        scheduledType=None,
+        participantEmail=None,
+        current=None,
+        from_=None,
+        to=None,
+        max=None,
+        hostEmail=None,
+        siteUrl=None,
+        integrationTag=None,
+        headers={},
+        **request_parameters,
+    ):
         """List meetings.
 
         Use query parameters to filter the response.
@@ -105,18 +107,23 @@ class MeetingsAPI(object):
         container.
 
         Args:
-            meetingNumber (basestring): Meeting number for the meeting objects being requested
-            webLink (basestring): URL encoded link to information page
+            meetingNumber (basestring): Meeting number for the meeting objects
+                being requested.
+            webLink (basestring): URL encoded link to information page.
             roomId (basestring): Associated teams space room ID.
-            meetingType (basestring): Type of the meeting (meetingSeries, scheduledMeeting, meeting).
-            state (basestring): 
-            scheduledType (basestring): Schedule type of this meeting (meeting, webinar, personalRoomMeeting)
+            meetingType (basestring): Type of the meeting (meetingSeries,
+                scheduledMeeting, meeting).
+            state (basestring):
+            scheduledType (basestring): Schedule type of this meeting (meeting,
+                webinar, personalRoomMeeting).
             participantEmail (basestring): E-Mail of a meeting participant.
-            current (bool): Flag to retrieve the current scheduled meeting of a series.
-            from_ (basestring): Start date and time in ISO 8601 format
-            to (basestring): To date and time in ISO 8601 format
+            current (bool): Flag to retrieve the current scheduled meeting of a
+                series.
+            from_ (basestring): Start date and time in ISO 8601 format.
+            to (basestring): To date and time in ISO 8601 format.
             max (int): Limit the number of meetings in response.
-            hostEmail (basestring): Email address for the meeting host (Needs admin-level scope).
+            hostEmail (basestring): Email address for the meeting host (Needs
+                admin-level scope).
             siteUrl (basestring): URL of the webex site.
             integrationTag (basestring): External tag set by integrations.
             headers(dict): Additional headers to be passed.
@@ -146,7 +153,6 @@ class MeetingsAPI(object):
         check_type(hostEmail, basestring, optional=True)
         check_type(siteUrl, basestring, optional=True)
         check_type(integrationTag, basestring, optional=True)
-        
 
         params = dict_from_items_with_values(
             request_parameters,
@@ -164,12 +170,11 @@ class MeetingsAPI(object):
             hostEmail=hostEmail,
             siteUrl=siteUrl,
             integrationTag=integrationTag,
-            
         )
-        
+
         if from_:
-            params['from'] = params.pop("from_")
-        
+            params["from"] = params.pop("from_")
+
         # API request - get items
 
         # Update headers
@@ -185,86 +190,109 @@ class MeetingsAPI(object):
         for item in items:
             yield self._object_factory(OBJECT_TYPE, item)
 
-    def create(self, title,
-                     start,
-                     end,
-                     templateId=None,
-                     agenda=None,
-                     password=None,
-                     timezone=None,
-                     recurrence=None,
-                     enabledAutoRecordMeeting=None,
-                     allowAnyUserToBeCoHost=None,
-                     enabledJoinBeforeHost=None,
-                     enableConnectAudioBeforeHost=None,
-                     joinBeforeHostMinutes=None,
-                     excludePassword=None,
-                     publicMeeting=None,
-                     reminderTime=None,
-                     unlockedMeetingJoinSecurity=None,
-                     sessionTypeId=None,
-                     scheduledType=None,
-                     enabledWebcastView=None,
-                     panelistPassword=None,
-                     enableAutomaticLock=None,
-                     automaticLockMinutes=None,
-                     allowFirstUserToBeCoHost=None,
-                     allowAuthenticatedDevices=None,
-                     invitees=None,
-                     sendEmail=None,
-                     hostEmail=None,
-                     siteUrl=None,
-                     meetingOptions=None,
-                     registration=None,
-                     integrationTags=None,
-                     simultaneousInterpretation=None,
-                     enabledBreakoutSessions=None,
-                     breakoutSessions=None,
-                     **request_parameters):
+    def create(
+        self,
+        title,
+        start,
+        end,
+        templateId=None,
+        agenda=None,
+        password=None,
+        timezone=None,
+        recurrence=None,
+        enabledAutoRecordMeeting=None,
+        allowAnyUserToBeCoHost=None,
+        enabledJoinBeforeHost=None,
+        enableConnectAudioBeforeHost=None,
+        joinBeforeHostMinutes=None,
+        excludePassword=None,
+        publicMeeting=None,
+        reminderTime=None,
+        unlockedMeetingJoinSecurity=None,
+        sessionTypeId=None,
+        scheduledType=None,
+        enabledWebcastView=None,
+        panelistPassword=None,
+        enableAutomaticLock=None,
+        automaticLockMinutes=None,
+        allowFirstUserToBeCoHost=None,
+        allowAuthenticatedDevices=None,
+        invitees=None,
+        sendEmail=None,
+        hostEmail=None,
+        siteUrl=None,
+        meetingOptions=None,
+        registration=None,
+        integrationTags=None,
+        simultaneousInterpretation=None,
+        enabledBreakoutSessions=None,
+        breakoutSessions=None,
+        **request_parameters,
+    ):
         """Create a meeting.
 
         Args:
-            title (basestring): Title of the meeting
+            title (basestring): Title of the meeting.
             start (basestring): Start time of the meeting in ISO 8601.
             end (basestring): End time of the meeting in ISO 8601.
-            templateId (basestring): Unique identifier for meeting template
-            agenda (basestring): Meeting agenda (Maximum 1300 characters)
-            password (basestring): Password of the meeting
-            timezone (basestring): Time zone of start and end property in IANA time zone database format.
-            recurrence (basestring): Meeting recurrence according to RFC 2445
-            enabledAutoRecordMeeting (bool): Whether or not meeting is recorded automatically.
-            allowAnyUserToBeCoHost (bool): Allow any attendee with host account on site to become co host
-            enabledJoinBeforeHost (bool): Allow attendees to join before the host.
-            enableConnectAudioBeforeHost (bool): Allow attendees to connect audio before the host joins.
-            joinBeforeHostMinutes (int): Number of minutes attendees can join before the start time.
-            excludePassword (bool): Exclude meeting password from meeting invite emails.
-            publicMeeting (bool): Allow meeting to be listed on public calendar
-            reminderTime (int): Number of minutes before start time a reminder is send to the host
-            unlockedMeetingJoinSecurity (basestring): Join settings for uninvited people
-            sessionTypeId (basestring): Unique identifier for a meeting session type.
-            scheduledType (basestring): Type of meeting (regular, webinar, meeting in personal room)
-            enabledWebcastView (bool): Whether or not webcast view is enabled
-            panelistPassword (basestring): Password for panelists of a webinar meeting
-            enableAutomaticLock (bool): Whether or not to automatically lock the meeting after start.
-            automaticLockMinutes (int): Number of minutes for the meeting to be automatically locked.
-            allowFirstUserToBeCoHost (bool): Allow the first joiner with host account on the meeting site to be co host.
-            allowAuthenticatedDevices (bool): Whether or not to allow authenticated video devices in the meeting's organization to start or join the meeting
-            invitees (list): List of invitee objects
-            sendEmail (bool): Send an invite e-mail
-            hostEmail (basestring): Email address of the meeting host
-            siteUrl (basestring): Site URL for the meeting
-            meetingOptions (dict): Options for this meeting
+            templateId (basestring): Unique identifier for meeting template.
+            agenda (basestring): Meeting agenda (Maximum 1300 characters).
+            password (basestring): Password of the meeting.
+            timezone (basestring): Time zone of start and end property in
+                IANA time zone database format.
+            recurrence (basestring): Meeting recurrence according to RFC 2445.
+            enabledAutoRecordMeeting (bool): Whether or not meeting is
+                recorded automatically.
+            allowAnyUserToBeCoHost (bool): Allow any attendee with host
+                account on site to become cohost.
+            enabledJoinBeforeHost (bool): Allow attendees to join before the
+                host.
+            enableConnectAudioBeforeHost (bool): Allow attendees to connect
+                audio before the host joins.
+            joinBeforeHostMinutes (int): Number of minutes attendees can join
+                before the start time.
+            excludePassword (bool): Exclude meeting password from meeting
+                invite emails.
+            publicMeeting (bool): Allow meeting to be listed on public
+                calendar.
+            reminderTime (int): Number of minutes before start time a reminder
+                is send to the host.
+            unlockedMeetingJoinSecurity (basestring): Join settings for
+                uninvited people.
+            sessionTypeId (basestring): Unique identifier for a meeting
+                session type.
+            scheduledType (basestring): Type of meeting (regular, webinar,
+                meeting in personal room).
+            enabledWebcastView (bool): Whether or not webcast view is enabled.
+            panelistPassword (basestring): Password for panelists of a
+                webinar meeting.
+            enableAutomaticLock (bool): Whether or not to automatically lock
+                the meeting after start.
+            automaticLockMinutes (int): Number of minutes for the meeting to
+                be automatically locked.
+            allowFirstUserToBeCoHost (bool): Allow the first joiner with host
+                account on the meeting site to be cohost.
+            allowAuthenticatedDevices (bool): Whether or not to allow
+                authenticated video devices in the meeting's organization to
+                start or join the meeting.
+            invitees (list): List of invitee objects.
+            sendEmail (bool): Send an invite e-mail.
+            hostEmail (basestring): Email address of the meeting host.
+            siteUrl (basestring): Site URL for the meeting.
+            meetingOptions (dict): Options for this meeting.
             registration (dict): Meeting registration information.
-            integrationTags (list): List of external keys created by integrations
-            simultaneousInterpretation (dict): Simultaneous interpretation information for the meeting.
-            enabledBreakoutSessions (bool): Flag to enable breakout sessions in this meeting.
-            breakoutSessions (list): List of breakout sessions
+            integrationTags (list): List of external keys created by
+                integrations.
+            simultaneousInterpretation (dict): Simultaneous interpretation
+                information for the meeting.
+            enabledBreakoutSessions (bool): Flag to enable breakout sessions
+                in this meeting.
+            breakoutSessions (list): List of breakout sessions.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
         Returns:
-            Meeting: A Meeting object with the details of the created
-            meeting.
+            Meeting: A Meeting object with the details of the created meeting.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -306,7 +334,7 @@ class MeetingsAPI(object):
         check_type(simultaneousInterpretation, dict, optional=True)
         check_type(enabledBreakoutSessions, bool, optional=True)
         check_type(breakoutSessions, list, optional=True)
-        
+
         post_data = dict_from_items_with_values(
             request_parameters,
             title=title,
@@ -344,10 +372,8 @@ class MeetingsAPI(object):
             simultaneousInterpretation=simultaneousInterpretation,
             enabledBreakoutSessions=enabledBreakoutSessions,
             breakoutSessions=breakoutSessions,
-            
         )
 
-        
         # API request
         json_data = self._session.post(API_ENDPOINT, json=post_data)
 
@@ -372,7 +398,7 @@ class MeetingsAPI(object):
         check_type(meetingId, basestring)
 
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/' + meetingId)
+        json_data = self._session.get(API_ENDPOINT + "/" + meetingId)
 
         # Return a membership object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -391,74 +417,97 @@ class MeetingsAPI(object):
         check_type(meetingId, basestring)
 
         # API request
-        self._session.delete(API_ENDPOINT + '/' + meetingId)
+        self._session.delete(API_ENDPOINT + "/" + meetingId)
 
-    def update(self, meetingId,
-                     title,
-                     password,
-                     start,
-                     end,
-                     agenda=None,
-                     timezone=None,
-                     recurrence=None,
-                     enabledAutoRecordMeeting=None,
-                     allowAnyUserToBeCoHost=None,
-                     enabledJoinBeforeHost=None,
-                     enableConnectAudioBeforeHost=None,
-                     joinBeforeHostMinutes=None,
-                     excludePassword=None,
-                     publicMeeting=None,
-                     reminderTime=None,
-                     unlockedMeetingJoinSecurity=None,
-                     sessionTypeId=None,
-                     scheduledType=None,
-                     enabledWebcastView=None,
-                     panelistPassword=None,
-                     enableAutomaticLock=None,
-                     automaticLockMinutes=None,
-                     allowFirstUserToBeCoHost=None,
-                     allowAuthenticatedDevices=None,
-                     sendEmail=None,
-                     hostEmail=None,
-                     siteUrl=None,
-                     meetingOptions=None,
-                     integrationTags=None,
-                     enabledBreakoutSessions=None,
-                     **request_parameters):
+    def update(
+        self,
+        meetingId,
+        title,
+        password,
+        start,
+        end,
+        agenda=None,
+        timezone=None,
+        recurrence=None,
+        enabledAutoRecordMeeting=None,
+        allowAnyUserToBeCoHost=None,
+        enabledJoinBeforeHost=None,
+        enableConnectAudioBeforeHost=None,
+        joinBeforeHostMinutes=None,
+        excludePassword=None,
+        publicMeeting=None,
+        reminderTime=None,
+        unlockedMeetingJoinSecurity=None,
+        sessionTypeId=None,
+        scheduledType=None,
+        enabledWebcastView=None,
+        panelistPassword=None,
+        enableAutomaticLock=None,
+        automaticLockMinutes=None,
+        allowFirstUserToBeCoHost=None,
+        allowAuthenticatedDevices=None,
+        sendEmail=None,
+        hostEmail=None,
+        siteUrl=None,
+        meetingOptions=None,
+        integrationTags=None,
+        enabledBreakoutSessions=None,
+        **request_parameters,
+    ):
         """Update properties for a meeting, by ID.
 
         Args:
             meetingId(basestring): The meeting ID.
-            title (basestring): Title of the meeting
-            password (basestring): Password of the meeting
+            title (basestring): Title of the meeting.
+            password (basestring): Password of the meeting.
             start (basestring): Start time of the meeting in ISO 8601.
             end (basestring): End time of the meeting in ISO 8601.
-            agenda (basestring): Meeting agenda (Maximum 1300 characters)
-            timezone (basestring): Time zone of start and end property in IANA time zone database format.
-            recurrence (basestring): Meeting recurrence according to RFC 2445
-            enabledAutoRecordMeeting (bool): Whether or not meeting is recorded automatically.
-            allowAnyUserToBeCoHost (bool): Allow any attendee with host account on site to become co host
-            enabledJoinBeforeHost (bool): Allow attendees to join before the host.
-            enableConnectAudioBeforeHost (bool): Allow attendees to connect audio before the host joins.
-            joinBeforeHostMinutes (int): Number of minutes attendees can join before the start time.
-            excludePassword (bool): Exclude meeting password from meeting invite emails.
-            publicMeeting (bool): Allow meeting to be listed on public calendar
-            reminderTime (int): Number of minutes before start time a reminder is send to the host
-            unlockedMeetingJoinSecurity (basestring): Join settings for uninvited people
-            sessionTypeId (basestring): Unique identifier for a meeting session type.
-            scheduledType (basestring): Type of meeting (regular, webinar, meeting in personal room)
-            enabledWebcastView (bool): Whether or not webcast view is enabled
-            panelistPassword (basestring): Password for panelists of a webinar meeting
-            enableAutomaticLock (bool): Whether or not to automatically lock the meeting after start.
-            automaticLockMinutes (int): Number of minutes for the meeting to be automatically locked.
-            allowFirstUserToBeCoHost (bool): Allow the first joiner with host account on the meeting site to be co host.
-            allowAuthenticatedDevices (bool): Whether or not to allow authenticated video devices in the meeting's organization to start or join the meeting
-            sendEmail (bool): Send an invite e-mail
-            hostEmail (basestring): Email address of the meeting host
-            siteUrl (basestring): Site URL for the meeting
-            meetingOptions (dict): Options for this meeting
-            integrationTags (list): List of external keys created by integrations
-            enabledBreakoutSessions (bool): Flag to enable breakout sessions in this meeting.
+            agenda (basestring): Meeting agenda (Maximum 1300 characters).
+            timezone (basestring): Time zone of start and end property in IANA
+                time zone database format.
+            recurrence (basestring): Meeting recurrence according to RFC 2445.
+            enabledAutoRecordMeeting (bool): Whether or not meeting is recorded
+                automatically.
+            allowAnyUserToBeCoHost (bool): Allow any attendee with host account
+                on site to become cohost.
+            enabledJoinBeforeHost (bool): Allow attendees to join before the
+                host.
+            enableConnectAudioBeforeHost (bool): Allow attendees to connect
+                audio before the host joins.
+            joinBeforeHostMinutes (int): Number of minutes attendees can join
+                before the start time.
+            excludePassword (bool): Exclude meeting password from meeting
+                invite emails.
+            publicMeeting (bool): Allow meeting to be listed on public
+                calendar.
+            reminderTime (int): Number of minutes before start time a reminder
+                is send to the host.
+            unlockedMeetingJoinSecurity (basestring): Join settings for
+                uninvited people.
+            sessionTypeId (basestring): Unique identifier for a meeting session
+                type.
+            scheduledType (basestring): Type of meeting (regular, webinar,
+                meeting in personal room).
+            enabledWebcastView (bool): Whether or not webcast view is enabled.
+            panelistPassword (basestring): Password for panelists of a webinar
+                meeting.
+            enableAutomaticLock (bool): Whether or not to automatically lock
+                the meeting after start.
+            automaticLockMinutes (int): Number of minutes for the meeting to be
+                automatically locked.
+            allowFirstUserToBeCoHost (bool): Allow the first joiner with host
+                account on the meeting site to be cohost.
+            allowAuthenticatedDevices (bool): Whether or not to allow
+                authenticated video devices in the meeting's organization to
+                start or join the meeting.
+            sendEmail (bool): Send an invite e-mail.
+            hostEmail (basestring): Email address of the meeting host.
+            siteUrl (basestring): Site URL for the meeting.
+            meetingOptions (dict): Options for this meeting.
+            integrationTags (list): List of external keys created by
+                integrations.
+            enabledBreakoutSessions (bool): Flag to enable breakout sessions in
+                this meeting.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
@@ -502,7 +551,7 @@ class MeetingsAPI(object):
         check_type(meetingOptions, dict, optional=True)
         check_type(integrationTags, list, optional=True)
         check_type(enabledBreakoutSessions, bool, optional=True)
-        
+
         put_data = dict_from_items_with_values(
             request_parameters,
             title=title,
@@ -535,14 +584,12 @@ class MeetingsAPI(object):
             meetingOptions=meetingOptions,
             integrationTags=integrationTags,
             enabledBreakoutSessions=enabledBreakoutSessions,
-            
         )
 
-        
-
         # API request
-        json_data = self._session.put(API_ENDPOINT + '/' + meetingId,
-                                      json=put_data)
+        json_data = self._session.put(
+            API_ENDPOINT + "/" + meetingId, json=put_data
+        )
 
         # Return a membership object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)

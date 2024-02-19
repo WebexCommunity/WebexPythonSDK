@@ -41,42 +41,42 @@ class TeamMembershipBasicPropertiesMixin(object):
     @property
     def id(self):
         """A unique identifier for the team membership."""
-        return self._json_data.get('id')
+        return self._json_data.get("id")
 
     @property
     def teamId(self):
         """The team ID."""
-        return self._json_data.get('teamId')
+        return self._json_data.get("teamId")
 
     @property
     def personId(self):
         """The person ID."""
-        return self._json_data.get('personId')
+        return self._json_data.get("personId")
 
     @property
     def personEmail(self):
         """The email address of the person."""
-        return self._json_data.get('personEmail')
+        return self._json_data.get("personEmail")
 
     @property
     def personDisplayName(self):
         """The display name of the person."""
-        return self._json_data.get('personDisplayName')
+        return self._json_data.get("personDisplayName")
 
     @property
     def personOrgId(self):
         """The organization ID of the person."""
-        return self._json_data.get('personOrgId')
+        return self._json_data.get("personOrgId")
 
     @property
     def isModerator(self):
         """Whether or not the participant is a team moderator."""
-        return self._json_data.get('isModerator')
+        return self._json_data.get("isModerator")
 
     @property
     def created(self):
         """The date and time when the team membership was created."""
-        created = self._json_data.get('created')
+        created = self._json_data.get("created")
         if created:
             return WebexTeamsDateTime.strptime(created)
         else:

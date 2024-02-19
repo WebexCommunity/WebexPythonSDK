@@ -41,7 +41,7 @@ class EventBasicPropertiesMixin(object):
     @property
     def id(self):
         """The unique identifier for the event."""
-        return self._json_data.get('id')
+        return self._json_data.get("id")
 
     @property
     def resource(self):
@@ -51,7 +51,7 @@ class EventBasicPropertiesMixin(object):
             `messages`
             `memberships`
         """
-        return self._json_data.get('resource')
+        return self._json_data.get("resource")
 
     @property
     def type(self):
@@ -62,27 +62,27 @@ class EventBasicPropertiesMixin(object):
             `updated`
             `deleted`
         """
-        return self._json_data.get('type')
+        return self._json_data.get("type")
 
     @property
     def appId(self):
         """The ID of the application for the event."""
-        return self._json_data.get('appId')
+        return self._json_data.get("appId")
 
     @property
     def actorId(self):
         """The ID of the person who performed the action."""
-        return self._json_data.get('actorId')
+        return self._json_data.get("actorId")
 
     @property
     def orgId(self):
         """The ID of the organization for the event."""
-        return self._json_data.get('orgId')
+        return self._json_data.get("orgId")
 
     @property
     def created(self):
         """The date and time of the event."""
-        created = self._json_data.get('created')
+        created = self._json_data.get("created")
         if created:
             return WebexTeamsDateTime.strptime(created)
         else:

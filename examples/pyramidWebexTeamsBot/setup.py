@@ -34,20 +34,20 @@ from setuptools import setup, find_packages
 
 
 here = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(here, 'README.rst')) as f:
+with open(os.path.join(here, "README.rst")) as f:
     README = f.read()
 
 
 setup(
-    name='pyramidWebexTeamsBot',
+    name="pyramidWebexTeamsBot",
     version=0.1,
-    description='Pyramid Webex Teams Bot application',
+    description="Pyramid Webex Teams Bot application",
     long_description=README,
     classifiers=[
         "Programming Language :: Python",
         "Framework :: Pylons",
         "Topic :: Internet :: WWW/HTTP",
-        "Topic :: Internet :: WWW/HTTP :: WSGI :: Application"
+        "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
     ],
     keywords="web services",
     author=__author__,
@@ -55,13 +55,9 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    install_requires=[
-        'cornice',
-        'waitress',
-        'webexteamssdk'
-    ],
+    install_requires=["cornice", "waitress", "webexteamssdk"],
     entry_points="""[paste.app_factory]
                     main=pyramidWebexTeamsBot:main
                     """,
-    paster_plugins=['pyramid']
+    paster_plugins=["pyramid"],
 )

@@ -29,6 +29,7 @@ import webexteamssdk
 
 # Helper Functions
 
+
 def is_valid_role(obj):
     return isinstance(obj, webexteamssdk.Role) and obj.id is not None
 
@@ -38,6 +39,7 @@ def are_valid_roles(iterable):
 
 
 # Fixtures
+
 
 @pytest.fixture(scope="session")
 def roles_list(api):
@@ -50,6 +52,7 @@ def roles_dict(roles_list):
 
 
 # Tests
+
 
 def test_list_roles(roles_list):
     assert are_valid_roles(roles_list)

@@ -37,12 +37,16 @@ WEBEX_TEAMS_GUEST_ISSUER_SECRET = os.environ.get(
 
 # Helper Functions
 
+
 def is_valid_guest_issuer_token(obj):
-    return (isinstance(obj, webexteamssdk.GuestIssuerToken)
-            and obj.token is not None)
+    return (
+        isinstance(obj, webexteamssdk.GuestIssuerToken)
+        and obj.token is not None
+    )
 
 
 # Tests
+
 
 def test_get_guest_issuer_token(api):
     guest_issuer_token = api.guest_issuer.create(

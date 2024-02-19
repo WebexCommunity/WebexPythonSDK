@@ -39,13 +39,17 @@ from webexteamssdk.models.cards import AdaptiveCard
 from ..generator_containers import generator_container
 from ..restsession import RestSession
 from ..utils import (
-    check_type, dict_from_items_with_values, is_local_file, is_web_url,
-    make_attachment, open_local_file,
+    check_type,
+    dict_from_items_with_values,
+    is_local_file,
+    is_web_url,
+    make_attachment,
+    open_local_file,
 )
 
 
-API_ENDPOINT = 'messages'
-OBJECT_TYPE = 'message'
+API_ENDPOINT = "messages"
+OBJECT_TYPE = "message"
 
 
 class MessagesAPI(object):
@@ -73,8 +77,16 @@ class MessagesAPI(object):
         self._object_factory = object_factory
 
     @generator_container
-    def list(self, roomId, parentId=None, mentionedPeople=None, before=None,
-             beforeMessage=None, max=50, **request_parameters):
+    def list(
+        self,
+        roomId,
+        parentId=None,
+        mentionedPeople=None,
+        before=None,
+        beforeMessage=None,
+        max=50,
+        **request_parameters
+    ):
         """Lists messages in a room.
 
         Each message will include content attachments if present.
@@ -139,8 +151,13 @@ class MessagesAPI(object):
             yield self._object_factory(OBJECT_TYPE, item)
 
     @generator_container
-    def list_direct(self, personId=None, personEmail=None, parentId=None,
-                    **request_parameters):
+    def list_direct(
+        self,
+        personId=None,
+        personEmail=None,
+        parentId=None,
+        **request_parameters
+    ):
         """List all messages in a 1:1 (direct) room.
 
         Use the `personId` or `personEmail` query parameter to specify the
@@ -196,9 +213,18 @@ class MessagesAPI(object):
         for item in items:
             yield self._object_factory(OBJECT_TYPE, item)
 
-    def create(self, roomId=None, parentId=None, toPersonId=None,
-               toPersonEmail=None, text=None, markdown=None, files=None,
-               attachments=None, **request_parameters):
+    def create(
+        self,
+        roomId=None,
+        parentId=None,
+        toPersonId=None,
+        toPersonEmail=None,
+        text=None,
+        markdown=None,
+        files=None,
+        attachments=None,
+        **request_parameters
+    ):
         """Post a message to a room.
 
         The files parameter is a list, which accepts multiple values to allow
@@ -246,12 +272,14 @@ class MessagesAPI(object):
 
         if files:
             if len(files) > 1:
-                raise ValueError("The `files` parameter should be a list with "
-                                 "exactly one (1) item. The files parameter "
-                                 "is a list, which accepts multiple values to "
-                                 "allow for future expansion, but currently "
-                                 "only one file may be included with the "
-                                 "message.")
+                raise ValueError(
+                    "The `files` parameter should be a list with "
+                    "exactly one (1) item. The files parameter "
+                    "is a list, which accepts multiple values to "
+                    "allow for future expansion, but currently "
+                    "only one file may be included with the "
+                    "message."
+                )
             check_type(files[0], basestring)
         else:
             files = None
@@ -273,7 +301,7 @@ class MessagesAPI(object):
             markdown=markdown,
             files=files,
             attachments=attachments,
-            parentId=parentId
+            parentId=parentId,
         )
 
         # API request
@@ -284,18 +312,20 @@ class MessagesAPI(object):
         elif is_local_file(files[0]):
             # Multipart MIME post
             try:
-                post_data['files'] = open_local_file(files[0])
+                post_data["files"] = open_local_file(files[0])
                 multipart_data = MultipartEncoder(post_data)
-                headers = {'Content-type': multipart_data.content_type}
-                json_data = self._session.post(API_ENDPOINT,
-                                               headers=headers,
-                                               data=multipart_data)
+                headers = {"Content-type": multipart_data.content_type}
+                json_data = self._session.post(
+                    API_ENDPOINT, headers=headers, data=multipart_data
+                )
             finally:
-                post_data['files'].file_object.close()
+                post_data["files"].file_object.close()
 
         else:
-            raise ValueError("The `files` parameter does not contain a vaild "
-                             "URL or path to a local file.")
+            raise ValueError(
+                "The `files` parameter does not contain a vaild "
+                "URL or path to a local file."
+            )
 
         # Return a message object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -318,7 +348,7 @@ class MessagesAPI(object):
         check_type(messageId, basestring)
 
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/' + messageId)
+        json_data = self._session.get(API_ENDPOINT + "/" + messageId)
 
         # Return a message object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -337,7 +367,7 @@ class MessagesAPI(object):
         check_type(messageId, basestring)
 
         # API request
-        self._session.delete(API_ENDPOINT + '/' + messageId)
+        self._session.delete(API_ENDPOINT + "/" + messageId)
 
     def edit(self, messageId=None, roomId=None, text=None, markdown=None):
         """Edit a message.
@@ -367,7 +397,9 @@ class MessagesAPI(object):
         )
 
         # API request
-        json_data = self._session.put(API_ENDPOINT + '/' + messageId, json=put_data)
+        json_data = self._session.put(
+            API_ENDPOINT + "/" + messageId, json=put_data
+        )
 
         # Return a message object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)

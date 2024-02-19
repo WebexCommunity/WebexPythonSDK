@@ -32,13 +32,16 @@ from tests.utils import create_string
 
 # Helper Functions
 
+
 def is_valid_room(obj):
     return isinstance(obj, webexteamssdk.Room) and obj.id is not None
 
 
 def is_valid_room_meeting_info(obj):
-    return (isinstance(obj, webexteamssdk.RoomMeetingInfo)
-            and obj.roomId is not None)
+    return (
+        isinstance(obj, webexteamssdk.RoomMeetingInfo)
+        and obj.roomId is not None
+    )
 
 
 def are_valid_rooms(iterable):
@@ -46,6 +49,7 @@ def are_valid_rooms(iterable):
 
 
 # Fixtures
+
 
 @pytest.fixture(scope="session")
 def group_room(api):
@@ -58,10 +62,7 @@ def group_room(api):
 
 @pytest.fixture(scope="session")
 def direct_rooms(api, direct_messages):
-    return [
-        api.rooms.get(message.roomId)
-        for message in direct_messages
-    ]
+    return [api.rooms.get(message.roomId) for message in direct_messages]
 
 
 @pytest.fixture(scope="session")
@@ -113,6 +114,7 @@ def add_rooms(api):
 
 # Tests
 
+
 def test_list_all_rooms(list_of_rooms):
     assert len(list_of_rooms) > 0
     assert are_valid_rooms(list_of_rooms)
@@ -131,7 +133,7 @@ def test_list_rooms_with_paging(api, list_of_rooms, add_rooms):
 
 
 def test_list_group_rooms(api, group_room):
-    group_rooms_list = list(api.rooms.list(type='group'))
+    group_rooms_list = list(api.rooms.list(type="group"))
     assert len(group_rooms_list) > 0
     assert are_valid_rooms(group_rooms_list)
 
@@ -143,7 +145,7 @@ def test_list_team_rooms(api, team, team_room):
 
 
 def test_list_direct_rooms(api, direct_rooms):
-    direct_rooms_list = list(api.rooms.list(type='direct'))
+    direct_rooms_list = list(api.rooms.list(type="direct"))
     assert len(direct_rooms_list) > 0
     assert are_valid_rooms(direct_rooms_list)
 

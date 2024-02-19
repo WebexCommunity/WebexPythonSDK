@@ -40,9 +40,11 @@ to_datetime_string = str(
 
 # Helper Functions
 
+
 def is_valid_admin_audit_event(obj):
-    return isinstance(obj, webexteamssdk.AdminAuditEvent) \
-        and obj.id is not None
+    return (
+        isinstance(obj, webexteamssdk.AdminAuditEvent) and obj.id is not None
+    )
 
 
 def are_valid_admin_audit_events(iterable):
@@ -51,18 +53,22 @@ def are_valid_admin_audit_events(iterable):
 
 # Fixtures
 
+
 @pytest.fixture(scope="session")
 def admin_audit_events(api, me):
-    three_events = list(api.admin_audit_events.list(
-        orgId=me.orgId,
-        _from=from_datetime_string,
-        to=to_datetime_string,
-    )[:3])
+    three_events = list(
+        api.admin_audit_events.list(
+            orgId=me.orgId,
+            _from=from_datetime_string,
+            to=to_datetime_string,
+        )[:3]
+    )
     assert len(three_events) == 3
     return three_events
 
 
 # Tests
+
 
 def test_list_admin_audit_events(api, admin_audit_events):
     assert are_valid_admin_audit_events(admin_audit_events)

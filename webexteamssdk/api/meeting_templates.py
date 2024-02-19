@@ -42,8 +42,8 @@ from ..utils import (
 )
 
 
-API_ENDPOINT = 'meetings/templates'
-OBJECT_TYPE = 'meetingTemplate'
+API_ENDPOINT = "meetings/templates"
+OBJECT_TYPE = "meetingTemplate"
 
 
 class MeetingTemplatesAPI(object):
@@ -71,17 +71,19 @@ class MeetingTemplatesAPI(object):
 
         self._session = session
         self._object_factory = object_factory
-    
-    @generator_container
-    def list(self, templateType=None,
-                   locale=None,
-                   isDefault=None,
-                   isStandard=None,
-                   hostEmail=None,
-                   siteUrl=None,
-                   headers={},
-             **request_parameters):
 
+    @generator_container
+    def list(
+        self,
+        templateType=None,
+        locale=None,
+        isDefault=None,
+        isStandard=None,
+        hostEmail=None,
+        siteUrl=None,
+        headers={},
+        **request_parameters,
+    ):
         """List meetingTemplates.
 
         Use query parameters to filter the response.
@@ -97,11 +99,15 @@ class MeetingTemplatesAPI(object):
         container.
 
         Args:
-            templateType (basestring): Meeting template types (meeting, webinar)
-            locale (basestring): Locale for the meeting template (i.e. en_US)
-            isDefault (bool): Flag to indicate if default or non-default meeting templates are returned
-            isStandard (bool): Flag to indicate if standard or non-standard meeting templates are returned
-            hostEmail (bool): Email address of a meeting host (Requires admin-level scope)
+            templateType (basestring): Meeting template types (meeting,
+                webinar).
+            locale (basestring): Locale for the meeting template (i.e. en_US).
+            isDefault (bool): Flag to indicate if default or non-default
+                meeting templates are returned.
+            isStandard (bool): Flag to indicate if standard or non-standard
+                meeting templates are returned.
+            hostEmail (bool): Email address of a meeting host (Requires
+                admin-level scope).
             siteUrl (bool): URL of the Webex site from which we are listing.
             headers(dict): Additional headers to be passed.
             **request_parameters: Additional request parameters (provides
@@ -122,7 +128,6 @@ class MeetingTemplatesAPI(object):
         check_type(isStandard, bool, optional=True)
         check_type(hostEmail, bool, optional=True)
         check_type(siteUrl, bool, optional=True)
-        
 
         params = dict_from_items_with_values(
             request_parameters,
@@ -132,9 +137,8 @@ class MeetingTemplatesAPI(object):
             isStandard=isStandard,
             hostEmail=hostEmail,
             siteUrl=siteUrl,
-            
         )
-        
+
         # API request - get items
 
         # Update headers
@@ -149,10 +153,7 @@ class MeetingTemplatesAPI(object):
         # Yield membership objects created from the returned items JSON objects
         for item in items:
             yield self._object_factory(OBJECT_TYPE, item)
-    
-    
 
-    
     def get(self, meetingTemplateId):
         """Get details for a meetingTemplate, by ID.
 
@@ -160,8 +161,8 @@ class MeetingTemplatesAPI(object):
             meetingTemplateId(basestring): The meetingTemplate ID.
 
         Returns:
-            MeetingTemplate: A MeetingTemplate object with the details of the requested
-            meetingTemplate.
+            MeetingTemplate: A MeetingTemplate object with the details of the
+            requested meetingTemplate.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -171,12 +172,7 @@ class MeetingTemplatesAPI(object):
         check_type(meetingTemplateId, basestring)
 
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/' + meetingTemplateId)
+        json_data = self._session.get(API_ENDPOINT + "/" + meetingTemplateId)
 
         # Return a membership object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
-    
-
-    
-
-    

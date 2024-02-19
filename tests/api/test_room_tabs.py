@@ -32,6 +32,7 @@ from tests.utils import create_string
 
 # Helper Functions
 
+
 def is_valid_room_tab(obj):
     return isinstance(obj, webexteamssdk.RoomTab) and obj.id is not None
 
@@ -41,6 +42,7 @@ def are_valid_room_tabs(iterable):
 
 
 # Fixtures
+
 
 @pytest.fixture(scope="session")
 def group_room(api):
@@ -53,10 +55,7 @@ def group_room(api):
 
 @pytest.fixture(scope="session")
 def direct_rooms(api, direct_messages):
-    return [
-        api.rooms.get(message.roomId)
-        for message in direct_messages
-    ]
+    return [api.rooms.get(message.roomId) for message in direct_messages]
 
 
 @pytest.fixture(scope="session")
@@ -107,6 +106,7 @@ def add_rooms(api):
 
 
 # Tests
+
 
 def test_list_all_room_tabs(list_of_room_tabs):
     assert len(list_of_room_tabs) > 0

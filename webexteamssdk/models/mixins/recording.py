@@ -45,27 +45,42 @@ class RecordingBasicPropertiesMixin(object):
 
     @property
     def meetingId(self):
-        """Unique identifier for the parent ended meeting instance which the recording belongs to."""
+        """Meeting identifier for the meeting instance.
+
+        Unique identifier for the parent ended meeting instance that the
+        recording belongs to.
+        """
         return self._json_data.get("meetingId")
 
     @property
     def scheduledMeetingId(self):
-        """Unique identifier for the parent scheduled meeting which the recording belongs to."""
+        """Meeting identifier for the scheduled meeting.
+
+        Unique identifier for the parent scheduled meeting which the recording
+        belongs to.
+        """
         return self._json_data.get("scheduledMeetingId")
 
     @property
     def topic(self):
-        """The recording's topic."""
+        """The recording topic."""
         return self._json_data.get("topic")
 
     @property
     def meetingSeriesId(self):
-        """Unique identifier for the parent meeting series which the recording belongs to."""
+        """Meeting series identifier.
+
+        Unique identifier for the parent meeting series which the recording
+        belongs to.
+        """
         return self._json_data.get("meetingSeriesId")
 
     @property
     def createTime(self):
-        """The date and time recording was created in ISO 8601 compliant format."""
+        """Recording creation time.
+
+        The date and time recording was created in ISO 8601 compliant format.
+        """
         created = self._json_data.get("createTime")
         if created:
             return WebexTeamsDateTime.strptime(created)
@@ -124,5 +139,9 @@ class RecordingBasicPropertiesMixin(object):
 
     @property
     def integrationTags(self):
-        """External keys of the parent meeting created by an integration application."""
+        """Integration tags.
+
+        External keys of the parent meeting created by an integration
+        application.
+        """
         return self._json_data.get("integrationTags")

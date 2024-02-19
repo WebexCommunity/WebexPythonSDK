@@ -30,8 +30,14 @@ SOFTWARE.
 """
 
 from __future__ import (
-    absolute_import, absolute_import, division, division,
-    print_function, print_function, unicode_literals, unicode_literals,
+    absolute_import,
+    absolute_import,
+    division,
+    division,
+    print_function,
+    print_function,
+    unicode_literals,
+    unicode_literals,
 )
 
 from builtins import *
@@ -65,6 +71,7 @@ from .mixins.recording import RecordingBasicPropertiesMixin
 from .mixins.meetings import MeetingBasicPropertiesMixin
 from .mixins.meeting_templates import MeetingTemplateBasicPropertiesMixin
 from .mixins.meeting_invitees import MeetingInviteeBasicPropertiesMixin
+
 
 class ImmutableData(object):
     """Model a Webex Teams JSON object as an immutable native Python object."""
@@ -139,8 +146,7 @@ class ImmutableData(object):
             # Freeze the elements of the dictionary, sort them, and return
             # them as a list of tuples
             key_value_tuples = [
-                (key, cls._serialize(value))
-                for key, value in data.items()
+                (key, cls._serialize(value)) for key, value in data.items()
             ]
             key_value_tuples.sort()
             return tuple(key_value_tuples)
@@ -155,8 +161,10 @@ class ImmutableData(object):
 
     def __eq__(self, other):
         """Determine if two objects are equal."""
-        return isinstance(other, self.__class__) \
+        return (
+            isinstance(other, self.__class__)
             and self._freeze() == other._freeze()
+        )
 
     def __hash__(self):
         """Hash the data object."""
@@ -186,8 +194,9 @@ class AccessToken(ImmutableData, AccessTokenBasicPropertiesMixin):
     """Webex Teams Access-Token data model."""
 
 
-class AdminAuditEventData(ImmutableData,
-                          AdminAuditEventDataBasicPropertiesMixin):
+class AdminAuditEventData(
+    ImmutableData, AdminAuditEventDataBasicPropertiesMixin
+):
     """Webex Teams Admin Audit Event Data object data model."""
 
 
@@ -197,7 +206,7 @@ class AdminAuditEvent(ImmutableData, AdminAuditEventBasicPropertiesMixin):
     @property
     def data(self):
         """The event resource data."""
-        return AdminAuditEventData(self._json_data.get('data'))
+        return AdminAuditEventData(self._json_data.get("data"))
 
 
 class AttachmentAction(ImmutableData, AttachmentActionBasicPropertiesMixin):
@@ -214,7 +223,7 @@ class Event(ImmutableData, EventBasicPropertiesMixin):
         This object will contain the event's resource, such as memberships or
         messages, at the time the event took place.
         """
-        return ImmutableData(self._json_data.get('data'))
+        return ImmutableData(self._json_data.get("data"))
 
 
 class License(ImmutableData, LicenseBasicPropertiesMixin):
@@ -271,7 +280,7 @@ class WebhookEvent(ImmutableData, WebhookEventBasicPropertiesMixin):
     @property
     def data(self):
         """The event resource data."""
-        return ImmutableData(self._json_data.get('data'))
+        return ImmutableData(self._json_data.get("data"))
 
 
 class GuestIssuerToken(ImmutableData, GuestIssuerTokenBasicPropertiesMixin):
@@ -281,14 +290,18 @@ class GuestIssuerToken(ImmutableData, GuestIssuerTokenBasicPropertiesMixin):
 class Recording(ImmutableData, RecordingBasicPropertiesMixin):
     """Webex Teams Recording data model"""
 
+
 class Meeting(ImmutableData, MeetingBasicPropertiesMixin):
     """Webex Meeting data model"""
+
 
 class MeetingTemplate(ImmutableData, MeetingTemplateBasicPropertiesMixin):
     """Webex MeetingTemplate data model"""
 
+
 class MeetingInvitees(ImmutableData, MeetingInviteeBasicPropertiesMixin):
     """Webex MeetingInvitees data model"""
+
 
 immutable_data_models = defaultdict(
     lambda: ImmutableData,
@@ -313,7 +326,7 @@ immutable_data_models = defaultdict(
     recording=Recording,
     meeting=Meeting,
     meetingTemplate=MeetingTemplate,
-    meetingInvitee=MeetingInvitees
+    meetingInvitee=MeetingInvitees,
 )
 
 

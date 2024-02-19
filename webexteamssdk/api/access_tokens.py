@@ -31,6 +31,7 @@ from __future__ import (
 )
 
 from future import standard_library
+
 standard_library.install_aliases()
 
 from builtins import *
@@ -49,8 +50,8 @@ from ..utils import (
 )
 
 
-API_ENDPOINT = 'access_token'
-OBJECT_TYPE = 'access_token'
+API_ENDPOINT = "access_token"
+OBJECT_TYPE = "access_token"
 
 
 class AccessTokensAPI(object):
@@ -133,9 +134,10 @@ class AccessTokensAPI(object):
         )
 
         # API request
-        response = requests.post(self._endpoint_url, data=post_data,
-                                 **self._request_kwargs)
-        check_response_code(response, EXPECTED_RESPONSE_CODE['POST'])
+        response = requests.post(
+            self._endpoint_url, data=post_data, **self._request_kwargs
+        )
+        check_response_code(response, EXPECTED_RESPONSE_CODE["POST"])
         json_data = extract_and_parse_json(response)
 
         # Return a access_token object created from the response JSON data
@@ -172,9 +174,10 @@ class AccessTokensAPI(object):
         )
 
         # API request
-        response = requests.post(self._endpoint_url, data=post_data,
-                                 **self._request_kwargs)
-        check_response_code(response, EXPECTED_RESPONSE_CODE['POST'])
+        response = requests.post(
+            self._endpoint_url, data=post_data, **self._request_kwargs
+        )
+        check_response_code(response, EXPECTED_RESPONSE_CODE["POST"])
         json_data = extract_and_parse_json(response)
 
         # Return a AccessToken object created from the response JSON data

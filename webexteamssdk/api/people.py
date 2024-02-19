@@ -42,8 +42,8 @@ from ..utils import (
 )
 
 
-API_ENDPOINT = 'people'
-OBJECT_TYPE = 'person'
+API_ENDPOINT = "people"
+OBJECT_TYPE = "person"
 
 
 class PeopleAPI(object):
@@ -73,8 +73,15 @@ class PeopleAPI(object):
         self._object_factory = object_factory
 
     @generator_container
-    def list(self, email=None, displayName=None, id=None, orgId=None, max=None,
-             **request_parameters):
+    def list(
+        self,
+        email=None,
+        displayName=None,
+        id=None,
+        orgId=None,
+        max=None,
+        **request_parameters
+    ):
         """List people in your organization.
 
         For most users, either the `email` or `displayName` parameter is
@@ -140,9 +147,18 @@ class PeopleAPI(object):
         for item in items:
             yield self._object_factory(OBJECT_TYPE, item)
 
-    def create(self, emails, displayName=None, firstName=None, lastName=None,
-               avatar=None, orgId=None, roles=None, licenses=None,
-               **request_parameters):
+    def create(
+        self,
+        emails,
+        displayName=None,
+        firstName=None,
+        lastName=None,
+        avatar=None,
+        orgId=None,
+        roles=None,
+        licenses=None,
+        **request_parameters
+    ):
         """Create a new user account for a given organization
 
         Only an admin can create a new user account.
@@ -215,14 +231,24 @@ class PeopleAPI(object):
         check_type(personId, basestring)
 
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/' + personId)
+        json_data = self._session.get(API_ENDPOINT + "/" + personId)
 
         # Return a person object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
 
-    def update(self, personId, emails=None, displayName=None, firstName=None,
-               lastName=None, avatar=None, orgId=None, roles=None,
-               licenses=None, **request_parameters):
+    def update(
+        self,
+        personId,
+        emails=None,
+        displayName=None,
+        firstName=None,
+        lastName=None,
+        avatar=None,
+        orgId=None,
+        roles=None,
+        licenses=None,
+        **request_parameters
+    ):
         """Update details for a person, by ID.
 
         Only an admin can update a person's details.
@@ -281,8 +307,9 @@ class PeopleAPI(object):
         )
 
         # API request
-        json_data = self._session.put(API_ENDPOINT + '/' + personId,
-                                      json=put_data)
+        json_data = self._session.put(
+            API_ENDPOINT + "/" + personId, json=put_data
+        )
 
         # Return a person object created from the returned JSON object
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -303,7 +330,7 @@ class PeopleAPI(object):
         check_type(personId, basestring)
 
         # API request
-        self._session.delete(API_ENDPOINT + '/' + personId)
+        self._session.delete(API_ENDPOINT + "/" + personId)
 
     def me(self):
         """Get the details of the person accessing the API.
@@ -313,7 +340,7 @@ class PeopleAPI(object):
 
         """
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/me')
+        json_data = self._session.get(API_ENDPOINT + "/me")
 
         # Return a person object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)

@@ -31,6 +31,7 @@ import webexteamssdk
 
 # Helper Functions
 
+
 def is_valid_event(obj):
     return isinstance(obj, webexteamssdk.Event) and obj.id is not None
 
@@ -41,6 +42,7 @@ def are_valid_events(iterable):
 
 # Fixtures
 
+
 @pytest.fixture(scope="session")
 def events(api, group_room_messages, direct_messages):
     five_events = list(api.events.list()[:5])
@@ -49,6 +51,7 @@ def events(api, group_room_messages, direct_messages):
 
 
 # Tests
+
 
 def test_list_events(api, events):
     assert are_valid_events(events)

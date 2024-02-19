@@ -42,8 +42,8 @@ from ..utils import (
 )
 
 
-API_ENDPOINT = 'licenses'
-OBJECT_TYPE = 'license'
+API_ENDPOINT = "licenses"
+OBJECT_TYPE = "license"
 
 
 class LicensesAPI(object):
@@ -125,7 +125,7 @@ class LicensesAPI(object):
         check_type(licenseId, basestring)
 
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/' + licenseId)
+        json_data = self._session.get(API_ENDPOINT + "/" + licenseId)
 
         # Return a license object created from the returned JSON object
         return self._object_factory(OBJECT_TYPE, json_data)

@@ -76,13 +76,17 @@ WEBHOOK_EVENT = "created"
 def get_ngrok_public_url():
     """Get the ngrok public HTTP URL from the local client API."""
     try:
-        response = requests.get(url=NGROK_CLIENT_API_BASE_URL + "/tunnels",
-                                headers={'content-type': 'application/json'})
+        response = requests.get(
+            url=NGROK_CLIENT_API_BASE_URL + "/tunnels",
+            headers={"content-type": "application/json"},
+        )
         response.raise_for_status()
 
     except requests.exceptions.RequestException:
-        print("Could not connect to the ngrok client API; "
-              "assuming not running.")
+        print(
+            "Could not connect to the ngrok client API; "
+            "assuming not running."
+        )
         return None
 
     else:
@@ -123,5 +127,5 @@ def main():
         create_ngrok_webhook(api, public_url)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

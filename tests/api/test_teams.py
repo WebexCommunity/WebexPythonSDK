@@ -32,6 +32,7 @@ from tests.utils import create_string
 
 # Helper Functions
 
+
 def is_valid_team(obj):
     return isinstance(obj, webexteamssdk.Team) and obj.id is not None
 
@@ -41,6 +42,7 @@ def are_valid_teams(iterable):
 
 
 # Fixtures
+
 
 @pytest.fixture(scope="session")
 def team(api):
@@ -87,6 +89,7 @@ def add_teams(api):
 
 
 # Tests
+
 
 def test_list_teams(teams_list):
     assert len(teams_list) > 0

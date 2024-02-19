@@ -39,8 +39,9 @@ attachment_actions_card_path = os.path.abspath(
 
 # Helper Functions
 def is_valid_attachment_action(obj):
-    return isinstance(obj, webexteamssdk.AttachmentAction) \
-        and obj.id is not None
+    return (
+        isinstance(obj, webexteamssdk.AttachmentAction) and obj.id is not None
+    )
 
 
 # Fixtures
@@ -70,7 +71,7 @@ def attachment_action_create(api, test_people, attachment_actions_card):
         inputs={
             "Name": person.displayName,
             "Email": person.emails[0],
-        }
+        },
     )
 
     yield attachment_action

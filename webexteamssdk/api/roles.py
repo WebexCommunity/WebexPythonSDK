@@ -42,8 +42,8 @@ from ..utils import (
 )
 
 
-API_ENDPOINT = 'roles'
-OBJECT_TYPE = 'role'
+API_ENDPOINT = "roles"
+OBJECT_TYPE = "role"
 
 
 class RolesAPI(object):
@@ -91,8 +91,7 @@ class RolesAPI(object):
         """
         # API request - get items
         items = self._session.get_items(
-            API_ENDPOINT,
-            params=request_parameters
+            API_ENDPOINT, params=request_parameters
         )
 
         # Yield role objects created from the returned JSON objects
@@ -116,7 +115,7 @@ class RolesAPI(object):
         check_type(roleId, basestring)
 
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/' + roleId)
+        json_data = self._session.get(API_ENDPOINT + "/" + roleId)
 
         # Return a role object created from the returned JSON object
         return self._object_factory(OBJECT_TYPE, json_data)

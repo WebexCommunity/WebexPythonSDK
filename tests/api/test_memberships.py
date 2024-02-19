@@ -31,9 +31,12 @@ import webexteamssdk
 
 # Helper Functions
 
+
 def is_valid_membership(membership):
-    return isinstance(membership, webexteamssdk.Membership) \
+    return (
+        isinstance(membership, webexteamssdk.Membership)
         and membership.id is not None
+    )
 
 
 def are_valid_memberships(iterable):
@@ -42,6 +45,7 @@ def are_valid_memberships(iterable):
 
 
 # Fixtures
+
 
 @pytest.fixture(scope="session")
 def my_memberships(api, group_room, team_room, direct_rooms):
@@ -74,8 +78,9 @@ def group_room_moderator(api, my_group_room_membership):
 
 
 @pytest.fixture(scope="session")
-def membership_person_added_by_email(api, group_room, test_people,
-                                     group_room_moderator):
+def membership_person_added_by_email(
+    api, group_room, test_people, group_room_moderator
+):
     person = test_people["member_added_by_email"]
     membership = api.memberships.create(
         roomId=group_room.id,
@@ -88,8 +93,9 @@ def membership_person_added_by_email(api, group_room, test_people,
 
 
 @pytest.fixture(scope="session")
-def membership_person_added_by_id(api, group_room, test_people,
-                                  group_room_moderator):
+def membership_person_added_by_id(
+    api, group_room, test_people, group_room_moderator
+):
     person = test_people["member_added_by_id"]
     membership = api.memberships.create(
         roomId=group_room.id,
@@ -102,8 +108,9 @@ def membership_person_added_by_id(api, group_room, test_people,
 
 
 @pytest.fixture(scope="session")
-def membership_moderator_added_by_email(api, group_room, test_people,
-                                        group_room_moderator):
+def membership_moderator_added_by_email(
+    api, group_room, test_people, group_room_moderator
+):
     person = test_people["moderator_added_by_email"]
     membership = api.memberships.create(
         roomId=group_room.id,
@@ -117,8 +124,9 @@ def membership_moderator_added_by_email(api, group_room, test_people,
 
 
 @pytest.fixture(scope="session")
-def membership_moderator_added_by_id(api, group_room, test_people,
-                                     group_room_moderator):
+def membership_moderator_added_by_id(
+    api, group_room, test_people, group_room_moderator
+):
     person = test_people["moderator_added_by_id"]
     membership = api.memberships.create(
         roomId=group_room.id,
@@ -132,15 +140,17 @@ def membership_moderator_added_by_id(api, group_room, test_people,
 
 
 @pytest.fixture(scope="session")
-def additional_group_room_memberships(membership_person_added_by_email,
-                                      membership_person_added_by_id,
-                                      membership_moderator_added_by_email,
-                                      membership_moderator_added_by_id):
+def additional_group_room_memberships(
+    membership_person_added_by_email,
+    membership_person_added_by_id,
+    membership_moderator_added_by_email,
+    membership_moderator_added_by_id,
+):
     return [
         membership_person_added_by_email,
         membership_person_added_by_id,
         membership_moderator_added_by_email,
-        membership_moderator_added_by_id
+        membership_moderator_added_by_id,
     ]
 
 
@@ -150,6 +160,7 @@ def group_room_with_members(group_room, additional_group_room_memberships):
 
 
 # Tests
+
 
 def test_list_memberships(my_memberships):
     assert len(my_memberships) >= 3
@@ -169,13 +180,16 @@ def test_list_memberships_with_paging(api, add_rooms, my_memberships):
 
 
 @pytest.mark.xfail  # TODO: Resolve test account issues
-def test_filter_room_memberships_by_person_email(api, test_people,
-                                                 group_room_with_members):
+def test_filter_room_memberships_by_person_email(
+    api, test_people, group_room_with_members
+):
     person = test_people["member_added_by_email"]
-    memberships = list(api.memberships.list(
-        roomId=group_room_with_members.id,
-        personEmail=person.emails[0],
-    ))
+    memberships = list(
+        api.memberships.list(
+            roomId=group_room_with_members.id,
+            personEmail=person.emails[0],
+        )
+    )
     assert len(memberships) == 1
     membership = memberships[0]
     assert is_valid_membership(membership)
@@ -183,13 +197,16 @@ def test_filter_room_memberships_by_person_email(api, test_people,
 
 
 @pytest.mark.xfail  # TODO: Resolve test account issues
-def test_filter_room_memberships_by_person_id(api, test_people,
-                                              group_room_with_members):
+def test_filter_room_memberships_by_person_id(
+    api, test_people, group_room_with_members
+):
     person = test_people["member_added_by_id"]
-    memberships = list(api.memberships.list(
-        roomId=group_room_with_members.id,
-        personId=person.id,
-    ))
+    memberships = list(
+        api.memberships.list(
+            roomId=group_room_with_members.id,
+            personId=person.id,
+        )
+    )
     assert len(memberships) == 1
     membership = memberships[0]
     assert is_valid_membership(membership)

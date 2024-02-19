@@ -42,8 +42,8 @@ from ..utils import (
 )
 
 
-API_ENDPOINT = 'room/tabs'
-OBJECT_TYPE = 'room_tab'
+API_ENDPOINT = "room/tabs"
+OBJECT_TYPE = "room_tab"
 
 
 class RoomTabsAPI(object):
@@ -74,8 +74,7 @@ class RoomTabsAPI(object):
 
     @generator_container
     def list(self, roomId, **request_parameters):
-        """
-        Lists all Room Tabs of a room. roomId query parameter is required to retrieve the response.
+        """Lists all Room Tabs of a room.
 
         This method supports Webex Teams's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
@@ -169,12 +168,14 @@ class RoomTabsAPI(object):
         check_type(roomTabId, basestring)
 
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/' + roomTabId)
+        json_data = self._session.get(API_ENDPOINT + "/" + roomTabId)
 
         # Return a room object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
 
-    def update(self, roomTabId, roomId, contentUrl, displayName, **request_parameters):
+    def update(
+        self, roomTabId, roomId, contentUrl, displayName, **request_parameters
+    ):
         """Updates the content url of a Room Tab by ID.
 
         Args:
@@ -208,8 +209,9 @@ class RoomTabsAPI(object):
         )
 
         # API request
-        json_data = self._session.put(API_ENDPOINT + '/' + roomTabId,
-                                      json=put_data)
+        json_data = self._session.put(
+            API_ENDPOINT + "/" + roomTabId, json=put_data
+        )
 
         # Return a room object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -228,4 +230,4 @@ class RoomTabsAPI(object):
         check_type(roomTabId, basestring)
 
         # API request
-        self._session.delete(API_ENDPOINT + '/' + roomTabId)
+        self._session.delete(API_ENDPOINT + "/" + roomTabId)

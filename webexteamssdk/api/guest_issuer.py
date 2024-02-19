@@ -38,7 +38,7 @@ from ..restsession import RestSession
 from ..utils import (
     check_type,
     dict_from_items_with_values,
-    check_response_code
+    check_response_code,
 )
 from ..response_codes import EXPECTED_RESPONSE_CODE
 
@@ -110,23 +110,15 @@ class GuestIssuerAPI(object):
         check_type(exp, basestring)
         check_type(secret, basestring)
 
-        payload = {
-            "sub": sub,
-            "name": name,
-            "iss": iss,
-            "exp": exp
-        }
+        payload = {"sub": sub, "name": name, "iss": iss, "exp": exp}
 
         key = base64.b64decode(secret)
         jwt_token = jwt.encode(payload, key, algorithm="HS256")
 
-        headers = {
-            "Authorization": "Bearer " + jwt_token.decode("utf-8")
-        }
+        headers = {"Authorization": "Bearer " + jwt_token.decode("utf-8")}
 
         json_data = self._session.post(
-            API_ENDPOINT + "/" + "login",
-            headers=headers
+            API_ENDPOINT + "/" + "login", headers=headers
         )
 
         return self._object_factory(OBJECT_TYPE, json_data)

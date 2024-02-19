@@ -42,8 +42,8 @@ from ..utils import (
 )
 
 
-API_ENDPOINT = 'rooms'
-OBJECT_TYPE = 'room'
+API_ENDPOINT = "rooms"
+OBJECT_TYPE = "room"
 
 
 class RoomsAPI(object):
@@ -73,8 +73,14 @@ class RoomsAPI(object):
         self._object_factory = object_factory
 
     @generator_container
-    def list(self, teamId=None, type=None, sortBy=None, max=100,
-             **request_parameters):
+    def list(
+        self,
+        teamId=None,
+        type=None,
+        sortBy=None,
+        max=100,
+        **request_parameters
+    ):
         """List rooms.
 
         By default, lists rooms to which the authenticated user belongs.
@@ -184,7 +190,7 @@ class RoomsAPI(object):
         check_type(roomId, basestring)
 
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/' + roomId)
+        json_data = self._session.get(API_ENDPOINT + "/" + roomId)
 
         # Return a room object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -209,7 +215,7 @@ class RoomsAPI(object):
 
         # API request
         json_data = self._session.get(
-            API_ENDPOINT + '/' + roomId + '/meetingInfo',
+            API_ENDPOINT + "/" + roomId + "/meetingInfo",
         )
 
         # Return a room meeting info object created from the response JSON data
@@ -241,8 +247,9 @@ class RoomsAPI(object):
         )
 
         # API request
-        json_data = self._session.put(API_ENDPOINT + '/' + roomId,
-                                      json=put_data)
+        json_data = self._session.put(
+            API_ENDPOINT + "/" + roomId, json=put_data
+        )
 
         # Return a room object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -261,4 +268,4 @@ class RoomsAPI(object):
         check_type(roomId, basestring)
 
         # API request
-        self._session.delete(API_ENDPOINT + '/' + roomId)
+        self._session.delete(API_ENDPOINT + "/" + roomId)

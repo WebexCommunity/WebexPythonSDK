@@ -176,9 +176,7 @@ def group_room_markdown_message(
 def group_room_message_with_file_by_url(group_room, send_group_room_message):
     text = "File posted via URL"
     return send_group_room_message(
-        room_id=group_room.id,
-        text=text,
-        files=[WEBEX_TEAMS_TEST_FILE_URL]
+        room_id=group_room.id, text=text, files=[WEBEX_TEAMS_TEST_FILE_URL]
     )
 
 
@@ -244,6 +242,7 @@ def direct_messages(
 
 # Tests
 
+
 def test_list_all_messages(group_room_messages):
     assert len(group_room_messages) >= 1
     assert are_valid_messages(group_room_messages)
@@ -260,28 +259,35 @@ def test_list_messages_with_paging(api, group_room, group_room_messages):
     assert are_valid_messages(messages_list)
 
 
-def test_list_messages_before_datetime(api, group_room,
-                                       group_room_markdown_message):
-    message_list = list(api.messages.list(
-        roomId=group_room.id,
-        before=str(group_room_markdown_message.created),
-    ))
+def test_list_messages_before_datetime(
+    api, group_room, group_room_markdown_message
+):
+    message_list = list(
+        api.messages.list(
+            roomId=group_room.id,
+            before=str(group_room_markdown_message.created),
+        )
+    )
     assert len(message_list) >= 1
     assert are_valid_messages(message_list)
 
 
-def test_list_messages_before_message_with_id(api, group_room,
-                                              group_room_markdown_message):
-    message_list = list(api.messages.list(
-        roomId=group_room.id,
-        beforeMessage=group_room_markdown_message.id,
-    ))
+def test_list_messages_before_message_with_id(
+    api, group_room, group_room_markdown_message
+):
+    message_list = list(
+        api.messages.list(
+            roomId=group_room.id,
+            beforeMessage=group_room_markdown_message.id,
+        )
+    )
     assert len(message_list) >= 1
     assert are_valid_messages(message_list)
 
 
-def test_list_messages_mentioning_me(api, group_room,
-                                     group_room_markdown_message):
+def test_list_messages_mentioning_me(
+    api, group_room, group_room_markdown_message
+):
     messages = api.messages.list(group_room.id, mentionedPeople="me")
     messages_list = list(messages)
     assert len(messages_list) >= 1
@@ -293,7 +299,7 @@ def test_create_direct_messages_by_email(direct_message_by_person_email):
 
 
 def test_reply_to_direct_message_by_person_email(
-    direct_message_reply_by_person_email
+    direct_message_reply_by_person_email,
 ):
     assert is_valid_message(direct_message_reply_by_person_email)
 
@@ -309,7 +315,7 @@ def test_create_direct_messages_by_id(direct_message_by_person_id):
 
 
 def test_reply_to_direct_message_by_person_id(
-    direct_message_reply_by_person_id
+    direct_message_reply_by_person_id,
 ):
     assert is_valid_message(direct_message_reply_by_person_id)
 
@@ -321,8 +327,9 @@ def test_list_direct_messages_by_person_id(api, direct_message_by_person_id):
     assert are_valid_messages(messages)
 
 
-def test_list_direct_messages_by_person_email(api,
-                                              direct_message_by_person_email):
+def test_list_direct_messages_by_person_email(
+    api, direct_message_by_person_email
+):
     messages = api.messages.list_direct(
         personEmail=direct_message_by_person_email.toPersonEmail,
     )
@@ -346,7 +353,8 @@ def test_post_file_by_url(group_room_message_with_file_by_url):
 
 
 def test_post_file_by_local_upload(
-        group_room_message_with_file_by_local_upload):
+    group_room_message_with_file_by_local_upload,
+):
     assert is_valid_message(group_room_message_with_file_by_local_upload)
 
 
@@ -363,8 +371,9 @@ def test_delete_message(api, group_room, send_group_room_message):
     with pytest.raises(webexteamssdk.ApiError):
         api.messages.get(message.id)
 
-def test_delete_message(api, group_room):
+
+def test_edit_message(api, group_room):
     text = create_string("Edit this Message")
     message = api.messages.create(group_room.id, text=text)
     text = create_string("Message Edited")
-    assert text == api.messages.edit( message.id, group_room.id, text).text
+    assert text == api.messages.edit(message.id, group_room.id, text).text

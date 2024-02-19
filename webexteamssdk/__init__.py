@@ -34,20 +34,48 @@ import logging
 
 import webexteamssdk.models.cards as cards
 from ._metadata import (
-    __author__, __author_email__, __copyright__, __description__,
-    __download_url__, __license__, __title__, __url__, __version__,
+    __author__,
+    __author_email__,
+    __copyright__,
+    __description__,
+    __download_url__,
+    __license__,
+    __title__,
+    __url__,
+    __version__,
 )
 from .api import WebexTeamsAPI
 from .exceptions import (
-    AccessTokenError, ApiError, ApiWarning, MalformedResponse, RateLimitError,
-    RateLimitWarning, webexteamssdkException, webexteamssdkWarning,
+    AccessTokenError,
+    ApiError,
+    ApiWarning,
+    MalformedResponse,
+    RateLimitError,
+    RateLimitWarning,
+    webexteamssdkException,
+    webexteamssdkWarning,
 )
 from .models.dictionary import dict_data_factory
 from .models.immutable import (
-    AccessToken, AdminAuditEvent, AttachmentAction, Event, GuestIssuerToken,
-    immutable_data_factory, License, Membership, Message, Organization, Person,
-    Role, Room, RoomMeetingInfo, Team, TeamMembership, Webhook, WebhookEvent,
-    Recording
+    AccessToken,
+    AdminAuditEvent,
+    AttachmentAction,
+    Event,
+    GuestIssuerToken,
+    immutable_data_factory,
+    License,
+    Membership,
+    Message,
+    Organization,
+    Person,
+    Role,
+    Room,
+    RoomMeetingInfo,
+    Team,
+    TeamMembership,
+    Webhook,
+    WebhookEvent,
+    Recording,
 )
 from .models.simple import simple_data_factory, SimpleDataModel
 from .utils import WebexTeamsDateTime

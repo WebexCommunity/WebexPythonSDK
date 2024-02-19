@@ -68,12 +68,12 @@ from webexteamssdk import WebexTeamsAPI, Webhook
 
 
 # Module constants
-CAT_FACTS_URL = 'https://catfact.ninja/fact'
+CAT_FACTS_URL = "https://catfact.ninja/fact"
 
 
 # Global variables
 # Your Webex Teams webhook should point to http://<serverip>:8080/events
-urls = ('/events', 'webhook')
+urls = ("/events", "webhook")
 # Create the web application instance
 app = web.application(urls, globals())
 # Create the Webex Teams API connection object
@@ -90,7 +90,7 @@ def get_catfact():
     response = requests.get(CAT_FACTS_URL, verify=False)
     response.raise_for_status()
     json_data = response.json()
-    return json_data['fact']
+    return json_data["fact"]
 
 
 class webhook(object):
@@ -120,7 +120,7 @@ class webhook(object):
         me = api.people.me()
         if message.personId == me.id:
             # Message was sent by me (bot); do not respond.
-            return 'OK'
+            return "OK"
         else:
             # Message was sent by someone else; parse message and respond.
             if "/CAT" in message.text:
@@ -130,9 +130,9 @@ class webhook(object):
                 print("SENDING CAT FACT '{}'".format(cat_fact))
                 # Post the fact to the room where the request was received
                 api.messages.create(room.id, text=cat_fact)
-        return 'OK'
+        return "OK"
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Start the web.py web server
     app.run()

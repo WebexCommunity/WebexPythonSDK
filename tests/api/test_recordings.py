@@ -50,7 +50,9 @@ def are_valid_recording(iterable):
 # Fixtures
 @pytest.fixture(scope="session")
 def list_recordings(api):
-    return list(api.recordings.list(_from=from_datetime_string, to=to_datetime_string))
+    return list(
+        api.recordings.list(_from=from_datetime_string, to=to_datetime_string)
+    )
 
 
 @pytest.fixture(scope="session")

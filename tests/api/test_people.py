@@ -31,6 +31,7 @@ import webexteamssdk
 
 # Helper Functions
 
+
 def get_person_by_email(api, email):
     list_of_people = list(api.people.list(email=email))
     if list_of_people:
@@ -60,6 +61,7 @@ def are_valid_people(iterable):
 
 
 # Fixtures
+
 
 @pytest.fixture(scope="session")
 def me(api):
@@ -174,6 +176,7 @@ def people_in_group_room(api, group_room_memberships):
 
 # Tests
 
+
 def test_list_people_by_email(api, test_people):
     email = test_people["not_a_member"].emails[0]
     list_of_people = list(api.people.list(email=email))
@@ -196,8 +199,9 @@ def test_list_people_by_id(api, test_people):
 
 
 @pytest.mark.xfail  # TODO: Resolve test account issues
-def test_list_people_with_paging(api, test_people,
-                                 additional_group_room_memberships):
+def test_list_people_with_paging(
+    api, test_people, additional_group_room_memberships
+):
     page_size = 1
     pages = 3
     num_people = pages * page_size

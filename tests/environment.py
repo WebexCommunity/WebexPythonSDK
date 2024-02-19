@@ -48,9 +48,13 @@ if WEBEX_TEAMS_TEST_FILE_URL is None:
     )
 
 WEBEX_TEAMS_TEST_STRING_PREFIX = os.getenv(
-    "WEBEX_TEAMS_TEST_STRING_PREFIX", default="webexteamssdk py.test",
+    "WEBEX_TEAMS_TEST_STRING_PREFIX",
+    default="webexteamssdk py.test",
 )
 
-WEBEX_TEAMS_TEST_STRING_TEMPLATE = string.Template(os.getenv(
-    "WEBEX_TEAMS_TEST_STRING_TEMPLATE", default="$prefix $item [$datetime]",
-))
+WEBEX_TEAMS_TEST_STRING_TEMPLATE = string.Template(
+    os.getenv(
+        "WEBEX_TEAMS_TEST_STRING_TEMPLATE",
+        default="$prefix $item [$datetime]",
+    )
+)

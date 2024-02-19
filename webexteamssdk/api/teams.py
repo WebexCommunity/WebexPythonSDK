@@ -42,8 +42,8 @@ from ..utils import (
 )
 
 
-API_ENDPOINT = 'teams'
-OBJECT_TYPE = 'team'
+API_ENDPOINT = "teams"
+OBJECT_TYPE = "team"
 
 
 class TeamsAPI(object):
@@ -163,7 +163,7 @@ class TeamsAPI(object):
         check_type(teamId, basestring)
 
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/' + teamId)
+        json_data = self._session.get(API_ENDPOINT + "/" + teamId)
 
         # Return a team object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -194,8 +194,9 @@ class TeamsAPI(object):
         )
 
         # API request
-        json_data = self._session.put(API_ENDPOINT + '/' + teamId,
-                                      json=put_data)
+        json_data = self._session.put(
+            API_ENDPOINT + "/" + teamId, json=put_data
+        )
 
         # Return a team object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -214,4 +215,4 @@ class TeamsAPI(object):
         check_type(teamId, basestring)
 
         # API request
-        self._session.delete(API_ENDPOINT + '/' + teamId)
+        self._session.delete(API_ENDPOINT + "/" + teamId)

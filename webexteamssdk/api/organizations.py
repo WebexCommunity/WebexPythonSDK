@@ -39,8 +39,8 @@ from webexteamssdk.restsession import RestSession
 from webexteamssdk.utils import check_type, dict_from_items_with_values
 
 
-API_ENDPOINT = 'organizations'
-OBJECT_TYPE = 'organization'
+API_ENDPOINT = "organizations"
+OBJECT_TYPE = "organization"
 
 
 class OrganizationsAPI(object):
@@ -88,8 +88,7 @@ class OrganizationsAPI(object):
         """
         # API request - get items
         items = self._session.get_items(
-            API_ENDPOINT,
-            params=request_parameters
+            API_ENDPOINT, params=request_parameters
         )
 
         # Yield organization objects created from the returned JSON objects
@@ -114,7 +113,7 @@ class OrganizationsAPI(object):
         check_type(orgId, basestring)
 
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/' + orgId)
+        json_data = self._session.get(API_ENDPOINT + "/" + orgId)
 
         # Return a organization object created from the returned JSON object
         return self._object_factory(OBJECT_TYPE, json_data)

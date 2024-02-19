@@ -42,8 +42,8 @@ from ..utils import (
 )
 
 
-API_ENDPOINT = 'team/memberships'
-OBJECT_TYPE = 'team_membership'
+API_ENDPOINT = "team/memberships"
+OBJECT_TYPE = "team_membership"
 
 
 class TeamMembershipsAPI(object):
@@ -119,8 +119,14 @@ class TeamMembershipsAPI(object):
         for item in items:
             yield self._object_factory(OBJECT_TYPE, item)
 
-    def create(self, teamId, personId=None, personEmail=None,
-               isModerator=False, **request_parameters):
+    def create(
+        self,
+        teamId,
+        personId=None,
+        personEmail=None,
+        isModerator=False,
+        **request_parameters
+    ):
         """Add someone to a team by Person ID or email address.
 
         Add someone to a team by Person ID or email address; optionally making
@@ -180,7 +186,7 @@ class TeamMembershipsAPI(object):
         check_type(membershipId, basestring)
 
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/' + membershipId)
+        json_data = self._session.get(API_ENDPOINT + "/" + membershipId)
 
         # Return a team membership object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -212,8 +218,9 @@ class TeamMembershipsAPI(object):
         )
 
         # API request
-        json_data = self._session.put(API_ENDPOINT + '/' + membershipId,
-                                      json=put_data)
+        json_data = self._session.put(
+            API_ENDPOINT + "/" + membershipId, json=put_data
+        )
 
         # Return a team membership object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -232,4 +239,4 @@ class TeamMembershipsAPI(object):
         check_type(membershipId, basestring)
 
         # API request
-        self._session.delete(API_ENDPOINT + '/' + membershipId)
+        self._session.delete(API_ENDPOINT + "/" + membershipId)

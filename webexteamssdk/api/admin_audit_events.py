@@ -39,8 +39,8 @@ from webexteamssdk.restsession import RestSession
 from webexteamssdk.utils import check_type, dict_from_items_with_values
 
 
-API_ENDPOINT = 'adminAudit/events'
-OBJECT_TYPE = 'admin_audit_event'
+API_ENDPOINT = "adminAudit/events"
+OBJECT_TYPE = "admin_audit_event"
 
 
 class AdminAuditEventsAPI(object):
@@ -70,8 +70,16 @@ class AdminAuditEventsAPI(object):
         self._object_factory = object_factory
 
     @generator_container
-    def list(self, orgId, _from, to, actorId=None, max=100, offset=0,
-             **request_parameters):
+    def list(
+        self,
+        orgId,
+        _from,
+        to,
+        actorId=None,
+        max=100,
+        offset=0,
+        **request_parameters
+    ):
         """List Organizations.
 
         This method supports Webex Teams's implementation of RFC5988 Web

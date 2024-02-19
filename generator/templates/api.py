@@ -42,14 +42,14 @@ from ..utils import (
 )
 
 
-API_ENDPOINT = '{{ endpoint }}'
-OBJECT_TYPE = '{{ object_type }}'
+API_ENDPOINT = "{{ endpoint }}"
+OBJECT_TYPE = "{{ object_type }}"
 
 
 class {{ name }}sAPI(object):
-    """Webex {{ name }}s API.
+    """Webex {{ name }}s API.
 
-    Wraps the Webex {{ name }}s API and exposes the API as native Python
+    Wraps the Webex {{ name }}s API and exposes the API as native Python
     methods that return native Python objects.
 
     """
@@ -67,19 +67,19 @@ class {{ name }}sAPI(object):
         """
         check_type(session, RestSession)
 
-        super({{name }}sAPI, self).__init__()
+        super({{ name }}sAPI, self).__init__()
 
         self._session = session
         self._object_factory = object_factory
     {% if "list" in methods %}
     @generator_container
     def list(self, {% for qp in query_parameters -%}
-                    {{ qp['name'] }}{% if qp['optional'] %}=None{% endif %},
+                    {{ qp["name"] }}{% if qp["optional"] %}=None{% endif %},
                    {% endfor -%}
             headers={},
              **request_parameters):
 
-        """List {{ object_type }}s.
+        """List {{ object_type }}s.
 
         Use query parameters to filter the response.
 
@@ -95,7 +95,7 @@ class {{ name }}sAPI(object):
 
         Args:
             {% for qp in query_parameters -%}
-            {{ qp['name'] }} ({{ qp['type']}}): {{ qp['description']}}
+            {{ qp['name'] }} ({{ qp['type']}}): {{ qp['description']}}
             {% endfor -%}
             headers(dict): Additional headers to be passed.
             **request_parameters: Additional request parameters (provides
@@ -103,7 +103,7 @@ class {{ name }}sAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-            yields the {{ object_type }}s returned by the Webex query.
+            yields the {{ object_type }}s returned by the Webex query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -111,19 +111,19 @@ class {{ name }}sAPI(object):
 
         """
         {% for qp in query_parameters -%}
-        check_type({{ qp['name'] }}, {{ qp['type'] }}{% if qp['optional'] %}, optional=True{% endif %})
+        check_type({{ qp['name'] }}, {{ qp['type'] }}{% if qp['optional'] %}, optional=True{% endif %})
         {% endfor %}
 
         params = dict_from_items_with_values(
             request_parameters,
-            {% for qp in query_parameters -%} 
-            {{ qp['name'] }}={{ qp['name'] }},
+            {% for qp in query_parameters -%}
+            {{ qp['name'] }}={{ qp['name'] }},
             {% endfor %}
         )
         {% for qp in query_parameters -%}
         {% if qp['requestName'] %}
         if {{ qp['name'] }}:
-            params['{{qp['requestName']}}'] = params.pop("{{ qp['name'] }}")
+            params['{{qp['requestName']}}'] = params.pop("{{ qp['name'] }}")
         {% endif %}
         {%- endfor %}
         # API request - get items
@@ -144,20 +144,20 @@ class {{ name }}sAPI(object):
     {% if "create" in methods %}
     def create(self, {% for cp in create_parameters -%}
                      {{ cp['name'] }}{% if cp['optional'] %}=None{% endif %},
-                     {% endfor -%} 
-    
+                     {% endfor -%}
+
                     **request_parameters):
-        """Create a {{ object_type }}.
+        """Create a {{ object_type }}.
 
         Args:
             {% for cp in create_parameters -%}
-            {{ cp['name'] }} ({{ cp['type']}}): {{ cp['description']}}
+            {{ cp['name'] }} ({{ cp['type'] }}): {{ cp['description'] }}
             {% endfor -%}
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
         Returns:
-            {{ name }}: A {{ name }} object with the details of the created
+            {{ name }}: A {{ name }} object with the details of the created
             {{ object_type }}.
 
         Raises:
@@ -166,19 +166,19 @@ class {{ name }}sAPI(object):
 
         """
         {% for cp in create_parameters -%}
-        check_type({{ cp['name'] }}, {{ cp['type'] }}{% if cp['optional'] %}, optional=True{% endif %})
+        check_type({{ cp['name'] }}, {{ cp['type'] }}{% if cp['optional'] %}, optional=True{% endif %})
         {% endfor %}
         post_data = dict_from_items_with_values(
             request_parameters,
-            {% for cp in create_parameters -%} 
-            {{ cp['name'] }}={{ cp['name'] }},
+            {% for cp in create_parameters -%}
+            {{ cp['name'] }}={{ cp['name'] }},
             {% endfor %}
         )
 
         {% for cp in create_parameters -%}
         {% if cp['requestName'] %}
         if {{ cp['name'] }}:
-            post_data['{{cp['requestName']}}'] = post_data.pop("{{ cp['name'] }}")
+            post_data['{{cp['requestName']}}'] = post_data.pop("{{ cp['name'] }}")
         {% endif %}
         {%- endfor %}
         # API request
@@ -190,24 +190,24 @@ class {{ name }}sAPI(object):
 
     {% if "get" in methods %}
     def get(self, {{ object_type }}Id):
-        """Get details for a {{ object_type }}, by ID.
+        """Get details for a {{ object_type }}, by ID.
 
         Args:
-            {{ object_type }}Id(basestring): The {{ object_type }} ID.
+            {{ object_type }}Id(basestring): The {{ object_type }} ID.
 
         Returns:
-            {{ name }}: A {{ name }} object with the details of the requested
-            {{ object_type }}.
+            {{ name }}: A {{ name }} object with the details of the requested
+            {{ object_type }}.
 
         Raises:
             TypeError: If the parameter types are incorrect.
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type({{ object_type }}Id, basestring)
+        check_type({{ object_type }}Id, basestring)
 
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/' + {{ object_type }}Id)
+        json_data = self._session.get(API_ENDPOINT + '/' + {{ object_type }}Id)
 
         # Return a membership object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -232,56 +232,56 @@ class {{ name }}sAPI(object):
     {% endif %}
 
     {% if "update" in methods %}
-    def update(self, {{ object_type }}Id,
+    def update(self, {{ object_type }}Id,
                      {% for up in update_parameters -%}
                      {{ up['name'] }}{% if up['optional'] %}=None{% endif %},
-                     {% endfor -%} 
-    
+                     {% endfor -%}
+
                      **request_parameters):
-        """Update properties for a {{ object_type }}, by ID.
+        """Update properties for a {{ object_type }}, by ID.
 
         Args:
-            {{ object_type }}Id(basestring): The {{ object_type }} ID.
+            {{ object_type }}Id(basestring): The {{ object_type }} ID.
             {% for up in update_parameters -%}
-            {{ up['name'] }} ({{ up['type']}}): {{ up['description']}}
-            {% endfor -%} 
+            {{ up['name'] }} ({{ up['type']}}): {{ up['description']}}
+            {% endfor -%}
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
         Returns:
-            {{ name }}: A {{ name }} object with the updated Webex
-            {{ object_type }} details.
+            {{ name }}: A {{ name }} object with the updated Webex
+            {{ object_type }} details.
 
         Raises:
             TypeError: If the parameter types are incorrect.
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type({{ object_type }}Id, basestring)
+        check_type({{ object_type }}Id, basestring)
         {% for up in update_parameters -%}
-        check_type({{ up['name'] }}, {{ up['type'] }}{% if up['optional'] %}, optional=True{% endif %})
+        check_type({{ up['name'] }}, {{ up['type'] }}{% if up['optional'] %}, optional=True{% endif %})
         {% endfor %}
         put_data = dict_from_items_with_values(
             request_parameters,
-            {% for up in update_parameters -%} 
-            {{ up['name'] }}={{ up['name'] }},
+            {% for up in update_parameters -%}
+            {{ up['name'] }}={{ up['name'] }},
             {% endfor %}
         )
 
         {% for up in update_parameters -%}
         {% if up['requestName'] %}
         if {{ up['name'] }}:
-            put_data['{{up['requestName']}}'] = put_data.pop("{{ up['name'] }}")
+            put_data['{{up['requestName']}}'] = put_data.pop("{{ up['name'] }}")
         {% endif %}
         {%- endfor %}
 
         # API request
-        json_data = self._session.put(API_ENDPOINT + '/' + {{ object_type }}Id,
+        json_data = self._session.put(API_ENDPOINT + '/' + {{ object_type }}Id,
                                       json=put_data)
 
         # Return a membership object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
     {% endif %}
     {% if additional_code %}
-    {{ additional_code }}
+    {{ additional_code }}
     {% endif %}

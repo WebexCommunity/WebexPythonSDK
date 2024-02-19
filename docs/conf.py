@@ -4,49 +4,48 @@ import os
 import sys
 
 
-sys.path.insert(0, os.path.abspath('..'))
+sys.path.insert(0, os.path.abspath(".."))
 
 
 from webexteamssdk._version import get_versions
 
 
-project = u'webexteamssdk'
-copyright = u'Copyright (c) 2016-2020 Cisco and/or its affiliates.'
-author = u'Chris Lunsford'
-version = get_versions()['version']
-release = get_versions()['version']
+project = "webexteamssdk"
+copyright = "Copyright (c) 2016-2020 Cisco and/or its affiliates."
+author = "Chris Lunsford"
+version = get_versions()["version"]
+release = get_versions()["version"]
 language = None
 
 
 extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.doctest',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.todo',
-    'sphinx.ext.coverage',
-    'sphinx.ext.viewcode',
-    'sphinx.ext.napoleon',
+    "sphinx.ext.autodoc",
+    "sphinx.ext.doctest",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.todo",
+    "sphinx.ext.coverage",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.napoleon",
 ]
 
 
-master_doc = 'index'
-source_suffix = '.rst'
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-templates_path = ['_templates']
-pygments_style = 'sphinx'
+master_doc = "index"
+source_suffix = ".rst"
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+templates_path = ["_templates"]
+pygments_style = "sphinx"
 
 
 add_module_names = False
-autodoc_member_order = 'bysource'
+autodoc_member_order = "bysource"
 # autodoc_default_flags = ['members', 'undoc-members']
 autodoc_default_options = {
-    'members': None,
-    'undoc-members': None,
+    "members": None,
+    "undoc-members": None,
 }
 
 
 todo_include_todos = True
-
 
 
 # -- Options for HTML output ----------------------------------------------
@@ -54,21 +53,20 @@ todo_include_todos = True
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-#html_theme = 'alabaster'
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+# html_theme = 'alabaster'
+on_rtd = os.environ.get("READTHEDOCS", None) == "True"
 
 if not on_rtd:
     import sphinx_rtd_theme
-    html_theme = 'sphinx_rtd_theme'
+
+    html_theme = "sphinx_rtd_theme"
     html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-html_theme_options = {
-    'collapse_navigation': False
-}
+html_theme_options = {"collapse_navigation": False}
 
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
@@ -176,36 +174,37 @@ html_theme_options = {
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'webexteamssdkdoc'
-
+htmlhelp_basename = "webexteamssdkdoc"
 
 
 # -- Options for LaTeX output ---------------------------------------------
 
 latex_elements = {
-     # The paper size ('letterpaper' or 'a4paper').
-     #
-     # 'papersize': 'letterpaper',
-
-     # The font size ('10pt', '11pt' or '12pt').
-     #
-     # 'pointsize': '10pt',
-
-     # Additional stuff for the LaTeX preamble.
-     #
-     # 'preamble': '',
-
-     # Latex figure (float) alignment
-     #
-     # 'figure_align': 'htbp',
+    # The paper size ('letterpaper' or 'a4paper').
+    #
+    # 'papersize': 'letterpaper',
+    # The font size ('10pt', '11pt' or '12pt').
+    #
+    # 'pointsize': '10pt',
+    # Additional stuff for the LaTeX preamble.
+    #
+    # 'preamble': '',
+    # Latex figure (float) alignment
+    #
+    # 'figure_align': 'htbp',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'webexteamssdk.tex', u'webexteamssdk Documentation',
-     u'Chris Lunsford', 'manual'),
+    (
+        master_doc,
+        "webexteamssdk.tex",
+        "webexteamssdk Documentation",
+        "Chris Lunsford",
+        "manual",
+    ),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -241,20 +240,17 @@ latex_documents = [
 # latex_domain_indices = True
 
 
-
 # -- Options for manual page output ---------------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'webexteamssdk', u'webexteamssdk Documentation',
-     [author], 1)
+    (master_doc, "webexteamssdk", "webexteamssdk Documentation", [author], 1)
 ]
 
 # If true, show URL addresses after external links.
 #
 # man_show_urls = False
-
 
 
 # -- Options for Texinfo output -------------------------------------------
@@ -263,9 +259,15 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'webexteamssdk', u'webexteamssdk Documentation',
-     author, 'webexteamssdk', 'One line description of project.',
-     'Miscellaneous'),
+    (
+        master_doc,
+        "webexteamssdk",
+        "webexteamssdk Documentation",
+        author,
+        "webexteamssdk",
+        "One line description of project.",
+        "Miscellaneous",
+    ),
 ]
 
 # Documents to append as an appendix to all manuals.
@@ -286,4 +288,4 @@ texinfo_documents = [
 
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/': None}
+intersphinx_mapping = {"https://docs.python.org/": None}

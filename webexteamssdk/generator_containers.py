@@ -68,9 +68,7 @@ class GeneratorContainer(object):
 
         if sys.version_info[0] < 3:
             self.arguments = inspect.getcallargs(
-                self.generator_function,
-                *args,
-                **kwargs
+                self.generator_function, *args, **kwargs
             )
         else:
             signature = inspect.signature(self.generator_function)
@@ -79,10 +77,10 @@ class GeneratorContainer(object):
 
     def __repr__(self):
         """A string representation of this object."""
-        return '<GeneratorContainer {func_name}({arguments})>'.format(
+        return "<GeneratorContainer {func_name}({arguments})>".format(
             func_name=self.generator_function.__name__,
             arguments=", ".join(
-                str(key) + '=' + repr(value)
+                str(key) + "=" + repr(value)
                 for key, value in self.arguments.items()
             ),
         )
@@ -125,7 +123,7 @@ class GeneratorContainer(object):
         """
         if isinstance(item, slice):
             arguments = self.arguments.copy()
-            arguments.setdefault('max', item.stop)
+            arguments.setdefault("max", item.stop)
             return islice(
                 self.generator_function(**arguments),
                 item.start,
@@ -133,8 +131,10 @@ class GeneratorContainer(object):
                 item.step,
             )
         else:
-            raise IndexError("GeneratorContainers support slicing only. "
-                             "Indexing is not supported.")
+            raise IndexError(
+                "GeneratorContainers support slicing only. "
+                "Indexing is not supported."
+            )
 
 
 def generator_container(generator_function):

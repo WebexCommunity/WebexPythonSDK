@@ -38,6 +38,7 @@ class AdaptiveCardComponent:
       This includes lists of items (i.e. the 'body' field of the adaptive card)
       or single objects that also inherit from Serializable
     """
+
     def __init__(self, serializable_properties, simple_properties):
         """Initialize a serializable object.
 

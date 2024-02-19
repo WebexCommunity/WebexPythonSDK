@@ -29,6 +29,7 @@ import webexteamssdk
 
 # Helper Functions
 
+
 def is_valid_license(obj):
     return isinstance(obj, webexteamssdk.License) and obj.id is not None
 
@@ -38,6 +39,7 @@ def are_valid_licenses(iterable):
 
 
 # Fixtures
+
 
 @pytest.fixture(scope="session")
 def licenses_list(api, me):
@@ -50,6 +52,7 @@ def licenses_dict(licenses_list):
 
 
 # Tests
+
 
 def test_list_licenses(licenses_list):
     assert are_valid_licenses(licenses_list)
