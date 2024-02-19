@@ -69,7 +69,7 @@ def new_email_generator():
 # pytest Fixtures
 
 
-@pytest.fixture("session")
+@pytest.fixture(scope="session")
 def temp_directory():
     directory_abs_path = tempfile.mkdtemp()
 
@@ -78,7 +78,7 @@ def temp_directory():
     os.rmdir(directory_abs_path)
 
 
-@pytest.fixture("session")
+@pytest.fixture(scope="session")
 def local_file(temp_directory):
     file = download_file(WEBEX_TEAMS_TEST_FILE_URL, temp_directory)
 
