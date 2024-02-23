@@ -1,0 +1,135 @@
+name: MeetingRegistrant
+endpoint: meetings/{meetingId}/registrants
+object_type: meetingRegistrant
+methods:
+  - list
+  - get
+  - create
+  - delete
+url_parameters:
+  - name: meetingId
+    description: Unique identifier for the meeting.
+    type: basestring
+query_parameters:
+  - name: max
+    description: Limit the maximum number of registrants in the response, up to 100.
+    optional: True
+    type: int
+  - name: hostEmail
+    description: Email address for the meeting host.
+    optional: True
+    type: basestring
+  - name: current
+    description: Whether or not to retrieve only the current scheduled meeting of the meeting series, i.e. the meeting ready to join or start or the upcoming meeting of the meeting series.
+    optional: True
+    type: bool
+  - name: email
+    description: Registrant's email to filter registrants.
+    optional: True
+    type: basestring
+  - name: registrationTimeFrom
+    description: The time registrants register a meeting starts from the specified date and time (inclusive) in any ISO 8601 compliant format.
+    optional: True
+    type: basestring
+  - name: registrationTimeTo
+    description: The time registrants register a meeting before the specified date and time (exclusive) in any ISO 8601 compliant format.
+    optional: True
+    type: basestring
+list:
+  properties:
+    - name: registrantId
+      description: New registrant's ID.
+      type: basestring
+    - name: status
+      description: New registrant's status.
+      type: basestring
+    - name: firstName
+      description: Registrant's first name.
+      type: basestring
+    - name: lastName
+      description: Registrant's last name.
+      type: basestring
+    - name: email
+      description: Registrant's email.
+      type: basestring
+    - name: jobTitle
+      description: Registrant's job title.
+      type: basestring
+    - name: companyName
+      description: Registrant's company.
+      type: basestring
+    - name: address1
+      description: Registrant's first address line.
+      type: basestring
+    - name: address2
+      description: Registrant's second address line.
+      type: basestring
+    - name: city
+      description: Registrant's city name.
+      type: basestring
+    - name: state
+      description: Registrant's state.
+      type: basestring
+    - name: zipCode
+      description: Registrant's postal code.
+      type: int
+    - name: countryRegion
+      description: Registrant's country or region.
+      type: basestring
+    - name: workPhone
+      description: Registrant's work phone number.
+      type: basestring
+    - name: fax
+      description: Registrant's FAX number.
+      type: basestring
+    - name: registrationTime
+      description: Registrant's registration time.
+      type: basestring
+    - name: customizedQuestions
+      description: List of registrant's answers for customized questions,
+      type: list
+    - name: sourceId
+      description: Registrant's source id.
+      type: basestring
+    - name: registrationId
+      description: Registrant's registration ID.
+      type: basestring
+
+create:
+  required:
+    - firstName
+    - lastName
+    - email
+  optional:
+    - name: sendEmail
+      description: If true send email to the registrant.
+      type: bool
+    - jobTitle
+    - address1
+    - address2
+    - city
+    - state
+    - zipCode
+    - countryRegion
+    - workPhone
+    - fax
+    - customizedQuestions
+update:
+  # required:
+  optional:
+    - firstName
+    - lastName
+    - email
+    - name: sendEmail
+      description: If true send email to the registrant.
+      type: bool
+    - jobTitle
+    - address1
+    - address2
+    - city
+    - state
+    - zipCode
+    - countryRegion
+    - workPhone
+    - fax
+    - customizedQuestions
