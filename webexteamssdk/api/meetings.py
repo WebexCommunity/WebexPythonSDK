@@ -71,7 +71,7 @@ class MeetingsAPI(object):
 
         self._session = session
         self._object_factory = object_factory
-
+    
     @generator_container
     def list(self, meetingNumber=None,
                    webLink=None,
@@ -170,12 +170,14 @@ class MeetingsAPI(object):
         if from_:
             params['from'] = params.pop("from_")
         
+        request_url = API_ENDPOINT
+        
         # API request - get items
 
         # Update headers
         for k, v in headers.items():
             self._session.headers[k] = v
-        items = self._session.get_items(API_ENDPOINT, params=params)
+        items = self._session.get_items(request_url, params=params)
 
         # Remove headers
         for k, v in headers.items():
@@ -184,7 +186,8 @@ class MeetingsAPI(object):
         # Yield membership objects created from the returned items JSON objects
         for item in items:
             yield self._object_factory(OBJECT_TYPE, item)
-
+    
+    
     def create(self, title,
                      start,
                      end,
@@ -348,12 +351,16 @@ class MeetingsAPI(object):
         )
 
         
+        request_url = API_ENDPOINT
+        
         # API request
-        json_data = self._session.post(API_ENDPOINT, json=post_data)
+        json_data = self._session.post(request_url, json=post_data)
 
         # Return a membership object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
+    
 
+    
     def get(self, meetingId):
         """Get details for a meeting, by ID.
 
@@ -370,13 +377,16 @@ class MeetingsAPI(object):
 
         """
         check_type(meetingId, basestring)
-
+        request_url = API_ENDPOINT
+        
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/' + meetingId)
+        json_data = self._session.get(request_url + '/' + meetingId)
 
         # Return a membership object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
+    
 
+    
     def delete(self, meetingId):
         """Delete a meeting, by ID.
 
@@ -389,10 +399,13 @@ class MeetingsAPI(object):
 
         """
         check_type(meetingId, basestring)
-
+        request_url = API_ENDPOINT
+        
         # API request
-        self._session.delete(API_ENDPOINT + '/' + meetingId)
+        self._session.delete(request_url + '/' + meetingId)
+    
 
+    
     def update(self, meetingId,
                      title,
                      password,
@@ -537,12 +550,14 @@ class MeetingsAPI(object):
             enabledBreakoutSessions=enabledBreakoutSessions,
             
         )
-
         
-
+        request_url = API_ENDPOINT
+        
         # API request
-        json_data = self._session.put(API_ENDPOINT + '/' + meetingId,
+        json_data = self._session.put(request_url + '/' + meetingId,
                                       json=put_data)
 
         # Return a membership object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
+    
+    

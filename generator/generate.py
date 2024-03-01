@@ -79,6 +79,7 @@ def render_api_class(env: Environment,
     out = tpl.render(name=descr['name'],
                     endpoint=descr['endpoint'],
                     object_type=descr['object_type'],
+                    url_parameters=descr['url_parameters'],
                     query_parameters=descr['query_parameters'],
                     create_parameters=create_parameters,
                     update_parameters=update_parameters,
@@ -137,6 +138,10 @@ def main():
                 raise MissingKeyError(f"Missing required key '{key}'")
             else:
                 d = d.get(sub_key)
+    
+    # Add empty url_parameters key if there are no URL parameters defined
+    if 'url_parameters' not in descr.keys():
+        descr['url_parameters'] = []
 
     mixin_path = render_prop_mixin(env=env, 
                                    name=descr['name'],

@@ -34,7 +34,7 @@ from builtins import *
 
 
 class MeetingBasicPropertiesMixin(object):
-    """Meeting basic properties."""
+    """Meeting basic properties."""
     
     @property
     def id(self):
