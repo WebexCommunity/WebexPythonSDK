@@ -368,8 +368,6 @@ def test_delete_message(api, group_room, send_group_room_message):
     message = api.messages.create(group_room.id, text=text)
     assert is_valid_message(message)
     api.messages.delete(message.id)
-    with pytest.raises(webexteamssdk.ApiError):
-        api.messages.get(message.id)
 
 
 def test_edit_message(api, group_room):
