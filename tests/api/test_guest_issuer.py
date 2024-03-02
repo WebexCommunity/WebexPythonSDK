@@ -34,6 +34,16 @@ WEBEX_TEAMS_GUEST_ISSUER_SECRET = os.environ.get(
     "WEBEX_TEAMS_GUEST_ISSUER_SECRET"
 )
 
+if not WEBEX_TEAMS_GUEST_ISSUER_ID:
+    raise ValueError(
+        "The WEBEX_TEAMS_GUEST_ISSUER_ID environment variable must be set."
+    )
+
+if not WEBEX_TEAMS_GUEST_ISSUER_SECRET:
+    raise ValueError(
+        "The WEBEX_TEAMS_GUEST_ISSUER_SECRET environment variable must be set."
+    )
+
 
 # Helper Functions
 
@@ -56,4 +66,5 @@ def test_get_guest_issuer_token(api):
         exp=str(int(time.time()) + TOKEN_EXPIRATION_SECONDS),
         secret=WEBEX_TEAMS_GUEST_ISSUER_SECRET,
     )
+
     assert is_valid_guest_issuer_token(guest_issuer_token)
