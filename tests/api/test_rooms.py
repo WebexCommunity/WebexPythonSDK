@@ -61,6 +61,18 @@ def group_room(api):
 
 
 @pytest.fixture(scope="session")
+def moderated_group_room(api):
+    room = api.rooms.create(
+        title=create_string("Moderated Group Room"),
+        isLocked=True,
+    )
+
+    yield room
+
+    api.rooms.delete(room.id)
+
+
+@pytest.fixture(scope="session")
 def direct_rooms(api, direct_messages):
     return [api.rooms.get(message.roomId) for message in direct_messages]
 
