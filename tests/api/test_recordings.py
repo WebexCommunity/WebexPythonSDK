@@ -24,18 +24,14 @@ SOFTWARE.
 
 import itertools
 import os
+from datetime import timedelta, timezone
 
 import pytest
 
 import webexteamssdk
 
-from_datetime_string = str(
-    webexteamssdk.WebexTeamsDateTime(2022, 1, 1, 0, 0, 0, 0),
-)
-
-to_datetime_string = str(
-    webexteamssdk.WebexTeamsDateTime.utcnow(),
-)
+to_datetime = webexteamssdk.WebexTeamsDateTime.now(tz=timezone.utc)
+from_datetime = to_datetime - timedelta(days=364)
 
 
 # Helper Functions
@@ -51,7 +47,7 @@ def are_valid_recording(iterable):
 @pytest.fixture(scope="session")
 def list_recordings(api):
     return list(
-        api.recordings.list(_from=from_datetime_string, to=to_datetime_string)
+        api.recordings.list(_from=str(from_datetime), to=str(to_datetime))
     )
 
 

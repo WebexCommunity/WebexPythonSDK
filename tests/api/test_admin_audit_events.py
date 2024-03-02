@@ -23,20 +23,15 @@ SOFTWARE.
 """
 
 import itertools
-from datetime import timedelta
+from datetime import timedelta, timezone
 
 import pytest
 
 import webexteamssdk
 
 
-to_datetime_string = str(
-    webexteamssdk.WebexTeamsDateTime.utcnow(),
-)
-
-from_datetime_string = str(
-    webexteamssdk.WebexTeamsDateTime.utcnow() - timedelta(days=364),
-)
+to_datetime = webexteamssdk.WebexTeamsDateTime.now(tz=timezone.utc)
+from_datetime = to_datetime - timedelta(days=364)
 
 
 # Helper Functions
@@ -60,8 +55,8 @@ def admin_audit_events(api, me):
     three_events = list(
         api.admin_audit_events.list(
             orgId=me.orgId,
-            _from=from_datetime_string,
-            to=to_datetime_string,
+            _from=str(from_datetime),
+            to=str(to_datetime),
         )[:3]
     )
     assert len(three_events) == 3
@@ -89,8 +84,8 @@ def test_list_events_with_paging(api, me, admin_audit_events):
     assert len(admin_audit_events) >= num_events
     events_gen = api.admin_audit_events.list(
         orgId=me.orgId,
-        _from=from_datetime_string,
-        to=to_datetime_string,
+        _from=str(from_datetime),
+        to=str(to_datetime),
         max=page_size,
     )
     events_list = list(itertools.islice(events_gen, num_events))
