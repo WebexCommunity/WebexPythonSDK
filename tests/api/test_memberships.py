@@ -142,6 +142,17 @@ def additional_group_room_memberships(
 
 
 @pytest.fixture(scope="session")
+def additional_moderated_group_room_memberships(
+    membership_moderator_added_by_email,
+    membership_moderator_added_by_id,
+):
+    return [
+        membership_moderator_added_by_email,
+        membership_moderator_added_by_id,
+    ]
+
+
+@pytest.fixture(scope="session")
 def group_room_with_members(group_room, additional_group_room_memberships):
     return group_room
 

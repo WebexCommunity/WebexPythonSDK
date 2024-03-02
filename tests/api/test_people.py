@@ -193,21 +193,24 @@ def test_list_people_by_display_name(api, test_people):
 def test_list_people_by_id(api, test_people):
     person_id = test_people["not_a_member"].id
     list_of_people = list(api.people.list(id=person_id))
-    assert len(list_of_people) >= 1
+    assert len(list_of_people) == 1
     assert are_valid_people(list_of_people)
 
 
-@pytest.mark.xfail  # TODO: Resolve test account issues
 def test_list_people_with_paging(
-    api, test_people, additional_group_room_memberships
+    api,
+    test_people,
+    additional_group_room_memberships,
+    additional_moderated_group_room_memberships,
 ):
     page_size = 1
     pages = 3
     num_people = pages * page_size
     assert test_people.len() >= num_people
-    display_name = test_people["not_a_member"].displayName
-    people = api.people.list(displayName=display_name, max=page_size)
+
+    people = api.people.list(max=page_size)
     people_list = list(itertools.islice(people, num_people))
+
     assert len(people_list) == num_people
     assert are_valid_people(people_list)
 
