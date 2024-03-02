@@ -79,7 +79,7 @@ class RoomsAPI(object):
         type=None,
         sortBy=None,
         max=100,
-        **request_parameters
+        **request_parameters,
     ):
         """List rooms.
 
@@ -138,7 +138,17 @@ class RoomsAPI(object):
         for item in items:
             yield self._object_factory(OBJECT_TYPE, item)
 
-    def create(self, title, teamId=None, **request_parameters):
+    def create(
+        self,
+        title,
+        teamId=None,
+        classificationId=None,
+        isLocked=None,
+        isPublic=None,
+        description=None,
+        isAnnouncementOnly=None,
+        **request_parameters,
+    ):
         """Create a room.
 
         The authenticated user is automatically added as a member of the room.
@@ -147,6 +157,15 @@ class RoomsAPI(object):
             title(basestring): A user-friendly name for the room.
             teamId(basestring): The team ID with which this room is
                 associated.
+            classificationId(basestring): The classification ID for the room.
+            isLocked(bool): Set the space as locked/moderated and the creator
+                becomes a moderator.
+            isPublic(bool): The room is public and therefore discoverable
+                within the org. Anyone can find and join that room. When `true`
+                the description must be filled in.
+            description(basestring): The description of the space.
+            isAnnouncementOnly(bool): Sets the space into Announcement Mode or
+                clears the Announcement Mode (`false`).
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
@@ -158,8 +177,13 @@ class RoomsAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
-        check_type(title, basestring, optional=True)
+        check_type(title, basestring)
         check_type(teamId, basestring, optional=True)
+        check_type(classificationId, basestring, optional=True)
+        check_type(isLocked, bool, optional=True)
+        check_type(isPublic, bool, optional=True)
+        check_type(description, basestring, optional=True)
+        check_type(isAnnouncementOnly, bool, optional=True)
 
         post_data = dict_from_items_with_values(
             request_parameters,
@@ -221,12 +245,39 @@ class RoomsAPI(object):
         # Return a room meeting info object created from the response JSON data
         return self._object_factory("room_meeting_info", json_data)
 
-    def update(self, roomId, title, **request_parameters):
+    def update(
+        self,
+        roomId,
+        title,
+        classificationId=None,
+        teamId=None,
+        isLocked=None,
+        isPublic=None,
+        description=None,
+        isAnnouncementOnly=None,
+        isReadOnly=None,
+        **request_parameters,
+    ):
         """Update details for a room, by ID.
 
         Args:
             roomId(basestring): The room ID.
             title(basestring): A user-friendly name for the room.
+            classificationId(basestring): The classification ID for the room.
+            teamId(basestring): The teamId to which this space should be
+                assigned. Only unowned spaces can be assigned to a team.
+                Assignment between teams is unsupported.
+            isLocked(bool): Set the space as locked/moderated and the creator
+                becomes a moderator.
+            isPublic(bool): The room is public and therefore discoverable
+                within the org. Anyone can find and join that room. When `true`
+                the description must be filled in.
+            description(basestring): The description of the space.
+            isAnnouncementOnly(bool): Sets the space into Announcement Mode or
+                clears the Announcement Mode (`false`).
+            isReadOnly(bool): A compliance officer can set a direct room as
+                read-only, which will disallow any new information exchanges in
+                this space, while maintaining historical data.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
@@ -240,10 +291,24 @@ class RoomsAPI(object):
         """
         check_type(roomId, basestring)
         check_type(title, basestring)
+        check_type(classificationId, basestring, optional=True)
+        check_type(teamId, basestring, optional=True)
+        check_type(isLocked, bool, optional=True)
+        check_type(isPublic, bool, optional=True)
+        check_type(description, basestring, optional=True)
+        check_type(isAnnouncementOnly, bool, optional=True)
+        check_type(isReadOnly, bool, optional=True)
 
         put_data = dict_from_items_with_values(
             request_parameters,
             title=title,
+            classificationId=classificationId,
+            teamId=teamId,
+            isLocked=isLocked,
+            isPublic=isPublic,
+            description=description,
+            isAnnouncementOnly=isAnnouncementOnly,
+            isReadOnly=isReadOnly,
         )
 
         # API request
