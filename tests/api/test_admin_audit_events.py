@@ -23,18 +23,19 @@ SOFTWARE.
 """
 
 import itertools
+from datetime import timedelta
 
 import pytest
 
 import webexteamssdk
 
 
-from_datetime_string = str(
-    webexteamssdk.WebexTeamsDateTime(2018, 1, 1, 0, 0, 0, 0),
-)
-
 to_datetime_string = str(
     webexteamssdk.WebexTeamsDateTime.utcnow(),
+)
+
+from_datetime_string = str(
+    webexteamssdk.WebexTeamsDateTime.utcnow() - timedelta(days=364),
 )
 
 
@@ -81,7 +82,6 @@ def test_list_admin_audit_events_by_actor_id(api, admin_audit_events):
     assert all([event.actorId == actor_id for event in actor_events])
 
 
-@pytest.mark.xfail  # TODO: Returned link headers are malformed on the endpoint
 def test_list_events_with_paging(api, me, admin_audit_events):
     page_size = 1
     pages = 3
