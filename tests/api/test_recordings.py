@@ -62,14 +62,22 @@ def recording_id(api, list_recordings):
 
 
 # Tests
+# We cannot create recordings programmatically, so we cannot automate testing
+# of the Recordings API - we can only manually test the API after manually
+# creating recordings.
+
+
+@pytest.mark.manual
 def test_recording_list(list_recordings):
     assert len(list_recordings) > 0
     assert are_valid_recording(list_recordings)
 
 
+@pytest.mark.manual
 def test_recording_detail(recording_id):
     assert is_valid_recording(recording_id)
 
 
+@pytest.mark.manual
 def test_delete_recording(api, recording_id):
     api.recordings.delete(recording_id)
