@@ -24,6 +24,7 @@ SOFTWARE.
 
 import os
 import time
+import pytest
 
 import webexteamssdk
 
@@ -34,14 +35,11 @@ WEBEX_TEAMS_GUEST_ISSUER_SECRET = os.environ.get(
     "WEBEX_TEAMS_GUEST_ISSUER_SECRET"
 )
 
-if not WEBEX_TEAMS_GUEST_ISSUER_ID:
-    raise ValueError(
-        "The WEBEX_TEAMS_GUEST_ISSUER_ID environment variable must be set."
-    )
-
-if not WEBEX_TEAMS_GUEST_ISSUER_SECRET:
-    raise ValueError(
-        "The WEBEX_TEAMS_GUEST_ISSUER_SECRET environment variable must be set."
+if WEBEX_TEAMS_GUEST_ISSUER_ID is None or not WEBEX_TEAMS_GUEST_ISSUER_SECRET:
+    pytest.skip(
+        "Required WEBEX_TEAMS_GUEST_ISSUER_ID and/or "
+        "WEBEX_TEAMS_GUEST_ISSUER_SECRET environment variables are not set.",
+        allow_module_level=True,
     )
 
 
