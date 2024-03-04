@@ -29,11 +29,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import, absolute_import, division, division,
-    print_function, print_function, unicode_literals, unicode_literals,
-)
-
 from builtins import *
 
 import json

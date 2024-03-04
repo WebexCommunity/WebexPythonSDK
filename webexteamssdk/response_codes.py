@@ -23,14 +23,6 @@ SOFTWARE.
 """
 
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
-
-
 RESPONSE_CODES = {
     200: "Successful request with body content.",
     204: "Successful request without body content.",
