@@ -364,16 +364,20 @@ def test_get_message_by_id(api, group_room_text_message):
     message = api.messages.get(group_room_text_message.id)
     assert is_valid_message(message)
 
-
 def test_delete_message(api, group_room, send_group_room_message):
     text = create_string("Message")
     message = api.messages.create(group_room.id, text=text)
     assert is_valid_message(message)
     api.messages.delete(message.id)
 
-
 def test_edit_message(api, group_room):
     text = create_string("Edit this Message")
     message = api.messages.create(group_room.id, text=text)
     text = create_string("Message Edited")
+    assert text == api.messages.edit(message.id, group_room.id, text).text
+
+def test_update_message(api, group_room):
+    text = create_string("Update this Message")
+    message = api.messages.create(group_room.id, text=text)
+    text = create_string("Message Updated")
     assert text == api.messages.edit(message.id, group_room.id, text).text
