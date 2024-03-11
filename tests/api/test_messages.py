@@ -355,6 +355,24 @@ def test_get_message_by_id(api, group_room_text_message):
     assert is_valid_message(message)
 
 
+def test_update_message_by_id(api, group_room_text_message):
+    message = api.messages.update(
+        group_room_text_message.id, 
+        roomId=group_room_text_message.roomId,
+        text=group_room_text_message.text+" updated!"
+    )
+    assert is_valid_message(message)
+    assert message.text.endswith(" updated!")
+
+    message = api.messages.edit(
+        group_room_text_message.id, 
+        roomId=group_room_text_message.roomId,
+        text=group_room_text_message.text+" edited!"
+    )
+    assert is_valid_message(message)
+    assert message.text.endswith(" edited!")
+
+
 def test_delete_message(api, group_room, send_group_room_message):
     text = create_string("Message")
     message = api.messages.create(group_room.id, text=text)
