@@ -261,6 +261,7 @@ class Choices(AdaptiveCardComponent):
         super().__init__(
             serializable_properties=["choices"],
             simple_properties=[
+                "choices",
                 "id",
                 "type",
                 "isMultiSelect",
