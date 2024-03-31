@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from __future__ import (
     absolute_import,
     division,
@@ -80,7 +79,7 @@ class PeopleAPI(object):
         id=None,
         orgId=None,
         max=None,
-        **request_parameters
+        **request_parameters,
     ):
         """List people in your organization.
 
@@ -150,6 +149,9 @@ class PeopleAPI(object):
     def create(
         self,
         emails,
+        phoneNumbers=None,
+        extension=None,
+        locationId=None,
         displayName=None,
         firstName=None,
         lastName=None,
@@ -157,7 +159,15 @@ class PeopleAPI(object):
         orgId=None,
         roles=None,
         licenses=None,
-        **request_parameters
+        department=None,
+        manager=None,
+        managerId=None,
+        title=None,
+        addresses=None,
+        siteUrls=None,
+        callingData=None,
+        minResponse=None,
+        **request_parameters,
     ):
         """Create a new user account for a given organization
 
@@ -165,6 +175,9 @@ class PeopleAPI(object):
 
         Args:
             emails(`list`): Email address(es) of the person (list of strings).
+            phoneNumbers(`list`): Phone numbers for the person.
+            extension(basestring): Webex Calling extension of the person.
+            locationId(basestring): The ID of the location for this person.
             displayName(basestring): Full name of the person.
             firstName(basestring): First name of the person.
             lastName(basestring): Last name of the person.
@@ -176,6 +189,19 @@ class PeopleAPI(object):
             licenses(`list`): Licenses allocated to the person (list of
                 strings - containing the license IDs to be allocated to the
                 person).
+            department(basestring): The business department the user belongs
+                to.
+            manager(basestring): A manager identifier.
+            managerId(basestring): Person ID of the manager.
+            title(basestring): The person's title.
+            addresses(`list`): A person's addresses.
+            siteUrls(`list`): One or several site names where this user has an
+                attendee role.
+            callingData(bool): Include Webex Calling user details in the
+                response.
+            minResponse(bool): Set to true to improve performance by omitting
+                person details and returning only the ID in the response when
+                successful.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
@@ -188,6 +214,9 @@ class PeopleAPI(object):
 
         """
         check_type(emails, list)
+        check_type(phoneNumbers, list, optional=True)
+        check_type(extension, basestring, optional=True)
+        check_type(locationId, basestring, optional=True)
         check_type(displayName, basestring, optional=True)
         check_type(firstName, basestring, optional=True)
         check_type(lastName, basestring, optional=True)
@@ -195,10 +224,21 @@ class PeopleAPI(object):
         check_type(orgId, basestring, optional=True)
         check_type(roles, list, optional=True)
         check_type(licenses, list, optional=True)
+        check_type(department, basestring, optional=True)
+        check_type(manager, basestring, optional=True)
+        check_type(managerId, basestring, optional=True)
+        check_type(title, basestring, optional=True)
+        check_type(addresses, list, optional=True)
+        check_type(siteUrls, list, optional=True)
+        check_type(callingData, bool, optional=True)
+        check_type(minResponse, bool, optional=True)
 
         post_data = dict_from_items_with_values(
             request_parameters,
             emails=emails,
+            phoneNumbers=phoneNumbers,
+            extension=extension,
+            locationId=locationId,
             displayName=displayName,
             firstName=firstName,
             lastName=lastName,
@@ -206,10 +246,23 @@ class PeopleAPI(object):
             orgId=orgId,
             roles=roles,
             licenses=licenses,
+            department=department,
+            manager=manager,
+            managerId=managerId,
+            title=title,
+            addresses=addresses,
+            siteUrls=siteUrls,
+        )
+
+        params = dict_from_items_with_values(
+            callingData=callingData,
+            minResponse=minResponse,
         )
 
         # API request
-        json_data = self._session.post(API_ENDPOINT, json=post_data)
+        json_data = self._session.post(
+            API_ENDPOINT, params=params, json=post_data
+        )
 
         # Return a person object created from the returned JSON object
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -247,7 +300,7 @@ class PeopleAPI(object):
         orgId=None,
         roles=None,
         licenses=None,
-        **request_parameters
+        **request_parameters,
     ):
         """Update details for a person, by ID.
 

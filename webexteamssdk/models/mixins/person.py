@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from __future__ import (
     absolute_import,
     division,
@@ -48,9 +47,20 @@ class PersonBasicPropertiesMixin(object):
         """The email addresses of the person."""
         return self._json_data.get("emails")
 
+    @property
     def phoneNumbers(self):
         """Phone numbers for the person."""
         return self._json_data.get("phoneNumbers")
+
+    @property
+    def extension(self):
+        """The Webex Calling extension for the person."""
+        return self._json_data.get("extension")
+
+    @property
+    def locationId(self):
+        """The location ID for the person."""
+        return self._json_data.get("locationId")
 
     @property
     def displayName(self):
@@ -101,6 +111,31 @@ class PersonBasicPropertiesMixin(object):
         return self._json_data.get("licenses")
 
     @property
+    def department(self):
+        """The business department the user belongs to."""
+        return self._json_data.get("department")
+
+    @property
+    def manager(self):
+        """A manager identifier."""
+        return self._json_data.get("manager")
+
+    @property
+    def managerId(self):
+        """Person ID of the manager."""
+        return self._json_data.get("managerId")
+
+    @property
+    def title(self):
+        """The person's title."""
+        return self._json_data.get("title")
+
+    @property
+    def addresses(self):
+        """A person's addresses."""
+        return self._json_data.get("addresses")
+
+    @property
     def created(self):
         """The date and time the person was created."""
         created = self._json_data.get("created")
@@ -138,6 +173,25 @@ class PersonBasicPropertiesMixin(object):
             return None
 
     @property
+    def siteUrls(self):
+        """One or several site names where this user has a role."""
+        return self._json_data.get("siteUrls")
+
+    @property
+    def sipAddresses(self):
+        """The user's SIP addresses."""
+        return self._json_data.get("sipAddresses")
+
+    @property
+    def xmppFederationJid(self):
+        """XMPP federation identifier.
+
+        Identifier for intra-domain federation with other XMPP based messenger
+        systems.
+        """
+        return self._json_data.get("xmppFederationJid")
+
+    @property
     def status(self):
         """The current presence status of the person.
 
@@ -161,7 +215,7 @@ class PersonBasicPropertiesMixin(object):
 
             `presenting`: The user is sharing content
 
-            `unknown`: The user’s status could not be determined
+            `unknown`: The user's status could not be determined
         """
         return self._json_data.get("status")
 

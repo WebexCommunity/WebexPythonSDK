@@ -83,6 +83,8 @@ def get_test_person(api, get_new_email_address, me, licenses_dict):
                 lastName="webexteamssdk",
                 orgId=me.orgId,
                 licenses=[licenses_dict["Advanced Messaging"].id],
+                callingData=True,
+                minResponse=False,
             )
             return person
 
