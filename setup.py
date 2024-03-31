@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """webexteamssdk setup module."""
 
-
 import os
 from codecs import open
 
@@ -46,11 +45,14 @@ PACKAGE_CLASSIFIERS = [
     "Topic :: Communications :: Chat",
 ]
 
+# TODO: Review the the dependencies when releasing WebexPythonSDK v2
+# PyJWT should be updated to ^2.8.0. Keeping it at 1.7.1 to maintain python v2
+# compatibility for now.
 INSTALLATION_REQUIREMENTS = [
     "future",
     "requests>=2.4.2",
     "requests-toolbelt",
-    "PyJWT",
+    "PyJWT==1.7.1",
 ]
 
 
