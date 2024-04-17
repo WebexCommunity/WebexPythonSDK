@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """WebexTeamsAPI Licenses API fixtures and tests.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@ SOFTWARE.
 
 import os
 import time
+import pytest
 
 import webexteamssdk
 
@@ -34,15 +35,26 @@ WEBEX_TEAMS_GUEST_ISSUER_SECRET = os.environ.get(
     "WEBEX_TEAMS_GUEST_ISSUER_SECRET"
 )
 
+if WEBEX_TEAMS_GUEST_ISSUER_ID is None or not WEBEX_TEAMS_GUEST_ISSUER_SECRET:
+    pytest.skip(
+        "Required WEBEX_TEAMS_GUEST_ISSUER_ID and/or "
+        "WEBEX_TEAMS_GUEST_ISSUER_SECRET environment variables are not set.",
+        allow_module_level=True,
+    )
+
 
 # Helper Functions
 
+
 def is_valid_guest_issuer_token(obj):
-    return (isinstance(obj, webexteamssdk.GuestIssuerToken)
-            and obj.token is not None)
+    return (
+        isinstance(obj, webexteamssdk.GuestIssuerToken)
+        and obj.token is not None
+    )
 
 
 # Tests
+
 
 def test_get_guest_issuer_token(api):
     guest_issuer_token = api.guest_issuer.create(
@@ -52,4 +64,5 @@ def test_get_guest_issuer_token(api):
         exp=str(int(time.time()) + TOKEN_EXPIRATION_SECONDS),
         secret=WEBEX_TEAMS_GUEST_ISSUER_SECRET,
     )
+
     assert is_valid_guest_issuer_token(guest_issuer_token)

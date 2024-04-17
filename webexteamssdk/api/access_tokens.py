@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams Access-Tokens API wrapper.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from __future__ import (
     absolute_import,
     division,
@@ -31,6 +30,7 @@ from __future__ import (
 )
 
 from future import standard_library
+
 standard_library.install_aliases()
 
 from builtins import *
@@ -49,8 +49,8 @@ from ..utils import (
 )
 
 
-API_ENDPOINT = 'access_token'
-OBJECT_TYPE = 'access_token'
+API_ENDPOINT = "access_token"
+OBJECT_TYPE = "access_token"
 
 
 class AccessTokensAPI(object):
@@ -133,9 +133,10 @@ class AccessTokensAPI(object):
         )
 
         # API request
-        response = requests.post(self._endpoint_url, data=post_data,
-                                 **self._request_kwargs)
-        check_response_code(response, EXPECTED_RESPONSE_CODE['POST'])
+        response = requests.post(
+            self._endpoint_url, data=post_data, **self._request_kwargs
+        )
+        check_response_code(response, EXPECTED_RESPONSE_CODE["POST"])
         json_data = extract_and_parse_json(response)
 
         # Return a access_token object created from the response JSON data
@@ -172,9 +173,10 @@ class AccessTokensAPI(object):
         )
 
         # API request
-        response = requests.post(self._endpoint_url, data=post_data,
-                                 **self._request_kwargs)
-        check_response_code(response, EXPECTED_RESPONSE_CODE['POST'])
+        response = requests.post(
+            self._endpoint_url, data=post_data, **self._request_kwargs
+        )
+        check_response_code(response, EXPECTED_RESPONSE_CODE["POST"])
         json_data = extract_and_parse_json(response)
 
         # Return a AccessToken object created from the response JSON data

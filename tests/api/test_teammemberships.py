@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """WebexTeamsAPI Team Memberships API fixtures and tests.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -31,9 +31,12 @@ import webexteamssdk
 
 # Helper Functions
 
+
 def is_valid_team_membership(membership):
-    return isinstance(membership, webexteamssdk.TeamMembership) \
+    return (
+        isinstance(membership, webexteamssdk.TeamMembership)
         and membership.id is not None
+    )
 
 
 def are_valid_team_memberships(iterable):
@@ -42,6 +45,7 @@ def are_valid_team_memberships(iterable):
 
 
 # Fixtures
+
 
 @pytest.fixture(scope="session")
 def my_team_membership(api, me, team):
@@ -122,15 +126,17 @@ def team_moderator_added_by_id(api, team, test_people, team_moderator):
 
 
 @pytest.fixture(scope="session")
-def additional_team_memberships(team_member_added_by_email,
-                                team_member_added_by_id,
-                                team_moderator_added_by_email,
-                                team_moderator_added_by_id):
+def additional_team_memberships(
+    team_member_added_by_email,
+    team_member_added_by_id,
+    team_moderator_added_by_email,
+    team_moderator_added_by_id,
+):
     return [
         team_member_added_by_email,
         team_member_added_by_id,
         team_moderator_added_by_email,
-        team_moderator_added_by_id
+        team_moderator_added_by_id,
     ]
 
 
@@ -140,6 +146,7 @@ def team_with_members(team, additional_team_memberships):
 
 
 # Tests
+
 
 def test_list_team_memberships(api, team_with_members):
     team_memberships = list(api.team_memberships.list(team_with_members.id))

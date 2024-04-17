@@ -8,7 +8,7 @@ The ImmutableData class models any JSON object passed to it as a string or
 Python dictionary as a native Python object; providing attribute access using
 native dot-syntax (`object.attribute`).
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,8 +30,14 @@ SOFTWARE.
 """
 
 from __future__ import (
-    absolute_import, absolute_import, division, division,
-    print_function, print_function, unicode_literals, unicode_literals,
+    absolute_import,
+    absolute_import,
+    division,
+    division,
+    print_function,
+    print_function,
+    unicode_literals,
+    unicode_literals,
 )
 
 from builtins import *
@@ -65,7 +71,9 @@ from .mixins.recording import RecordingBasicPropertiesMixin
 from .mixins.meetings import MeetingBasicPropertiesMixin
 from .mixins.meeting_templates import MeetingTemplateBasicPropertiesMixin
 from .mixins.meeting_invitees import MeetingInviteeBasicPropertiesMixin
+
 from .mixins.meeting_registrants import MeetingRegistrantBasicPropertiesMixin
+
 
 class ImmutableData(object):
     """Model a Webex Teams JSON object as an immutable native Python object."""
@@ -111,8 +119,9 @@ class ImmutableData(object):
                 return item_data
         else:
             raise AttributeError(
-                "'{}' object has no attribute '{}'"
-                "".format(self.__class__.__name__, item)
+                "'{}' object has no attribute '{}'" "".format(
+                    self.__class__.__name__, item
+                )
             )
 
     def __str__(self):
@@ -140,8 +149,7 @@ class ImmutableData(object):
             # Freeze the elements of the dictionary, sort them, and return
             # them as a list of tuples
             key_value_tuples = [
-                (key, cls._serialize(value))
-                for key, value in data.items()
+                (key, cls._serialize(value)) for key, value in data.items()
             ]
             key_value_tuples.sort()
             return tuple(key_value_tuples)
@@ -156,8 +164,10 @@ class ImmutableData(object):
 
     def __eq__(self, other):
         """Determine if two objects are equal."""
-        return isinstance(other, self.__class__) \
+        return (
+            isinstance(other, self.__class__)
             and self._freeze() == other._freeze()
+        )
 
     def __hash__(self):
         """Hash the data object."""
@@ -187,8 +197,9 @@ class AccessToken(ImmutableData, AccessTokenBasicPropertiesMixin):
     """Webex Teams Access-Token data model."""
 
 
-class AdminAuditEventData(ImmutableData,
-                          AdminAuditEventDataBasicPropertiesMixin):
+class AdminAuditEventData(
+    ImmutableData, AdminAuditEventDataBasicPropertiesMixin
+):
     """Webex Teams Admin Audit Event Data object data model."""
 
 
@@ -198,7 +209,7 @@ class AdminAuditEvent(ImmutableData, AdminAuditEventBasicPropertiesMixin):
     @property
     def data(self):
         """The event resource data."""
-        return AdminAuditEventData(self._json_data.get('data'))
+        return AdminAuditEventData(self._json_data.get("data"))
 
 
 class AttachmentAction(ImmutableData, AttachmentActionBasicPropertiesMixin):
@@ -210,12 +221,12 @@ class Event(ImmutableData, EventBasicPropertiesMixin):
 
     @property
     def data(self):
-        """The event’s data representation.
+        """The event's data representation.
 
         This object will contain the event's resource, such as memberships or
         messages, at the time the event took place.
         """
-        return ImmutableData(self._json_data.get('data'))
+        return ImmutableData(self._json_data.get("data"))
 
 
 class License(ImmutableData, LicenseBasicPropertiesMixin):
@@ -272,7 +283,7 @@ class WebhookEvent(ImmutableData, WebhookEventBasicPropertiesMixin):
     @property
     def data(self):
         """The event resource data."""
-        return ImmutableData(self._json_data.get('data'))
+        return ImmutableData(self._json_data.get("data"))
 
 
 class GuestIssuerToken(ImmutableData, GuestIssuerTokenBasicPropertiesMixin):
@@ -282,17 +293,22 @@ class GuestIssuerToken(ImmutableData, GuestIssuerTokenBasicPropertiesMixin):
 class Recording(ImmutableData, RecordingBasicPropertiesMixin):
     """Webex Teams Recording data model"""
 
+
 class Meeting(ImmutableData, MeetingBasicPropertiesMixin):
     """Webex Meeting data model"""
+
 
 class MeetingTemplate(ImmutableData, MeetingTemplateBasicPropertiesMixin):
     """Webex MeetingTemplate data model"""
 
+
 class MeetingInvitee(ImmutableData, MeetingInviteeBasicPropertiesMixin):
-    """Webex MeetingInvitees data model"""
+    """Webex MeetingInvitee data model"""
+
 
 class MeetingRegistrant(ImmutableData, MeetingRegistrantBasicPropertiesMixin):
-    """Webex MeetingRegistrants data model"""
+    """Webex MeetingRegistrant data model"""
+
 
 immutable_data_models = defaultdict(
     lambda: ImmutableData,
@@ -318,7 +334,7 @@ immutable_data_models = defaultdict(
     meeting=Meeting,
     meetingTemplate=MeetingTemplate,
     meetingInvitee=MeetingInvitee,
-    meetingRegistrant=MeetingRegistrant
+    meetingRegistrant=MeetingRegistrant,
 )
 
 

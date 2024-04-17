@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """pytest configuration and top-level fixtures.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,27 +30,28 @@ import tempfile
 import pytest
 
 from tests.environment import (
-    WEBEX_TEAMS_TEST_DOMAIN, WEBEX_TEAMS_TEST_FILE_URL,
+    WEBEX_TEAMS_TEST_DOMAIN,
+    WEBEX_TEAMS_TEST_FILE_URL,
     WEBEX_TEAMS_TEST_ID_START,
 )
 from tests.utils import download_file
 
 
 pytest_plugins = [
-    'tests.test_webexteamssdk',
-    'tests.api',
-    'tests.api.test_attachment_actions',
-    'tests.api.test_licenses',
-    'tests.api.test_memberships',
-    'tests.api.test_messages',
-    'tests.api.test_organizations',
-    'tests.api.test_people',
-    'tests.api.test_roles',
-    'tests.api.test_rooms',
-    'tests.api.test_teammemberships',
-    'tests.api.test_teams',
+    "tests.test_webexteamssdk",
+    "tests.api",
+    "tests.api.test_attachment_actions",
+    "tests.api.test_licenses",
+    "tests.api.test_memberships",
+    "tests.api.test_messages",
+    "tests.api.test_organizations",
+    "tests.api.test_people",
+    "tests.api.test_roles",
+    "tests.api.test_rooms",
+    "tests.api.test_teammemberships",
+    "tests.api.test_teams",
     "tests.api.test_events",
-    "tests.api.test_recordings"
+    "tests.api.test_recordings",
 ]
 
 email_template = string.Template("test${number}@" + WEBEX_TEAMS_TEST_DOMAIN)
@@ -66,6 +67,7 @@ def new_email_generator():
 
 
 # pytest Fixtures
+
 
 @pytest.fixture(scope="session")
 def temp_directory():

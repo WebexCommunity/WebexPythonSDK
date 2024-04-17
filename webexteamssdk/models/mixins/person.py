@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams Person data model.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-
 
 from __future__ import (
     absolute_import,
@@ -48,9 +47,20 @@ class PersonBasicPropertiesMixin(object):
         """The email addresses of the person."""
         return self._json_data.get("emails")
 
+    @property
     def phoneNumbers(self):
         """Phone numbers for the person."""
         return self._json_data.get("phoneNumbers")
+
+    @property
+    def extension(self):
+        """The Webex Calling extension for the person."""
+        return self._json_data.get("extension")
+
+    @property
+    def locationId(self):
+        """The location ID for the person."""
+        return self._json_data.get("locationId")
 
     @property
     def displayName(self):
@@ -88,14 +98,42 @@ class PersonBasicPropertiesMixin(object):
 
     @property
     def roles(self):
-        """An array of role strings representing the roles to which this
-        person belongs. """
+        """List of roles for the person.
+
+        An list of role strings representing the roles to which this
+        person belongs.
+        """
         return self._json_data.get("roles")
 
     @property
     def licenses(self):
-        """An array of license strings allocated to this person."""
+        """An list of license strings allocated to this person."""
         return self._json_data.get("licenses")
+
+    @property
+    def department(self):
+        """The business department the user belongs to."""
+        return self._json_data.get("department")
+
+    @property
+    def manager(self):
+        """A manager identifier."""
+        return self._json_data.get("manager")
+
+    @property
+    def managerId(self):
+        """Person ID of the manager."""
+        return self._json_data.get("managerId")
+
+    @property
+    def title(self):
+        """The person's title."""
+        return self._json_data.get("title")
+
+    @property
+    def addresses(self):
+        """A person's addresses."""
+        return self._json_data.get("addresses")
 
     @property
     def created(self):
@@ -127,12 +165,31 @@ class PersonBasicPropertiesMixin(object):
     @property
     def lastActivity(self):
         """The date and time of the person"s last activity within Webex
-        Teams. """
+        Teams."""
         last_activity = self._json_data.get("lastActivity")
         if last_activity:
             return WebexTeamsDateTime.strptime(last_activity)
         else:
             return None
+
+    @property
+    def siteUrls(self):
+        """One or several site names where this user has a role."""
+        return self._json_data.get("siteUrls")
+
+    @property
+    def sipAddresses(self):
+        """The user's SIP addresses."""
+        return self._json_data.get("sipAddresses")
+
+    @property
+    def xmppFederationJid(self):
+        """XMPP federation identifier.
+
+        Identifier for intra-domain federation with other XMPP based messenger
+        systems.
+        """
+        return self._json_data.get("xmppFederationJid")
 
     @property
     def status(self):
@@ -158,7 +215,7 @@ class PersonBasicPropertiesMixin(object):
 
             `presenting`: The user is sharing content
 
-            `unknown`: The user’s status could not be determined
+            `unknown`: The user's status could not be determined
         """
         return self._json_data.get("status")
 

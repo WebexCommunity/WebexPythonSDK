@@ -31,7 +31,7 @@ the space.
 
 This script should support Python versions 3.6+ only.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -52,7 +52,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 import os
 import sys
 from urllib.parse import urljoin
@@ -66,7 +65,7 @@ from webexteamssdk import WebexTeamsAPI, Webhook
 __author__ = "JP Shipherd"
 __author_email__ = "jshipher@cisco.com"
 __contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
-__copyright__ = "Copyright (c) 2016-2020 Cisco and/or its affiliates."
+__copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
@@ -90,83 +89,72 @@ CARD_CONTENT = {
             "type": "TextBlock",
             "text": "Some ways to collect user input",
             "size": "medium",
-            "weight": "bolder"
+            "weight": "bolder",
         },
         {
             "type": "TextBlock",
             "text": "This **Input.Text** element collects some free from "
-                    "text. Designers can use attributes like `isMutiline`, "
-                    "`maxLength` and `placeholder to shape the way that users "
-                    "enter text in a form.",
-            "wrap": True
+            "text. Designers can use attributes like `isMutiline`, "
+            "`maxLength` and `placeholder to shape the way that users "
+            "enter text in a form.",
+            "wrap": True,
         },
         {
             "type": "Input.Text",
             "placeholder": "Text Field",
             "style": "text",
             "maxLength": 0,
-            "id": "TextFieldVal"
+            "id": "TextFieldVal",
         },
         {
             "type": "TextBlock",
             "text": "This **Input.Number** element collects a number. "
-                    "Designers can use the `max`, `min` and `placeholder` "
-                    "attributes to control the input options.",
-            "wrap": True
+            "Designers can use the `max`, `min` and `placeholder` "
+            "attributes to control the input options.",
+            "wrap": True,
         },
         {
             "type": "Input.Number",
             "placeholder": "Number",
             "min": -5,
             "max": 5,
-            "id": "NumberVal"
+            "id": "NumberVal",
         },
         {
             "type": "TextBlock",
             "text": "The **Input.ChoiceSet** element provides a variety of "
-                    "ways that users can choose from a set of options. This "
-                    "is the default view, but designers can use the `style` "
-                    "and `isMutiSelect` attributes to change the way it "
-                    "works. The choices are defined in an array attribute "
-                    "called `choices`.",
-            "wrap": True
+            "ways that users can choose from a set of options. This "
+            "is the default view, but designers can use the `style` "
+            "and `isMutiSelect` attributes to change the way it "
+            "works. The choices are defined in an array attribute "
+            "called `choices`.",
+            "wrap": True,
         },
         {
             "type": "Input.ChoiceSet",
             "id": "ColorChoiceVal",
             "value": "Red",
             "choices": [
-                {
-                    "title": "Red",
-                    "value": "Red"
-                },
-                {
-                    "title": "Blue",
-                    "value": "Blue"
-                },
-                {
-                    "title": "Green",
-                    "value": "Green"
-                }
-            ]
+                {"title": "Red", "value": "Red"},
+                {"title": "Blue", "value": "Blue"},
+                {"title": "Green", "value": "Green"},
+            ],
         },
         {
             "type": "Input.Toggle",
             "title": "This Input.Toggle element gets a true/false input.",
             "id": "Toggle",
             "wrap": True,
-            "value": "false"
-        }
+            "value": "false",
+        },
     ],
     "actions": [
         {
             "type": "Action.Submit",
             "title": "Submit",
-            "data": {
-                "formDemoAction": "Submit"
-            }
+            "data": {"formDemoAction": "Submit"},
         }
-    ]
+    ],
 }
 
 
@@ -209,7 +197,7 @@ def create_webhooks(webhook_url):
         resource=MESSAGE_WEBHOOK_RESOURCE,
         event=MESSAGE_WEBHOOK_EVENT,
         name=WEBHOOK_NAME,
-        targetUrl=urljoin(webhook_url, WEBHOOK_URL_SUFFIX)
+        targetUrl=urljoin(webhook_url, WEBHOOK_URL_SUFFIX),
     )
     print(webhook)
     print("Webhook successfully created.")
@@ -219,7 +207,7 @@ def create_webhooks(webhook_url):
         resource=CARDS_WEBHOOK_RESOURCE,
         event=CARDS_WEBHOOK_EVENT,
         name=WEBHOOK_NAME,
-        targetUrl=urljoin(webhook_url, WEBHOOK_URL_SUFFIX)
+        targetUrl=urljoin(webhook_url, WEBHOOK_URL_SUFFIX),
     )
     print(webhook)
     print("Webhook successfully created.")
@@ -244,8 +232,8 @@ def respond_to_button_press(webhook):
         room.id,
         parentId=message_id,
         markdown=f"This is the data sent from the button press.  A more "
-                 f"robust app would do something cool with this:\n"
-                 f"```\n{attachment_action.to_json(indent=2)}\n```"
+        f"robust app would do something cool with this:\n"
+        f"```\n{attachment_action.to_json(indent=2)}\n```",
     )
 
 
@@ -280,10 +268,12 @@ def respond_to_message(webhook):
         api.messages.create(
             room.id,
             text="If you see this your client cannot render cards",
-            attachments=[{
-                "contentType": "application/vnd.microsoft.card.adaptive",
-                "content": CARD_CONTENT
-            }],
+            attachments=[
+                {
+                    "contentType": "application/vnd.microsoft.card.adaptive",
+                    "content": CARD_CONTENT,
+                }
+            ],
         )
         return "OK"
 
@@ -299,13 +289,17 @@ def webex_teams_webhook_events():
     webhook_obj = Webhook(request.json)
 
     # Handle a new message event
-    if (webhook_obj.resource == MESSAGE_WEBHOOK_RESOURCE
-            and webhook_obj.event == MESSAGE_WEBHOOK_EVENT):
+    if (
+        webhook_obj.resource == MESSAGE_WEBHOOK_RESOURCE
+        and webhook_obj.event == MESSAGE_WEBHOOK_EVENT
+    ):
         respond_to_message(webhook_obj)
 
     # Handle an Action.Submit button press event
-    elif (webhook_obj.resource == CARDS_WEBHOOK_RESOURCE
-          and webhook_obj.event == CARDS_WEBHOOK_EVENT):
+    elif (
+        webhook_obj.resource == CARDS_WEBHOOK_RESOURCE
+        and webhook_obj.event == CARDS_WEBHOOK_EVENT
+    ):
         respond_to_button_press(webhook_obj)
 
     # Ignore anything else (which should never happen

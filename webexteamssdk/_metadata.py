@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Package metadata.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,13 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-__title__ = 'webexteamssdk'
-__description__ = 'Community-developed Python SDK for the Webex Teams APIs'
-__url__ = 'https://github.com/CiscoDevNet/webexteamssdk'
-__download_url__ = 'https://pypi.python.org/pypi/webexteamssdk'
-__author__ = 'Chris Lunsford'
-__author_email__ = 'chrlunsf@cisco.com'
-__copyright__ = "Copyright (c) 2016-2020 Cisco and/or its affiliates."
+__title__ = "webexteamssdk"
+__description__ = "Community-developed Python SDK for the Webex Teams APIs"
+__url__ = "https://github.com/CiscoDevNet/webexteamssdk"
+__download_url__ = "https://pypi.python.org/pypi/webexteamssdk"
+__author__ = "Chris Lunsford"
+__author_email__ = "chrlunsf@cisco.com"
+__copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
@@ -36,5 +36,6 @@ __license__ = "MIT"
 # imported.
 if __name__ == "webexteamssdk._metadata":
     from ._version import get_versions
-    __version__ = get_versions()['version']
+
+    __version__ = get_versions()["version"]
     del get_versions

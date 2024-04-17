@@ -1,33 +1,31 @@
 =============
-WebexPythonSDK
+webexteamssdk
 =============
 
 *Work with the Webex APIs in native Python!*
 
 .. image:: https://img.shields.io/badge/license-MIT-blue.svg
-    :target: https://github.com/CiscoDevNet/webexteamssdk/blob/master/LICENSE
+    :target: https://github.com/WebexCommunity/WebexPythonSDK/blob/master/LICENSE
 .. image:: https://img.shields.io/pypi/v/webexteamssdk.svg
     :target: https://pypi.org/project/webexteamssdk/
 .. image:: https://img.shields.io/pypi/dw/webexteamssdk.svg
     :target: https://pypi.org/project/webexteamssdk/
-.. image:: https://travis-ci.org/CiscoDevNet/webexteamssdk.svg?branch=master
-    :target: https://travis-ci.org/CiscoDevNet/webexteamssdk
 .. image:: https://readthedocs.org/projects/webexteamssdk/badge/?version=latest
     :target: http://webexteamssdk.readthedocs.io/en/latest/?badge=latest
 
 ------------------------------------------------------------------------------------------------------------------------
 
 
-With release v1.6 we are wrapping up active development on the v1.x release and shifting our focus to the next major
-release v2!  Please see the work-in-progress `Release Plan`_ and contribute your ideas for v2.x enhancements by either
-opening enhancement issues_ or by joining our
-`webexteamssdk - Webex Teams SDK - Python Community Contributors <https://eurl.io/#BJ0A8gfOQ>`_ space and posting your
-ideas there.
+**webexteamssdk** v1.7 will be the last 🤞 release of the `webexteamssdk` package. This will be the last release
+supporting Python v2 and v3 compatibility; it is compatible Python v3 releases *up to Python v3.10*.
+
+Going forward, the `webexteamssdk` package will be replaced by the `WebexPythonSDK` package, which will support Python
+v3.10+.
 
 ------------------------------------------------------------------------------------------------------------------------
 
 
-**WebexPythonSDK** is a *community developed* Python library for working with the Webex APIs.  Our goal is to make
+**webexteamssdk** is a *community developed* Python library for working with the Webex APIs.  Our goal is to make
 working with Webex in Python a *native* and *natural* experience!
 
 .. code-block:: Python
@@ -58,9 +56,9 @@ working with Webex in Python a *native* and *natural* experience!
 
 
 That's more than 6 Webex API calls in less than 23 lines of code (with comments and whitespace), and likely more
-than that, since WebexPythonSDK handles pagination_ for you automatically!
+than that, since webexteamssdk handles pagination_ for you automatically!
 
-WebexPythonSDK makes your life better...  `Learn how!`__
+webexteamssdk makes your life better...  `Learn how!`__
 
 __ Introduction_
 
@@ -68,7 +66,7 @@ __ Introduction_
 Features
 --------
 
-WebexPythonSDK does all of this for you:
+webexteamssdk does all of this for you:
 
 * Transparently sources your Webex access token from your local environment
 
@@ -139,7 +137,7 @@ published releases.
 Questions, Support & Discussion
 -------------------------------
 
-WebexPythonSDK is a *community developed* and *community-supported* project.  If you experience any issues using this
+webexteamssdk is a *community developed* and *community-supported* project.  If you experience any issues using this
 package, please report them using the issues_ page.
 
 Please join the `Python Webex Teams Devs`__ Webex space to ask questions, join the discussion, and share your
@@ -151,7 +149,7 @@ __ Community_
 Contribution
 ------------
 
-WebexPythonSDK is a community development project.  Feedback, thoughts, ideas, and code contributions are welcome!
+webexteamssdk is a community development project.  Feedback, thoughts, ideas, and code contributions are welcome!
 Please see the `Contributing`_ guide for more information.
 
 
@@ -167,7 +165,7 @@ The development team may make additional name changes as the library evolves wit
 developer.webex.com.
 
 
-*Copyright (c) 2016-2020 Cisco and/or its affiliates.*
+*Copyright (c) 2016-2024 Cisco and/or its affiliates.*
 
 
 .. _Release Plan: https://github.com/CiscoDevNet/webexteamssdk/wiki/Release-Plans

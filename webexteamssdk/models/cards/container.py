@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams Adaptive Card container data models.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,11 +27,20 @@ from .adaptive_card_component import AdaptiveCardComponent
 
 class Container(AdaptiveCardComponent):
     """Adaptive Card Container component."""
+
     type = "Container"
 
-    def __init__(self, items, selectAction=None, style=None,
-                 verticalContentAlignment=None, height=None, separator=None,
-                 spacing=None, id=None):
+    def __init__(
+        self,
+        items,
+        selectAction=None,
+        style=None,
+        verticalContentAlignment=None,
+        height=None,
+        separator=None,
+        spacing=None,
+        id=None,
+    ):
         self.items = items
         self.selectAction = selectAction
         self.style = style
@@ -42,20 +51,34 @@ class Container(AdaptiveCardComponent):
         self.id = id
 
         super().__init__(
-            serializable_properties=['items'],
+            serializable_properties=["items"],
             simple_properties=[
-                'selectAction', 'style', 'verticalContentAlignment', 'height',
-                'separator', 'spacing', 'id', 'type',
+                "selectAction",
+                "style",
+                "verticalContentAlignment",
+                "height",
+                "separator",
+                "spacing",
+                "id",
+                "type",
             ],
         )
 
 
 class ColumnSet(AdaptiveCardComponent):
     """Adaptive Card Column Set component."""
+
     type = "ColumnSet"
 
-    def __init__(self, columns=None, selectAction=None, height=None,
-                 separator=None, spacing=None, id=None):
+    def __init__(
+        self,
+        columns=None,
+        selectAction=None,
+        height=None,
+        separator=None,
+        spacing=None,
+        id=None,
+    ):
         self.columns = columns
         self.selectAction = selectAction
         self.height = height
@@ -64,19 +87,26 @@ class ColumnSet(AdaptiveCardComponent):
         self.id = id
 
         super().__init__(
-            serializable_properties=['columns'],
+            serializable_properties=["columns"],
             simple_properties=[
-                'selectAction', 'height', 'separator', 'spacing', 'id', 'type',
+                "selectAction",
+                "height",
+                "separator",
+                "spacing",
+                "id",
+                "type",
             ],
         )
 
 
 class FactSet(AdaptiveCardComponent):
     """Adaptive Card Fact Set component."""
+
     type = "FactSet"
 
-    def __init__(self, facts, height=None, separator=None, spacing=None,
-                 id=None):
+    def __init__(
+        self, facts, height=None, separator=None, spacing=None, id=None
+    ):
         self.facts = facts
         self.height = height
         self.separator = separator
@@ -84,19 +114,31 @@ class FactSet(AdaptiveCardComponent):
         self.id = id
 
         super().__init__(
-            serializable_properties=['facts'],
+            serializable_properties=["facts"],
             simple_properties=[
-                'type', 'height', 'separator', 'id', 'spacing',
+                "type",
+                "height",
+                "separator",
+                "id",
+                "spacing",
             ],
         )
 
 
 class ImageSet(AdaptiveCardComponent):
     """Adaptive Card Image Set component."""
+
     type = "ImageSet"
 
-    def __init__(self, images, imageSize=None, height=None, separator=None,
-                 spacing=None, id=None):
+    def __init__(
+        self,
+        images,
+        imageSize=None,
+        height=None,
+        separator=None,
+        spacing=None,
+        id=None,
+    ):
         self.images = images
         self.imageSize = imageSize
         self.height = height
@@ -105,8 +147,13 @@ class ImageSet(AdaptiveCardComponent):
         self.id = id
 
         super().__init__(
-            serializable_properties=['images'],
+            serializable_properties=["images"],
             simple_properties=[
-                'imageSize', 'height', 'separator', 'spacing', 'id', 'type',
+                "imageSize",
+                "height",
+                "separator",
+                "spacing",
+                "id",
+                "type",
             ],
         )

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Admin Audit Events API wrapper.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from __future__ import (
     absolute_import,
     division,
@@ -39,8 +38,8 @@ from webexteamssdk.restsession import RestSession
 from webexteamssdk.utils import check_type, dict_from_items_with_values
 
 
-API_ENDPOINT = 'adminAudit/events'
-OBJECT_TYPE = 'admin_audit_event'
+API_ENDPOINT = "adminAudit/events"
+OBJECT_TYPE = "admin_audit_event"
 
 
 class AdminAuditEventsAPI(object):
@@ -70,8 +69,16 @@ class AdminAuditEventsAPI(object):
         self._object_factory = object_factory
 
     @generator_container
-    def list(self, orgId, _from, to, actorId=None, max=100, offset=0,
-             **request_parameters):
+    def list(
+        self,
+        orgId,
+        _from,
+        to,
+        actorId=None,
+        max=100,
+        offset=0,
+        **request_parameters,
+    ):
         """List Organizations.
 
         This method supports Webex Teams's implementation of RFC5988 Web

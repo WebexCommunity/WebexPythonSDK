@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Test suite environment variables.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -48,9 +48,13 @@ if WEBEX_TEAMS_TEST_FILE_URL is None:
     )
 
 WEBEX_TEAMS_TEST_STRING_PREFIX = os.getenv(
-    "WEBEX_TEAMS_TEST_STRING_PREFIX", default="webexteamssdk py.test",
+    "WEBEX_TEAMS_TEST_STRING_PREFIX",
+    default="webexteamssdk pytest",
 )
 
-WEBEX_TEAMS_TEST_STRING_TEMPLATE = string.Template(os.getenv(
-    "WEBEX_TEAMS_TEST_STRING_TEMPLATE", default="$prefix $item [$datetime]",
-))
+WEBEX_TEAMS_TEST_STRING_TEMPLATE = string.Template(
+    os.getenv(
+        "WEBEX_TEAMS_TEST_STRING_TEMPLATE",
+        default="$prefix $item [$datetime]",
+    )
+)

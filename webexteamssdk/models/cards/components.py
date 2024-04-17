@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams Adaptive Card components.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,13 @@ SOFTWARE.
 
 from .actions import OpenUrl, Submit
 from .adaptive_card_component import AdaptiveCardComponent
-from .options import BlockElementHeight, ImageSize, ImageStyle, Spacing, HorizontalAlignment
+from .options import (
+    BlockElementHeight,
+    ImageSize,
+    ImageStyle,
+    Spacing,
+    HorizontalAlignment,
+)
 from .utils import check_type
 
 
@@ -47,16 +53,25 @@ class MediaSource(AdaptiveCardComponent):
 
         super().__init__(
             serializable_properties=[],
-            simple_properties=['mimeType', 'url'],
+            simple_properties=["mimeType", "url"],
         )
 
 
 class Media(AdaptiveCardComponent):
     """Adaptive Card Media component."""
+
     type = "Media"
 
-    def __init__(self, sources, poster=None, altText=None, height=None,
-                 separator=None, spacing=None, id=None):
+    def __init__(
+        self,
+        sources,
+        poster=None,
+        altText=None,
+        height=None,
+        separator=None,
+        spacing=None,
+        id=None,
+    ):
         """Initialize a new Media component.
 
         Args:
@@ -86,22 +101,39 @@ class Media(AdaptiveCardComponent):
         self.id = id
 
         super().__init__(
-            serializable_properties=['sources'],
+            serializable_properties=["sources"],
             simple_properties=[
-                'type', 'poster', 'altText', 'height', 'separator', 'spacing',
-                'id',
+                "type",
+                "poster",
+                "altText",
+                "height",
+                "separator",
+                "spacing",
+                "id",
             ],
         )
 
 
 class Image(AdaptiveCardComponent):
     """Adaptive Card Image component."""
+
     type = "Image"
 
-    def __init__(self, url, altText=None, backgroundColor=None, height=None,
-                 horizontalAlignment=None, selectAction=None, size=None,
-                 style=None, width=None, separator=None, spacing=None,
-                 id=None):
+    def __init__(
+        self,
+        url,
+        altText=None,
+        backgroundColor=None,
+        height=None,
+        horizontalAlignment=None,
+        selectAction=None,
+        size=None,
+        style=None,
+        width=None,
+        separator=None,
+        spacing=None,
+        id=None,
+    ):
         """Initialize a new image component.
 
         Args:
@@ -126,7 +158,9 @@ class Image(AdaptiveCardComponent):
         check_type(altText, str, optional=True)
         check_type(backgroundColor, str, optional=True)
         check_type(height, (str, BlockElementHeight), optional=True)
-        check_type(horizontalAlignment, (str, HorizontalAlignment), optional=True)
+        check_type(
+            horizontalAlignment, (str, HorizontalAlignment), optional=True
+        )
         check_type(selectAction, (OpenUrl, Submit), optional=True)
         check_type(size, ImageSize, optional=True)
         check_type(style, ImageStyle, optional=True)
@@ -151,20 +185,42 @@ class Image(AdaptiveCardComponent):
         super().__init__(
             serializable_properties=[],
             simple_properties=[
-                'type', 'url', 'altText', 'backgroundColor', 'height',
-                'horizontalAlignment', 'selectAction', 'size', 'style',
-                'width', 'separator', 'spacing', 'id',
+                "type",
+                "url",
+                "altText",
+                "backgroundColor",
+                "height",
+                "horizontalAlignment",
+                "selectAction",
+                "size",
+                "style",
+                "width",
+                "separator",
+                "spacing",
+                "id",
             ],
         )
 
 
 class TextBlock(AdaptiveCardComponent):
     """Adaptive Card Text Block component."""
+
     type = "TextBlock"
 
-    def __init__(self, text, color=None, horizontalAlignment=None,
-                 isSubtle=None, maxLines=None, size=None, weight=None,
-                 wrap=None, separator=None, spacing=None, id=None):
+    def __init__(
+        self,
+        text,
+        color=None,
+        horizontalAlignment=None,
+        isSubtle=None,
+        maxLines=None,
+        size=None,
+        weight=None,
+        wrap=None,
+        separator=None,
+        spacing=None,
+        id=None,
+    ):
         """Initialize a new TextBlock component."""
         # TODO: Document arguments
         self.text = text
@@ -182,20 +238,38 @@ class TextBlock(AdaptiveCardComponent):
         super().__init__(
             serializable_properties=[],
             simple_properties=[
-                'type', 'text', 'color', 'horizontalAlignment', 'isSubtle',
-                'maxLines', 'size', 'weight', 'wrap', 'spacing', 'id',
-                'separator',
+                "type",
+                "text",
+                "color",
+                "horizontalAlignment",
+                "isSubtle",
+                "maxLines",
+                "size",
+                "weight",
+                "wrap",
+                "spacing",
+                "id",
+                "separator",
             ],
         )
 
 
 class Column(AdaptiveCardComponent):
     """Adaptive Card Column component."""
+
     type = "Column"
 
-    def __init__(self, items=None, separator=None, spacing=None,
-                 selectAction=None, style=None, verticalContentAlignment=None,
-                 width=None, id=None):
+    def __init__(
+        self,
+        items=None,
+        separator=None,
+        spacing=None,
+        selectAction=None,
+        style=None,
+        verticalContentAlignment=None,
+        width=None,
+        id=None,
+    ):
         """Initialize a new Column component."""
         # TODO: Document arguments
         self.items = items
@@ -208,10 +282,16 @@ class Column(AdaptiveCardComponent):
         self.id = id
 
         super().__init__(
-            serializable_properties=['items'],
+            serializable_properties=["items"],
             simple_properties=[
-                'type', 'separator', 'spacing', 'selectAction', 'style',
-                'verticalContentAlignment', 'width', 'id',
+                "type",
+                "separator",
+                "spacing",
+                "selectAction",
+                "style",
+                "verticalContentAlignment",
+                "width",
+                "id",
             ],
         )
 
@@ -227,7 +307,7 @@ class Fact(AdaptiveCardComponent):
 
         super().__init__(
             serializable_properties=[],
-            simple_properties=['title', 'value'],
+            simple_properties=["title", "value"],
         )
 
 
@@ -240,5 +320,5 @@ class Choice(AdaptiveCardComponent):
 
         super().__init__(
             serializable_properties=[],
-            simple_properties=['title', 'value'],
+            simple_properties=["title", "value"],
         )

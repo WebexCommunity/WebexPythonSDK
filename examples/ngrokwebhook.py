@@ -13,7 +13,7 @@ Internet accesible ngrok url to localhost port 8080:
 To use script simply launch ngrok, and then launch this script.  After ngrok is
 killed, run this script a second time to remove webhook from Webex Teams.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 # Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
@@ -48,7 +47,7 @@ from builtins import *
 __author__ = "Brad Bester"
 __author_email__ = "brbester@cisco.com"
 __contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
-__copyright__ = "Copyright (c) 2016-2020 Cisco and/or its affiliates."
+__copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
@@ -76,13 +75,17 @@ WEBHOOK_EVENT = "created"
 def get_ngrok_public_url():
     """Get the ngrok public HTTP URL from the local client API."""
     try:
-        response = requests.get(url=NGROK_CLIENT_API_BASE_URL + "/tunnels",
-                                headers={'content-type': 'application/json'})
+        response = requests.get(
+            url=NGROK_CLIENT_API_BASE_URL + "/tunnels",
+            headers={"content-type": "application/json"},
+        )
         response.raise_for_status()
 
     except requests.exceptions.RequestException:
-        print("Could not connect to the ngrok client API; "
-              "assuming not running.")
+        print(
+            "Could not connect to the ngrok client API; "
+            "assuming not running."
+        )
         return None
 
     else:
@@ -123,5 +126,5 @@ def main():
         create_ngrok_webhook(api, public_url)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

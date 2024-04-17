@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams Attachment Actions API wrapper.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from __future__ import (
     absolute_import,
     division,
@@ -39,8 +38,8 @@ from ..restsession import RestSession
 from ..utils import check_type, dict_from_items_with_values
 
 
-API_ENDPOINT = 'attachment/actions'
-OBJECT_TYPE = 'attachment_action'
+API_ENDPOINT = "attachment/actions"
+OBJECT_TYPE = "attachment_action"
 
 
 class AttachmentActionsAPI(object):
@@ -95,10 +94,7 @@ class AttachmentActionsAPI(object):
         check_type(inputs, dict)
 
         post_data = dict_from_items_with_values(
-            request_parameters,
-            type=type,
-            messageId=messageId,
-            inputs=inputs
+            request_parameters, type=type, messageId=messageId, inputs=inputs
         )
 
         json_data = self._session.post(API_ENDPOINT, json=post_data)
@@ -124,7 +120,7 @@ class AttachmentActionsAPI(object):
         check_type(id, basestring)
 
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/' + id)
+        json_data = self._session.get(API_ENDPOINT + "/" + id)
 
         # Return a message object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)

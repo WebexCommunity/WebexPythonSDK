@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """WebexTeamsAPI Rooms API fixtures and tests.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -32,13 +32,16 @@ from tests.utils import create_string
 
 # Helper Functions
 
+
 def is_valid_room(obj):
     return isinstance(obj, webexteamssdk.Room) and obj.id is not None
 
 
 def is_valid_room_meeting_info(obj):
-    return (isinstance(obj, webexteamssdk.RoomMeetingInfo)
-            and obj.roomId is not None)
+    return (
+        isinstance(obj, webexteamssdk.RoomMeetingInfo)
+        and obj.roomId is not None
+    )
 
 
 def are_valid_rooms(iterable):
@@ -46,6 +49,7 @@ def are_valid_rooms(iterable):
 
 
 # Fixtures
+
 
 @pytest.fixture(scope="session")
 def group_room(api):
@@ -57,11 +61,20 @@ def group_room(api):
 
 
 @pytest.fixture(scope="session")
+def moderated_group_room(api):
+    room = api.rooms.create(
+        title=create_string("Moderated Group Room"),
+        isLocked=True,
+    )
+
+    yield room
+
+    api.rooms.delete(room.id)
+
+
+@pytest.fixture(scope="session")
 def direct_rooms(api, direct_messages):
-    return [
-        api.rooms.get(message.roomId)
-        for message in direct_messages
-    ]
+    return [api.rooms.get(message.roomId) for message in direct_messages]
 
 
 @pytest.fixture(scope="session")
@@ -98,7 +111,7 @@ def add_rooms(api):
     rooms = []
 
     def inner(num_rooms):
-        for i in range(num_rooms):
+        for _ in range(num_rooms):
             rooms.append(api.rooms.create(create_string("Additional Room")))
         return rooms
 
@@ -112,6 +125,7 @@ def add_rooms(api):
 
 
 # Tests
+
 
 def test_list_all_rooms(list_of_rooms):
     assert len(list_of_rooms) > 0
@@ -131,7 +145,7 @@ def test_list_rooms_with_paging(api, list_of_rooms, add_rooms):
 
 
 def test_list_group_rooms(api, group_room):
-    group_rooms_list = list(api.rooms.list(type='group'))
+    group_rooms_list = list(api.rooms.list(type="group"))
     assert len(group_rooms_list) > 0
     assert are_valid_rooms(group_rooms_list)
 
@@ -143,7 +157,7 @@ def test_list_team_rooms(api, team, team_room):
 
 
 def test_list_direct_rooms(api, direct_rooms):
-    direct_rooms_list = list(api.rooms.list(type='direct'))
+    direct_rooms_list = list(api.rooms.list(type="direct"))
     assert len(direct_rooms_list) > 0
     assert are_valid_rooms(direct_rooms_list)
 

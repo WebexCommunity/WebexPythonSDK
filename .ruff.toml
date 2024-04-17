@@ -1,0 +1,25 @@
+line-length = 79
+
+
+extend-exclude = [
+    "versioneer.py",
+    "webexteamssdk/_version.py",
+    "generator/**",
+]
+
+[lint]
+# B: flake8-bugbear
+# Q: flake8-quotes
+extend-select = [ "B", "Q", "W" ]
+
+ignore-init-module-imports = true
+ignore = [
+    # E402 module level import not at top of file
+    "E402",
+    # F401 'builtins.*' imported but unused
+    "F401",
+    # F403 'from builtins import *' used; unable to detect undefined names
+    "F403",
+    # F405 'unicode' may be undefined, or defined from star imports: builtins
+    "F405",
+]

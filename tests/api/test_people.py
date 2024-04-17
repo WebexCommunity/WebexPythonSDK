@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """WebexTeamsAPI People API fixtures and tests.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,7 @@ import webexteamssdk
 
 
 # Helper Functions
+
 
 def get_person_by_email(api, email):
     list_of_people = list(api.people.list(email=email))
@@ -61,6 +62,7 @@ def are_valid_people(iterable):
 
 # Fixtures
 
+
 @pytest.fixture(scope="session")
 def me(api):
     return api.people.me()
@@ -68,7 +70,6 @@ def me(api):
 
 @pytest.fixture(scope="session")
 def get_test_person(api, get_new_email_address, me, licenses_dict):
-
     def inner_function():
         person_email = get_new_email_address()
         person = get_person_by_email(api, person_email)
@@ -81,7 +82,9 @@ def get_test_person(api, get_new_email_address, me, licenses_dict):
                 firstName="webexteamssdk",
                 lastName="webexteamssdk",
                 orgId=me.orgId,
-                licenses=[licenses_dict["Messaging"].id],
+                licenses=[licenses_dict["Advanced Messaging"].id],
+                callingData=True,
+                minResponse=False,
             )
             return person
 
@@ -153,7 +156,7 @@ def temp_person(api, get_random_email_address, me, licenses_dict):
         firstName="webexteamssdk",
         lastName="webexteamssdk",
         orgId=me.orgId,
-        licenses=[licenses_dict["Messaging"].id],
+        licenses=[licenses_dict["Advanced Messaging"].id],
     )
 
     yield person
@@ -174,6 +177,7 @@ def people_in_group_room(api, group_room_memberships):
 
 # Tests
 
+
 def test_list_people_by_email(api, test_people):
     email = test_people["not_a_member"].emails[0]
     list_of_people = list(api.people.list(email=email))
@@ -191,20 +195,24 @@ def test_list_people_by_display_name(api, test_people):
 def test_list_people_by_id(api, test_people):
     person_id = test_people["not_a_member"].id
     list_of_people = list(api.people.list(id=person_id))
-    assert len(list_of_people) >= 1
+    assert len(list_of_people) == 1
     assert are_valid_people(list_of_people)
 
 
-@pytest.mark.xfail  # TODO: Resolve test account issues
-def test_list_people_with_paging(api, test_people,
-                                 additional_group_room_memberships):
+def test_list_people_with_paging(
+    api,
+    test_people,
+    additional_group_room_memberships,
+    additional_moderated_group_room_memberships,
+):
     page_size = 1
     pages = 3
     num_people = pages * page_size
     assert test_people.len() >= num_people
-    display_name = test_people["not_a_member"].displayName
-    people = api.people.list(displayName=display_name, max=page_size)
+
+    people = api.people.list(max=page_size)
     people_list = list(itertools.islice(people, num_people))
+
     assert len(people_list) == num_people
     assert are_valid_people(people_list)
 

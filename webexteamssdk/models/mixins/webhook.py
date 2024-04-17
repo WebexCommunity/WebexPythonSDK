@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams Webhook data model.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from __future__ import (
     absolute_import,
     division,
@@ -41,17 +40,17 @@ class WebhookBasicPropertiesMixin(object):
     @property
     def id(self):
         """A unique identifier for the webhook."""
-        return self._json_data.get('id')
+        return self._json_data.get("id")
 
     @property
     def name(self):
         """A user-friendly name for the webhook."""
-        return self._json_data.get('name')
+        return self._json_data.get("name")
 
     @property
     def targetUrl(self):
         """The URL that receives POST requests for each event."""
-        return self._json_data.get('targetUrl')
+        return self._json_data.get("targetUrl")
 
     @property
     def resource(self):
@@ -66,7 +65,7 @@ class WebhookBasicPropertiesMixin(object):
             `messages`: The Messages resource
             `rooms`: The Rooms resource
         """
-        return self._json_data.get('resource')
+        return self._json_data.get("resource")
 
     @property
     def event(self):
@@ -78,32 +77,32 @@ class WebhookBasicPropertiesMixin(object):
             `updated`: An object was updated
             `deleted`: An object was deleted
         """
-        return self._json_data.get('event')
+        return self._json_data.get("event")
 
     @property
     def filter(self):
         """The filter that defines the webhook scope."""
-        return self._json_data.get('filter')
+        return self._json_data.get("filter")
 
     @property
     def secret(self):
         """The secret used to generate payload signature."""
-        return self._json_data.get('secret')
+        return self._json_data.get("secret")
 
     @property
     def orgId(self):
         """The ID of the organization that owns the webhook."""
-        return self._json_data.get('orgId')
+        return self._json_data.get("orgId")
 
     @property
     def createdBy(self):
         """The ID of the person that created the webhook."""
-        return self._json_data.get('createdBy')
+        return self._json_data.get("createdBy")
 
     @property
     def appId(self):
         """The ID of the application that created the webhook."""
-        return self._json_data.get('appId')
+        return self._json_data.get("appId")
 
     @property
     def ownedBy(self):
@@ -118,7 +117,7 @@ class WebhookBasicPropertiesMixin(object):
             `org`
             `creator`
         """
-        return self._json_data.get('ownedBy')
+        return self._json_data.get("ownedBy")
 
     @property
     def status(self):
@@ -128,12 +127,12 @@ class WebhookBasicPropertiesMixin(object):
             `active`: The webhook is active
             `inactive`: The webhook is inactive
         """
-        return self._json_data.get('status')
+        return self._json_data.get("status")
 
     @property
     def created(self):
         """The date and time the webhook was created."""
-        created = self._json_data.get('created')
+        created = self._json_data.get("created")
         if created:
             return WebexTeamsDateTime.strptime(created)
         else:

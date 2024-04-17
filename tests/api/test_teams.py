@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """WebexTeamsAPI Team API fixtures and tests.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -32,6 +32,7 @@ from tests.utils import create_string
 
 # Helper Functions
 
+
 def is_valid_team(obj):
     return isinstance(obj, webexteamssdk.Team) and obj.id is not None
 
@@ -41,6 +42,7 @@ def are_valid_teams(iterable):
 
 
 # Fixtures
+
 
 @pytest.fixture(scope="session")
 def team(api):
@@ -73,7 +75,7 @@ def add_teams(api):
     teams = []
 
     def inner(num_teams):
-        for i in range(num_teams):
+        for _ in range(num_teams):
             teams.append(api.teams.create(create_string("Additional Team")))
         return teams
 
@@ -87,6 +89,7 @@ def add_teams(api):
 
 
 # Tests
+
 
 def test_list_teams(teams_list):
     assert len(teams_list) > 0

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """WebexTeamsAPI Memberships API fixtures and tests.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -31,9 +31,12 @@ import webexteamssdk
 
 # Helper Functions
 
+
 def is_valid_membership(membership):
-    return isinstance(membership, webexteamssdk.Membership) \
+    return (
+        isinstance(membership, webexteamssdk.Membership)
         and membership.id is not None
+    )
 
 
 def are_valid_memberships(iterable):
@@ -42,6 +45,7 @@ def are_valid_memberships(iterable):
 
 
 # Fixtures
+
 
 @pytest.fixture(scope="session")
 def my_memberships(api, group_room, team_room, direct_rooms):
@@ -58,24 +62,20 @@ def my_group_room_membership(api, group_room, me):
 
 
 @pytest.fixture(scope="session")
-def group_room_moderator(api, my_group_room_membership):
-    if my_group_room_membership.isModerator:
-        return True
-    else:
-        updated_membership = api.memberships.update(
-            membershipId=my_group_room_membership.id,
-            isModerator=True,
-        )
+def my_moderated_group_room_membership(api, moderated_group_room, me):
+    memberships = list(
+        api.memberships.list(roomId=moderated_group_room.id, personId=me.id)
+    )
 
-        if updated_membership.isModerator:
-            return True
+    assert len(memberships) == 1
+    membership = memberships[0]
+    assert membership.isModerator
 
-    pytest.fail("Unable to make test account a Room Moderator")
+    return membership
 
 
 @pytest.fixture(scope="session")
-def membership_person_added_by_email(api, group_room, test_people,
-                                     group_room_moderator):
+def membership_person_added_by_email(api, group_room, test_people):
     person = test_people["member_added_by_email"]
     membership = api.memberships.create(
         roomId=group_room.id,
@@ -88,8 +88,7 @@ def membership_person_added_by_email(api, group_room, test_people,
 
 
 @pytest.fixture(scope="session")
-def membership_person_added_by_id(api, group_room, test_people,
-                                  group_room_moderator):
+def membership_person_added_by_id(api, group_room, test_people):
     person = test_people["member_added_by_id"]
     membership = api.memberships.create(
         roomId=group_room.id,
@@ -102,11 +101,12 @@ def membership_person_added_by_id(api, group_room, test_people,
 
 
 @pytest.fixture(scope="session")
-def membership_moderator_added_by_email(api, group_room, test_people,
-                                        group_room_moderator):
+def membership_moderator_added_by_email(
+    api, moderated_group_room, test_people
+):
     person = test_people["moderator_added_by_email"]
     membership = api.memberships.create(
-        roomId=group_room.id,
+        roomId=moderated_group_room.id,
         personEmail=person.emails[0],
         isModerator=True,
     )
@@ -117,11 +117,10 @@ def membership_moderator_added_by_email(api, group_room, test_people,
 
 
 @pytest.fixture(scope="session")
-def membership_moderator_added_by_id(api, group_room, test_people,
-                                     group_room_moderator):
+def membership_moderator_added_by_id(api, moderated_group_room, test_people):
     person = test_people["moderator_added_by_id"]
     membership = api.memberships.create(
-        roomId=group_room.id,
+        roomId=moderated_group_room.id,
         personId=person.id,
         isModerator=True,
     )
@@ -132,15 +131,24 @@ def membership_moderator_added_by_id(api, group_room, test_people,
 
 
 @pytest.fixture(scope="session")
-def additional_group_room_memberships(membership_person_added_by_email,
-                                      membership_person_added_by_id,
-                                      membership_moderator_added_by_email,
-                                      membership_moderator_added_by_id):
+def additional_group_room_memberships(
+    membership_person_added_by_email,
+    membership_person_added_by_id,
+):
     return [
         membership_person_added_by_email,
         membership_person_added_by_id,
+    ]
+
+
+@pytest.fixture(scope="session")
+def additional_moderated_group_room_memberships(
+    membership_moderator_added_by_email,
+    membership_moderator_added_by_id,
+):
+    return [
         membership_moderator_added_by_email,
-        membership_moderator_added_by_id
+        membership_moderator_added_by_id,
     ]
 
 
@@ -150,6 +158,7 @@ def group_room_with_members(group_room, additional_group_room_memberships):
 
 
 # Tests
+
 
 def test_list_memberships(my_memberships):
     assert len(my_memberships) >= 3
@@ -168,69 +177,66 @@ def test_list_memberships_with_paging(api, add_rooms, my_memberships):
     assert are_valid_memberships(memberships_list)
 
 
-@pytest.mark.xfail  # TODO: Resolve test account issues
-def test_filter_room_memberships_by_person_email(api, test_people,
-                                                 group_room_with_members):
+def test_filter_room_memberships_by_person_email(
+    api, test_people, group_room_with_members
+):
     person = test_people["member_added_by_email"]
-    memberships = list(api.memberships.list(
-        roomId=group_room_with_members.id,
-        personEmail=person.emails[0],
-    ))
+    memberships = list(
+        api.memberships.list(
+            roomId=group_room_with_members.id,
+            personEmail=person.emails[0],
+        )
+    )
     assert len(memberships) == 1
     membership = memberships[0]
     assert is_valid_membership(membership)
     assert membership.roomId == group_room_with_members.id
 
 
-@pytest.mark.xfail  # TODO: Resolve test account issues
-def test_filter_room_memberships_by_person_id(api, test_people,
-                                              group_room_with_members):
+def test_filter_room_memberships_by_person_id(
+    api, test_people, group_room_with_members
+):
     person = test_people["member_added_by_id"]
-    memberships = list(api.memberships.list(
-        roomId=group_room_with_members.id,
-        personId=person.id,
-    ))
+    memberships = list(
+        api.memberships.list(
+            roomId=group_room_with_members.id,
+            personId=person.id,
+        )
+    )
     assert len(memberships) == 1
     membership = memberships[0]
     assert is_valid_membership(membership)
     assert membership.roomId == group_room_with_members.id
 
 
-@pytest.mark.xfail  # TODO: Resolve test account issues
 def test_list_room_memberships(api, group_room_with_members):
     memberships = list(api.memberships.list(group_room_with_members.id))
     assert len(memberships) > 1
     assert are_valid_memberships(memberships)
 
 
-@pytest.mark.xfail  # TODO: Resolve test account issues
 def test_create_membership_by_email(membership_person_added_by_email):
     assert is_valid_membership(membership_person_added_by_email)
 
 
-@pytest.mark.xfail  # TODO: Resolve test account issues
 def test_create_membership_by_person_id(membership_person_added_by_id):
     assert is_valid_membership(membership_person_added_by_id)
 
 
-@pytest.mark.xfail  # TODO: Resolve test account issues
 def test_create_moderator_by_email(membership_moderator_added_by_email):
     assert is_valid_membership(membership_moderator_added_by_email)
 
 
-@pytest.mark.xfail  # TODO: Resolve test account issues
 def test_create_moderator_by_person_id(membership_moderator_added_by_id):
     assert is_valid_membership(membership_moderator_added_by_id)
 
 
-@pytest.mark.xfail  # TODO: Resolve test account issues
 def test_get_membership_details(api, membership_person_added_by_id):
     membership_id = membership_person_added_by_id.id
     details = api.memberships.get(membership_id)
     assert is_valid_membership(details)
 
 
-@pytest.mark.xfail  # TODO: Resolve test account issues
 def test_update_membership_make_moderator(api, membership_person_added_by_id):
     assert not membership_person_added_by_id.isModerator
     updated_membership = api.memberships.update(

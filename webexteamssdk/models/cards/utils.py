@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams Access-Tokens API wrapper.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -60,7 +60,7 @@ def check_type(obj, acceptable_types, optional=False, is_list=False):
                     ),
                     none="or None" if optional else "",
                     o=obj,
-                    o_type=repr(type(obj).__name__)
+                    o_type=repr(type(obj).__name__),
                 )
             )
             raise TypeError(error_message)
@@ -76,7 +76,7 @@ def check_type(obj, acceptable_types, optional=False, is_list=False):
                         ),
                         none="or None" if optional else "",
                         o=o,
-                        o_type=repr(type(o).__name__)
+                        o_type=repr(type(o).__name__),
                     )
                 )
                 raise TypeError(error_message)
@@ -92,7 +92,7 @@ def check_type(obj, acceptable_types, optional=False, is_list=False):
                 types=", ".join([repr(t.__name__) for t in acceptable_types]),
                 none="or 'None'" if optional else "",
                 o=obj,
-                o_type=repr(type(obj).__name__)
+                o_type=repr(type(obj).__name__),
             )
         )
         raise TypeError(error_message)

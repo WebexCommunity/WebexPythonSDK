@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Test utilities, helper functions, and classes.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,8 @@ import os
 import requests
 
 from tests.environment import (
-    WEBEX_TEAMS_TEST_STRING_PREFIX, WEBEX_TEAMS_TEST_STRING_TEMPLATE,
+    WEBEX_TEAMS_TEST_STRING_PREFIX,
+    WEBEX_TEAMS_TEST_STRING_TEMPLATE,
 )
 
 
@@ -37,7 +38,7 @@ def create_string(item):
     return WEBEX_TEAMS_TEST_STRING_TEMPLATE.substitute(
         prefix=WEBEX_TEAMS_TEST_STRING_PREFIX,
         item=item,
-        datetime=str(datetime.datetime.now())
+        datetime=str(datetime.datetime.now()),
     )
 
 
@@ -45,13 +46,15 @@ def download_file(url, local_directory, local_filename=None):
     """Download a file from a remote URL to a local directory."""
     # http://stackoverflow.com/questions/16694907/
     # how-to-download-large-file-in-python-with-requests-py
-    local_filename = local_filename if local_filename \
-        else url.split('/')[-1]
-    local_path = os.path.normpath(os.path.join(
-        local_directory, local_filename,
-    ))
+    local_filename = local_filename if local_filename else url.split("/")[-1]
+    local_path = os.path.normpath(
+        os.path.join(
+            local_directory,
+            local_filename,
+        )
+    )
     response = requests.get(url, stream=True)
-    with open(local_path, 'wb') as f:
+    with open(local_path, "wb") as f:
         for chunk in response.iter_content(chunk_size=1024):
             if chunk:
                 f.write(chunk)

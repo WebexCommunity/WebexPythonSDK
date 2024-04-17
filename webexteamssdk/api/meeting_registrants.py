@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex MeetingRegistrants API wrapper.
 
-Copyright (c) 2016-2022 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from __future__ import (
     absolute_import,
     division,
@@ -42,8 +41,8 @@ from ..utils import (
 )
 
 
-API_ENDPOINT = 'meetings/{meetingId}/registrants'
-OBJECT_TYPE = 'meetingRegistrant'
+API_ENDPOINT = "meetings/{meetingId}/registrants"
+OBJECT_TYPE = "meetingRegistrant"
 
 
 class MeetingRegistrantsAPI(object):
@@ -55,7 +54,7 @@ class MeetingRegistrantsAPI(object):
     """
 
     def __init__(self, session, object_factory):
-        """Init a new MeetingRegistrantsAPI object with the provided RestSession.
+        """Init a new MeetingRegistrantsAPI object with the RestSession.
 
         Args:
             session(RestSession): The RESTful session object to be used for
@@ -71,18 +70,20 @@ class MeetingRegistrantsAPI(object):
 
         self._session = session
         self._object_factory = object_factory
-    
-    @generator_container
-    def list(self, meetingId,
-                   max=None,
-                   hostEmail=None,
-                   current=None,
-                   email=None,
-                   registrationTimeFrom=None,
-                   registrationTimeTo=None,
-                   headers={},
-             **request_parameters):
 
+    @generator_container
+    def list(
+        self,
+        meetingId,
+        max=None,
+        hostEmail=None,
+        current=None,
+        email=None,
+        registrationTimeFrom=None,
+        registrationTimeTo=None,
+        headers=None,
+        **request_parameters,
+    ):
         """List meetingRegistrants.
 
         Use query parameters to filter the response.
@@ -99,12 +100,19 @@ class MeetingRegistrantsAPI(object):
 
         Args:
             meetingId (basestring): Unique identifier for the meeting.
-            max (int): Limit the maximum number of registrants in the response, up to 100.
+            max (int): Limit the maximum number of registrants in the response,
+                up to 100.
             hostEmail (basestring): Email address for the meeting host.
-            current (bool): Whether or not to retrieve only the current scheduled meeting of the meeting series, i.e. the meeting ready to join or start or the upcoming meeting of the meeting series.
+            current (bool): Whether or not to retrieve only the current
+                scheduled meeting of the meeting series, i.e. the meeting ready
+                to join or start or the upcoming meeting of the meeting series.
             email (basestring): Registrant's email to filter registrants.
-            registrationTimeFrom (basestring): The time registrants register a meeting starts from the specified date and time (inclusive) in any ISO 8601 compliant format.
-            registrationTimeTo (basestring): The time registrants register a meeting before the specified date and time (exclusive) in any ISO 8601 compliant format.
+            registrationTimeFrom (basestring): The time registrants register a
+                meeting starts from the specified date and time (inclusive) in
+                any ISO 8601 compliant format.
+            registrationTimeTo (basestring): The time registrants register a
+                meeting before the specified date and time (exclusive) in any
+                ISO 8601 compliant format.
             headers(dict): Additional headers to be passed.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
@@ -125,7 +133,9 @@ class MeetingRegistrantsAPI(object):
         check_type(email, basestring, optional=True)
         check_type(registrationTimeFrom, basestring, optional=True)
         check_type(registrationTimeTo, basestring, optional=True)
-        
+        check_type(headers, dict, optional=True)
+
+        headers = headers or {}
 
         params = dict_from_items_with_values(
             request_parameters,
@@ -135,12 +145,11 @@ class MeetingRegistrantsAPI(object):
             email=email,
             registrationTimeFrom=registrationTimeFrom,
             registrationTimeTo=registrationTimeTo,
-            
         )
-        
+
         # Add URL parameters to the API endpoint
         request_url = API_ENDPOINT.format(meetingId=meetingId)
-        
+
         # API request - get items
 
         # Update headers
@@ -149,30 +158,32 @@ class MeetingRegistrantsAPI(object):
         items = self._session.get_items(request_url, params=params)
 
         # Remove headers
-        for k, v in headers.items():
+        for k in headers.keys():
             del self._session.headers[k]
 
         # Yield membership objects created from the returned items JSON objects
         for item in items:
             yield self._object_factory(OBJECT_TYPE, item)
-    
-    
-    def create(self, meetingId,
-                     firstName,
-                     lastName,
-                     email,
-                     sendEmail=None,
-                     jobTitle=None,
-                     address1=None,
-                     address2=None,
-                     city=None,
-                     state=None,
-                     zipCode=None,
-                     countryRegion=None,
-                     workPhone=None,
-                     fax=None,
-                     customizedQuestions=None,
-                     **request_parameters):
+
+    def create(
+        self,
+        meetingId,
+        firstName,
+        lastName,
+        email,
+        sendEmail=None,
+        jobTitle=None,
+        address1=None,
+        address2=None,
+        city=None,
+        state=None,
+        zipCode=None,
+        countryRegion=None,
+        workPhone=None,
+        fax=None,
+        customizedQuestions=None,
+        **request_parameters,
+    ):
         """Create a meetingRegistrant.
 
         Args:
@@ -190,13 +201,14 @@ class MeetingRegistrantsAPI(object):
             countryRegion (basestring): Registrant's country or region.
             workPhone (basestring): Registrant's work phone number.
             fax (basestring): Registrant's FAX number.
-            customizedQuestions (list): List of registrant's answers for customized questions,
+            customizedQuestions (list): List of registrant's answers for
+                customized questions,
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
         Returns:
-            MeetingRegistrant: A MeetingRegistrant object with the details of the created
-            meetingRegistrant.
+            MeetingRegistrant: A MeetingRegistrant object with the details of
+                the created meetingRegistrant.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -218,7 +230,7 @@ class MeetingRegistrantsAPI(object):
         check_type(workPhone, basestring, optional=True)
         check_type(fax, basestring, optional=True)
         check_type(customizedQuestions, list, optional=True)
-        
+
         post_data = dict_from_items_with_values(
             request_parameters,
             firstName=firstName,
@@ -235,21 +247,17 @@ class MeetingRegistrantsAPI(object):
             workPhone=workPhone,
             fax=fax,
             customizedQuestions=customizedQuestions,
-            
         )
 
-        
         # Add URL parameters to the API endpoint
         request_url = API_ENDPOINT.format(meetingId=meetingId)
-        
+
         # API request
         json_data = self._session.post(request_url, json=post_data)
 
         # Return a membership object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
-    
 
-    
     def get(self, meetingId, meetingRegistrantId):
         """Get details for a meetingRegistrant, by ID.
 
@@ -258,8 +266,8 @@ class MeetingRegistrantsAPI(object):
             meetingRegistrantId(basestring): The meetingRegistrant ID.
 
         Returns:
-            MeetingRegistrant: A MeetingRegistrant object with the details of the requested
-            meetingRegistrant.
+            MeetingRegistrant: A MeetingRegistrant object with the details of
+                the requested meetingRegistrant.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -271,15 +279,13 @@ class MeetingRegistrantsAPI(object):
 
         # Add URL parameters to the API endpoint
         request_url = API_ENDPOINT.format(meetingId=meetingId)
-        
+
         # API request
-        json_data = self._session.get(request_url + '/' + meetingRegistrantId)
+        json_data = self._session.get(request_url + "/" + meetingRegistrantId)
 
         # Return a membership object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
-    
 
-    
     def delete(self, meetingId, meetingRegistrantId):
         """Delete a meetingRegistrant, by ID.
 
@@ -297,10 +303,6 @@ class MeetingRegistrantsAPI(object):
 
         # Add URL parameters to the API endpoint
         request_url = API_ENDPOINT.format(meetingId=meetingId)
-        
-        # API request
-        self._session.delete(request_url + '/' + meetingRegistrantId)
-    
 
-    
-    
+        # API request
+        self._session.delete(request_url + "/" + meetingRegistrantId)

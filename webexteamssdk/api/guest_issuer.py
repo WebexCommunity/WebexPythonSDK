@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams Guest Issuer API wrapper.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,7 @@ from ..restsession import RestSession
 from ..utils import (
     check_type,
     dict_from_items_with_values,
-    check_response_code
+    check_response_code,
 )
 from ..response_codes import EXPECTED_RESPONSE_CODE
 
@@ -110,23 +110,18 @@ class GuestIssuerAPI(object):
         check_type(exp, basestring)
         check_type(secret, basestring)
 
-        payload = {
-            "sub": sub,
-            "name": name,
-            "iss": iss,
-            "exp": exp
-        }
+        payload = {"sub": sub, "name": name, "iss": iss, "exp": exp}
 
         key = base64.b64decode(secret)
         jwt_token = jwt.encode(payload, key, algorithm="HS256")
 
-        headers = {
-            "Authorization": "Bearer " + jwt_token.decode("utf-8")
-        }
+        # TODO: Remove `.decode("utf-8")` when Python 2 is no longer supported
+        # v1.7.1 is the last release of PyJWT that supports Python 2, and it
+        # returns a byte string for the JWT token.
+        headers = {"Authorization": "Bearer " + jwt_token.decode("utf-8")}
 
         json_data = self._session.post(
-            API_ENDPOINT + "/" + "login",
-            headers=headers
+            API_ENDPOINT + "/" + "login", headers=headers
         )
 
         return self._object_factory(OBJECT_TYPE, json_data)

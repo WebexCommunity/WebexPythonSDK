@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams Adaptive Card data model.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -33,12 +33,19 @@ class AdaptiveCard(AdaptiveCardComponent):
     Note: Webex Teams currently supports version 1.1 of adaptive cards and thus
     only features from that release are supported in this abstraction.
     """
+
     type = "AdaptiveCard"
     schema = "http://adaptivecards.io/schemas/adaptive-card.json"
     version = "1.1"
 
-    def __init__(self, body=None, actions=None, selectAction=None,
-                 fallbackText=None, lang=None):
+    def __init__(
+        self,
+        body=None,
+        actions=None,
+        selectAction=None,
+        fallbackText=None,
+        lang=None,
+    ):
         """Initialize a new Adaptive Card object.
 
         Args:
@@ -74,8 +81,8 @@ class AdaptiveCard(AdaptiveCardComponent):
         self.lang = lang
 
         super().__init__(
-            serializable_properties=['body', 'actions', 'selectAction'],
-            simple_properties=['version', 'fallbackText', 'lang', 'type'],
+            serializable_properties=["body", "actions", "selectAction"],
+            simple_properties=["version", "fallbackText", "lang", "type"],
         )
 
     def to_dict(self):

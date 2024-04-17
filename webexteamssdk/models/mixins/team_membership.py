@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams Team-Membership data model.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from __future__ import (
     absolute_import,
     division,
@@ -41,42 +40,42 @@ class TeamMembershipBasicPropertiesMixin(object):
     @property
     def id(self):
         """A unique identifier for the team membership."""
-        return self._json_data.get('id')
+        return self._json_data.get("id")
 
     @property
     def teamId(self):
         """The team ID."""
-        return self._json_data.get('teamId')
+        return self._json_data.get("teamId")
 
     @property
     def personId(self):
         """The person ID."""
-        return self._json_data.get('personId')
+        return self._json_data.get("personId")
 
     @property
     def personEmail(self):
         """The email address of the person."""
-        return self._json_data.get('personEmail')
+        return self._json_data.get("personEmail")
 
     @property
     def personDisplayName(self):
         """The display name of the person."""
-        return self._json_data.get('personDisplayName')
+        return self._json_data.get("personDisplayName")
 
     @property
     def personOrgId(self):
         """The organization ID of the person."""
-        return self._json_data.get('personOrgId')
+        return self._json_data.get("personOrgId")
 
     @property
     def isModerator(self):
         """Whether or not the participant is a team moderator."""
-        return self._json_data.get('isModerator')
+        return self._json_data.get("isModerator")
 
     @property
     def created(self):
         """The date and time when the team membership was created."""
-        created = self._json_data.get('created')
+        created = self._json_data.get("created")
         if created:
             return WebexTeamsDateTime.strptime(created)
         else:

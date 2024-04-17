@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """WebexTeamsAPI Admin Audit Events API fixtures and tests.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,26 +23,24 @@ SOFTWARE.
 """
 
 import itertools
+from datetime import timedelta, timezone
 
 import pytest
 
 import webexteamssdk
 
 
-from_datetime_string = str(
-    webexteamssdk.WebexTeamsDateTime(2018, 1, 1, 0, 0, 0, 0),
-)
-
-to_datetime_string = str(
-    webexteamssdk.WebexTeamsDateTime.utcnow(),
-)
+to_datetime = webexteamssdk.WebexTeamsDateTime.now(tz=timezone.utc)
+from_datetime = to_datetime - timedelta(days=364)
 
 
 # Helper Functions
 
+
 def is_valid_admin_audit_event(obj):
-    return isinstance(obj, webexteamssdk.AdminAuditEvent) \
-        and obj.id is not None
+    return (
+        isinstance(obj, webexteamssdk.AdminAuditEvent) and obj.id is not None
+    )
 
 
 def are_valid_admin_audit_events(iterable):
@@ -51,18 +49,22 @@ def are_valid_admin_audit_events(iterable):
 
 # Fixtures
 
+
 @pytest.fixture(scope="session")
 def admin_audit_events(api, me):
-    three_events = list(api.admin_audit_events.list(
-        orgId=me.orgId,
-        _from=from_datetime_string,
-        to=to_datetime_string,
-    )[:3])
+    three_events = list(
+        api.admin_audit_events.list(
+            orgId=me.orgId,
+            _from=str(from_datetime),
+            to=str(to_datetime),
+        )[:3]
+    )
     assert len(three_events) == 3
     return three_events
 
 
 # Tests
+
 
 def test_list_admin_audit_events(api, admin_audit_events):
     assert are_valid_admin_audit_events(admin_audit_events)
@@ -75,7 +77,6 @@ def test_list_admin_audit_events_by_actor_id(api, admin_audit_events):
     assert all([event.actorId == actor_id for event in actor_events])
 
 
-@pytest.mark.xfail  # TODO: Returned link headers are malformed on the endpoint
 def test_list_events_with_paging(api, me, admin_audit_events):
     page_size = 1
     pages = 3
@@ -83,8 +84,8 @@ def test_list_events_with_paging(api, me, admin_audit_events):
     assert len(admin_audit_events) >= num_events
     events_gen = api.admin_audit_events.list(
         orgId=me.orgId,
-        _from=from_datetime_string,
-        to=to_datetime_string,
+        _from=str(from_datetime),
+        to=str(to_datetime),
         max=page_size,
     )
     events_list = list(itertools.islice(events_gen, num_events))

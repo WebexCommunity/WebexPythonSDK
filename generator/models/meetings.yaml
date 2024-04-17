@@ -56,7 +56,7 @@ query_parameters:
   - name: hostEmail
     description: Email address for the meeting host (Needs admin-level scope).
     optional: True
-    type: basestring 
+    type: basestring
   - name: siteUrl
     description: URL of the webex site.
     optional: True
@@ -222,7 +222,7 @@ list:
       description: Whether or not meeting is recorded automatically.
       type: bool
     - name: allowAnyUserToBeCoHost
-      description: Allow any attendee with host account on site to become co host
+      description: Allow any attendee with host account on site to become cohost
       type: bool
     - name: enabledJoinBeforeHost
       description: Allow attendees to join before the host.
@@ -267,7 +267,7 @@ list:
       description: Number of minutes for the meeting to be automatically locked.
       type: int
     - name: allowFirstUserToBeCoHost
-      description: Allow the first joiner with host account on the meeting site to be co host.
+      description: Allow the first joiner with host account on the meeting site to be cohost.
       type: bool
     - name: allowAuthenticatedDevices
       description: Whether or not to allow authenticated video devices in the meeting's organization to start or join the meeting

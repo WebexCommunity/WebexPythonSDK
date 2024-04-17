@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams Licenses API wrapper.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from __future__ import (
     absolute_import,
     division,
@@ -42,8 +41,8 @@ from ..utils import (
 )
 
 
-API_ENDPOINT = 'licenses'
-OBJECT_TYPE = 'license'
+API_ENDPOINT = "licenses"
+OBJECT_TYPE = "license"
 
 
 class LicensesAPI(object):
@@ -125,7 +124,7 @@ class LicensesAPI(object):
         check_type(licenseId, basestring)
 
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/' + licenseId)
+        json_data = self._session.get(API_ENDPOINT + "/" + licenseId)
 
         # Return a license object created from the returned JSON object
         return self._object_factory(OBJECT_TYPE, json_data)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams Events API wrapper.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from __future__ import (
     absolute_import,
     division,
@@ -42,8 +41,8 @@ from ..utils import (
 )
 
 
-API_ENDPOINT = 'events'
-OBJECT_TYPE = 'event'
+API_ENDPOINT = "events"
+OBJECT_TYPE = "event"
 
 
 class EventsAPI(object):
@@ -73,8 +72,16 @@ class EventsAPI(object):
         self._object_factory = object_factory
 
     @generator_container
-    def list(self, resource=None, type=None, actorId=None, _from=None, to=None,
-             max=None, **request_parameters):
+    def list(
+        self,
+        resource=None,
+        type=None,
+        actorId=None,
+        _from=None,
+        to=None,
+        max=None,
+        **request_parameters,
+    ):
         """List events.
 
         List events in your organization. Several query parameters are
@@ -162,7 +169,7 @@ class EventsAPI(object):
         check_type(eventId, basestring)
 
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/' + eventId)
+        json_data = self._session.get(API_ENDPOINT + "/" + eventId)
 
         # Return a room object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)

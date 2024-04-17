@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams Memberships API wrapper.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from __future__ import (
     absolute_import,
     division,
@@ -42,8 +41,8 @@ from ..utils import (
 )
 
 
-API_ENDPOINT = 'memberships'
-OBJECT_TYPE = 'membership'
+API_ENDPOINT = "memberships"
+OBJECT_TYPE = "membership"
 
 
 class MembershipsAPI(object):
@@ -73,8 +72,14 @@ class MembershipsAPI(object):
         self._object_factory = object_factory
 
     @generator_container
-    def list(self, roomId=None, personId=None, personEmail=None, max=None,
-             **request_parameters):
+    def list(
+        self,
+        roomId=None,
+        personId=None,
+        personEmail=None,
+        max=None,
+        **request_parameters,
+    ):
         """List room memberships.
 
         By default, lists memberships for rooms to which the authenticated user
@@ -135,8 +140,14 @@ class MembershipsAPI(object):
         for item in items:
             yield self._object_factory(OBJECT_TYPE, item)
 
-    def create(self, roomId, personId=None, personEmail=None,
-               isModerator=False, **request_parameters):
+    def create(
+        self,
+        roomId,
+        personId=None,
+        personEmail=None,
+        isModerator=False,
+        **request_parameters,
+    ):
         """Add someone to a room by Person ID or email address.
 
         Add someone to a room by Person ID or email address; optionally
@@ -196,7 +207,7 @@ class MembershipsAPI(object):
         check_type(membershipId, basestring)
 
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/' + membershipId)
+        json_data = self._session.get(API_ENDPOINT + "/" + membershipId)
 
         # Return a membership object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -228,8 +239,9 @@ class MembershipsAPI(object):
         )
 
         # API request
-        json_data = self._session.put(API_ENDPOINT + '/' + membershipId,
-                                      json=put_data)
+        json_data = self._session.put(
+            API_ENDPOINT + "/" + membershipId, json=put_data
+        )
 
         # Return a membership object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -248,4 +260,4 @@ class MembershipsAPI(object):
         check_type(membershipId, basestring)
 
         # API request
-        self._session.delete(API_ENDPOINT + '/' + membershipId)
+        self._session.delete(API_ENDPOINT + "/" + membershipId)

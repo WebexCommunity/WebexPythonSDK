@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams API wrappers.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,8 @@ SOFTWARE.
 from past.types import basestring
 
 from webexteamssdk.config import (
-    DEFAULT_BASE_URL, DEFAULT_SINGLE_REQUEST_TIMEOUT,
+    DEFAULT_BASE_URL,
+    DEFAULT_SINGLE_REQUEST_TIMEOUT,
     DEFAULT_WAIT_ON_RATE_LIMIT,
 )
 from webexteamssdk.environment import WEBEX_TEAMS_ACCESS_TOKEN
@@ -69,18 +70,22 @@ class WebexTeamsAPI(object):
     them in a simple hierarchical structure.
     """
 
-    def __init__(self, access_token=None, base_url=DEFAULT_BASE_URL,
-                 single_request_timeout=DEFAULT_SINGLE_REQUEST_TIMEOUT,
-                 wait_on_rate_limit=DEFAULT_WAIT_ON_RATE_LIMIT,
-                 object_factory=immutable_data_factory,
-                 client_id=None,
-                 client_secret=None,
-                 oauth_code=None,
-                 redirect_uri=None,
-                 proxies=None,
-                 be_geo_id=None,
-                 caller=None,
-                 disable_ssl_verify=False):
+    def __init__(
+        self,
+        access_token=None,
+        base_url=DEFAULT_BASE_URL,
+        single_request_timeout=DEFAULT_SINGLE_REQUEST_TIMEOUT,
+        wait_on_rate_limit=DEFAULT_WAIT_ON_RATE_LIMIT,
+        object_factory=immutable_data_factory,
+        client_id=None,
+        client_secret=None,
+        oauth_code=None,
+        redirect_uri=None,
+        proxies=None,
+        be_geo_id=None,
+        caller=None,
+        disable_ssl_verify=False,
+    ):
         """Create a new WebexTeamsAPI object.
 
         An access token must be used when interacting with the Webex Teams API.
@@ -160,7 +165,8 @@ class WebexTeamsAPI(object):
 
         # Init AccessTokensAPI wrapper early to use for oauth requests
         self.access_tokens = AccessTokensAPI(
-            base_url, object_factory,
+            base_url,
+            object_factory,
             single_request_timeout=single_request_timeout,
         )
 
@@ -171,12 +177,12 @@ class WebexTeamsAPI(object):
                 client_id=client_id,
                 client_secret=client_secret,
                 code=oauth_code,
-                redirect_uri=redirect_uri
+                redirect_uri=redirect_uri,
             ).access_token
 
         # Set optional API metrics tracking variables from env vars if there
-        be_geo_id = be_geo_id or os.environ.get('BE_GEO_ID')
-        caller = caller or os.environ.get('WEBEX_PYTHON_SDK_CALLER')
+        be_geo_id = be_geo_id or os.environ.get("BE_GEO_ID")
+        caller = caller or os.environ.get("WEBEX_PYTHON_SDK_CALLER")
 
         # If an access token hasn't been provided as a parameter, environment
         # variable, or obtained via an OAuth exchange raise an error.
@@ -199,15 +205,17 @@ class WebexTeamsAPI(object):
             proxies=proxies,
             be_geo_id=be_geo_id,
             caller=caller,
-            disable_ssl_verify=disable_ssl_verify
+            disable_ssl_verify=disable_ssl_verify,
         )
 
         # API wrappers
         self.admin_audit_events = AdminAuditEventsAPI(
-            self._session, object_factory,
+            self._session,
+            object_factory,
         )
         self.attachment_actions = AttachmentActionsAPI(
-            self._session, object_factory,
+            self._session,
+            object_factory,
         )
         self.events = EventsAPI(self._session, object_factory)
         self.guest_issuer = GuestIssuerAPI(self._session, object_factory)
@@ -221,14 +229,22 @@ class WebexTeamsAPI(object):
         self.room_tabs = RoomTabsAPI(self._session, object_factory)
         self.teams = TeamsAPI(self._session, object_factory)
         self.team_memberships = TeamMembershipsAPI(
-            self._session, object_factory,
+            self._session,
+            object_factory,
         )
         self.webhooks = WebhooksAPI(self._session, object_factory)
         self.recordings = RecordingsAPI(self._session, object_factory)
         self.meetings = MeetingsAPI(self._session, object_factory)
-        self.meeting_templates = MeetingTemplatesAPI(self._session, object_factory)
-        self.meeting_invitees = MeetingInviteesAPI(self._session, object_factory)
-        self.meeting_registrants = MeetingRegistrantsAPI(self._session, object_factory)
+        self.meeting_templates = MeetingTemplatesAPI(
+            self._session, object_factory
+        )
+        self.meeting_invitees = MeetingInviteesAPI(
+            self._session, object_factory
+        )
+        self.meeting_registrants = MeetingRegistrantsAPI(
+            self._session, object_factory
+        )
+
     @property
     def access_token(self):
         """The access token used for API calls to the Webex Teams service."""
@@ -281,8 +297,9 @@ class WebexTeamsAPI(object):
             TypeError: If the parameter types are incorrect.
             ApiError: If the Webex Teams cloud returns an error.
         """
-        token_obj = cls.access_tokens.get(client_id, client_secret, code,
-                                          redirect_uri)
+        token_obj = cls.access_tokens.get(
+            client_id, client_secret, code, redirect_uri
+        )
 
         return cls(access_token=token_obj.access_token)
 
@@ -308,6 +325,7 @@ class WebexTeamsAPI(object):
             TypeError: If the parameter types are incorrect.
             ApiError: If the Webex Teams cloud returns an error.
         """
-        token_obj = cls.access_tokens.refresh(client_id, client_secret,
-                                              refresh_token)
+        token_obj = cls.access_tokens.refresh(
+            client_id, client_secret, refresh_token
+        )
         return cls(access_token=token_obj.access_token)

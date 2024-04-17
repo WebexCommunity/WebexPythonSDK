@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams People API wrapper.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from __future__ import (
     absolute_import,
     division,
@@ -42,8 +41,8 @@ from ..utils import (
 )
 
 
-API_ENDPOINT = 'people'
-OBJECT_TYPE = 'person'
+API_ENDPOINT = "people"
+OBJECT_TYPE = "person"
 
 
 class PeopleAPI(object):
@@ -73,8 +72,15 @@ class PeopleAPI(object):
         self._object_factory = object_factory
 
     @generator_container
-    def list(self, email=None, displayName=None, id=None, orgId=None, max=None,
-             **request_parameters):
+    def list(
+        self,
+        email=None,
+        displayName=None,
+        id=None,
+        orgId=None,
+        max=None,
+        **request_parameters,
+    ):
         """List people in your organization.
 
         For most users, either the `email` or `displayName` parameter is
@@ -140,15 +146,38 @@ class PeopleAPI(object):
         for item in items:
             yield self._object_factory(OBJECT_TYPE, item)
 
-    def create(self, emails, displayName=None, firstName=None, lastName=None,
-               avatar=None, orgId=None, roles=None, licenses=None,
-               **request_parameters):
+    def create(
+        self,
+        emails,
+        phoneNumbers=None,
+        extension=None,
+        locationId=None,
+        displayName=None,
+        firstName=None,
+        lastName=None,
+        avatar=None,
+        orgId=None,
+        roles=None,
+        licenses=None,
+        department=None,
+        manager=None,
+        managerId=None,
+        title=None,
+        addresses=None,
+        siteUrls=None,
+        callingData=None,
+        minResponse=None,
+        **request_parameters,
+    ):
         """Create a new user account for a given organization
 
         Only an admin can create a new user account.
 
         Args:
             emails(`list`): Email address(es) of the person (list of strings).
+            phoneNumbers(`list`): Phone numbers for the person.
+            extension(basestring): Webex Calling extension of the person.
+            locationId(basestring): The ID of the location for this person.
             displayName(basestring): Full name of the person.
             firstName(basestring): First name of the person.
             lastName(basestring): Last name of the person.
@@ -160,6 +189,19 @@ class PeopleAPI(object):
             licenses(`list`): Licenses allocated to the person (list of
                 strings - containing the license IDs to be allocated to the
                 person).
+            department(basestring): The business department the user belongs
+                to.
+            manager(basestring): A manager identifier.
+            managerId(basestring): Person ID of the manager.
+            title(basestring): The person's title.
+            addresses(`list`): A person's addresses.
+            siteUrls(`list`): One or several site names where this user has an
+                attendee role.
+            callingData(bool): Include Webex Calling user details in the
+                response.
+            minResponse(bool): Set to true to improve performance by omitting
+                person details and returning only the ID in the response when
+                successful.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
@@ -172,6 +214,9 @@ class PeopleAPI(object):
 
         """
         check_type(emails, list)
+        check_type(phoneNumbers, list, optional=True)
+        check_type(extension, basestring, optional=True)
+        check_type(locationId, basestring, optional=True)
         check_type(displayName, basestring, optional=True)
         check_type(firstName, basestring, optional=True)
         check_type(lastName, basestring, optional=True)
@@ -179,10 +224,21 @@ class PeopleAPI(object):
         check_type(orgId, basestring, optional=True)
         check_type(roles, list, optional=True)
         check_type(licenses, list, optional=True)
+        check_type(department, basestring, optional=True)
+        check_type(manager, basestring, optional=True)
+        check_type(managerId, basestring, optional=True)
+        check_type(title, basestring, optional=True)
+        check_type(addresses, list, optional=True)
+        check_type(siteUrls, list, optional=True)
+        check_type(callingData, bool, optional=True)
+        check_type(minResponse, bool, optional=True)
 
         post_data = dict_from_items_with_values(
             request_parameters,
             emails=emails,
+            phoneNumbers=phoneNumbers,
+            extension=extension,
+            locationId=locationId,
             displayName=displayName,
             firstName=firstName,
             lastName=lastName,
@@ -190,10 +246,23 @@ class PeopleAPI(object):
             orgId=orgId,
             roles=roles,
             licenses=licenses,
+            department=department,
+            manager=manager,
+            managerId=managerId,
+            title=title,
+            addresses=addresses,
+            siteUrls=siteUrls,
+        )
+
+        params = dict_from_items_with_values(
+            callingData=callingData,
+            minResponse=minResponse,
         )
 
         # API request
-        json_data = self._session.post(API_ENDPOINT, json=post_data)
+        json_data = self._session.post(
+            API_ENDPOINT, params=params, json=post_data
+        )
 
         # Return a person object created from the returned JSON object
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -215,14 +284,24 @@ class PeopleAPI(object):
         check_type(personId, basestring)
 
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/' + personId)
+        json_data = self._session.get(API_ENDPOINT + "/" + personId)
 
         # Return a person object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
 
-    def update(self, personId, emails=None, displayName=None, firstName=None,
-               lastName=None, avatar=None, orgId=None, roles=None,
-               licenses=None, **request_parameters):
+    def update(
+        self,
+        personId,
+        emails=None,
+        displayName=None,
+        firstName=None,
+        lastName=None,
+        avatar=None,
+        orgId=None,
+        roles=None,
+        licenses=None,
+        **request_parameters,
+    ):
         """Update details for a person, by ID.
 
         Only an admin can update a person's details.
@@ -281,8 +360,9 @@ class PeopleAPI(object):
         )
 
         # API request
-        json_data = self._session.put(API_ENDPOINT + '/' + personId,
-                                      json=put_data)
+        json_data = self._session.put(
+            API_ENDPOINT + "/" + personId, json=put_data
+        )
 
         # Return a person object created from the returned JSON object
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -303,7 +383,7 @@ class PeopleAPI(object):
         check_type(personId, basestring)
 
         # API request
-        self._session.delete(API_ENDPOINT + '/' + personId)
+        self._session.delete(API_ENDPOINT + "/" + personId)
 
     def me(self):
         """Get the details of the person accessing the API.
@@ -313,7 +393,7 @@ class PeopleAPI(object):
 
         """
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/me')
+        json_data = self._session.get(API_ENDPOINT + "/me")
 
         # Return a person object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)

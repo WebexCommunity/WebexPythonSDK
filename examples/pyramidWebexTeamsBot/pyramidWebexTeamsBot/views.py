@@ -22,7 +22,7 @@ script.
 
 This script supports Python versions 2 and 3.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -43,7 +43,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 # Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
@@ -60,7 +59,7 @@ __contributors__ = [
     "Brad Bester <brbester@cisco.com>",
     "Chris Lunsford <chrlunsf@cisco.com>",
 ]
-__copyright__ = "Copyright (c) 2016-2020 Cisco and/or its affiliates."
+__copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
@@ -71,11 +70,12 @@ import requests
 
 
 import logging
+
 log = logging.getLogger(__name__)
 
 
 # Module constants
-CAT_FACTS_URL = 'https://catfact.ninja/fact'
+CAT_FACTS_URL = "https://catfact.ninja/fact"
 
 
 # Initialize the environment
@@ -94,12 +94,12 @@ def get_catfact():
     response = requests.get(CAT_FACTS_URL, verify=False)
     response.raise_for_status()
     json_data = response.json()
-    return json_data['fact']
+    return json_data["fact"]
 
 
 events_service = Service(
-    name='events',
-    path='/events',
+    name="events",
+    path="/events",
     description="Webex Teams Webhook",
 )
 
@@ -144,7 +144,7 @@ def post_events_service(request):
     me = api.people.me()
     if message.personId == me.id:
         # Message was sent by me (bot); do not respond.
-        return {'Message': 'OK'}
+        return {"Message": "OK"}
 
     else:
         # Message was sent by someone else; parse message and respond.
@@ -157,4 +157,4 @@ def post_events_service(request):
 
             # Post the fact to the room where the request was received
             api.messages.create(room.id, text=catfact)
-        return {'Message': 'OK'}
+        return {"Message": "OK"}

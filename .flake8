@@ -11,13 +11,14 @@ ignore =
     # W503 line break before binary operator
     W503,
 exclude =
+    __pycache__,
     .git/,
     .idea/,
     .venv/,
     .vscode/,
-    __pycache__,
     dist/,
     docs/conf.py,
+    generator/templates/,
     venv/,
     versioneer.py,
     webexteamssdk/_version.py,

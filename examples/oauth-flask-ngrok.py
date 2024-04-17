@@ -11,28 +11,29 @@ is launched with "./ngrok http 5000"
 
 You must create a Webex Integration in the My Webex Apps section of
 https://developer.webex.com. For details, see
-https://developer.webex.com/docs/integrations . Copy your integration Client ID,
-Client Secret, scopes and set Redirect URI as "http://localhost:5000/callback"
-or the public ngrok URI + "/callback".
+https://developer.webex.com/docs/integrations .
+Copy your integration Client ID, Client Secret, scopes and set Redirect URI as
+"http://localhost:5000/callback" or the public ngrok URI + "/callback".
 
 Copyright (c) 2022 Cisco and/or its affiliates.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 """
 
 
@@ -77,10 +78,10 @@ app.secret_key = "very bad secret"
 @app.route("/")
 def root():
     print("/ requested")
-    return ("""
+    return """
             <p>Hey, this is Flask!</p>
             <p>Click <a href="{}">here</a> to authorize Webex Integration.</p>
-            """.format(url_for("auth")))
+            """.format(url_for("auth"))
 
 
 # OAuth Step 1 - Build authorization URL and redirect user.
@@ -93,17 +94,19 @@ def auth():
     # State is used to prevent CSRF, generate random and save in session.
     # Not mandatory but improves security.
     oauth_state = str(uuid4())
-    session['oauth_state'] = oauth_state
+    session["oauth_state"] = oauth_state
 
     # All parameters we need to pass to authorization service
     oauth_params = {
-        'response_type': "code",
-        'client_id': OAUTH_CLIENT_ID,
-        'redirect_uri': OAUTH_CALLBACK_URI,
-        'scope': OAUTH_SCOPE,
-        'state': oauth_state
+        "response_type": "code",
+        "client_id": OAUTH_CLIENT_ID,
+        "redirect_uri": OAUTH_CALLBACK_URI,
+        "scope": OAUTH_SCOPE,
+        "state": oauth_state,
     }
-    authorizationUri = oauth_authorizationUri + urllib.parse.urlencode(oauth_params)
+    authorizationUri = oauth_authorizationUri + urllib.parse.urlencode(
+        oauth_params
+    )
 
     return redirect(authorizationUri)
 
@@ -121,21 +124,23 @@ def auth():
 def callback():
     print("OAuth callback received")
 
-    oauth_error = request.args.get("error_description", '')
+    oauth_error = request.args.get("error_description", "")
     if oauth_error:
         return "OAuth error: " + oauth_error
 
     oauth_code = request.args.get("code")
     if not oauth_code:
-        return "OAuth error: Authorization provider did not return authorization code."
+        return (
+            "OAuth error: Authorization provider did not return authorization "
+            "code."
+        )
 
     # check state to prevent CSRF
-    oauth_state = request.args.get('state', '')
+    oauth_state = request.args.get("state", "")
     if not oauth_state:
         return "OAuth error: Authorization provider did not return state."
-    if oauth_state != session['oauth_state']:
+    if oauth_state != session["oauth_state"]:
         return "OAuth error: State does not match."
-
 
     # There are three options how the OAuth authorization code can be used
 
@@ -148,17 +153,17 @@ def callback():
         client_id=OAUTH_CLIENT_ID,
         client_secret=OAUTH_CLIENT_SECRET,
         oauth_code=oauth_code,
-        redirect_uri=OAUTH_CALLBACK_URI
+        redirect_uri=OAUTH_CALLBACK_URI,
     )
     print(api.people.me())
     return "Welcome, {}!".format(api.people.me().displayName)
 
-
     # 2.
-    # The API connection object can be initialized with any string. Then use the
-    # access_tokens endpoint to obtain access and refresh tokens. The access
-    # token is valid for 14 days. The refresh token may be saved somewhere and
-    # later used to refresh the access token with access_tokens.refresh()
+    # The API connection object can be initialized with any string. Then use
+    # the access_tokens endpoint to obtain access and refresh tokens. The
+    # access token is valid for 14 days. The refresh token may be saved
+    # somewhere and later used to refresh the access token with
+    # access_tokens.refresh()
     # api = WebexTeamsAPI("any string")
     # access_tokens = api.access_tokens.get(
     #     client_id=OAUTH_CLIENT_ID,
@@ -173,11 +178,10 @@ def callback():
     # print(api.people.me())
     # return "Welcome, {}!".format(api.people.me().displayName)
 
-
     # 3.
     # Alternatively, can use requests to exchange authorization code to access
-    # token without using the Webex SDK. Useful if your authorization process is
-    # separate from the token usage. Save tokens somewhere for later use.
+    # token without using the Webex SDK. Useful if your authorization process
+    # is separate from the token usage. Save tokens somewhere for later use.
     # oauth_data = {
     #     'grant_type': "authorization_code",
     #     'redirect_uri': OAUTH_CALLBACK_URI,
@@ -187,7 +191,10 @@ def callback():
     # }
     # resp = requests.post(oauth_tokenUri, data=oauth_data)
     # if not resp.ok:
-    #     return "OAuth error: Authorization provider returned:<br>{}".format(resp.json()['error_description'])
+    #     return (
+    #         "OAuth error: Authorization provider returned:<br>{}"
+    #         "".format(resp.json()['error_description'])
+    #     )
     # else:
     #     oauth_tokens = resp.json()
     #     access_token = oauth_tokens["access_token"]

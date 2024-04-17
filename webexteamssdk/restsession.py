@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """RestSession class for creating connections to the Webex Teams APIs.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from __future__ import (
     absolute_import,
     division,
@@ -33,6 +32,7 @@ from __future__ import (
 from builtins import *
 
 from future import standard_library
+
 standard_library.install_aliases()
 
 import json
@@ -52,7 +52,10 @@ from .config import DEFAULT_SINGLE_REQUEST_TIMEOUT, DEFAULT_WAIT_ON_RATE_LIMIT
 from .exceptions import MalformedResponse, RateLimitError, RateLimitWarning
 from .response_codes import EXPECTED_RESPONSE_CODE
 from .utils import (
-    check_response_code, check_type, extract_and_parse_json, validate_base_url,
+    check_response_code,
+    check_type,
+    extract_and_parse_json,
+    validate_base_url,
 )
 
 
@@ -94,12 +97,16 @@ def _fix_next_url(next_url, params):
         query_list = parsed_url.query.split("&")
         if "max=null" in query_list:
             query_list.remove("max=null")
-            warnings.warn("`max=null` still present in next-URL returned "
-                          "from Webex Teams", RuntimeWarning)
+            warnings.warn(
+                "`max=null` still present in next-URL returned "
+                "from Webex Teams",
+                RuntimeWarning,
+                stacklevel=1,
+            )
         if params:
             for k, v in params.items():
-                if not any(p.startswith('{}='.format(k)) for p in query_list):
-                    query_list.append('{}={}'.format(k, v))
+                if not any(p.startswith("{}=".format(k)) for p in query_list):
+                    query_list.append("{}={}".format(k, v))
         new_query = "&".join(query_list)
         parsed_url = list(parsed_url)
         parsed_url[4] = new_query
@@ -179,13 +186,17 @@ def user_agent(be_geo_id=None, caller=None):
 class RestSession(object):
     """RESTful HTTP session class for making calls to the Webex Teams APIs."""
 
-    def __init__(self, access_token, base_url,
-                 single_request_timeout=DEFAULT_SINGLE_REQUEST_TIMEOUT,
-                 wait_on_rate_limit=DEFAULT_WAIT_ON_RATE_LIMIT,
-                 proxies=None,
-                 be_geo_id=None,
-                 caller=None,
-                 disable_ssl_verify=False):
+    def __init__(
+        self,
+        access_token,
+        base_url,
+        single_request_timeout=DEFAULT_SINGLE_REQUEST_TIMEOUT,
+        wait_on_rate_limit=DEFAULT_WAIT_ON_RATE_LIMIT,
+        proxies=None,
+        be_geo_id=None,
+        caller=None,
+        disable_ssl_verify=False,
+    ):
         """Initialize a new RestSession object.
 
         Args:
@@ -239,11 +250,13 @@ class RestSession(object):
             self._req_session.proxies.update(proxies)
 
         # Update the HTTP headers for the session
-        self.update_headers({
-            "Authorization": "Bearer " + access_token,
-            "Content-type": "application/json;charset=utf-8",
-            "User-Agent": user_agent(be_geo_id=be_geo_id, caller=caller),
-        })
+        self.update_headers(
+            {
+                "Authorization": "Bearer " + access_token,
+                "Content-type": "application/json;charset=utf-8",
+                "User-Agent": user_agent(be_geo_id=be_geo_id, caller=caller),
+            }
+        )
 
     @property
     def base_url(self):
@@ -362,7 +375,7 @@ class RestSession(object):
                 # Catch rate-limit errors
                 # Wait and retry if automatic rate-limit handling is enabled
                 if self.wait_on_rate_limit:
-                    warnings.warn(RateLimitWarning(response))
+                    warnings.warn(RateLimitWarning(response), stacklevel=1)
                     time.sleep(e.retry_after)
                     continue
                 else:
@@ -472,8 +485,11 @@ class RestSession(object):
             items = json_page.get("items")
 
             if items is None:
-                error_message = "'items' key not found in JSON data: " \
-                                "{!r}".format(json_page)
+                error_message = (
+                    "'items' key not found in JSON data: " "{!r}".format(
+                        json_page
+                    )
+                )
                 raise MalformedResponse(error_message)
 
             else:
@@ -501,8 +517,9 @@ class RestSession(object):
         # Expected response code
         erc = kwargs.pop("erc", EXPECTED_RESPONSE_CODE["POST"])
 
-        response = self.request("POST", url, erc, json=json, data=data,
-                                **kwargs)
+        response = self.request(
+            "POST", url, erc, json=json, data=data, **kwargs
+        )
         return extract_and_parse_json(response)
 
     def put(self, url, json=None, data=None, **kwargs):
@@ -526,8 +543,9 @@ class RestSession(object):
         # Expected response code
         erc = kwargs.pop("erc", EXPECTED_RESPONSE_CODE["PUT"])
 
-        response = self.request("PUT", url, erc, json=json, data=data,
-                                **kwargs)
+        response = self.request(
+            "PUT", url, erc, json=json, data=data, **kwargs
+        )
         return extract_and_parse_json(response)
 
     def delete(self, url, **kwargs):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams Adaptive Card actions.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ from .adaptive_card_component import AdaptiveCardComponent
 
 class OpenUrl(AdaptiveCardComponent):
     """Open URL Action."""
+
     type = "Action.OpenUrl"
 
     def __init__(self, url, title=None, iconURL=None):
@@ -36,12 +37,13 @@ class OpenUrl(AdaptiveCardComponent):
 
         super().__init__(
             serializable_properties=[],
-            simple_properties=['url', 'type', 'title', 'iconURL'],
+            simple_properties=["url", "type", "title", "iconURL"],
         )
 
 
 class Submit(AdaptiveCardComponent):
     """Submit Action."""
+
     type = "Action.Submit"
 
     def __init__(self, data=None, title=None, iconURL=None):
@@ -51,12 +53,13 @@ class Submit(AdaptiveCardComponent):
 
         super().__init__(
             serializable_properties=[],
-            simple_properties=['data', 'title', 'iconURL', 'type'],
+            simple_properties=["data", "title", "iconURL", "type"],
         )
 
 
 class ShowCard(AdaptiveCardComponent):
     """Show Card Action."""
+
     type = "Action.ShowCard"
 
     def __init__(self, card=None, title=None, iconURL=None):
@@ -65,6 +68,6 @@ class ShowCard(AdaptiveCardComponent):
         self.iconURL = iconURL
 
         super().__init__(
-            serializable_properties=['card'],
-            simple_properties=['title', 'type', 'iconURL'],
+            serializable_properties=["card"],
+            simple_properties=["title", "type", "iconURL"],
         )

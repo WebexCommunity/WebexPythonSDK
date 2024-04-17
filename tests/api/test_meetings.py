@@ -31,25 +31,29 @@ from tests.utils import create_string
 
 # Helper Functions
 
+
 def is_valid_meeting(obj):
     return isinstance(obj, webexteamssdk.Meeting) and obj.id is not None
 
+
 def get_start_end_time():
     now = datetime.datetime.now()
-    start = (now + datetime.timedelta(days=1)).strftime('%Y-%m-%dT%H:%M:%S')    # tomorrow same time
-    end = (now + datetime.timedelta(days=1, hours=1)).strftime('%Y-%m-%dT%H:%M:%S') # tomorrow 1 hour later
-    return {'start': start, 'end': end}
-
+    start = (now + datetime.timedelta(days=1)).strftime(
+        "%Y-%m-%dT%H:%M:%S"
+    )  # tomorrow same time
+    end = (now + datetime.timedelta(days=1, hours=1)).strftime(
+        "%Y-%m-%dT%H:%M:%S"
+    )  # tomorrow 1 hour later
+    return {"start": start, "end": end}
 
 
 # Fixtures
 
+
 @pytest.fixture(scope="session")
 def meeting(api):
-
     meeting = api.meetings.create(
-        title=create_string("Meeting"),
-        **get_start_end_time()
+        title=create_string("Meeting"), **get_start_end_time()
     )
 
     yield meeting
@@ -59,12 +63,13 @@ def meeting(api):
     except webexteamssdk.ApiError:
         pass
 
+
 @pytest.fixture(scope="session")
 def webinar(api):
     webinar = api.meetings.create(
         title=create_string("Webinar"),
         scheduledType="webinar",
-        **get_start_end_time()
+        **get_start_end_time(),
     )
 
     yield webinar
@@ -77,16 +82,23 @@ def webinar(api):
 
 # Tests
 
+
 def test_create_meeting(meeting):
     assert is_valid_meeting(meeting)
+
 
 def test_create_webinar(webinar):
     assert is_valid_meeting(webinar)
     assert webinar.scheduledType == "webinar"
 
+
 def test_get_meeting(api, meeting, webinar):
     assert is_valid_meeting(api.meetings.get(meeting.id))
-    assert is_valid_meeting(api.meetings.get(webinar.id)) and api.meetings.get(webinar.id).scheduledType == "webinar"
+    assert (
+        is_valid_meeting(api.meetings.get(webinar.id))
+        and api.meetings.get(webinar.id).scheduledType == "webinar"
+    )
+
 
 def test_list_meetings(api, meeting, webinar):
     meetings_list = list(api.meetings.list())
@@ -95,6 +107,7 @@ def test_list_meetings(api, meeting, webinar):
     assert meeting.id in all_ids
     assert webinar.id in all_ids
 
+
 def test_update_meeting_title(api, meeting):
     new_title = create_string("Updates Meeting")
     updated_meeting = api.meetings.update(
@@ -102,10 +115,11 @@ def test_update_meeting_title(api, meeting):
         title=new_title,
         password=meeting.password,
         start=meeting.start,
-        end=meeting.end
+        end=meeting.end,
     )
     assert is_valid_meeting(updated_meeting)
     assert updated_meeting.title == new_title
+
 
 def test_delete_meeting(api, meeting):
     api.meetings.delete(meeting.id)

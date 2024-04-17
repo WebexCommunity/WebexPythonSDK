@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """WebexTeamsAPI Rooms API fixtures and tests.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,14 +23,24 @@ SOFTWARE.
 """
 
 import itertools
+import os
 
 import pytest
 
 import webexteamssdk
 from tests.utils import create_string
 
+WEBEX_TEAMS_TEST_FILE_URL = os.environ.get("WEBEX_TEAMS_TEST_FILE_URL")
+
+if not WEBEX_TEAMS_TEST_FILE_URL:
+    pytest.skip(
+        "WEBEX_TEAMS_TEST_FILE_URL environment variable is not set.",
+        allow_module_level=True,
+    )
+
 
 # Helper Functions
+
 
 def is_valid_room_tab(obj):
     return isinstance(obj, webexteamssdk.RoomTab) and obj.id is not None
@@ -41,132 +51,63 @@ def are_valid_room_tabs(iterable):
 
 
 # Fixtures
-
 @pytest.fixture(scope="session")
-def group_room(api):
-    room = api.rooms.create(title=create_string("Group Room"))
-
-    yield room
-
-    api.rooms.delete(room.id)
-
-
-@pytest.fixture(scope="session")
-def direct_rooms(api, direct_messages):
-    return [
-        api.rooms.get(message.roomId)
-        for message in direct_messages
-    ]
-
-
-@pytest.fixture(scope="session")
-def team_room(api, team):
-    team_room = api.rooms.create(
-        title=create_string("Team Room"),
-        teamId=team.id,
+def room_tab(api, group_room):
+    room_tab = api.room_tabs.create(
+        roomId=group_room.id,
+        contentUrl=WEBEX_TEAMS_TEST_FILE_URL,
+        displayName=create_string("RoomTab"),
     )
 
-    yield team_room
+    yield room_tab
 
-    api.rooms.delete(team_room.id)
-
-
-@pytest.fixture(scope="session")
-def list_of_rooms(api, group_room, direct_rooms, team_room):
-    return list(api.rooms.list())
+    api.room_tabs.delete(room_tab.id)
 
 
-@pytest.fixture
-def temp_room(api):
-    room = api.rooms.create(title=create_string("Temp Room"))
+@pytest.fixture()
+def temp_room_tab(api, group_room):
+    temp_room_tab = api.room_tabs.create(
+        roomId=group_room.id,
+        contentUrl=WEBEX_TEAMS_TEST_FILE_URL,
+        displayName=create_string("RoomTab"),
+    )
 
-    yield room
+    yield temp_room_tab
 
     try:
-        api.rooms.delete(room.id)
+        api.room_tabs.delete(temp_room_tab.id)
     except webexteamssdk.ApiError:
         pass
 
 
-@pytest.fixture
-def add_rooms(api):
-    rooms = []
-
-    def inner(num_rooms):
-        for i in range(num_rooms):
-            rooms.append(api.rooms.create(create_string("Additional Room")))
-        return rooms
-
-    yield inner
-
-    for room in rooms:
-        try:
-            api.rooms.delete(room.id)
-        except webexteamssdk.ApiError:
-            pass
-
-
 # Tests
 
-def test_list_all_room_tabs(list_of_room_tabs):
-    assert len(list_of_room_tabs) > 0
-    assert are_valid_room_tabs(list_of_room_tabs)
+
+def test_list_all_room_tabs(api, group_room, room_tab):
+    all_room_tabs = list(api.room_tabs.list(roomId=group_room.id))
+    assert len(all_room_tabs) > 0
+    assert are_valid_room_tabs(all_room_tabs)
 
 
-# def test_list_rooms_with_paging(api, list_of_rooms, add_rooms):
-#     page_size = 1
-#     pages = 3
-#     num_rooms = pages * page_size
-#     if len(list_of_rooms) < num_rooms:
-#         add_rooms(num_rooms - len(list_of_rooms))
-#     rooms = api.rooms.list(max=page_size)
-#     rooms_list = list(itertools.islice(rooms, num_rooms))
-#     assert len(rooms_list) == num_rooms
-#     assert are_valid_rooms(rooms_list)
+def test_create_room_tab(room_tab):
+    assert is_valid_room_tab(room_tab)
 
 
-# def test_list_group_rooms(api, group_room):
-#     group_rooms_list = list(api.rooms.list(type='group'))
-#     assert len(group_rooms_list) > 0
-#     assert are_valid_rooms(group_rooms_list)
+def test_get_room_tab(api, room_tab):
+    assert is_valid_room_tab(api.room_tabs.get(room_tab.id))
 
 
-# def test_list_team_rooms(api, team, team_room):
-#     team_rooms_list = list(api.rooms.list(teamId=team.id))
-#     assert len(team_rooms_list) > 0
-#     assert are_valid_rooms(team_rooms_list)
+def test_update_room_tab(api, group_room, room_tab):
+    new_display_name = create_string("RoomTab")
+    updated_room_tab = api.room_tabs.update(
+        roomTabId=room_tab.id,
+        roomId=group_room.id,
+        contentUrl=room_tab.contentUrl,
+        displayName=new_display_name,
+    )
+    assert is_valid_room_tab(updated_room_tab)
+    assert updated_room_tab.displayName == new_display_name
 
 
-# def test_list_direct_rooms(api, direct_rooms):
-#     direct_rooms_list = list(api.rooms.list(type='direct'))
-#     assert len(direct_rooms_list) > 0
-#     assert are_valid_rooms(direct_rooms_list)
-
-
-# def test_create_group_room(group_room):
-#     assert is_valid_room(group_room)
-
-
-# def test_create_team_room(team_room):
-#     assert is_valid_room(team_room)
-
-
-# def test_get_room_details(api, group_room):
-#     room = api.rooms.get(group_room.id)
-#     assert is_valid_room(room)
-
-
-# def test_get_room_meeting_info(api, group_room):
-#     room_meeting_info = api.rooms.get_meeting_info(group_room.id)
-#     assert is_valid_room_meeting_info(room_meeting_info)
-
-
-# def test_update_room_title(api, group_room):
-#     new_title = create_string("Updated Group Room")
-#     room = api.rooms.update(group_room.id, title=new_title)
-#     assert is_valid_room(room)
-#     assert room.title == new_title
-
-
-# def test_delete_room(api, temp_room):
-#     api.rooms.delete(temp_room.id)
+def test_delete_room_tab(api, temp_room_tab):
+    api.room_tabs.delete(temp_room_tab.id)

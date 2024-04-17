@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Package exceptions.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-
 
 from __future__ import (
     absolute_import,
@@ -43,16 +42,19 @@ logger = logging.getLogger(__name__)
 
 class webexteamssdkException(Exception):
     """Base class for all webexteamssdk package exceptions."""
+
     pass
 
 
 class webexteamssdkWarning(webexteamssdkException, Warning):
     """Base class for all webexteamssdk warnings."""
+
     pass
 
 
 class AccessTokenError(webexteamssdkException):
     """Raised when an incorrect Webex Teams Access Token has been provided."""
+
     pass
 
 
@@ -83,8 +85,10 @@ class ApiError(webexteamssdkException):
 
         self.details = None
         """The parsed JSON details from the API response."""
-        if "application/json" in \
-                self.response.headers.get("Content-Type", "").lower():
+        if (
+            "application/json"
+            in self.response.headers.get("Content-Type", "").lower()
+        ):
             try:
                 self.details = self.response.json()
             except ValueError:
@@ -94,8 +98,9 @@ class ApiError(webexteamssdkException):
         """The error message from the parsed API response."""
 
         self.tracking_id = (
-            self.details.get("trackingId") if self.details else None
-            or self.response.headers.get("trackingId")
+            self.details.get("trackingId")
+            if self.details
+            else None or self.response.headers.get("trackingId")
         )
         """The Webex Tracking ID from the response."""
 
@@ -104,8 +109,11 @@ class ApiError(webexteamssdkException):
                 status_code=self.status_code,
                 status=" " + self.status if self.status else "",
                 detail=self.message or self.description or "Unknown Error",
-                tracking_id=" [Tracking ID: " + self.tracking_id + "]"
-                            if self.tracking_id else "",
+                tracking_id=(
+                    " [Tracking ID: " + self.tracking_id + "]"
+                    if self.tracking_id
+                    else ""
+                ),
             )
         )
 
@@ -124,6 +132,7 @@ class ApiWarning(webexteamssdkWarning, ApiError):
 
     Several data attributes are available for inspection.
     """
+
     pass
 
 
@@ -138,7 +147,7 @@ class RateLimitError(ApiError):
         assert isinstance(response, requests.Response)
 
         # Extended exception attributes
-        self.retry_after = max(1, int(response.headers.get('Retry-After', 15)))
+        self.retry_after = max(1, int(response.headers.get("Retry-After", 15)))
         """The `Retry-After` time period (in seconds) provided by Webex Teams.
 
         Defaults to 15 seconds if the response `Retry-After` header isn't
@@ -155,9 +164,11 @@ class RateLimitWarning(ApiWarning, RateLimitError):
     Raised when a rate-limit exceeded message is received and the request will
     be retried.
     """
+
     pass
 
 
 class MalformedResponse(webexteamssdkException):
     """Raised when a malformed response is received from Webex Teams."""
+
     pass

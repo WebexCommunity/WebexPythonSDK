@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex MeetingInvitees data model.
 
-Copyright (c) 2016-2022 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -32,37 +32,35 @@ from __future__ import (
 from builtins import *
 
 
-
 class MeetingInviteeBasicPropertiesMixin(object):
     """MeetingInvitee basic properties."""
-    
+
     @property
     def id(self):
         """Unique id for the meeting invitee"""
         return self._json_data.get("id")
-    
+
     @property
     def email(self):
         """Email address for the meeting invitee"""
         return self._json_data.get("email")
-    
+
     @property
     def displayName(self):
         """Display name of the meeting invitee"""
         return self._json_data.get("displayName")
-    
+
     @property
     def coHost(self):
         """CoHost status of the invitee"""
         return self._json_data.get("coHost")
-    
+
     @property
     def meetingId(self):
         """Unique id for the meeting that the invitee is part of"""
         return self._json_data.get("meetingId")
-    
+
     @property
     def panelist(self):
         """Flag to indicate if the invitee is panelist or not"""
         return self._json_data.get("panelist")
-    

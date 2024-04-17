@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """WebexTeamsAPI Recordings API fixtures and tests.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,18 +24,14 @@ SOFTWARE.
 
 import itertools
 import os
+from datetime import timedelta, timezone
 
 import pytest
 
 import webexteamssdk
 
-from_datetime_string = str(
-    webexteamssdk.WebexTeamsDateTime(2022, 1, 1, 0, 0, 0, 0),
-)
-
-to_datetime_string = str(
-    webexteamssdk.WebexTeamsDateTime.utcnow(),
-)
+to_datetime = webexteamssdk.WebexTeamsDateTime.now(tz=timezone.utc)
+from_datetime = to_datetime - timedelta(days=364)
 
 
 # Helper Functions
@@ -50,7 +46,9 @@ def are_valid_recording(iterable):
 # Fixtures
 @pytest.fixture(scope="session")
 def list_recordings(api):
-    return list(api.recordings.list(_from=from_datetime_string, to=to_datetime_string))
+    return list(
+        api.recordings.list(_from=str(from_datetime), to=str(to_datetime))
+    )
 
 
 @pytest.fixture(scope="session")
@@ -60,14 +58,22 @@ def recording_id(api, list_recordings):
 
 
 # Tests
+# We cannot create recordings programmatically, so we cannot automate testing
+# of the Recordings API - we can only manually test the API after manually
+# creating recordings.
+
+
+@pytest.mark.manual
 def test_recording_list(list_recordings):
     assert len(list_recordings) > 0
     assert are_valid_recording(list_recordings)
 
 
+@pytest.mark.manual
 def test_recording_detail(recording_id):
     assert is_valid_recording(recording_id)
 
 
+@pytest.mark.manual
 def test_delete_recording(api, recording_id):
     api.recordings.delete(recording_id)

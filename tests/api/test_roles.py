@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """WebexTeamsAPI Roles API fixtures and tests.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,7 @@ import webexteamssdk
 
 # Helper Functions
 
+
 def is_valid_role(obj):
     return isinstance(obj, webexteamssdk.Role) and obj.id is not None
 
@@ -38,6 +39,7 @@ def are_valid_roles(iterable):
 
 
 # Fixtures
+
 
 @pytest.fixture(scope="session")
 def roles_list(api):
@@ -50,6 +52,7 @@ def roles_dict(roles_list):
 
 
 # Tests
+
 
 def test_list_roles(roles_list):
     assert are_valid_roles(roles_list)

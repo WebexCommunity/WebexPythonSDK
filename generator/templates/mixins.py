@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex {{ name }}s data model.
 
-Copyright (c) 2016-2022 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

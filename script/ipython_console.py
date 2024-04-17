@@ -4,7 +4,6 @@
 Used to interactively work with the main package contents in IPython.
 """
 
-
 from __future__ import (
     absolute_import,
     division,
@@ -16,7 +15,7 @@ from builtins import *
 
 import webexteamssdk
 
-__copyright__ = "Copyright (c) 2016-2020 Cisco and/or its affiliates."
+__copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 

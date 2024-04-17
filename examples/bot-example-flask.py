@@ -22,7 +22,7 @@ script.
 
 This script supports Python versions 2 and 3.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -43,7 +43,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 # Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
@@ -57,7 +56,7 @@ from builtins import *
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
 __contributors__ = ["Brad Bester <brbester@cisco.com>"]
-__copyright__ = "Copyright (c) 2016-2020 Cisco and/or its affiliates."
+__copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
@@ -68,7 +67,7 @@ from webexteamssdk import WebexTeamsAPI, Webhook
 
 
 # Module constants
-CAT_FACTS_URL = 'https://catfact.ninja/fact'
+CAT_FACTS_URL = "https://catfact.ninja/fact"
 
 
 # Initialize the environment
@@ -89,16 +88,16 @@ def get_catfact():
     response = requests.get(CAT_FACTS_URL, verify=False)
     response.raise_for_status()
     json_data = response.json()
-    return json_data['fact']
+    return json_data["fact"]
 
 
 # Core bot functionality
 # Your Webex Teams webhook should point to http://<serverip>:5000/events
-@flask_app.route('/events', methods=['GET', 'POST'])
+@flask_app.route("/events", methods=["GET", "POST"])
 def webex_teams_webhook_events():
     """Processes incoming requests to the '/events' URI."""
-    if request.method == 'GET':
-        return ("""<!DOCTYPE html>
+    if request.method == "GET":
+        return """<!DOCTYPE html>
                    <html lang="en">
                        <head>
                            <meta charset="UTF-8">
@@ -114,8 +113,8 @@ def webex_teams_webhook_events():
                    <blockquote>{}</blockquote>
                    </body>
                    </html>
-                """.format(get_catfact()))
-    elif request.method == 'POST':
+                """.format(get_catfact())
+    elif request.method == "POST":
         """Respond to inbound webhook JSON HTTP POST from Webex Teams."""
 
         # Get the POST data sent from Webex Teams
@@ -144,7 +143,7 @@ def webex_teams_webhook_events():
         me = api.people.me()
         if message.personId == me.id:
             # Message was sent by me (bot); do not respond.
-            return 'OK'
+            return "OK"
 
         else:
             # Message was sent by someone else; parse message and respond.
@@ -155,9 +154,9 @@ def webex_teams_webhook_events():
                 print("SENDING CAT FACT '{}'".format(cat_fact))
                 # Post the fact to the room where the request was received
                 api.messages.create(room.id, text=cat_fact)
-            return 'OK'
+            return "OK"
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Start the Flask web server
-    flask_app.run(host='0.0.0.0', port=5000)
+    flask_app.run(host="0.0.0.0", port=5000)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams Organization data model.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from __future__ import (
     absolute_import,
     division,
@@ -41,17 +40,17 @@ class OrganizationBasicPropertiesMixin(object):
     @property
     def id(self):
         """A unique identifier for the organization."""
-        return self._json_data.get('id')
+        return self._json_data.get("id")
 
     @property
     def displayName(self):
         """Full name of the organization."""
-        return self._json_data.get('displayName')
+        return self._json_data.get("displayName")
 
     @property
     def created(self):
         """The date and time the organization was created."""
-        created = self._json_data.get('created')
+        created = self._json_data.get("created")
         if created:
             return WebexTeamsDateTime.strptime(created)
         else:

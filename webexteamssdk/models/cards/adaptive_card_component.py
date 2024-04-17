@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams Adaptive Card Component base class.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +38,7 @@ class AdaptiveCardComponent:
       This includes lists of items (i.e. the 'body' field of the adaptive card)
       or single objects that also inherit from Serializable
     """
+
     def __init__(self, serializable_properties, simple_properties):
         """Initialize a serializable object.
 

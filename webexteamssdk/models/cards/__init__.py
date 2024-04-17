@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams Adaptive Cards data models.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,13 +25,27 @@ SOFTWARE.
 from .adaptive_card_component import AdaptiveCardComponent
 from .card import AdaptiveCard
 from .components import (
-    Choice, Column, Fact, Image, Media, MediaSource,
+    Choice,
+    Column,
+    Fact,
+    Image,
+    Media,
+    MediaSource,
     TextBlock,
 )
 from .container import ColumnSet, Container, FactSet, ImageSet
 from .inputs import Choices, Date, Number, Text, Time, Toggle
 from .options import (
-    BlockElementHeight, ChoiceInputStyle, Colors,
-    ContainerStyle, FontSize, FontWeight, HorizontalAlignment, ImageSize,
-    ImageStyle, Spacing, TextInputStyle, VerticalContentAlignment,
+    BlockElementHeight,
+    ChoiceInputStyle,
+    Colors,
+    ContainerStyle,
+    FontSize,
+    FontWeight,
+    HorizontalAlignment,
+    ImageSize,
+    ImageStyle,
+    Spacing,
+    TextInputStyle,
+    VerticalContentAlignment,
 )

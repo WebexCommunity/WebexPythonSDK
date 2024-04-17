@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams Access-Tokens API wrapper.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,11 +27,21 @@ from .adaptive_card_component import AdaptiveCardComponent
 
 class Text(AdaptiveCardComponent):
     """Adaptive Card Text component."""
+
     type = "Input.Text"
 
-    def __init__(self, id, isMultiline=None, maxLength=None, placeholder=None,
-                 style=None, value=None, height=None, separator=None,
-                 spacing=None):
+    def __init__(
+        self,
+        id,
+        isMultiline=None,
+        maxLength=None,
+        placeholder=None,
+        style=None,
+        value=None,
+        height=None,
+        separator=None,
+        spacing=None,
+    ):
         self.id = id
         self.isMultiline = isMultiline
         self.maxLength = maxLength
@@ -45,18 +55,36 @@ class Text(AdaptiveCardComponent):
         super().__init__(
             serializable_properties=[],
             simple_properties=[
-                'id', 'type', 'isMultiline', 'maxLength', 'placeholder',
-                'style', 'value', 'height', 'separator', 'spacing',
+                "id",
+                "type",
+                "isMultiline",
+                "maxLength",
+                "placeholder",
+                "style",
+                "value",
+                "height",
+                "separator",
+                "spacing",
             ],
         )
 
 
 class Number(AdaptiveCardComponent):
     """Adaptive Card Number component."""
+
     type = "Input.Number"
 
-    def __init__(self, id, max=None, min=None, placeholder=None, value=None,
-                 height=None, separator=None, spacing=None):
+    def __init__(
+        self,
+        id,
+        max=None,
+        min=None,
+        placeholder=None,
+        value=None,
+        height=None,
+        separator=None,
+        spacing=None,
+    ):
         self.id = id
         self.max = max
         self.min = min
@@ -69,18 +97,35 @@ class Number(AdaptiveCardComponent):
         super().__init__(
             serializable_properties=[],
             simple_properties=[
-                'type', 'id', 'max', 'min', 'placeholder', 'value', 'height',
-                'separator', 'spacing',
+                "type",
+                "id",
+                "max",
+                "min",
+                "placeholder",
+                "value",
+                "height",
+                "separator",
+                "spacing",
             ],
         )
 
 
 class Date(AdaptiveCardComponent):
     """Adaptive Card Date component."""
+
     type = "Input.Date"
 
-    def __init__(self, id, max=None, min=None, placeholder=None, value=None,
-                 height=None, separator=None, spacing=None):
+    def __init__(
+        self,
+        id,
+        max=None,
+        min=None,
+        placeholder=None,
+        value=None,
+        height=None,
+        separator=None,
+        spacing=None,
+    ):
         self.id = id
         self.max = max
         self.min = min
@@ -93,18 +138,35 @@ class Date(AdaptiveCardComponent):
         super().__init__(
             serializable_properties=[],
             simple_properties=[
-                'type', 'id', 'max', 'min', 'placeholder', 'value', 'height',
-                'separator', 'spacing',
+                "type",
+                "id",
+                "max",
+                "min",
+                "placeholder",
+                "value",
+                "height",
+                "separator",
+                "spacing",
             ],
         )
 
 
 class Time(AdaptiveCardComponent):
     """Adaptive Card Time component."""
+
     type = "Input.Time"
 
-    def __init__(self, id, max=None, min=None, placeholder=None, value=None,
-                 height=None, separator=None, spacing=None):
+    def __init__(
+        self,
+        id,
+        max=None,
+        min=None,
+        placeholder=None,
+        value=None,
+        height=None,
+        separator=None,
+        spacing=None,
+    ):
         self.id = id
         self.max = max
         self.min = min
@@ -117,18 +179,35 @@ class Time(AdaptiveCardComponent):
         super().__init__(
             serializable_properties=[],
             simple_properties=[
-                'id', 'type', 'max', 'min', 'placeholder', 'value', 'height',
-                'separator', 'spacing',
+                "id",
+                "type",
+                "max",
+                "min",
+                "placeholder",
+                "value",
+                "height",
+                "separator",
+                "spacing",
             ],
         )
 
 
 class Toggle(AdaptiveCardComponent):
     """Adaptive Card Toggle component."""
+
     type = "Input.Toggle"
 
-    def __init__(self, title, id, value=None, valueOff=None, valueOn=None,
-                 height=None, separator=None, spacing=None):
+    def __init__(
+        self,
+        title,
+        id,
+        value=None,
+        valueOff=None,
+        valueOn=None,
+        height=None,
+        separator=None,
+        spacing=None,
+    ):
         self.title = title
         self.id = id
         self.value = value
@@ -141,18 +220,35 @@ class Toggle(AdaptiveCardComponent):
         super().__init__(
             serializable_properties=[],
             simple_properties=[
-                'type', 'id', 'title', 'value', 'valueOff', 'valueOn',
-                'height', 'separator', 'spacing',
+                "type",
+                "id",
+                "title",
+                "value",
+                "valueOff",
+                "valueOn",
+                "height",
+                "separator",
+                "spacing",
             ],
         )
 
 
 class Choices(AdaptiveCardComponent):
     """Adaptive Card Choice Set component."""
+
     type = "Input.ChoiceSet"
 
-    def __init__(self, choices, id, isMultiSelect=None, style=None, value=None,
-                 height=None, separator=None, spacing=None):
+    def __init__(
+        self,
+        choices,
+        id,
+        isMultiSelect=None,
+        style=None,
+        value=None,
+        height=None,
+        separator=None,
+        spacing=None,
+    ):
         self.choices = choices
         self.id = id
         self.isMultiSelect = isMultiSelect
@@ -163,9 +259,16 @@ class Choices(AdaptiveCardComponent):
         self.spacing = spacing
 
         super().__init__(
-            serializable_properties=['choices'],
+            serializable_properties=["choices"],
             simple_properties=[
-                'id', 'type', 'isMultiSelect', 'style', 'value', 'height',
-                'separator', 'spacing',
+                "choices",
+                "id",
+                "type",
+                "isMultiSelect",
+                "style",
+                "value",
+                "height",
+                "separator",
+                "spacing",
             ],
         )
