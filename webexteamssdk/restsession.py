@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from __future__ import (
     absolute_import,
     division,
@@ -102,6 +101,7 @@ def _fix_next_url(next_url, params):
                 "`max=null` still present in next-URL returned "
                 "from Webex Teams",
                 RuntimeWarning,
+                stacklevel=1,
             )
         if params:
             for k, v in params.items():
@@ -375,7 +375,7 @@ class RestSession(object):
                 # Catch rate-limit errors
                 # Wait and retry if automatic rate-limit handling is enabled
                 if self.wait_on_rate_limit:
-                    warnings.warn(RateLimitWarning(response))
+                    warnings.warn(RateLimitWarning(response), stacklevel=1)
                     time.sleep(e.retry_after)
                     continue
                 else:
@@ -486,8 +486,9 @@ class RestSession(object):
 
             if items is None:
                 error_message = (
-                    "'items' key not found in JSON data: "
-                    "{!r}".format(json_page)
+                    "'items' key not found in JSON data: " "{!r}".format(
+                        json_page
+                    )
                 )
                 raise MalformedResponse(error_message)
 

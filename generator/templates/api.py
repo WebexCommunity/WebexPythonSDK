@@ -73,8 +73,11 @@ class {{ name }}sAPI(object):
         self._object_factory = object_factory
     {% if "list" in methods %}
     @generator_container
-    def list(self, {% for qp in query_parameters -%}
-                    {{ qp["name"] }}{% if qp["optional"] %}=None{% endif %},
+    def list(self, {% for up in url_parameters -%}
+                    {{ up['name'] }},
+                   {% endfor -%}
+                   {% for qp in query_parameters -%}
+                    {{ qp['name'] }}{% if qp['optional'] %}=None{% endif %},
                    {% endfor -%}
             headers={},
              **request_parameters):
@@ -94,6 +97,9 @@ class {{ name }}sAPI(object):
         container.
 
         Args:
+            {% for up in url_parameters -%}
+            {{ up['name'] }} ({{ up['type']}}): {{ up['description']}}
+            {% endfor -%}
             {% for qp in query_parameters -%}
             {{ qp['name'] }} ({{ qp['type']}}): {{ qp['description']}}
             {% endfor -%}
@@ -110,6 +116,9 @@ class {{ name }}sAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
+        {% for up in url_parameters -%}
+        check_type({{ up['name'] }}, {{ up['type'] }})
+        {% endfor -%}
         {% for qp in query_parameters -%}
         check_type({{ qp['name'] }}, {{ qp['type'] }}{% if qp['optional'] %}, optional=True{% endif %})
         {% endfor %}
@@ -126,12 +135,22 @@ class {{ name }}sAPI(object):
             params['{{qp['requestName']}}'] = params.pop("{{ qp['name'] }}")
         {% endif %}
         {%- endfor %}
+        {%- if url_parameters %}
+            {%- set ups = [] -%}
+            {% for up in url_parameters|map(attribute='name') -%}
+            {% set ups = ups.append( up+"="+up ) %}
+            {%- endfor %}
+        # Add URL parameters to the API endpoint
+        request_url = API_ENDPOINT.format({{ ups|join(", ") }})
+        {% else %}
+        request_url = API_ENDPOINT
+        {% endif %}
         # API request - get items
 
         # Update headers
         for k, v in headers.items():
             self._session.headers[k] = v
-        items = self._session.get_items(API_ENDPOINT, params=params)
+        items = self._session.get_items(request_url, params=params)
 
         # Remove headers
         for k, v in headers.items():
@@ -142,14 +161,20 @@ class {{ name }}sAPI(object):
             yield self._object_factory(OBJECT_TYPE, item)
     {% endif %}
     {% if "create" in methods %}
-    def create(self, {% for cp in create_parameters -%}
-                     {{ cp['name'] }}{% if cp['optional'] %}=None{% endif %},
+    def create(self, {% for up in url_parameters -%}
+                      {{ up['name'] }},
+                     {% endfor -%}
+                     {% for cp in create_parameters -%}
+                      {{ cp['name'] }}{% if cp['optional'] %}=None{% endif %},
                      {% endfor -%}
 
                     **request_parameters):
         """Create a {{ object_type }}.
 
         Args:
+            {% for up in url_parameters -%}
+            {{ up['name'] }} ({{ up['type']}}): {{ up['description']}}
+            {% endfor -%}
             {% for cp in create_parameters -%}
             {{ cp['name'] }} ({{ cp['type'] }}): {{ cp['description'] }}
             {% endfor -%}
@@ -165,6 +190,9 @@ class {{ name }}sAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
+        {% for up in url_parameters -%}
+        check_type({{ up['name'] }}, {{ up['type'] }})
+        {% endfor -%}
         {% for cp in create_parameters -%}
         check_type({{ cp['name'] }}, {{ cp['type'] }}{% if cp['optional'] %}, optional=True{% endif %})
         {% endfor %}
@@ -181,18 +209,31 @@ class {{ name }}sAPI(object):
             post_data['{{cp['requestName']}}'] = post_data.pop("{{ cp['name'] }}")
         {% endif %}
         {%- endfor %}
+        {%- if url_parameters %}
+            {%- set ups = [] -%}
+            {% for up in url_parameters|map(attribute='name') -%}
+            {% set ups = ups.append( up+"="+up ) %}
+            {%- endfor %}
+        # Add URL parameters to the API endpoint
+        request_url = API_ENDPOINT.format({{ ups|join(", ") }})
+        {% else %}
+        request_url = API_ENDPOINT
+        {% endif %}
         # API request
-        json_data = self._session.post(API_ENDPOINT, json=post_data)
+        json_data = self._session.post(request_url, json=post_data)
 
         # Return a membership object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
     {% endif %}
 
     {% if "get" in methods %}
-    def get(self, {{ object_type }}Id):
+    def get(self, {% for up in url_parameters %}{{up['name']}}, {% endfor %}{{ object_type }}Id):
         """Get details for a {{ object_type }}, by ID.
 
         Args:
+            {% for up in url_parameters -%}
+            {{up['name']}} ({{ up['type']}}): {{ up['description']}}
+            {% endfor -%}
             {{ object_type }}Id(basestring): The {{ object_type }} ID.
 
         Returns:
@@ -206,18 +247,26 @@ class {{ name }}sAPI(object):
         """
         check_type({{ object_type }}Id, basestring)
 
+        # Add URL parameters to the API endpoint
+        request_url = API_ENDPOINT.format({{ ups|join(", ") }})
+        {% else %}
+        request_url = API_ENDPOINT
+        {% endif %}
         # API request
-        json_data = self._session.get(API_ENDPOINT + '/' + {{ object_type }}Id)
+        json_data = self._session.get(request_url + '/' + {{ object_type }}Id)
 
         # Return a membership object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
     {% endif %}
 
     {% if "delete" in methods %}
-    def delete(self, {{ object_type }}Id):
+    def delete(self, {% for up in url_parameters %}{{up['name']}}, {% endfor %}{{ object_type }}Id):
         """Delete a {{ object_type }}, by ID.
 
         Args:
+            {% for up in url_parameters -%}
+            {{up['name']}} ({{ up['type']}}): {{ up['description']}}
+            {% endfor -%}
             {{ object_type }}Id(basestring): The {{ object_type }} ID.
 
         Raises:
@@ -225,10 +274,23 @@ class {{ name }}sAPI(object):
             ApiError: If the Webex Teams cloud returns an error.
 
         """
+        {% for up in url_parameters -%}
+        check_type({{ up['name'] }}, {{ up['type'] }})
+        {% endfor -%}
         check_type({{ object_type }}Id, basestring)
+        {%- if url_parameters %}
+            {%- set ups = [] -%}
+            {% for up in url_parameters|map(attribute='name') -%}
+            {% set ups = ups.append( up+"="+up ) %}
+            {%- endfor %}
 
+        # Add URL parameters to the API endpoint
+        request_url = API_ENDPOINT.format({{ ups|join(", ") }})
+        {% else %}
+        request_url = API_ENDPOINT
+        {% endif %}
         # API request
-        self._session.delete(API_ENDPOINT + '/' + {{ object_type }}Id)
+        self._session.delete(request_url + '/' + {{ object_type }}Id)
     {% endif %}
 
     {% if "update" in methods %}
@@ -241,6 +303,9 @@ class {{ name }}sAPI(object):
         """Update properties for a {{ object_type }}, by ID.
 
         Args:
+            {% for up in url_parameters -%}
+            {{up['name']}} ({{ up['type']}}): {{ up['description']}}
+            {% endfor -%}
             {{ object_type }}Id(basestring): The {{ object_type }} ID.
             {% for up in update_parameters -%}
             {{ up['name'] }} ({{ up['type']}}): {{ up['description']}}
@@ -267,16 +332,24 @@ class {{ name }}sAPI(object):
             {{ up['name'] }}={{ up['name'] }},
             {% endfor %}
         )
-
         {% for up in update_parameters -%}
         {% if up['requestName'] %}
         if {{ up['name'] }}:
             put_data['{{up['requestName']}}'] = put_data.pop("{{ up['name'] }}")
         {% endif %}
         {%- endfor %}
-
+        {%- if url_parameters %}
+            {%- set ups = [] -%}
+            {% for up in url_parameters|map(attribute='name') -%}
+            {% set ups = ups.append( up+"="+up ) %}
+            {%- endfor %}
+        # Add URL parameters to the API endpoint
+        request_url = API_ENDPOINT.format({{ ups|join(", ") }})
+        {% else %}
+        request_url = API_ENDPOINT
+        {% endif %}
         # API request
-        json_data = self._session.put(API_ENDPOINT + '/' + {{ object_type }}Id,
+        json_data = self._session.put(request_url + '/' + {{ object_type }}Id,
                                       json=put_data)
 
         # Return a membership object created from the response JSON data

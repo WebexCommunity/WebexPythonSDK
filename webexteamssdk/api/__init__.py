@@ -54,6 +54,7 @@ from .webhooks import WebhooksAPI
 from .meetings import MeetingsAPI
 from .meeting_templates import MeetingTemplatesAPI
 from .meeting_invitees import MeetingInviteesAPI
+from .meeting_registrants import MeetingRegistrantsAPI
 
 import os
 
@@ -238,6 +239,9 @@ class WebexTeamsAPI(object):
             self._session, object_factory
         )
         self.meeting_invitees = MeetingInviteesAPI(
+            self._session, object_factory
+        )
+        self.meeting_registrants = MeetingRegistrantsAPI(
             self._session, object_factory
         )
 

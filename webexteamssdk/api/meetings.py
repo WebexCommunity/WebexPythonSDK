@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from __future__ import (
     absolute_import,
     division,
@@ -89,7 +88,7 @@ class MeetingsAPI(object):
         hostEmail=None,
         siteUrl=None,
         integrationTag=None,
-        headers={},
+        headers=None,
         **request_parameters,
     ):
         """List meetings.
@@ -153,6 +152,9 @@ class MeetingsAPI(object):
         check_type(hostEmail, basestring, optional=True)
         check_type(siteUrl, basestring, optional=True)
         check_type(integrationTag, basestring, optional=True)
+        check_type(headers, dict, optional=True)
+
+        headers = headers if headers is not None else {}
 
         params = dict_from_items_with_values(
             request_parameters,
@@ -175,15 +177,17 @@ class MeetingsAPI(object):
         if from_:
             params["from"] = params.pop("from_")
 
+        request_url = API_ENDPOINT
+
         # API request - get items
 
         # Update headers
         for k, v in headers.items():
             self._session.headers[k] = v
-        items = self._session.get_items(API_ENDPOINT, params=params)
+        items = self._session.get_items(request_url, params=params)
 
         # Remove headers
-        for k, v in headers.items():
+        for k in headers.keys():
             del self._session.headers[k]
 
         # Yield membership objects created from the returned items JSON objects
@@ -374,8 +378,10 @@ class MeetingsAPI(object):
             breakoutSessions=breakoutSessions,
         )
 
+        request_url = API_ENDPOINT
+
         # API request
-        json_data = self._session.post(API_ENDPOINT, json=post_data)
+        json_data = self._session.post(request_url, json=post_data)
 
         # Return a membership object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -396,9 +402,10 @@ class MeetingsAPI(object):
 
         """
         check_type(meetingId, basestring)
+        request_url = API_ENDPOINT
 
         # API request
-        json_data = self._session.get(API_ENDPOINT + "/" + meetingId)
+        json_data = self._session.get(request_url + "/" + meetingId)
 
         # Return a membership object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
@@ -415,9 +422,10 @@ class MeetingsAPI(object):
 
         """
         check_type(meetingId, basestring)
+        request_url = API_ENDPOINT
 
         # API request
-        self._session.delete(API_ENDPOINT + "/" + meetingId)
+        self._session.delete(request_url + "/" + meetingId)
 
     def update(
         self,
@@ -586,9 +594,11 @@ class MeetingsAPI(object):
             enabledBreakoutSessions=enabledBreakoutSessions,
         )
 
+        request_url = API_ENDPOINT
+
         # API request
         json_data = self._session.put(
-            API_ENDPOINT + "/" + meetingId, json=put_data
+            request_url + "/" + meetingId, json=put_data
         )
 
         # Return a membership object created from the response JSON data

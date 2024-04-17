@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 import os
 import warnings
 
@@ -59,7 +58,7 @@ def _get_access_token():
                         new=ACCESS_TOKEN_ENVIRONMENT_VARIABLE,
                     )
                 )
-                warnings.warn(env_var_deprecation_warning)
+                warnings.warn(env_var_deprecation_warning, stacklevel=2)
                 return access_token
 
 

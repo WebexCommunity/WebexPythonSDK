@@ -72,6 +72,8 @@ from .mixins.meetings import MeetingBasicPropertiesMixin
 from .mixins.meeting_templates import MeetingTemplateBasicPropertiesMixin
 from .mixins.meeting_invitees import MeetingInviteeBasicPropertiesMixin
 
+from .mixins.meeting_registrants import MeetingRegistrantBasicPropertiesMixin
+
 
 class ImmutableData(object):
     """Model a Webex Teams JSON object as an immutable native Python object."""
@@ -117,8 +119,9 @@ class ImmutableData(object):
                 return item_data
         else:
             raise AttributeError(
-                "'{}' object has no attribute '{}'"
-                "".format(self.__class__.__name__, item)
+                "'{}' object has no attribute '{}'" "".format(
+                    self.__class__.__name__, item
+                )
             )
 
     def __str__(self):
@@ -218,7 +221,7 @@ class Event(ImmutableData, EventBasicPropertiesMixin):
 
     @property
     def data(self):
-        """The event’s data representation.
+        """The event's data representation.
 
         This object will contain the event's resource, such as memberships or
         messages, at the time the event took place.
@@ -299,8 +302,12 @@ class MeetingTemplate(ImmutableData, MeetingTemplateBasicPropertiesMixin):
     """Webex MeetingTemplate data model"""
 
 
-class MeetingInvitees(ImmutableData, MeetingInviteeBasicPropertiesMixin):
-    """Webex MeetingInvitees data model"""
+class MeetingInvitee(ImmutableData, MeetingInviteeBasicPropertiesMixin):
+    """Webex MeetingInvitee data model"""
+
+
+class MeetingRegistrant(ImmutableData, MeetingRegistrantBasicPropertiesMixin):
+    """Webex MeetingRegistrant data model"""
 
 
 immutable_data_models = defaultdict(
@@ -326,7 +333,8 @@ immutable_data_models = defaultdict(
     recording=Recording,
     meeting=Meeting,
     meetingTemplate=MeetingTemplate,
-    meetingInvitee=MeetingInvitees,
+    meetingInvitee=MeetingInvitee,
+    meetingRegistrant=MeetingRegistrant,
 )
 
 

@@ -75,7 +75,7 @@ def add_teams(api):
     teams = []
 
     def inner(num_teams):
-        for i in range(num_teams):
+        for _ in range(num_teams):
             teams.append(api.teams.create(create_string("Additional Team")))
         return teams
 

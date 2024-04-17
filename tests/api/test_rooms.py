@@ -111,7 +111,7 @@ def add_rooms(api):
     rooms = []
 
     def inner(num_rooms):
-        for i in range(num_rooms):
+        for _ in range(num_rooms):
             rooms.append(api.rooms.create(create_string("Additional Room")))
         return rooms
 

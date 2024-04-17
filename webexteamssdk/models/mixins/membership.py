@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from __future__ import (
     absolute_import,
     division,
@@ -81,6 +80,7 @@ class MembershipBasicPropertiesMixin(object):
         warnings.warn(
             "The `isMonitor` attribute has been deprecated.",
             DeprecationWarning,
+            stacklevel=1,
         )
         return self._json_data.get("isMonitor")
 

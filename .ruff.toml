@@ -1,10 +1,5 @@
 line-length = 79
 
-# B: flake8-bugbear
-# Q: flake8-quotes
-extend-select = [ "B", "Q", "W" ]
-
-ignore-init-module-imports = true
 
 extend-exclude = [
     "versioneer.py",
@@ -13,6 +8,11 @@ extend-exclude = [
 ]
 
 [lint]
+# B: flake8-bugbear
+# Q: flake8-quotes
+extend-select = [ "B", "Q", "W" ]
+
+ignore-init-module-imports = true
 ignore = [
     # E402 module level import not at top of file
     "E402",

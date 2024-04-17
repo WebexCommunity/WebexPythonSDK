@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from __future__ import (
     absolute_import,
     division,
@@ -81,7 +80,7 @@ class MeetingTemplatesAPI(object):
         isStandard=None,
         hostEmail=None,
         siteUrl=None,
-        headers={},
+        headers=None,
         **request_parameters,
     ):
         """List meetingTemplates.
@@ -128,6 +127,9 @@ class MeetingTemplatesAPI(object):
         check_type(isStandard, bool, optional=True)
         check_type(hostEmail, bool, optional=True)
         check_type(siteUrl, bool, optional=True)
+        check_type(headers, dict, optional=True)
+
+        headers = headers or {}
 
         params = dict_from_items_with_values(
             request_parameters,
@@ -147,7 +149,7 @@ class MeetingTemplatesAPI(object):
         items = self._session.get_items(API_ENDPOINT, params=params)
 
         # Remove headers
-        for k, v in headers.items():
+        for k in headers.keys():
             del self._session.headers[k]
 
         # Yield membership objects created from the returned items JSON objects
