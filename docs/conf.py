@@ -11,7 +11,7 @@ from webexteamssdk._version import get_versions
 
 
 project = "webexteamssdk"
-copyright = "Copyright (c) 2016-2020 Cisco and/or its affiliates."
+copyright = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 author = "Chris Lunsford"
 version = get_versions()["version"]
 release = get_versions()["version"]

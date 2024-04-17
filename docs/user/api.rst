@@ -434,4 +434,4 @@ Actions
 
 .. autoclass:: webexteamssdk.cards.actions.ShowCard
 
-*Copyright (c) 2016-2020 Cisco and/or its affiliates.*
+*Copyright (c) 2016-2024 Cisco and/or its affiliates.*

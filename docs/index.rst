@@ -66,7 +66,7 @@ Webex Teams for Developers
 Leveraging the Webex Teams APIs and developing on top of the Webex Teams cloud is easy.  Signup for a `free account`_ and then head over to the `Webex Teams for Developers`_ website to learn more.
 
 
-*Copyright (c) 2016-2020 Cisco and/or its affiliates.*
+*Copyright (c) 2016-2024 Cisco and/or its affiliates.*
 
 
 .. _free account: `Webex Teams`

@@ -167,7 +167,7 @@ The development team may make additional name changes as the library evolves wit
 developer.webex.com.
 
 
-*Copyright (c) 2016-2020 Cisco and/or its affiliates.*
+*Copyright (c) 2016-2024 Cisco and/or its affiliates.*
 
 
 .. _Release Plan: https://github.com/CiscoDevNet/webexteamssdk/wiki/Release-Plans

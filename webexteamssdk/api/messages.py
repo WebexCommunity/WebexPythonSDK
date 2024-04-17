@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams Messages API wrapper.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-
 
 from __future__ import (
     absolute_import,
@@ -85,7 +84,7 @@ class MessagesAPI(object):
         before=None,
         beforeMessage=None,
         max=50,
-        **request_parameters
+        **request_parameters,
     ):
         """Lists messages in a room.
 
@@ -156,7 +155,7 @@ class MessagesAPI(object):
         personId=None,
         personEmail=None,
         parentId=None,
-        **request_parameters
+        **request_parameters,
     ):
         """List all messages in a 1:1 (direct) room.
 
@@ -223,7 +222,7 @@ class MessagesAPI(object):
         markdown=None,
         files=None,
         attachments=None,
-        **request_parameters
+        **request_parameters,
     ):
         """Post a message to a room.
 

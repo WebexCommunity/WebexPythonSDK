@@ -11,7 +11,7 @@ WEBEX_TEAMS_ACCESS_TOKEN environment variable.  You must have this environment
 variable set to run this script.
 
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-
 
 from __future__ import print_function
 from webexteamssdk import WebexTeamsAPI
@@ -60,8 +59,9 @@ rooms = api.rooms.list()
 existing_demo_rooms = [room for room in rooms if room.title == DEMO_ROOM_NAME]
 if existing_demo_rooms:
     print(
-        "Found {} existing room(s); deleting them."
-        "".format(len(existing_demo_rooms))
+        "Found {} existing room(s); deleting them." "".format(
+            len(existing_demo_rooms)
+        )
     )
     for room in existing_demo_rooms:
         # Delete the room

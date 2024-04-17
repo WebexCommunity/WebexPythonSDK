@@ -9,7 +9,7 @@ from setuptools import find_packages, setup
 import versioneer
 
 
-__copyright__ = "Copyright (c) 2016-2020 Cisco and/or its affiliates."
+__copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 

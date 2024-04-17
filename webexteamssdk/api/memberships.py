@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Webex Teams Memberships API wrapper.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-
 
 from __future__ import (
     absolute_import,
@@ -79,7 +78,7 @@ class MembershipsAPI(object):
         personId=None,
         personEmail=None,
         max=None,
-        **request_parameters
+        **request_parameters,
     ):
         """List room memberships.
 
@@ -147,7 +146,7 @@ class MembershipsAPI(object):
         personId=None,
         personEmail=None,
         isModerator=False,
-        **request_parameters
+        **request_parameters,
     ):
         """Add someone to a room by Person ID or email address.
 

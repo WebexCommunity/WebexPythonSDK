@@ -22,7 +22,7 @@ script.
 
 This script supports Python versions 2 and 3.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -43,7 +43,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 # Use future for Python v2 and v3 compatibility
 from __future__ import (
     absolute_import,
@@ -57,7 +56,7 @@ from builtins import *
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
 __contributors__ = ["Brad Bester <brbester@cisco.com>"]
-__copyright__ = "Copyright (c) 2016-2020 Cisco and/or its affiliates."
+__copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
@@ -114,9 +113,7 @@ def webex_teams_webhook_events():
                    <blockquote>{}</blockquote>
                    </body>
                    </html>
-                """.format(
-            get_catfact()
-        )
+                """.format(get_catfact())
     elif request.method == "POST":
         """Respond to inbound webhook JSON HTTP POST from Webex Teams."""
 

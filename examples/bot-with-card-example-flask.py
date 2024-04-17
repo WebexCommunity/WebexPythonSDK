@@ -31,7 +31,7 @@ the space.
 
 This script should support Python versions 3.6+ only.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -52,7 +52,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 import os
 import sys
 from urllib.parse import urljoin
@@ -66,7 +65,7 @@ from webexteamssdk import WebexTeamsAPI, Webhook
 __author__ = "JP Shipherd"
 __author_email__ = "jshipher@cisco.com"
 __contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
-__copyright__ = "Copyright (c) 2016-2020 Cisco and/or its affiliates."
+__copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 

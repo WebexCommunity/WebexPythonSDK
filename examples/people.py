@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 #  -*- coding: utf-8 -*-
-""" Script to demonstrate the use of webexteamssdk for the people API
+"""Script to demonstrate the use of webexteamssdk for the people API
 
 The package natively retrieves your Webex Teams access token from the
 WEBEX_TEAMS_ACCESS_TOKEN environment variable.  You must have this environment
 variable set to run this script.
 
-Copyright (c) 2016-2020 Cisco and/or its affiliates.
+Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from __future__ import (
     absolute_import,
     division,
@@ -40,7 +39,7 @@ from builtins import *
 __author__ = "Jose Bogarín Solano"
 __author_email__ = "jose@bogarin.co.cr"
 __contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
-__copyright__ = "Copyright (c) 2016-2020 Cisco and/or its affiliates."
+__copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 from webexteamssdk import WebexTeamsAPI
