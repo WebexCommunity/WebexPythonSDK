@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install Dependencies
-        run: script/installdeps
+        run: pip install -r requirements.txt
       - name: Get Webex Token
         run: |
           echo "WEBEX_TEAMS_ACCESS_TOKEN=$(curl -s ${{ vars.WEBEX_TOKEN_KEEPER_URL }} | jq -r .access_token)" >> "${GITHUB_ENV}"
