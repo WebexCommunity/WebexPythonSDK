@@ -13,8 +13,9 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
+      - name: Install Dependencies
+        run: script/installdeps
       - name: Get Webex Token
-        id: get_token
         run: |
           echo "WEBEX_TEAMS_ACCESS_TOKEN=$(curl -s ${{ vars.WEBEX_TOKEN_KEEPER_URL }} | jq -r .access_token)" >> "${GITHUB_ENV}"
       - name: Build and Test
