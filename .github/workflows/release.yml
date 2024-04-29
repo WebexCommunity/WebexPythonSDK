@@ -18,9 +18,9 @@ jobs:
       - name: Get Webex Token
         id: webex_token
         run: |
-          echo "WEBEX_TEAMS_ACCESS_TOKEN=$(curl -s ${{ secrets.WEBEX_TOKEN_KEEPER_URL }} | jq -r .access_token)" >> "$GITHUB_OUTPUT"
-      - name: Hide Webex Token
-        run: echo "::add-mask::${{ steps.webex_token.outputs.WEBEX_TEAMS_ACCESS_TOKEN }}"
+          WEBEX_TEAMS_ACCESS_TOKEN=$(curl -s ${{ secrets.WEBEX_TOKEN_KEEPER_URL }} | jq -r .access_token)
+          echo "WEBEX_TEAMS_ACCESS_TOKEN=$WEBEX_TEAMS_ACCESS_TOKEN" >> "$GITHUB_OUTPUT"
+          echo "::add-mask::$WEBEX_TEAMS_ACCESS_TOKEN"
       - name: Build and Test
         run: script/ci
         env:
