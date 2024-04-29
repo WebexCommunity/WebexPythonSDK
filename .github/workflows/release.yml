@@ -1,0 +1,39 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*"
+      - "v*.*.*"
+
+jobs:
+  pypi:
+    name: Release to PyPI
+    runs-on: ubuntu-latest
+    environment: pypi.org
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+      - name: Get Webex Token
+        id: webex_token
+        run: |
+          WEBEX_TEAMS_ACCESS_TOKEN=$(curl -s ${{ secrets.WEBEX_TOKEN_KEEPER_URL }} | jq -r .access_token)
+          echo "WEBEX_TEAMS_ACCESS_TOKEN=$WEBEX_TEAMS_ACCESS_TOKEN" >> "$GITHUB_OUTPUT"
+          echo "::add-mask::$WEBEX_TEAMS_ACCESS_TOKEN"
+      - name: Build and Test
+        run: script/ci
+        env:
+          WEBEX_TEAMS_ACCESS_TOKEN: ${{ steps.webex_token.outputs.WEBEX_TEAMS_ACCESS_TOKEN }}
+          WEBEX_TEAMS_TEST_DOMAIN: ${{ vars.WEBEX_TEAMS_TEST_DOMAIN }}
+          WEBEX_TEAMS_TEST_ID_START: ${{ vars.WEBEX_TEAMS_TEST_ID_START }}
+          WEBEX_TEAMS_TEST_FILE_URL: ${{ vars.WEBEX_TEAMS_TEST_FILE_URL }}
+          WEBEX_TEAMS_GUEST_ISSUER_ID: ${{ secrets.WEBEX_TEAMS_GUEST_ISSUER_ID }}
+          WEBEX_TEAMS_GUEST_ISSUER_SECRET: ${{ secrets.WEBEX_TEAMS_GUEST_ISSUER_SECRET }}
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: ${{ vars.PYPI_REPOSITORY_URL }}
+          print-hash: true
