@@ -22,3 +22,7 @@ dist/
 docs/_build/
 *.egg-info/
 .DS_Store
+
+
+# PyPI local configuration files
+.pypirc
