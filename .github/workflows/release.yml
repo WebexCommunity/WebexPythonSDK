@@ -7,8 +7,8 @@ on:
       - "v*.*.*"
 
 jobs:
-  pypi-publish:
-    name: Upload release to PyPI
+  pypi:
+    name: Release to PyPI
     runs-on: ubuntu-latest
     environment: test.pypi.org
     permissions:
