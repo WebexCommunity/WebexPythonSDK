@@ -1,0 +1,43 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: "0 13 * * 1"
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    environment: chris-1xrn.wbx.ai
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+      - name: Get Webex Token
+        id: webex_token
+        run: |
+          WEBEX_TEAMS_ACCESS_TOKEN=$(curl -s ${{ secrets.WEBEX_TOKEN_KEEPER_URL }} | jq -r .access_token)
+          echo "WEBEX_TEAMS_ACCESS_TOKEN=$WEBEX_TEAMS_ACCESS_TOKEN" >> "$GITHUB_OUTPUT"
+          echo "::add-mask::$WEBEX_TEAMS_ACCESS_TOKEN"
+      - name: Build and Test
+        run: script/ci
+        env:
+          WEBEX_TEAMS_ACCESS_TOKEN: ${{ steps.webex_token.outputs.WEBEX_TEAMS_ACCESS_TOKEN }}
+          WEBEX_TEAMS_TEST_DOMAIN: ${{ vars.WEBEX_TEAMS_TEST_DOMAIN }}
+          WEBEX_TEAMS_TEST_ID_START: ${{ vars.WEBEX_TEAMS_TEST_ID_START }}
+          WEBEX_TEAMS_TEST_FILE_URL: ${{ vars.WEBEX_TEAMS_TEST_FILE_URL }}
+          WEBEX_TEAMS_GUEST_ISSUER_ID: ${{ secrets.WEBEX_TEAMS_GUEST_ISSUER_ID }}
+          WEBEX_TEAMS_GUEST_ISSUER_SECRET: ${{ secrets.WEBEX_TEAMS_GUEST_ISSUER_SECRET }}
+      - name: Upload Distribution Files
+        uses: actions/upload-artifact@v4
+        with:
+          name: distribution-files
+          path: dist/
