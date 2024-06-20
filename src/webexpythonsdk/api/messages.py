@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex Messages API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,16 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
 
-from past.builtins import basestring
 from requests_toolbelt import MultipartEncoder
 
 from webexpythonsdk.models.cards import AdaptiveCard
@@ -103,13 +94,13 @@ class MessagesAPI(object):
         container.
 
         Args:
-            roomId(basestring): List messages for a room, by ID.
-            parentId(basestring): List messages with a parent, by ID.
-            mentionedPeople(basestring): List messages where the caller is
+            roomId(str): List messages for a room, by ID.
+            parentId(str): List messages with a parent, by ID.
+            mentionedPeople(str): List messages where the caller is
                 mentioned by specifying "me" or the caller `personId`.
-            before(basestring): List messages sent before a date and time, in
+            before(str): List messages sent before a date and time, in
                 ISO8601 format.
-            beforeMessage(basestring): List messages sent before a message,
+            beforeMessage(str): List messages sent before a message,
                 by ID.
             max(int): Limit the maximum number of items returned from the Webex
                 service per request.
@@ -125,11 +116,11 @@ class MessagesAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(roomId, basestring)
-        check_type(parentId, basestring, optional=True)
-        check_type(mentionedPeople, basestring, optional=True)
-        check_type(before, basestring, optional=True)
-        check_type(beforeMessage, basestring, optional=True)
+        check_type(roomId, str)
+        check_type(parentId, str, optional=True)
+        check_type(mentionedPeople, str, optional=True)
+        check_type(before, str, optional=True)
+        check_type(beforeMessage, str, optional=True)
         check_type(max, int, optional=True)
 
         params = dict_from_items_with_values(
@@ -175,10 +166,10 @@ class MessagesAPI(object):
         container.
 
         Args:
-            personId(basestring): List messages in a 1:1 room, by person ID.
-            personEmail(basestring): List messages in a 1:1 room, by person
+            personId(str): List messages in a 1:1 room, by person ID.
+            personEmail(str): List messages in a 1:1 room, by person
                 email.
-            parentId(basestring): List messages with a parent, by ID.
+            parentId(str): List messages with a parent, by ID.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
@@ -191,9 +182,9 @@ class MessagesAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(personId, basestring, optional=True)
-        check_type(personEmail, basestring, optional=True)
-        check_type(parentId, basestring, optional=True)
+        check_type(personId, str, optional=True)
+        check_type(personEmail, str, optional=True)
+        check_type(parentId, str, optional=True)
 
         params = dict_from_items_with_values(
             request_parameters,
@@ -231,20 +222,20 @@ class MessagesAPI(object):
         the message.
 
         Args:
-            roomId(basestring): The room ID.
-            toPersonId(basestring): The ID of the recipient when sending a
+            roomId(str): The room ID.
+            toPersonId(str): The ID of the recipient when sending a
                 private 1:1 message.
-            toPersonEmail(basestring): The email address of the recipient when
+            toPersonEmail(str): The email address of the recipient when
                 sending a private 1:1 message.
-            text(basestring): The message, in plain text. If `markdown` is
+            text(str): The message, in plain text. If `markdown` is
                 specified this parameter may be optionally used to provide
                 alternate text for UI clients that do not support rich text.
-            markdown(basestring): The message, in markdown format.
+            markdown(str): The message, in markdown format.
             files(list): A list of public URL(s) or local path(s) to files to
                 be posted into the room. Only one file is allowed per message.
             attachments(list): Content attachments to attach to the message.
                 See the Cards Guide for more information.
-            parentId(basestring): The parent message to reply to. This will
+            parentId(str): The parent message to reply to. This will
                 start or reply to a thread.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
@@ -260,14 +251,14 @@ class MessagesAPI(object):
                 contain a valid URL or path to a local file.
 
         """
-        check_type(roomId, basestring, optional=True)
-        check_type(toPersonId, basestring, optional=True)
-        check_type(toPersonEmail, basestring, optional=True)
-        check_type(text, basestring, optional=True)
-        check_type(markdown, basestring, optional=True)
+        check_type(roomId, str, optional=True)
+        check_type(toPersonId, str, optional=True)
+        check_type(toPersonEmail, str, optional=True)
+        check_type(text, str, optional=True)
+        check_type(markdown, str, optional=True)
         check_type(files, list, optional=True)
         check_type(attachments, list, optional=True)
-        check_type(parentId, basestring, optional=True)
+        check_type(parentId, str, optional=True)
 
         if files:
             if len(files) > 1:
@@ -279,7 +270,7 @@ class MessagesAPI(object):
                     "only one file may be included with the "
                     "message."
                 )
-            check_type(files[0], basestring)
+            check_type(files[0], str)
         else:
             files = None
 
@@ -333,7 +324,7 @@ class MessagesAPI(object):
         """Get the details of a message, by ID.
 
         Args:
-            messageId(basestring): The ID of the message to be retrieved.
+            messageId(str): The ID of the message to be retrieved.
 
         Returns:
             Message: A Message object with the details of the requested
@@ -344,7 +335,7 @@ class MessagesAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(messageId, basestring)
+        check_type(messageId, str)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + "/" + messageId)
@@ -356,14 +347,14 @@ class MessagesAPI(object):
         """Delete a message.
 
         Args:
-            messageId(basestring): The ID of the message to be deleted.
+            messageId(str): The ID of the message to be deleted.
 
         Raises:
             TypeError: If the parameter types are incorrect.
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(messageId, basestring)
+        check_type(messageId, str)
 
         # API request
         self._session.delete(API_ENDPOINT + "/" + messageId)
@@ -372,22 +363,22 @@ class MessagesAPI(object):
         """Edit a message.
 
         Args:
-            messageId(basestring): The ID of the message to be edit.
-            roomId(basestring): The room ID.
-            text(basestring): The message, in plain text. If `markdown` is
+            messageId(str): The ID of the message to be edit.
+            roomId(str): The room ID.
+            text(str): The message, in plain text. If `markdown` is
                 specified this parameter may be optionally used to provide
                 alternate text for UI clients that do not support rich text.
-            markdown(basestring): The message, in markdown format.
+            markdown(str): The message, in markdown format.
 
         Raises:
             TypeError: If the parameter types are incorrect.
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(messageId, basestring)
-        check_type(roomId, basestring, optional=True)
-        check_type(text, basestring, optional=True)
-        check_type(markdown, basestring, optional=True)
+        check_type(messageId, str)
+        check_type(roomId, str, optional=True)
+        check_type(text, str, optional=True)
+        check_type(markdown, str, optional=True)
 
         put_data = dict_from_items_with_values(
             roomId=roomId,

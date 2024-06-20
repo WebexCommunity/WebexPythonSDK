@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Model Webex JSON objects as native Python objects.
 
 Classes:
@@ -28,19 +27,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
-
-from __future__ import (
-    absolute_import,
-    absolute_import,
-    division,
-    division,
-    print_function,
-    print_function,
-    unicode_literals,
-    unicode_literals,
-)
-
-from builtins import *
 
 import json
 from collections import defaultdict
@@ -82,7 +68,7 @@ class ImmutableData(object):
         """Init a new ImmutableData object from a dictionary or JSON string.
 
         Args:
-            json_data(dict, basestring): Input JSON string or dictionary.
+            json_data(dict, str): Input JSON string or dictionary.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -342,9 +328,9 @@ def immutable_data_factory(model, json_data):
     """Factory function for creating ImmutableData objects.
 
     Args:
-        model(basestring): The data model to use when creating the
+        model(str): The data model to use when creating the
             ImmutableData object (message, room, membership, etc.).
-        json_data(basestring, dict): The JSON string or dictionary data with
+        json_data(str, dict): The JSON string or dictionary data with
             which to initialize the object.
 
     Returns:

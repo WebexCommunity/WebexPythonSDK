@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex Rooms API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,16 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
 
-from past.builtins import basestring
 
 from ..generator_containers import generator_container
 from ..restsession import RestSession
@@ -95,12 +86,12 @@ class RoomsAPI(object):
         container.
 
         Args:
-            teamId(basestring): Limit the rooms to those associated with a
+            teamId(str): Limit the rooms to those associated with a
                 team, by ID.
-            type(basestring): 'direct' returns all 1-to-1 rooms. `group`
+            type(str): 'direct' returns all 1-to-1 rooms. `group`
                 returns all group rooms. If not specified or values not
                 matched, will return all room types.
-            sortBy(basestring): Sort results by room ID (`id`), most recent
+            sortBy(str): Sort results by room ID (`id`), most recent
                 activity (`lastactivity`), or most recently created
                 (`created`).
             max(int): Limit the maximum number of items returned from the Webex
@@ -117,9 +108,9 @@ class RoomsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(teamId, basestring, optional=True)
-        check_type(type, basestring, optional=True)
-        check_type(sortBy, basestring, optional=True)
+        check_type(teamId, str, optional=True)
+        check_type(type, str, optional=True)
+        check_type(sortBy, str, optional=True)
         check_type(max, int, optional=True)
 
         params = dict_from_items_with_values(
@@ -153,16 +144,16 @@ class RoomsAPI(object):
         The authenticated user is automatically added as a member of the room.
 
         Args:
-            title(basestring): A user-friendly name for the room.
-            teamId(basestring): The team ID with which this room is
+            title(str): A user-friendly name for the room.
+            teamId(str): The team ID with which this room is
                 associated.
-            classificationId(basestring): The classification ID for the room.
+            classificationId(str): The classification ID for the room.
             isLocked(bool): Set the space as locked/moderated and the creator
                 becomes a moderator.
             isPublic(bool): The room is public and therefore discoverable
                 within the org. Anyone can find and join that room. When `true`
                 the description must be filled in.
-            description(basestring): The description of the space.
+            description(str): The description of the space.
             isAnnouncementOnly(bool): Sets the space into Announcement Mode or
                 clears the Announcement Mode (`false`).
             **request_parameters: Additional request parameters (provides
@@ -176,12 +167,12 @@ class RoomsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(title, basestring)
-        check_type(teamId, basestring, optional=True)
-        check_type(classificationId, basestring, optional=True)
+        check_type(title, str)
+        check_type(teamId, str, optional=True)
+        check_type(classificationId, str, optional=True)
         check_type(isLocked, bool, optional=True)
         check_type(isPublic, bool, optional=True)
-        check_type(description, basestring, optional=True)
+        check_type(description, str, optional=True)
         check_type(isAnnouncementOnly, bool, optional=True)
 
         post_data = dict_from_items_with_values(
@@ -200,7 +191,7 @@ class RoomsAPI(object):
         """Get the details of a room, by ID.
 
         Args:
-            roomId(basestring): The ID of the room to be retrieved.
+            roomId(str): The ID of the room to be retrieved.
 
         Returns:
             Room: A Room object with the details of the requested room.
@@ -210,7 +201,7 @@ class RoomsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(roomId, basestring)
+        check_type(roomId, str)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + "/" + roomId)
@@ -222,7 +213,7 @@ class RoomsAPI(object):
         """Get the meeting details for a room.
 
         Args:
-            roomId(basestring): The unique identifier for the room.
+            roomId(str): The unique identifier for the room.
 
         Returns:
             RoomMeetingInfo: A Room Meeting Info object with the meeting
@@ -234,7 +225,7 @@ class RoomsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(roomId, basestring)
+        check_type(roomId, str)
 
         # API request
         json_data = self._session.get(
@@ -260,10 +251,10 @@ class RoomsAPI(object):
         """Update details for a room, by ID.
 
         Args:
-            roomId(basestring): The room ID.
-            title(basestring): A user-friendly name for the room.
-            classificationId(basestring): The classification ID for the room.
-            teamId(basestring): The teamId to which this space should be
+            roomId(str): The room ID.
+            title(str): A user-friendly name for the room.
+            classificationId(str): The classification ID for the room.
+            teamId(str): The teamId to which this space should be
                 assigned. Only unowned spaces can be assigned to a team.
                 Assignment between teams is unsupported.
             isLocked(bool): Set the space as locked/moderated and the creator
@@ -271,7 +262,7 @@ class RoomsAPI(object):
             isPublic(bool): The room is public and therefore discoverable
                 within the org. Anyone can find and join that room. When `true`
                 the description must be filled in.
-            description(basestring): The description of the space.
+            description(str): The description of the space.
             isAnnouncementOnly(bool): Sets the space into Announcement Mode or
                 clears the Announcement Mode (`false`).
             isReadOnly(bool): A compliance officer can set a direct room as
@@ -288,13 +279,13 @@ class RoomsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(roomId, basestring)
-        check_type(title, basestring)
-        check_type(classificationId, basestring, optional=True)
-        check_type(teamId, basestring, optional=True)
+        check_type(roomId, str)
+        check_type(title, str)
+        check_type(classificationId, str, optional=True)
+        check_type(teamId, str, optional=True)
         check_type(isLocked, bool, optional=True)
         check_type(isPublic, bool, optional=True)
-        check_type(description, basestring, optional=True)
+        check_type(description, str, optional=True)
         check_type(isAnnouncementOnly, bool, optional=True)
         check_type(isReadOnly, bool, optional=True)
 
@@ -322,14 +313,14 @@ class RoomsAPI(object):
         """Delete a room.
 
         Args:
-            roomId(basestring): The ID of the room to be deleted.
+            roomId(str): The ID of the room to be deleted.
 
         Raises:
             TypeError: If the parameter types are incorrect.
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(roomId, basestring)
+        check_type(roomId, str)
 
         # API request
         self._session.delete(API_ENDPOINT + "/" + roomId)

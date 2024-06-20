@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex Access-Tokens API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,21 +21,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from future import standard_library
 
-standard_library.install_aliases()
 
-from builtins import *
 import urllib.parse
 
-from past.builtins import basestring
 import requests
 
 from ..response_codes import EXPECTED_RESPONSE_CODE
@@ -65,7 +54,7 @@ class AccessTokensAPI(object):
         """Initialize an AccessTokensAPI object with the provided RestSession.
 
         Args:
-            base_url(basestring): The base URL the API endpoints.
+            base_url(str): The base URL the API endpoints.
             single_request_timeout(int): Timeout in seconds for the API
                 requests.
 
@@ -73,7 +62,7 @@ class AccessTokensAPI(object):
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(base_url, basestring)
+        check_type(base_url, str)
         check_type(single_request_timeout, int, optional=True)
 
         super(AccessTokensAPI, self).__init__()
@@ -102,12 +91,12 @@ class AccessTokensAPI(object):
         invoke the APIs.
 
         Args:
-            client_id(basestring): Provided when you created your integration.
-            client_secret(basestring): Provided when you created your
+            client_id(str): Provided when you created your integration.
+            client_secret(str): Provided when you created your
                 integration.
-            code(basestring): The Authorization Code provided by the user
+            code(str): The Authorization Code provided by the user
                 OAuth process.
-            redirect_uri(basestring): The redirect URI used in the user OAuth
+            redirect_uri(str): The redirect URI used in the user OAuth
                 process.
 
         Returns:
@@ -119,10 +108,10 @@ class AccessTokensAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(client_id, basestring)
-        check_type(client_secret, basestring)
-        check_type(code, basestring)
-        check_type(redirect_uri, basestring)
+        check_type(client_id, str)
+        check_type(client_secret, str)
+        check_type(code, str)
+        check_type(redirect_uri, str)
 
         post_data = dict_from_items_with_values(
             grant_type="authorization_code",
@@ -146,10 +135,10 @@ class AccessTokensAPI(object):
         """Return a refreshed Access Token from the provided refresh_token.
 
         Args:
-            client_id(basestring): Provided when you created your integration.
-            client_secret(basestring): Provided when you created your
+            client_id(str): Provided when you created your integration.
+            client_secret(str): Provided when you created your
                 integration.
-            refresh_token(basestring): Provided when you requested the Access
+            refresh_token(str): Provided when you requested the Access
                 Token.
 
         Returns:
@@ -161,9 +150,9 @@ class AccessTokensAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(client_id, basestring)
-        check_type(client_secret, basestring)
-        check_type(refresh_token, basestring)
+        check_type(client_id, str)
+        check_type(client_secret, str)
+        check_type(refresh_token, str)
 
         post_data = dict_from_items_with_values(
             grant_type="refresh_token",

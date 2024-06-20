@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex Memberships API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,16 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
 
-from past.builtins import basestring
 
 from ..generator_containers import generator_container
 from ..restsession import RestSession
@@ -86,7 +77,7 @@ class TeamMembershipsAPI(object):
         the container.
 
         Args:
-            teamId(basestring): List team memberships for a team, by ID.
+            teamId(str): List team memberships for a team, by ID.
             max(int): Limit the maximum number of items returned from the Webex
                 service per request.
             **request_parameters: Additional request parameters (provides
@@ -101,7 +92,7 @@ class TeamMembershipsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(teamId, basestring)
+        check_type(teamId, str)
         check_type(max, int, optional=True)
 
         params = dict_from_items_with_values(
@@ -132,9 +123,9 @@ class TeamMembershipsAPI(object):
         them a moderator.
 
         Args:
-            teamId(basestring): The team ID.
-            personId(basestring): The person ID.
-            personEmail(basestring): The email address of the person.
+            teamId(str): The team ID.
+            personId(str): The person ID.
+            personEmail(str): The email address of the person.
             isModerator(bool): Set to True to make the person a team moderator.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
@@ -148,9 +139,9 @@ class TeamMembershipsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(teamId, basestring)
-        check_type(personId, basestring, optional=True)
-        check_type(personEmail, basestring, optional=True)
+        check_type(teamId, str)
+        check_type(personId, str, optional=True)
+        check_type(personEmail, str, optional=True)
         check_type(isModerator, bool, optional=True)
 
         post_data = dict_from_items_with_values(
@@ -171,7 +162,7 @@ class TeamMembershipsAPI(object):
         """Get details for a team membership, by ID.
 
         Args:
-            membershipId(basestring): The team membership ID.
+            membershipId(str): The team membership ID.
 
         Returns:
             TeamMembership: A TeamMembership object with the details of the
@@ -182,7 +173,7 @@ class TeamMembershipsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(membershipId, basestring)
+        check_type(membershipId, str)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + "/" + membershipId)
@@ -194,7 +185,7 @@ class TeamMembershipsAPI(object):
         """Update a team membership, by ID.
 
         Args:
-            membershipId(basestring): The team membership ID.
+            membershipId(str): The team membership ID.
             isModerator(bool): Set to True to make the person a team moderator.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
@@ -208,7 +199,7 @@ class TeamMembershipsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(membershipId, basestring)
+        check_type(membershipId, str)
         check_type(isModerator, bool, optional=True)
 
         put_data = dict_from_items_with_values(
@@ -228,14 +219,14 @@ class TeamMembershipsAPI(object):
         """Delete a team membership, by ID.
 
         Args:
-            membershipId(basestring): The team membership ID.
+            membershipId(str): The team membership ID.
 
         Raises:
             TypeError: If the parameter types are incorrect.
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(membershipId, basestring)
+        check_type(membershipId, str)
 
         # API request
         self._session.delete(API_ENDPOINT + "/" + membershipId)

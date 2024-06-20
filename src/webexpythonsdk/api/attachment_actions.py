@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex Attachment Actions API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,16 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
 
-from past.builtins import basestring
 
 from ..models.immutable import AttachmentAction
 from ..restsession import RestSession
@@ -70,8 +61,8 @@ class AttachmentActionsAPI(object):
         """Create a new attachment action.
 
         Args:
-            type(basestring): The type of action to perform.
-            messageId(basestring): The ID of the message which contains the
+            type(str): The type of action to perform.
+            messageId(str): The ID of the message which contains the
                 attachment.
             inputs(dict): The attachment action's inputs.
             **request_parameters: Additional request parameters (provides
@@ -89,8 +80,8 @@ class AttachmentActionsAPI(object):
                 contain a valid URL or path to a local file.
 
         """
-        check_type(type, basestring)
-        check_type(messageId, basestring)
+        check_type(type, str)
+        check_type(messageId, str)
         check_type(inputs, dict)
 
         post_data = dict_from_items_with_values(
@@ -106,7 +97,7 @@ class AttachmentActionsAPI(object):
         """Get the details for a attachment action, by ID.
 
         Args:
-            id(basestring): A unique identifier for the attachment action.
+            id(str): A unique identifier for the attachment action.
 
         Returns:
             AttachmentAction: A Attachment Action object with the details of
@@ -117,7 +108,7 @@ class AttachmentActionsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(id, basestring)
+        check_type(id, str)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + "/" + id)

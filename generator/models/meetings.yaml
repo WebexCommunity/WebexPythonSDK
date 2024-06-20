@@ -11,31 +11,31 @@ query_parameters:
   - name: meetingNumber
     description: Meeting number for the meeting objects being requested
     optional: True
-    type: basestring
+    type: str
   - name: webLink
     description: URL encoded link to information page
     optional: True
-    type: basestring
+    type: str
   - name: roomId
     description: Associated teams space room ID.
     optional: True
-    type: basestring
+    type: str
   - name: meetingType
     description: Type of the meeting (meetingSeries, scheduledMeeting, meeting).
     optional: True
-    type: basestring
+    type: str
   - name: state
     descriptiopn: State of the meeting (active, scheduled, ready, lobby, inProgress, ended, missed, expired)
     optional: True
-    type: basestring
+    type: str
   - name: scheduledType
     description: Schedule type of this meeting (meeting, webinar, personalRoomMeeting)
     optional: True
-    type: basestring
+    type: str
   - name: participantEmail
     description: E-Mail of a meeting participant.
     optional: True
-    type: basestring
+    type: str
   - name: current
     description: Flag to retrieve the current scheduled meeting of a series.
     optional: True
@@ -44,11 +44,11 @@ query_parameters:
     requestName: from
     description: Start date and time in ISO 8601 format
     optional: True
-    type: basestring
+    type: str
   - name: to
     description: To date and time in ISO 8601 format
     optional: True
-    type: basestring
+    type: str
   - name: max
     description: Limit the number of meetings in response.
     optional: True
@@ -56,15 +56,15 @@ query_parameters:
   - name: hostEmail
     description: Email address for the meeting host (Needs admin-level scope).
     optional: True
-    type: basestring
+    type: str
   - name: siteUrl
     description: URL of the webex site.
     optional: True
-    type: basestring
+    type: str
   - name: integrationTag
     description: External tag set by integrations.
     optional: True
-    type: basestring
+    type: str
 update:
   required:
     - title
@@ -110,7 +110,7 @@ create:
   optional:
     - name: templateId
       description: Unique identifier for meeting template
-      type: basestring
+      type: str
     - agenda
     - password
     - timezone
@@ -154,70 +154,70 @@ list:
   properties:
     - name: id
       description: Unique identifier for the meeting
-      type: basestring
+      type: str
     - name: meetingNumber
       description: Meeting number (of series, scheduled meeting or instance)
-      type: basestring
+      type: str
     - name: title
       description: Title of the meeting
-      type: basestring
+      type: str
     - name: agenda
       description: Meeting agenda (Maximum 1300 characters)
-      type: basestring
+      type: str
     - name: password
       description: Password of the meeting
-      type: basestring
+      type: str
     - name: phoneAndVideoSystemPassword
       description: 8-digit numeric password to join via phone/device
-      type: basestring
+      type: str
     - name: meetingType
       description: "Type of this meeting (Values: meetingSeries, scheduledMeeting, meeting)"
-      type: basestring
+      type: str
     - name: state
       description: "State of the meeting (Values: active, scheduled, ready, lobby, inProgress, ended, missed, expired)"
-      type: basestring
+      type: str
     - name: timezone
       description: Time zone of start and end property in IANA time zone database format.
-      type: basestring
+      type: str
     - name: start
       description: Start time of the meeting in ISO 8601.
-      type: basestring
+      type: str
     - name: end
       description: End time of the meeting in ISO 8601.
-      type: basestring
+      type: str
     - name: recurrence
       description: Meeting recurrence according to RFC 2445
-      type: basestring
+      type: str
     - name: hostUserId
       description: Unique id of the meeting host.
-      type: basestring
+      type: str
     - name: hostDisplayName
       description: Display name for the meeting host
-      type: basestring
+      type: str
     - name: hostEmail
       description: Email address of the meeting host
-      type: basestring
+      type: str
     - name: hostKey
       description: Key for joining the meeting as host
-      type: basestring
+      type: str
     - name: siteUrl
       description: Site URL for the meeting
-      type: basestring
+      type: str
     - name: webLink
       description: Link to a meeting information page that launches the client
-      type: basestring
+      type: str
     - name: registerLink
       description: Link to a page where attendees can register for the webinar. Only applies for webinars.
-      type: basestring
+      type: str
     - name: sipAddress
       description: SIP address for callback from a video system
-      type: basestring
+      type: str
     - name: dialInIpAddress
       description: IP address for callback from video system.
-      type: basestring
+      type: str
     - name: roomId
       description: Room ID of the associated webex space. Only in space meetings.
-      type: basestring
+      type: str
     - name: enabledAutoRecordMeeting
       description: Whether or not meeting is recorded automatically.
       type: bool
@@ -244,22 +244,22 @@ list:
       type: int
     - name: unlockedMeetingJoinSecurity
       description: Join settings for uninvited people
-      type: basestring
+      type: str
     - name: sessionTypeId
       description: Unique identifier for a meeting session type.
-      type: basestring
+      type: str
     - name: scheduledType
       description: Type of meeting (regular, webinar, meeting in personal room)
-      type: basestring
+      type: str
     - name: enabledWebcastView
       description: Whether or not webcast view is enabled
       type: bool
     - name: panelistPassword
       description: Password for panelists of a webinar meeting
-      type: basestring
+      type: str
     - name: phoneAndVideoSystemPanelistPassword
       description: 8-digit numeric panelist pasword for phone/device usage
-      type: basestring
+      type: str
     - name: enableAutomaticLock
       description: Whether or not to automatically lock the meeting after start.
       type: bool

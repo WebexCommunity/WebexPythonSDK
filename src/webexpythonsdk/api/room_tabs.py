@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex Room Tabs API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,16 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
 
-from past.builtins import basestring
 
 from ..generator_containers import generator_container
 from ..restsession import RestSession
@@ -86,7 +77,7 @@ class RoomTabsAPI(object):
         container.
 
         Args:
-            roomId(basestring): List Room Tabs associated with a room, by ID.
+            roomId(str): List Room Tabs associated with a room, by ID.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
@@ -99,7 +90,7 @@ class RoomTabsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(roomId, basestring)
+        check_type(roomId, str)
 
         params = dict_from_items_with_values(
             request_parameters,
@@ -119,10 +110,10 @@ class RoomTabsAPI(object):
         Add a tab with a content url to a room that can be accessed in the room
 
         Args:
-            roomId(basestring): A unique identifier for the room.
-            contentUrl(basestring): Content Url of the Room Tab.
+            roomId(str): A unique identifier for the room.
+            contentUrl(str): Content Url of the Room Tab.
                 Needs to use the https protocol.
-            displayName(basestring): A user-friendly name for the room.
+            displayName(str): A user-friendly name for the room.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
         Returns:
@@ -133,9 +124,9 @@ class RoomTabsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(roomId, basestring)
-        check_type(contentUrl, basestring)
-        check_type(displayName, basestring)
+        check_type(roomId, str)
+        check_type(contentUrl, str)
+        check_type(displayName, str)
 
         post_data = dict_from_items_with_values(
             request_parameters,
@@ -154,7 +145,7 @@ class RoomTabsAPI(object):
         """Get the details of a room tab, by ID.
 
         Args:
-            roomTabId(basestring): The ID of the room tab to be retrieved.
+            roomTabId(str): The ID of the room tab to be retrieved.
 
         Returns:
             Room: A RoomTab object with the details of the requested room tab.
@@ -164,7 +155,7 @@ class RoomTabsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(roomTabId, basestring)
+        check_type(roomTabId, str)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + "/" + roomTabId)
@@ -178,11 +169,11 @@ class RoomTabsAPI(object):
         """Updates the content url of a Room Tab by ID.
 
         Args:
-            roomTabId(basestring): The unique identifier for the Room Tab.
-            roomId(basestring): The room ID.
-            contentUrl(basestring): Content Url of the Room Tab.
+            roomTabId(str): The unique identifier for the Room Tab.
+            roomId(str): The room ID.
+            contentUrl(str): Content Url of the Room Tab.
                 Needs to use the https protocol.
-            displayName(basestring): A user-friendly name for the room.
+            displayName(str): A user-friendly name for the room.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
@@ -194,10 +185,10 @@ class RoomTabsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(roomTabId, basestring)
-        check_type(roomId, basestring)
-        check_type(contentUrl, basestring)
-        check_type(displayName, basestring)
+        check_type(roomTabId, str)
+        check_type(roomId, str)
+        check_type(contentUrl, str)
+        check_type(displayName, str)
 
         put_data = dict_from_items_with_values(
             request_parameters,
@@ -219,14 +210,14 @@ class RoomTabsAPI(object):
         """Delete a room tab.
 
         Args:
-            roomTabId(basestring): The ID of the room tab to be deleted.
+            roomTabId(str): The ID of the room tab to be deleted.
 
         Raises:
             TypeError: If the parameter types are incorrect.
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(roomTabId, basestring)
+        check_type(roomTabId, str)
 
         # API request
         self._session.delete(API_ENDPOINT + "/" + roomTabId)

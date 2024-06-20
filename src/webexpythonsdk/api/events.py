@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex Events API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,16 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
 
-from past.builtins import basestring
 
 from ..generator_containers import generator_container
 from ..restsession import RestSession
@@ -101,15 +92,15 @@ class EventsAPI(object):
         container.
 
         Args:
-            resource(basestring): Limit results to a specific resource type.
+            resource(str): Limit results to a specific resource type.
                 Possible values: "messages", "memberships".
-            type(basestring): Limit results to a specific event type. Possible
+            type(str): Limit results to a specific event type. Possible
                 values: "created", "updated", "deleted".
-            actorId(basestring): Limit results to events performed by this
+            actorId(str): Limit results to events performed by this
                 person, by ID.
-            _from(basestring): Limit results to events which occurred after a
+            _from(str): Limit results to events which occurred after a
                 date and time, in ISO8601 format (yyyy-MM-dd'T'HH:mm:ss.SSSZ).
-            to(basestring): Limit results to events which occurred before a
+            to(str): Limit results to events which occurred before a
                 date and time, in ISO8601 format (yyyy-MM-dd'T'HH:mm:ss.SSSZ).
             max(int): Limit the maximum number of items returned from the Webex
                 service per request.
@@ -125,11 +116,11 @@ class EventsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(resource, basestring, optional=True)
-        check_type(type, basestring, optional=True)
-        check_type(actorId, basestring, optional=True)
-        check_type(_from, basestring, optional=True)
-        check_type(to, basestring, optional=True)
+        check_type(resource, str, optional=True)
+        check_type(type, str, optional=True)
+        check_type(actorId, str, optional=True)
+        check_type(_from, str, optional=True)
+        check_type(to, str, optional=True)
         check_type(max, int, optional=True)
 
         params = dict_from_items_with_values(
@@ -156,7 +147,7 @@ class EventsAPI(object):
         """Get the details for an event, by event ID.
 
         Args:
-            eventId(basestring): The ID of the event to be retrieved.
+            eventId(str): The ID of the event to be retrieved.
 
         Returns:
             Event: A event object with the details of the requested room.
@@ -166,7 +157,7 @@ class EventsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(eventId, basestring)
+        check_type(eventId, str)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + "/" + eventId)

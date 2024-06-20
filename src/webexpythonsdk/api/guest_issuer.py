@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex Guest Issuer API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,16 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
 
-from past.builtins import basestring
 
 from ..generator_containers import generator_container
 from ..restsession import RestSession
@@ -82,18 +73,18 @@ class GuestIssuerAPI(object):
         This function returns a guest issuer with an api access token.
 
         Args:
-            sub(basestring): The subject of the token. This is your unique
+            sub(str): The subject of the token. This is your unique
                 and public identifier for the guest user. This claim may
                 contain only letters, numbers, and hyphens.
-            name(basestring): The display name of the guest user. This will be
+            name(str): The display name of the guest user. This will be
                 the name shown in Webex clients.
-            iss(basestring): The issuer of the token. Use the Guest
+            iss(str): The issuer of the token. Use the Guest
                 Issuer ID provided in My Webex Apps.
-            exp(basestring): The exp time of the token, as a UNIX
+            exp(str): The exp time of the token, as a UNIX
                 timestamp in seconds. Use the lowest practical value for the
                 use of the token. This is not the exp time for the guest
                 user's session.
-            secret(basestring): Use the secret Webex provided you when you
+            secret(str): Use the secret Webex provided you when you
                 created your Guest Issuer App. The secret will be used to sign
                 the token request.
 
@@ -104,11 +95,11 @@ class GuestIssuerAPI(object):
             TypeError: If the parameter types are incorrect
             ApiError: If the webex teams cloud returns an error.
         """
-        check_type(sub, basestring)
-        check_type(name, basestring)
-        check_type(iss, basestring)
-        check_type(exp, basestring)
-        check_type(secret, basestring)
+        check_type(sub, str)
+        check_type(name, str)
+        check_type(iss, str)
+        check_type(exp, str)
+        check_type(secret, str)
 
         payload = {"sub": sub, "name": name, "iss": iss, "exp": exp}
 

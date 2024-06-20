@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex Memberships API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,16 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
 
-from past.builtins import basestring
 
 from ..generator_containers import generator_container
 from ..restsession import RestSession
@@ -102,9 +93,9 @@ class MembershipsAPI(object):
         container.
 
         Args:
-            roomId(basestring): Limit results to a specific room, by ID.
-            personId(basestring): Limit results to a specific person, by ID.
-            personEmail(basestring): Limit results to a specific person, by
+            roomId(str): Limit results to a specific room, by ID.
+            personId(str): Limit results to a specific person, by ID.
+            personEmail(str): Limit results to a specific person, by
                 email address.
             max(int): Limit the maximum number of items returned from the Webex
                 service per request.
@@ -120,9 +111,9 @@ class MembershipsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(roomId, basestring, optional=True)
-        check_type(personId, basestring, optional=True)
-        check_type(personEmail, basestring, optional=True)
+        check_type(roomId, str, optional=True)
+        check_type(personId, str, optional=True)
+        check_type(personEmail, str, optional=True)
         check_type(max, int, optional=True)
 
         params = dict_from_items_with_values(
@@ -154,9 +145,9 @@ class MembershipsAPI(object):
         making them a moderator.
 
         Args:
-            roomId(basestring): The room ID.
-            personId(basestring): The ID of the person.
-            personEmail(basestring): The email address of the person.
+            roomId(str): The room ID.
+            personId(str): The ID of the person.
+            personEmail(str): The email address of the person.
             isModerator(bool): Set to True to make the person a room moderator.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
@@ -170,9 +161,9 @@ class MembershipsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(roomId, basestring)
-        check_type(personId, basestring, optional=True)
-        check_type(personEmail, basestring, optional=True)
+        check_type(roomId, str)
+        check_type(personId, str, optional=True)
+        check_type(personEmail, str, optional=True)
         check_type(isModerator, bool, optional=True)
 
         post_data = dict_from_items_with_values(
@@ -193,7 +184,7 @@ class MembershipsAPI(object):
         """Get details for a membership, by ID.
 
         Args:
-            membershipId(basestring): The membership ID.
+            membershipId(str): The membership ID.
 
         Returns:
             Membership: A Membership object with the details of the requested
@@ -204,7 +195,7 @@ class MembershipsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(membershipId, basestring)
+        check_type(membershipId, str)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + "/" + membershipId)
@@ -216,7 +207,7 @@ class MembershipsAPI(object):
         """Update properties for a membership, by ID.
 
         Args:
-            membershipId(basestring): The membership ID.
+            membershipId(str): The membership ID.
             isModerator(bool): Set to True to make the person a room moderator.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
@@ -230,7 +221,7 @@ class MembershipsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(membershipId, basestring)
+        check_type(membershipId, str)
         check_type(isModerator, bool, optional=True)
 
         put_data = dict_from_items_with_values(
@@ -250,14 +241,14 @@ class MembershipsAPI(object):
         """Delete a membership, by ID.
 
         Args:
-            membershipId(basestring): The membership ID.
+            membershipId(str): The membership ID.
 
         Raises:
             TypeError: If the parameter types are incorrect.
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(membershipId, basestring)
+        check_type(membershipId, str)
 
         # API request
         self._session.delete(API_ENDPOINT + "/" + membershipId)

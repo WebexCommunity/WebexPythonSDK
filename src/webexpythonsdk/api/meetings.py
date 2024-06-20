@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex Meetings API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,16 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
 
-from past.builtins import basestring
 
 from ..generator_containers import generator_container
 from ..restsession import RestSession
@@ -106,25 +97,25 @@ class MeetingsAPI(object):
         container.
 
         Args:
-            meetingNumber (basestring): Meeting number for the meeting objects
+            meetingNumber (str): Meeting number for the meeting objects
                 being requested.
-            webLink (basestring): URL encoded link to information page.
-            roomId (basestring): Associated teams space room ID.
-            meetingType (basestring): Type of the meeting (meetingSeries,
+            webLink (str): URL encoded link to information page.
+            roomId (str): Associated teams space room ID.
+            meetingType (str): Type of the meeting (meetingSeries,
                 scheduledMeeting, meeting).
-            state (basestring):
-            scheduledType (basestring): Schedule type of this meeting (meeting,
+            state (str):
+            scheduledType (str): Schedule type of this meeting (meeting,
                 webinar, personalRoomMeeting).
-            participantEmail (basestring): E-Mail of a meeting participant.
+            participantEmail (str): E-Mail of a meeting participant.
             current (bool): Flag to retrieve the current scheduled meeting of a
                 series.
-            from_ (basestring): Start date and time in ISO 8601 format.
-            to (basestring): To date and time in ISO 8601 format.
+            from_ (str): Start date and time in ISO 8601 format.
+            to (str): To date and time in ISO 8601 format.
             max (int): Limit the number of meetings in response.
-            hostEmail (basestring): Email address for the meeting host (Needs
+            hostEmail (str): Email address for the meeting host (Needs
                 admin-level scope).
-            siteUrl (basestring): URL of the webex site.
-            integrationTag (basestring): External tag set by integrations.
+            siteUrl (str): URL of the webex site.
+            integrationTag (str): External tag set by integrations.
             headers(dict): Additional headers to be passed.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
@@ -138,20 +129,20 @@ class MeetingsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(meetingNumber, basestring, optional=True)
-        check_type(webLink, basestring, optional=True)
-        check_type(roomId, basestring, optional=True)
-        check_type(meetingType, basestring, optional=True)
-        check_type(state, basestring, optional=True)
-        check_type(scheduledType, basestring, optional=True)
-        check_type(participantEmail, basestring, optional=True)
+        check_type(meetingNumber, str, optional=True)
+        check_type(webLink, str, optional=True)
+        check_type(roomId, str, optional=True)
+        check_type(meetingType, str, optional=True)
+        check_type(state, str, optional=True)
+        check_type(scheduledType, str, optional=True)
+        check_type(participantEmail, str, optional=True)
         check_type(current, bool, optional=True)
-        check_type(from_, basestring, optional=True)
-        check_type(to, basestring, optional=True)
+        check_type(from_, str, optional=True)
+        check_type(to, str, optional=True)
         check_type(max, int, optional=True)
-        check_type(hostEmail, basestring, optional=True)
-        check_type(siteUrl, basestring, optional=True)
-        check_type(integrationTag, basestring, optional=True)
+        check_type(hostEmail, str, optional=True)
+        check_type(siteUrl, str, optional=True)
+        check_type(integrationTag, str, optional=True)
         check_type(headers, dict, optional=True)
 
         headers = headers if headers is not None else {}
@@ -236,15 +227,15 @@ class MeetingsAPI(object):
         """Create a meeting.
 
         Args:
-            title (basestring): Title of the meeting.
-            start (basestring): Start time of the meeting in ISO 8601.
-            end (basestring): End time of the meeting in ISO 8601.
-            templateId (basestring): Unique identifier for meeting template.
-            agenda (basestring): Meeting agenda (Maximum 1300 characters).
-            password (basestring): Password of the meeting.
-            timezone (basestring): Time zone of start and end property in
+            title (str): Title of the meeting.
+            start (str): Start time of the meeting in ISO 8601.
+            end (str): End time of the meeting in ISO 8601.
+            templateId (str): Unique identifier for meeting template.
+            agenda (str): Meeting agenda (Maximum 1300 characters).
+            password (str): Password of the meeting.
+            timezone (str): Time zone of start and end property in
                 IANA time zone database format.
-            recurrence (basestring): Meeting recurrence according to RFC 2445.
+            recurrence (str): Meeting recurrence according to RFC 2445.
             enabledAutoRecordMeeting (bool): Whether or not meeting is
                 recorded automatically.
             allowAnyUserToBeCoHost (bool): Allow any attendee with host
@@ -261,14 +252,14 @@ class MeetingsAPI(object):
                 calendar.
             reminderTime (int): Number of minutes before start time a reminder
                 is send to the host.
-            unlockedMeetingJoinSecurity (basestring): Join settings for
+            unlockedMeetingJoinSecurity (str): Join settings for
                 uninvited people.
-            sessionTypeId (basestring): Unique identifier for a meeting
+            sessionTypeId (str): Unique identifier for a meeting
                 session type.
-            scheduledType (basestring): Type of meeting (regular, webinar,
+            scheduledType (str): Type of meeting (regular, webinar,
                 meeting in personal room).
             enabledWebcastView (bool): Whether or not webcast view is enabled.
-            panelistPassword (basestring): Password for panelists of a
+            panelistPassword (str): Password for panelists of a
                 webinar meeting.
             enableAutomaticLock (bool): Whether or not to automatically lock
                 the meeting after start.
@@ -281,8 +272,8 @@ class MeetingsAPI(object):
                 start or join the meeting.
             invitees (list): List of invitee objects.
             sendEmail (bool): Send an invite e-mail.
-            hostEmail (basestring): Email address of the meeting host.
-            siteUrl (basestring): Site URL for the meeting.
+            hostEmail (str): Email address of the meeting host.
+            siteUrl (str): Site URL for the meeting.
             meetingOptions (dict): Options for this meeting.
             registration (dict): Meeting registration information.
             integrationTags (list): List of external keys created by
@@ -303,14 +294,14 @@ class MeetingsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(title, basestring)
-        check_type(start, basestring)
-        check_type(end, basestring)
-        check_type(templateId, basestring, optional=True)
-        check_type(agenda, basestring, optional=True)
-        check_type(password, basestring, optional=True)
-        check_type(timezone, basestring, optional=True)
-        check_type(recurrence, basestring, optional=True)
+        check_type(title, str)
+        check_type(start, str)
+        check_type(end, str)
+        check_type(templateId, str, optional=True)
+        check_type(agenda, str, optional=True)
+        check_type(password, str, optional=True)
+        check_type(timezone, str, optional=True)
+        check_type(recurrence, str, optional=True)
         check_type(enabledAutoRecordMeeting, bool, optional=True)
         check_type(allowAnyUserToBeCoHost, bool, optional=True)
         check_type(enabledJoinBeforeHost, bool, optional=True)
@@ -319,19 +310,19 @@ class MeetingsAPI(object):
         check_type(excludePassword, bool, optional=True)
         check_type(publicMeeting, bool, optional=True)
         check_type(reminderTime, int, optional=True)
-        check_type(unlockedMeetingJoinSecurity, basestring, optional=True)
-        check_type(sessionTypeId, basestring, optional=True)
-        check_type(scheduledType, basestring, optional=True)
+        check_type(unlockedMeetingJoinSecurity, str, optional=True)
+        check_type(sessionTypeId, str, optional=True)
+        check_type(scheduledType, str, optional=True)
         check_type(enabledWebcastView, bool, optional=True)
-        check_type(panelistPassword, basestring, optional=True)
+        check_type(panelistPassword, str, optional=True)
         check_type(enableAutomaticLock, bool, optional=True)
         check_type(automaticLockMinutes, int, optional=True)
         check_type(allowFirstUserToBeCoHost, bool, optional=True)
         check_type(allowAuthenticatedDevices, bool, optional=True)
         check_type(invitees, list, optional=True)
         check_type(sendEmail, bool, optional=True)
-        check_type(hostEmail, basestring, optional=True)
-        check_type(siteUrl, basestring, optional=True)
+        check_type(hostEmail, str, optional=True)
+        check_type(siteUrl, str, optional=True)
         check_type(meetingOptions, dict, optional=True)
         check_type(registration, dict, optional=True)
         check_type(integrationTags, list, optional=True)
@@ -390,7 +381,7 @@ class MeetingsAPI(object):
         """Get details for a meeting, by ID.
 
         Args:
-            meetingId(basestring): The meeting ID.
+            meetingId(str): The meeting ID.
 
         Returns:
             Meeting: A Meeting object with the details of the requested
@@ -401,7 +392,7 @@ class MeetingsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(meetingId, basestring)
+        check_type(meetingId, str)
         request_url = API_ENDPOINT
 
         # API request
@@ -414,14 +405,14 @@ class MeetingsAPI(object):
         """Delete a meeting, by ID.
 
         Args:
-            meetingId(basestring): The meeting ID.
+            meetingId(str): The meeting ID.
 
         Raises:
             TypeError: If the parameter types are incorrect.
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(meetingId, basestring)
+        check_type(meetingId, str)
         request_url = API_ENDPOINT
 
         # API request
@@ -465,15 +456,15 @@ class MeetingsAPI(object):
         """Update properties for a meeting, by ID.
 
         Args:
-            meetingId(basestring): The meeting ID.
-            title (basestring): Title of the meeting.
-            password (basestring): Password of the meeting.
-            start (basestring): Start time of the meeting in ISO 8601.
-            end (basestring): End time of the meeting in ISO 8601.
-            agenda (basestring): Meeting agenda (Maximum 1300 characters).
-            timezone (basestring): Time zone of start and end property in IANA
+            meetingId(str): The meeting ID.
+            title (str): Title of the meeting.
+            password (str): Password of the meeting.
+            start (str): Start time of the meeting in ISO 8601.
+            end (str): End time of the meeting in ISO 8601.
+            agenda (str): Meeting agenda (Maximum 1300 characters).
+            timezone (str): Time zone of start and end property in IANA
                 time zone database format.
-            recurrence (basestring): Meeting recurrence according to RFC 2445.
+            recurrence (str): Meeting recurrence according to RFC 2445.
             enabledAutoRecordMeeting (bool): Whether or not meeting is recorded
                 automatically.
             allowAnyUserToBeCoHost (bool): Allow any attendee with host account
@@ -490,14 +481,14 @@ class MeetingsAPI(object):
                 calendar.
             reminderTime (int): Number of minutes before start time a reminder
                 is send to the host.
-            unlockedMeetingJoinSecurity (basestring): Join settings for
+            unlockedMeetingJoinSecurity (str): Join settings for
                 uninvited people.
-            sessionTypeId (basestring): Unique identifier for a meeting session
+            sessionTypeId (str): Unique identifier for a meeting session
                 type.
-            scheduledType (basestring): Type of meeting (regular, webinar,
+            scheduledType (str): Type of meeting (regular, webinar,
                 meeting in personal room).
             enabledWebcastView (bool): Whether or not webcast view is enabled.
-            panelistPassword (basestring): Password for panelists of a webinar
+            panelistPassword (str): Password for panelists of a webinar
                 meeting.
             enableAutomaticLock (bool): Whether or not to automatically lock
                 the meeting after start.
@@ -509,8 +500,8 @@ class MeetingsAPI(object):
                 authenticated video devices in the meeting's organization to
                 start or join the meeting.
             sendEmail (bool): Send an invite e-mail.
-            hostEmail (basestring): Email address of the meeting host.
-            siteUrl (basestring): Site URL for the meeting.
+            hostEmail (str): Email address of the meeting host.
+            siteUrl (str): Site URL for the meeting.
             meetingOptions (dict): Options for this meeting.
             integrationTags (list): List of external keys created by
                 integrations.
@@ -528,14 +519,14 @@ class MeetingsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(meetingId, basestring)
-        check_type(title, basestring)
-        check_type(password, basestring)
-        check_type(start, basestring)
-        check_type(end, basestring)
-        check_type(agenda, basestring, optional=True)
-        check_type(timezone, basestring, optional=True)
-        check_type(recurrence, basestring, optional=True)
+        check_type(meetingId, str)
+        check_type(title, str)
+        check_type(password, str)
+        check_type(start, str)
+        check_type(end, str)
+        check_type(agenda, str, optional=True)
+        check_type(timezone, str, optional=True)
+        check_type(recurrence, str, optional=True)
         check_type(enabledAutoRecordMeeting, bool, optional=True)
         check_type(allowAnyUserToBeCoHost, bool, optional=True)
         check_type(enabledJoinBeforeHost, bool, optional=True)
@@ -544,18 +535,18 @@ class MeetingsAPI(object):
         check_type(excludePassword, bool, optional=True)
         check_type(publicMeeting, bool, optional=True)
         check_type(reminderTime, int, optional=True)
-        check_type(unlockedMeetingJoinSecurity, basestring, optional=True)
-        check_type(sessionTypeId, basestring, optional=True)
-        check_type(scheduledType, basestring, optional=True)
+        check_type(unlockedMeetingJoinSecurity, str, optional=True)
+        check_type(sessionTypeId, str, optional=True)
+        check_type(scheduledType, str, optional=True)
         check_type(enabledWebcastView, bool, optional=True)
-        check_type(panelistPassword, basestring, optional=True)
+        check_type(panelistPassword, str, optional=True)
         check_type(enableAutomaticLock, bool, optional=True)
         check_type(automaticLockMinutes, int, optional=True)
         check_type(allowFirstUserToBeCoHost, bool, optional=True)
         check_type(allowAuthenticatedDevices, bool, optional=True)
         check_type(sendEmail, bool, optional=True)
-        check_type(hostEmail, basestring, optional=True)
-        check_type(siteUrl, basestring, optional=True)
+        check_type(hostEmail, str, optional=True)
+        check_type(siteUrl, str, optional=True)
         check_type(meetingOptions, dict, optional=True)
         check_type(integrationTags, list, optional=True)
         check_type(enabledBreakoutSessions, bool, optional=True)

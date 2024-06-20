@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex MeetingTemplates API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,16 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
 
-from past.builtins import basestring
 
 from ..generator_containers import generator_container
 from ..restsession import RestSession
@@ -98,9 +89,9 @@ class MeetingTemplatesAPI(object):
         container.
 
         Args:
-            templateType (basestring): Meeting template types (meeting,
+            templateType (str): Meeting template types (meeting,
                 webinar).
-            locale (basestring): Locale for the meeting template (i.e. en_US).
+            locale (str): Locale for the meeting template (i.e. en_US).
             isDefault (bool): Flag to indicate if default or non-default
                 meeting templates are returned.
             isStandard (bool): Flag to indicate if standard or non-standard
@@ -121,8 +112,8 @@ class MeetingTemplatesAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(templateType, basestring, optional=True)
-        check_type(locale, basestring, optional=True)
+        check_type(templateType, str, optional=True)
+        check_type(locale, str, optional=True)
         check_type(isDefault, bool, optional=True)
         check_type(isStandard, bool, optional=True)
         check_type(hostEmail, bool, optional=True)
@@ -160,7 +151,7 @@ class MeetingTemplatesAPI(object):
         """Get details for a meetingTemplate, by ID.
 
         Args:
-            meetingTemplateId(basestring): The meetingTemplate ID.
+            meetingTemplateId(str): The meetingTemplate ID.
 
         Returns:
             MeetingTemplate: A MeetingTemplate object with the details of the
@@ -171,7 +162,7 @@ class MeetingTemplatesAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(meetingTemplateId, basestring)
+        check_type(meetingTemplateId, str)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + "/" + meetingTemplateId)

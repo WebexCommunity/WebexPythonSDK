@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex Recordings API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,15 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
-from past.builtins import basestring
 
 from webexpythonsdk.generator_containers import generator_container
 
@@ -103,20 +94,20 @@ class RecordingsAPI(object):
         Args:
             max(int): Limit the maximum number of items returned from the Webex
                 service per request.
-            _from(basestring): List recordings which occurred after a specific
+            _from(str): List recordings which occurred after a specific
                 date and time.
-            to(basestring): List recordings which occurred before a specific
+            to(str): List recordings which occurred before a specific
                 date and time.
-            meetingId(basestring): List recordings filtered by ID.
-            hostEmail(basestring): Email address of meeting host.
-            siteUrl(basestring): URL of the Webex site which the API lists
+            meetingId(str): List recordings filtered by ID.
+            hostEmail(str): Email address of meeting host.
+            siteUrl(str): URL of the Webex site which the API lists
                 recordings from.
-            integrationTag(basestring): External key of the parent meeting
+            integrationTag(str): External key of the parent meeting
                 created by an integration application.
-            topic(basestring): Recording's topic (case-insensitive).
-            format(basestring): Recording's format; if specified, it should be
+            topic(str): Recording's topic (case-insensitive).
+            format(str): Recording's format; if specified, it should be
                 either "MP4" or "ARF".
-            serviceType(basestring): Recording's service type; if specified, it
+            serviceType(str): Recording's service type; if specified, it
                 should be either of:
                     MeetingCenter,
                     EventCenter,
@@ -134,15 +125,15 @@ class RecordingsAPI(object):
             ApiError: If the Webex cloud returns an error.
         """
         check_type(max, int, optional=True)
-        check_type(_from, basestring, optional=True)
-        check_type(to, basestring, optional=True)
-        check_type(meetingId, basestring, optional=True)
-        check_type(hostEmail, basestring, optional=True)
-        check_type(siteUrl, basestring, optional=True)
-        check_type(integrationTag, basestring)
-        check_type(topic, basestring, optional=True)
-        check_type(format, basestring, optional=True)
-        check_type(serviceType, basestring, optional=True)
+        check_type(_from, str, optional=True)
+        check_type(to, str, optional=True)
+        check_type(meetingId, str, optional=True)
+        check_type(hostEmail, str, optional=True)
+        check_type(siteUrl, str, optional=True)
+        check_type(integrationTag, str)
+        check_type(topic, str, optional=True)
+        check_type(format, str, optional=True)
+        check_type(serviceType, str, optional=True)
 
         params = dict_from_items_with_values(
             request_parameters,
@@ -167,10 +158,10 @@ class RecordingsAPI(object):
         """Get the details of a recording, by ID.
 
         Args:
-            recordingId(basestring): The ID of the recording to be retrieved.
-            siteUrl(basestring): URL of the Webex site which the API gets
+            recordingId(str): The ID of the recording to be retrieved.
+            siteUrl(str): URL of the Webex site which the API gets
                 recordings from.
-            hostEmail(basestring): Email address of meeting host.
+            hostEmail(str): Email address of meeting host.
 
         Returns:
             Recording: A Recording object with the details of the requested
@@ -181,9 +172,9 @@ class RecordingsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(recordingId, basestring)
-        check_type(siteUrl, basestring, optional=True)
-        check_type(hostEmail, basestring, optional=True)
+        check_type(recordingId, str)
+        check_type(siteUrl, str, optional=True)
+        check_type(hostEmail, str, optional=True)
 
         params = dict_from_items_with_values(
             siteUrl=siteUrl, hostEmail=hostEmail
@@ -199,19 +190,19 @@ class RecordingsAPI(object):
         """Delete a recording.
 
         Args:
-            recordingId(basestring): The ID of the recording to be deleted.
-            siteUrl(basestring): URL of the Webex site which the API deletes
+            recordingId(str): The ID of the recording to be deleted.
+            siteUrl(str): URL of the Webex site which the API deletes
                 recording from.
-            hostEmail(basestring): Email address of meeting host.
+            hostEmail(str): Email address of meeting host.
 
         Raises:
             TypeError: If the parameter types are incorrect.
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(recordingId, basestring)
-        check_type(siteUrl, basestring, optional=True)
-        check_type(hostEmail, basestring, optional=True)
+        check_type(recordingId, str)
+        check_type(siteUrl, str, optional=True)
+        check_type(hostEmail, str, optional=True)
 
         params = dict_from_items_with_values(
             siteUrl=siteUrl, hostEmail=hostEmail

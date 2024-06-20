@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """WebexAPI Events API fixtures and tests.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.

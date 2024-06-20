@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex Teams-API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,16 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
 
-from past.builtins import basestring
 
 from ..generator_containers import generator_container
 from ..restsession import RestSession
@@ -120,7 +111,7 @@ class TeamsAPI(object):
         The authenticated user is automatically added as a member of the team.
 
         Args:
-            name(basestring): A user-friendly name for the team.
+            name(str): A user-friendly name for the team.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
@@ -132,7 +123,7 @@ class TeamsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(name, basestring)
+        check_type(name, str)
 
         post_data = dict_from_items_with_values(
             request_parameters,
@@ -149,7 +140,7 @@ class TeamsAPI(object):
         """Get the details of a team, by ID.
 
         Args:
-            teamId(basestring): The ID of the team to be retrieved.
+            teamId(str): The ID of the team to be retrieved.
 
         Returns:
             Team: A Team object with the details of the requested team.
@@ -159,7 +150,7 @@ class TeamsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(teamId, basestring)
+        check_type(teamId, str)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + "/" + teamId)
@@ -171,8 +162,8 @@ class TeamsAPI(object):
         """Update details for a team, by ID.
 
         Args:
-            teamId(basestring): The team ID.
-            name(basestring): A user-friendly name for the team.
+            teamId(str): The team ID.
+            name(str): A user-friendly name for the team.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
@@ -184,8 +175,8 @@ class TeamsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(teamId, basestring)
-        check_type(name, basestring)
+        check_type(teamId, str)
+        check_type(name, str)
 
         put_data = dict_from_items_with_values(
             request_parameters,
@@ -204,14 +195,14 @@ class TeamsAPI(object):
         """Delete a team.
 
         Args:
-            teamId(basestring): The ID of the team to be deleted.
+            teamId(str): The ID of the team to be deleted.
 
         Raises:
             TypeError: If the parameter types are incorrect.
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(teamId, basestring)
+        check_type(teamId, str)
 
         # API request
         self._session.delete(API_ENDPOINT + "/" + teamId)

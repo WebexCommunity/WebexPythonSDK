@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex Admin Audit Events API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,16 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
 
-from past.builtins import basestring
 
 from webexpythonsdk.generator_containers import generator_container
 from webexpythonsdk.restsession import RestSession
@@ -92,12 +83,12 @@ class AdminAuditEventsAPI(object):
         container.
 
         Args:
-            orgId(basestring): List events in this organization, by ID.
-            _from(basestring): List events which occurred after a specific
+            orgId(str): List events in this organization, by ID.
+            _from(str): List events which occurred after a specific
                 date and time.
-            to(basestring): List events which occurred before a specific date
+            to(str): List events which occurred before a specific date
                 and time.
-            actorId(basestring): List events performed by this person, by ID.
+            actorId(str): List events performed by this person, by ID.
             max(int): Limit the maximum number of events in the response. The
                 maximum value is 200.
             offset(int): Offset from the first result that you want to fetch.
@@ -112,10 +103,10 @@ class AdminAuditEventsAPI(object):
             TypeError: If the parameter types are incorrect.
             ApiError: If the Webex cloud returns an error.
         """
-        check_type(orgId, basestring)
-        check_type(_from, basestring)
-        check_type(to, basestring)
-        check_type(actorId, basestring, optional=True)
+        check_type(orgId, str)
+        check_type(_from, str)
+        check_type(to, str)
+        check_type(actorId, str, optional=True)
         check_type(max, int)
         check_type(offset, int)
 

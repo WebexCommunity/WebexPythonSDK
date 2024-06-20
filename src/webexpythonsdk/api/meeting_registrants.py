@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex MeetingRegistrants API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,16 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
 
-from past.builtins import basestring
 
 from ..generator_containers import generator_container
 from ..restsession import RestSession
@@ -99,18 +90,18 @@ class MeetingRegistrantsAPI(object):
         container.
 
         Args:
-            meetingId (basestring): Unique identifier for the meeting.
+            meetingId (str): Unique identifier for the meeting.
             max (int): Limit the maximum number of registrants in the response,
                 up to 100.
-            hostEmail (basestring): Email address for the meeting host.
+            hostEmail (str): Email address for the meeting host.
             current (bool): Whether or not to retrieve only the current
                 scheduled meeting of the meeting series, i.e. the meeting ready
                 to join or start or the upcoming meeting of the meeting series.
-            email (basestring): Registrant's email to filter registrants.
-            registrationTimeFrom (basestring): The time registrants register a
+            email (str): Registrant's email to filter registrants.
+            registrationTimeFrom (str): The time registrants register a
                 meeting starts from the specified date and time (inclusive) in
                 any ISO 8601 compliant format.
-            registrationTimeTo (basestring): The time registrants register a
+            registrationTimeTo (str): The time registrants register a
                 meeting before the specified date and time (exclusive) in any
                 ISO 8601 compliant format.
             headers(dict): Additional headers to be passed.
@@ -126,13 +117,13 @@ class MeetingRegistrantsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(meetingId, basestring)
+        check_type(meetingId, str)
         check_type(max, int, optional=True)
-        check_type(hostEmail, basestring, optional=True)
+        check_type(hostEmail, str, optional=True)
         check_type(current, bool, optional=True)
-        check_type(email, basestring, optional=True)
-        check_type(registrationTimeFrom, basestring, optional=True)
-        check_type(registrationTimeTo, basestring, optional=True)
+        check_type(email, str, optional=True)
+        check_type(registrationTimeFrom, str, optional=True)
+        check_type(registrationTimeTo, str, optional=True)
         check_type(headers, dict, optional=True)
 
         headers = headers or {}
@@ -187,20 +178,20 @@ class MeetingRegistrantsAPI(object):
         """Create a meetingRegistrant.
 
         Args:
-            meetingId (basestring): Unique identifier for the meeting.
-            firstName (basestring): Registrant's first name.
-            lastName (basestring): Registrant's last name.
-            email (basestring): Registrant's email.
+            meetingId (str): Unique identifier for the meeting.
+            firstName (str): Registrant's first name.
+            lastName (str): Registrant's last name.
+            email (str): Registrant's email.
             sendEmail (bool): If true send email to the registrant.
-            jobTitle (basestring): Registrant's job title.
-            address1 (basestring): Registrant's first address line.
-            address2 (basestring): Registrant's second address line.
-            city (basestring): Registrant's city name.
-            state (basestring): Registrant's state.
+            jobTitle (str): Registrant's job title.
+            address1 (str): Registrant's first address line.
+            address2 (str): Registrant's second address line.
+            city (str): Registrant's city name.
+            state (str): Registrant's state.
             zipCode (int): Registrant's postal code.
-            countryRegion (basestring): Registrant's country or region.
-            workPhone (basestring): Registrant's work phone number.
-            fax (basestring): Registrant's FAX number.
+            countryRegion (str): Registrant's country or region.
+            workPhone (str): Registrant's work phone number.
+            fax (str): Registrant's FAX number.
             customizedQuestions (list): List of registrant's answers for
                 customized questions,
             **request_parameters: Additional request parameters (provides
@@ -215,20 +206,20 @@ class MeetingRegistrantsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(meetingId, basestring)
-        check_type(firstName, basestring)
-        check_type(lastName, basestring)
-        check_type(email, basestring)
+        check_type(meetingId, str)
+        check_type(firstName, str)
+        check_type(lastName, str)
+        check_type(email, str)
         check_type(sendEmail, bool, optional=True)
-        check_type(jobTitle, basestring, optional=True)
-        check_type(address1, basestring, optional=True)
-        check_type(address2, basestring, optional=True)
-        check_type(city, basestring, optional=True)
-        check_type(state, basestring, optional=True)
+        check_type(jobTitle, str, optional=True)
+        check_type(address1, str, optional=True)
+        check_type(address2, str, optional=True)
+        check_type(city, str, optional=True)
+        check_type(state, str, optional=True)
         check_type(zipCode, int, optional=True)
-        check_type(countryRegion, basestring, optional=True)
-        check_type(workPhone, basestring, optional=True)
-        check_type(fax, basestring, optional=True)
+        check_type(countryRegion, str, optional=True)
+        check_type(workPhone, str, optional=True)
+        check_type(fax, str, optional=True)
         check_type(customizedQuestions, list, optional=True)
 
         post_data = dict_from_items_with_values(
@@ -262,8 +253,8 @@ class MeetingRegistrantsAPI(object):
         """Get details for a meetingRegistrant, by ID.
 
         Args:
-            meetingId (basestring): Unique identifier for the meeting.
-            meetingRegistrantId(basestring): The meetingRegistrant ID.
+            meetingId (str): Unique identifier for the meeting.
+            meetingRegistrantId(str): The meetingRegistrant ID.
 
         Returns:
             MeetingRegistrant: A MeetingRegistrant object with the details of
@@ -274,8 +265,8 @@ class MeetingRegistrantsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(meetingId, basestring)
-        check_type(meetingRegistrantId, basestring)
+        check_type(meetingId, str)
+        check_type(meetingRegistrantId, str)
 
         # Add URL parameters to the API endpoint
         request_url = API_ENDPOINT.format(meetingId=meetingId)
@@ -290,16 +281,16 @@ class MeetingRegistrantsAPI(object):
         """Delete a meetingRegistrant, by ID.
 
         Args:
-            meetingId (basestring): Unique identifier for the meeting.
-            meetingRegistrantId(basestring): The meetingRegistrant ID.
+            meetingId (str): Unique identifier for the meeting.
+            meetingRegistrantId(str): The meetingRegistrant ID.
 
         Raises:
             TypeError: If the parameter types are incorrect.
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(meetingId, basestring)
-        check_type(meetingRegistrantId, basestring)
+        check_type(meetingId, str)
+        check_type(meetingRegistrantId, str)
 
         # Add URL parameters to the API endpoint
         request_url = API_ENDPOINT.format(meetingId=meetingId)

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex Organizations API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,16 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
 
-from past.builtins import basestring
 
 from webexpythonsdk.generator_containers import generator_container
 from webexpythonsdk.restsession import RestSession
@@ -98,7 +89,7 @@ class OrganizationsAPI(object):
         """Get the details of an Organization, by ID.
 
         Args:
-            orgId(basestring): The ID of the Organization to be retrieved.
+            orgId(str): The ID of the Organization to be retrieved.
 
         Returns:
             Organization: An Organization object with the details of the
@@ -109,7 +100,7 @@ class OrganizationsAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(orgId, basestring)
+        check_type(orgId, str)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + "/" + orgId)

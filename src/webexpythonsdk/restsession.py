@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """RestSession class for creating connections to the Webex APIs.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,18 +21,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
 
-from future import standard_library
 
-standard_library.install_aliases()
 
 import json
 import logging
@@ -45,7 +35,6 @@ import urllib.parse
 import warnings
 
 import requests
-from past.builtins import basestring
 
 from ._metadata import __title__, __version__
 from .config import DEFAULT_SINGLE_REQUEST_TIMEOUT, DEFAULT_WAIT_ON_RATE_LIMIT
@@ -73,10 +62,10 @@ def _fix_next_url(next_url, params):
     This patch parses the next_url to remove the max=null parameter.
 
     Args:
-        next_url(basestring): The "next" URL to be parsed and cleaned.
+        next_url(str): The "next" URL to be parsed and cleaned.
 
     Returns:
-        basestring: The clean URL to be used for the "next" request.
+        str: The clean URL to be used for the "next" request.
 
     Raises:
         AssertionError: If the parameter types are incorrect.
@@ -200,9 +189,9 @@ class RestSession(object):
         """Initialize a new RestSession object.
 
         Args:
-            access_token(basestring): The Webex access token to be used
+            access_token(str): The Webex access token to be used
                 for this session.
-            base_url(basestring): The base URL that will be suffixed onto API
+            base_url(str): The base URL that will be suffixed onto API
                 endpoint relative URLs to produce a callable absolute URL.
             single_request_timeout(int): The timeout (seconds) for a single
                 HTTP REST API request.
@@ -210,10 +199,10 @@ class RestSession(object):
                 handling.
             proxies(dict): Dictionary of proxies passed on to the requests
                 session.
-            be_geo_id(basestring): Optional partner identifier for API usage
+            be_geo_id(str): Optional partner identifier for API usage
                 tracking.  Defaults to checking for a BE_GEO_ID environment
                 variable.
-            caller(basestring): Optional  identifier for API usage tracking.
+            caller(str): Optional  identifier for API usage tracking.
                 Defaults to checking for a WEBEX_PYTHON_SDK_CALLER environment
                 variable.
             disable_ssl_verify(bool): Optional boolean flag to disable ssl
@@ -224,8 +213,8 @@ class RestSession(object):
             TypeError: If the parameter types are incorrect.
 
         """
-        check_type(access_token, basestring)
-        check_type(base_url, basestring)
+        check_type(access_token, str)
+        check_type(base_url, str)
         check_type(single_request_timeout, int, optional=True)
         check_type(wait_on_rate_limit, bool)
         check_type(proxies, dict, optional=True)
@@ -323,7 +312,7 @@ class RestSession(object):
         """Given a relative or absolute URL; return an absolute URL.
 
         Args:
-            url(basestring): A relative or absolute URL.
+            url(str): A relative or absolute URL.
 
         Returns:
             str: An absolute URL.
@@ -347,8 +336,8 @@ class RestSession(object):
             * Inspects response codes and raises exceptions as appropriate
 
         Args:
-            method(basestring): The request-method type ("GET", "POST", etc.).
-            url(basestring): The URL of the API endpoint to be called.
+            method(str): The request-method type ("GET", "POST", etc.).
+            url(str): The URL of the API endpoint to be called.
             erc(int): The expected response code that should be returned by the
                 Webex API endpoint to indicate success.
             **kwargs: Passed on to the requests package.
@@ -388,7 +377,7 @@ class RestSession(object):
         """Sends a GET request.
 
         Args:
-            url(basestring): The URL of the API endpoint.
+            url(str): The URL of the API endpoint.
             params(dict): The parameters for the HTTP GET request.
             **kwargs:
                 erc(int): The expected (success) response code for the request.
@@ -399,7 +388,7 @@ class RestSession(object):
                 returned by the Webex API endpoint.
 
         """
-        check_type(url, basestring)
+        check_type(url, str)
         check_type(params, dict, optional=True)
 
         # Expected response code
@@ -414,7 +403,7 @@ class RestSession(object):
         Provides native support for RFC5988 Web Linking.
 
         Args:
-            url(basestring): The URL of the API endpoint.
+            url(str): The URL of the API endpoint.
             params(dict): The parameters for the HTTP GET request.
             **kwargs:
                 erc(int): The expected (success) response code for the request.
@@ -425,7 +414,7 @@ class RestSession(object):
                 returned by the Webex API endpoint.
 
         """
-        check_type(url, basestring)
+        check_type(url, str)
         check_type(params, dict, optional=True)
 
         # Expected response code
@@ -463,7 +452,7 @@ class RestSession(object):
         been returned.
 
         Args:
-            url(basestring): The URL of the API endpoint.
+            url(str): The URL of the API endpoint.
             params(dict): The parameters for the HTTP GET request.
             **kwargs:
                 erc(int): The expected (success) response code for the request.
@@ -500,7 +489,7 @@ class RestSession(object):
         """Sends a POST request.
 
         Args:
-            url(basestring): The URL of the API endpoint.
+            url(str): The URL of the API endpoint.
             json: Data to be sent in JSON format in tbe body of the request.
             data: Data to be sent in the body of the request.
             **kwargs:
@@ -512,7 +501,7 @@ class RestSession(object):
                 returned by the Webex API endpoint.
 
         """
-        check_type(url, basestring)
+        check_type(url, str)
 
         # Expected response code
         erc = kwargs.pop("erc", EXPECTED_RESPONSE_CODE["POST"])
@@ -526,7 +515,7 @@ class RestSession(object):
         """Sends a PUT request.
 
         Args:
-            url(basestring): The URL of the API endpoint.
+            url(str): The URL of the API endpoint.
             json: Data to be sent in JSON format in tbe body of the request.
             data: Data to be sent in the body of the request.
             **kwargs:
@@ -538,7 +527,7 @@ class RestSession(object):
                 returned by the Webex API endpoint.
 
         """
-        check_type(url, basestring)
+        check_type(url, str)
 
         # Expected response code
         erc = kwargs.pop("erc", EXPECTED_RESPONSE_CODE["PUT"])
@@ -552,7 +541,7 @@ class RestSession(object):
         """Sends a DELETE request.
 
         Args:
-            url(basestring): The URL of the API endpoint.
+            url(str): The URL of the API endpoint.
             **kwargs:
                 erc(int): The expected (success) response code for the request.
                 others: Passed on to the requests package.
@@ -562,7 +551,7 @@ class RestSession(object):
                 returned by the Webex API endpoint.
 
         """
-        check_type(url, basestring)
+        check_type(url, str)
 
         # Expected response code
         erc = kwargs.pop("erc", EXPECTED_RESPONSE_CODE["DELETE"])

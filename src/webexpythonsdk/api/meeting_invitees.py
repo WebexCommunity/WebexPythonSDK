@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex MeetingInvitees API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,16 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
 
-from past.builtins import basestring
 
 from ..generator_containers import generator_container
 from ..restsession import RestSession
@@ -96,10 +87,10 @@ class MeetingInviteesAPI(object):
         container.
 
         Args:
-            meetingId (basestring): Unique id of the meeting for which invitees
+            meetingId (str): Unique id of the meeting for which invitees
                 are requested.
             max (int): Limit the number of meeting invitees.
-            hostEmail (basestring): Email address for the meeting host
+            hostEmail (str): Email address for the meeting host
                 (requires admin scope).
             panelist (bool): Filter invitees or attendees based on their
                 panelist status.
@@ -116,9 +107,9 @@ class MeetingInviteesAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(meetingId, basestring)
+        check_type(meetingId, str)
         check_type(max, int, optional=True)
-        check_type(hostEmail, basestring, optional=True)
+        check_type(hostEmail, str, optional=True)
         check_type(panelist, bool, optional=True)
         check_type(headers, dict, optional=True)
 
@@ -161,12 +152,12 @@ class MeetingInviteesAPI(object):
         """Create a meetingInvitee.
 
         Args:
-            meetingId (basestring): Unique id for the meeting that the invitee
+            meetingId (str): Unique id for the meeting that the invitee
                 is part of.
-            email (basestring): Email address for the meeting invitee.
-            displayName (basestring): Display name of the meeting invitee.
+            email (str): Email address for the meeting invitee.
+            displayName (str): Display name of the meeting invitee.
             coHost (bool): CoHost status of the invitee.
-            hostEmail (basestring): Email address for the meeting host
+            hostEmail (str): Email address for the meeting host
                 (requires admin scope).
             sendEmail (bool): If true, send an e-mail to the invitee.
             panelist (bool): Flag to indicate if the invitee is panelist or
@@ -183,11 +174,11 @@ class MeetingInviteesAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(meetingId, basestring)
-        check_type(email, basestring)
-        check_type(displayName, basestring, optional=True)
+        check_type(meetingId, str)
+        check_type(email, str)
+        check_type(displayName, str, optional=True)
         check_type(coHost, bool, optional=True)
-        check_type(hostEmail, basestring, optional=True)
+        check_type(hostEmail, str, optional=True)
         check_type(sendEmail, bool, optional=True)
         check_type(panelist, bool, optional=True)
 
@@ -212,7 +203,7 @@ class MeetingInviteesAPI(object):
         """Get details for a meetingInvitee, by ID.
 
         Args:
-            meetingInviteeId(basestring): The meetingInvitee ID.
+            meetingInviteeId(str): The meetingInvitee ID.
 
         Returns:
             MeetingInvitee: A MeetingInvitee object with the details of the
@@ -223,7 +214,7 @@ class MeetingInviteesAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(meetingInviteeId, basestring)
+        check_type(meetingInviteeId, str)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + "/" + meetingInviteeId)
@@ -235,14 +226,14 @@ class MeetingInviteesAPI(object):
         """Delete a meetingInvitee, by ID.
 
         Args:
-            meetingInviteeId(basestring): The meetingInvitee ID.
+            meetingInviteeId(str): The meetingInvitee ID.
 
         Raises:
             TypeError: If the parameter types are incorrect.
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(meetingInviteeId, basestring)
+        check_type(meetingInviteeId, str)
 
         # API request
         self._session.delete(API_ENDPOINT + "/" + meetingInviteeId)
@@ -261,11 +252,11 @@ class MeetingInviteesAPI(object):
         """Update properties for a meetingInvitee, by ID.
 
         Args:
-            meetingInviteeId(basestring): The meetingInvitee ID.
-            email (basestring): Email address for the meeting invitee.
-            displayName (basestring): Display name of the meeting invitee.
+            meetingInviteeId(str): The meetingInvitee ID.
+            email (str): Email address for the meeting invitee.
+            displayName (str): Display name of the meeting invitee.
             coHost (bool): Cohost status of the invitee.
-            hostEmail (basestring): Email address for the meeting host
+            hostEmail (str): Email address for the meeting host
                 (requires admin scope).
             sendEmail (bool): If true, send an e-mail to the invitee.
             panelist (bool): Flag to indicate if the invitee is panelist or
@@ -282,11 +273,11 @@ class MeetingInviteesAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(meetingInviteeId, basestring)
-        check_type(email, basestring)
-        check_type(displayName, basestring, optional=True)
+        check_type(meetingInviteeId, str)
+        check_type(email, str)
+        check_type(displayName, str, optional=True)
         check_type(coHost, bool, optional=True)
-        check_type(hostEmail, basestring, optional=True)
+        check_type(hostEmail, str, optional=True)
         check_type(sendEmail, bool, optional=True)
         check_type(panelist, bool, optional=True)
 
@@ -314,9 +305,9 @@ class MeetingInviteesAPI(object):
         """Bulk insert meeting invitees
 
         Args:
-          meetingId(basestring): Id of the meeting the invitees should be added
+          meetingId(str): Id of the meeting the invitees should be added
             to.
-          hostEmail(basestring): Email of the meeting host.
+          hostEmail(str): Email of the meeting host.
           items(list): List of invitees. Each invitee is a dict with email as
             the required key and displayName, coHost, sendEmail and panelist as
             optional properties.
@@ -331,8 +322,8 @@ class MeetingInviteesAPI(object):
           TypeError: If the parameter types are incorrect.
           ApiError: If the Webex cloud returns an error.
         """
-        check_type(meetingId, basestring)
-        check_type(hostEmail, basestring, optional=True)
+        check_type(meetingId, str)
+        check_type(hostEmail, str, optional=True)
         check_type(items, list, optional=True)
 
         post_data = dict_from_items_with_values(

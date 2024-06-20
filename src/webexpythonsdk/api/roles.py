@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex Roles API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,16 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
 
-from past.builtins import basestring
 
 from ..generator_containers import generator_container
 from ..restsession import RestSession
@@ -101,7 +92,7 @@ class RolesAPI(object):
         """Get the details of a Role, by ID.
 
         Args:
-            roleId(basestring): The ID of the Role to be retrieved.
+            roleId(str): The ID of the Role to be retrieved.
 
         Returns:
             Role: A Role object with the details of the requested Role.
@@ -111,7 +102,7 @@ class RolesAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(roleId, basestring)
+        check_type(roleId, str)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + "/" + roleId)

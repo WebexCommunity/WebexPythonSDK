@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex People API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,16 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
 
-from past.builtins import basestring
 
 from ..generator_containers import generator_container
 from ..restsession import RestSession
@@ -104,12 +95,12 @@ class PeopleAPI(object):
         container.
 
         Args:
-            email(basestring): The e-mail address of the person to be found.
-            displayName(basestring): The complete or beginning portion of
+            email(str): The e-mail address of the person to be found.
+            displayName(str): The complete or beginning portion of
                 the displayName to be searched.
-            id(basestring): List people by ID. Accepts up to 85 person IDs
+            id(str): List people by ID. Accepts up to 85 person IDs
                 separated by commas.
-            orgId(basestring): The organization ID.
+            orgId(str): The organization ID.
             max(int): Limit the maximum number of items returned from the Webex
                 service per request.
             **request_parameters: Additional request parameters (provides
@@ -124,10 +115,10 @@ class PeopleAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(id, basestring, optional=True)
-        check_type(email, basestring, optional=True)
-        check_type(displayName, basestring, optional=True)
-        check_type(orgId, basestring, optional=True)
+        check_type(id, str, optional=True)
+        check_type(email, str, optional=True)
+        check_type(displayName, str, optional=True)
+        check_type(orgId, str, optional=True)
         check_type(max, int, optional=True)
 
         params = dict_from_items_with_values(
@@ -176,24 +167,24 @@ class PeopleAPI(object):
         Args:
             emails(`list`): Email address(es) of the person (list of strings).
             phoneNumbers(`list`): Phone numbers for the person.
-            extension(basestring): Webex Calling extension of the person.
-            locationId(basestring): The ID of the location for this person.
-            displayName(basestring): Full name of the person.
-            firstName(basestring): First name of the person.
-            lastName(basestring): Last name of the person.
-            avatar(basestring): URL to the person's avatar in PNG format.
-            orgId(basestring): ID of the organization to which this
+            extension(str): Webex Calling extension of the person.
+            locationId(str): The ID of the location for this person.
+            displayName(str): Full name of the person.
+            firstName(str): First name of the person.
+            lastName(str): Last name of the person.
+            avatar(str): URL to the person's avatar in PNG format.
+            orgId(str): ID of the organization to which this
                 person belongs.
             roles(`list`): Roles of the person (list of strings containing
                 the role IDs to be assigned to the person).
             licenses(`list`): Licenses allocated to the person (list of
                 strings - containing the license IDs to be allocated to the
                 person).
-            department(basestring): The business department the user belongs
+            department(str): The business department the user belongs
                 to.
-            manager(basestring): A manager identifier.
-            managerId(basestring): Person ID of the manager.
-            title(basestring): The person's title.
+            manager(str): A manager identifier.
+            managerId(str): Person ID of the manager.
+            title(str): The person's title.
             addresses(`list`): A person's addresses.
             siteUrls(`list`): One or several site names where this user has an
                 attendee role.
@@ -215,19 +206,19 @@ class PeopleAPI(object):
         """
         check_type(emails, list)
         check_type(phoneNumbers, list, optional=True)
-        check_type(extension, basestring, optional=True)
-        check_type(locationId, basestring, optional=True)
-        check_type(displayName, basestring, optional=True)
-        check_type(firstName, basestring, optional=True)
-        check_type(lastName, basestring, optional=True)
-        check_type(avatar, basestring, optional=True)
-        check_type(orgId, basestring, optional=True)
+        check_type(extension, str, optional=True)
+        check_type(locationId, str, optional=True)
+        check_type(displayName, str, optional=True)
+        check_type(firstName, str, optional=True)
+        check_type(lastName, str, optional=True)
+        check_type(avatar, str, optional=True)
+        check_type(orgId, str, optional=True)
         check_type(roles, list, optional=True)
         check_type(licenses, list, optional=True)
-        check_type(department, basestring, optional=True)
-        check_type(manager, basestring, optional=True)
-        check_type(managerId, basestring, optional=True)
-        check_type(title, basestring, optional=True)
+        check_type(department, str, optional=True)
+        check_type(manager, str, optional=True)
+        check_type(managerId, str, optional=True)
+        check_type(title, str, optional=True)
         check_type(addresses, list, optional=True)
         check_type(siteUrls, list, optional=True)
         check_type(callingData, bool, optional=True)
@@ -271,7 +262,7 @@ class PeopleAPI(object):
         """Get a person's details, by ID.
 
         Args:
-            personId(basestring): The ID of the person to be retrieved.
+            personId(str): The ID of the person to be retrieved.
 
         Returns:
             Person: A Person object with the details of the requested person.
@@ -281,7 +272,7 @@ class PeopleAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(personId, basestring)
+        check_type(personId, str)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + "/" + personId)
@@ -314,13 +305,13 @@ class PeopleAPI(object):
         unchanged values.
 
         Args:
-            personId(basestring): The person ID.
+            personId(str): The person ID.
             emails(`list`): Email address(es) of the person (list of strings).
-            displayName(basestring): Full name of the person.
-            firstName(basestring): First name of the person.
-            lastName(basestring): Last name of the person.
-            avatar(basestring): URL to the person's avatar in PNG format.
-            orgId(basestring): ID of the organization to which this
+            displayName(str): Full name of the person.
+            firstName(str): First name of the person.
+            lastName(str): Last name of the person.
+            avatar(str): URL to the person's avatar in PNG format.
+            orgId(str): ID of the organization to which this
                 person belongs.
             roles(`list`): Roles of the person (list of strings containing
                 the role IDs to be assigned to the person).
@@ -339,11 +330,11 @@ class PeopleAPI(object):
 
         """
         check_type(emails, list, optional=True)
-        check_type(displayName, basestring, optional=True)
-        check_type(firstName, basestring, optional=True)
-        check_type(lastName, basestring, optional=True)
-        check_type(avatar, basestring, optional=True)
-        check_type(orgId, basestring, optional=True)
+        check_type(displayName, str, optional=True)
+        check_type(firstName, str, optional=True)
+        check_type(lastName, str, optional=True)
+        check_type(avatar, str, optional=True)
+        check_type(orgId, str, optional=True)
         check_type(roles, list, optional=True)
         check_type(licenses, list, optional=True)
 
@@ -373,14 +364,14 @@ class PeopleAPI(object):
         Only an admin can remove a person.
 
         Args:
-            personId(basestring): The ID of the person to be deleted.
+            personId(str): The ID of the person to be deleted.
 
         Raises:
             TypeError: If the parameter types are incorrect.
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(personId, basestring)
+        check_type(personId, str)
 
         # API request
         self._session.delete(API_ENDPOINT + "/" + personId)

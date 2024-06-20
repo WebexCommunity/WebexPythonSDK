@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex Role data model.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,14 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
 
 
 class RoleBasicPropertiesMixin(object):

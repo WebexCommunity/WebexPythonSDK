@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Package helper functions and classes.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,16 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from future import standard_library
 
-standard_library.install_aliases()
 native_str = str
 
 import json
@@ -40,11 +31,9 @@ import os
 import sys
 import urllib.parse
 import warnings
-from builtins import *
 from collections import namedtuple, OrderedDict
 from datetime import datetime, timedelta, tzinfo
 
-from past.builtins import basestring
 
 from .config import WEBEX_DATETIME_FORMAT
 from .exceptions import (
@@ -61,7 +50,7 @@ EncodableFile = namedtuple(
 
 def to_unicode(string):
     """Convert a string (bytes, str or unicode) to unicode."""
-    assert isinstance(string, basestring)
+    assert isinstance(string, str)
     if sys.version_info[0] >= 3:
         if isinstance(string, bytes):
             return string.decode("utf-8")
@@ -76,7 +65,7 @@ def to_unicode(string):
 
 def to_bytes(string):
     """Convert a string (bytes, str or unicode) to bytes."""
-    assert isinstance(string, basestring)
+    assert isinstance(string, str)
     if sys.version_info[0] >= 3:
         if isinstance(string, str):
             return string.encode("utf-8")
@@ -104,7 +93,7 @@ def validate_base_url(base_url):
 
 def is_web_url(string):
     """Check to see if string is an validly-formatted web url."""
-    assert isinstance(string, basestring)
+    assert isinstance(string, str)
     parsed_url = urllib.parse.urlparse(string)
     return (
         parsed_url.scheme.lower() == "http"
@@ -114,13 +103,13 @@ def is_web_url(string):
 
 def is_local_file(string):
     """Check to see if string is a valid local file path."""
-    assert isinstance(string, basestring)
+    assert isinstance(string, str)
     return os.path.isfile(string)
 
 
 def open_local_file(file_path):
     """Open the file and return an EncodableFile tuple."""
-    assert isinstance(file_path, basestring)
+    assert isinstance(file_path, str)
     assert is_local_file(file_path)
     file_name = os.path.basename(file_path)
     file_object = open(file_path, "rb")
@@ -251,7 +240,7 @@ def json_dict(json_data):
     """
     if isinstance(json_data, dict):
         return json_data
-    elif isinstance(json_data, basestring):
+    elif isinstance(json_data, str):
         return json.loads(json_data, object_hook=OrderedDict)
     else:
         raise TypeError(

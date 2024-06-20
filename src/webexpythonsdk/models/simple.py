@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Simple data model; models Webex JSON objects as simple Python objects.
 
 Classes:
@@ -29,15 +28,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
 import json
-from builtins import *
 
 from webexpythonsdk.utils import json_dict
 
@@ -49,7 +41,7 @@ class SimpleDataModel(object):
         """Init a new SimpleDataModel object from a dictionary or JSON string.
 
         Args:
-            json_data(dict, basestring): Input JSON string or dictionary.
+            json_data(dict, str): Input JSON string or dictionary.
 
         Raises:
             TypeError: If the input object is not a dictionary or string.
@@ -74,9 +66,9 @@ def simple_data_factory(model, json_data):
     """Factory function for creating SimpleDataModel objects.
 
     Args:
-        model(basestring): The data model to use when creating the data
+        model(str): The data model to use when creating the data
             object (message, room, membership, etc.).
-        json_data(basestring, dict): The JSON string or dictionary data with
+        json_data(str, dict): The JSON string or dictionary data with
             which to initialize the object.
 
     Returns:

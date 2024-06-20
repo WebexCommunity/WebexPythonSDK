@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex Adaptive Card data model.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.

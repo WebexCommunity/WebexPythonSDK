@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex data models.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,12 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
 from webexpythonsdk.utils import json_dict
 
@@ -36,9 +29,9 @@ def dict_data_factory(model, json_data):
     """Factory function for creating SimpleDataModel objects.
 
     Args:
-        model(basestring): The data model to use when creating the data
+        model(str): The data model to use when creating the data
             object (message, room, membership, etc.).
-        json_data(basestring, dict): The JSON string or dictionary data with
+        json_data(str, dict): The JSON string or dictionary data with
             which to initialize the object.
 
     Returns:

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex API wrappers.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,7 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from past.types import basestring
+from past.types import str
 
 from webexpythonsdk.config import (
     DEFAULT_BASE_URL,
@@ -105,10 +104,10 @@ class WebexAPI(object):
         via one of these two methods.
 
         Args:
-            access_token(basestring): The access token to be used for API
+            access_token(str): The access token to be used for API
                 calls to the Webex service.  Defaults to checking for a
                 WEBEX_ACCESS_TOKEN environment variable.
-            base_url(basestring): The base URL to be prefixed to the
+            base_url(str): The base URL to be prefixed to the
                 individual API endpoint suffixes.
                 Defaults to webexpythonsdk.DEFAULT_BASE_URL.
             single_request_timeout(int): Timeout (in seconds) for RESTful HTTP
@@ -119,20 +118,20 @@ class WebexAPI(object):
                 webexpythonsdk.config.DEFAULT_WAIT_ON_RATE_LIMIT.
             object_factory(callable): The factory function to use to create
                 Python objects from the returned Webex JSON data objects.
-            client_id(basestring): The client id of your integration. Provided
+            client_id(str): The client id of your integration. Provided
                 upon creation in the portal.
-            client_secret(basestring): The client secret of your integration.
+            client_secret(str): The client secret of your integration.
                 Provided upon creation in the portal.
-            oauth_code(basestring): The oauth authorization code provided by
+            oauth_code(str): The oauth authorization code provided by
                 the user oauth process.
-            oauth_redirect_uri(basestring): The redirect URI used in the user
+            oauth_redirect_uri(str): The redirect URI used in the user
                 OAuth process.
             proxies(dict): Dictionary of proxies passed on to the requests
                 session.
-            be_geo_id(basestring): Optional partner identifier for API usage
+            be_geo_id(str): Optional partner identifier for API usage
                 tracking.  Defaults to checking for a BE_GEO_ID environment
                 variable.
-            caller(basestring): Optional  identifier for API usage tracking.
+            caller(str): Optional  identifier for API usage tracking.
                 Defaults to checking for a WEBEX_PYTHON_SDK_CALLER environment
                 variable.
             disable_ssl_verify(bool): Optional boolean flag to disable ssl
@@ -148,17 +147,17 @@ class WebexAPI(object):
                 access_token argument or an environment variable.
 
         """
-        check_type(access_token, basestring, optional=True)
-        check_type(base_url, basestring, optional=True)
+        check_type(access_token, str, optional=True)
+        check_type(base_url, str, optional=True)
         check_type(single_request_timeout, int, optional=True)
         check_type(wait_on_rate_limit, bool, optional=True)
-        check_type(client_id, basestring, optional=True)
-        check_type(client_secret, basestring, optional=True)
-        check_type(oauth_code, basestring, optional=True)
-        check_type(redirect_uri, basestring, optional=True)
+        check_type(client_id, str, optional=True)
+        check_type(client_secret, str, optional=True)
+        check_type(oauth_code, str, optional=True)
+        check_type(redirect_uri, str, optional=True)
         check_type(proxies, dict, optional=True)
-        check_type(be_geo_id, basestring, optional=True)
-        check_type(caller, basestring, optional=True)
+        check_type(be_geo_id, str, optional=True)
+        check_type(caller, str, optional=True)
         check_type(disable_ssl_verify, bool, optional=True)
 
         access_token = access_token or WEBEX_ACCESS_TOKEN
@@ -281,12 +280,12 @@ class WebexAPI(object):
         token to create a new WebexAPI connection object.
 
         Args:
-            client_id(basestring): Provided when you created your integration.
-            client_secret(basestring): Provided when you created your
+            client_id(str): Provided when you created your integration.
+            client_secret(str): Provided when you created your
                 integration.
-            code(basestring): The Authorization Code provided by the user
+            code(str): The Authorization Code provided by the user
                 OAuth process.
-            redirect_uri(basestring): The redirect URI used in the user OAuth
+            redirect_uri(str): The redirect URI used in the user OAuth
                 process.
 
         Returns:
@@ -311,10 +310,10 @@ class WebexAPI(object):
         token to create a new WebexAPI connection object.
 
         Args:
-            client_id(basestring): Provided when you created your integration.
-            client_secret(basestring): Provided when you created your
+            client_id(str): Provided when you created your integration.
+            client_secret(str): Provided when you created your
                 integration.
-            refresh_token(basestring): Provided when you requested the Access
+            refresh_token(str): Provided when you requested the Access
                 Token.
 
         Returns:

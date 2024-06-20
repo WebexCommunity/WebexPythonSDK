@@ -9,7 +9,7 @@ methods:
 url_parameters:
   - name: meetingId
     description: Unique identifier for the meeting.
-    type: basestring
+    type: str
 query_parameters:
   - name: max
     description: Limit the maximum number of registrants in the response, up to 100.
@@ -18,7 +18,7 @@ query_parameters:
   - name: hostEmail
     description: Email address for the meeting host.
     optional: True
-    type: basestring
+    type: str
   - name: current
     description: Whether or not to retrieve only the current scheduled meeting of the meeting series, i.e. the meeting ready to join or start or the upcoming meeting of the meeting series.
     optional: True
@@ -26,74 +26,74 @@ query_parameters:
   - name: email
     description: Registrant's email to filter registrants.
     optional: True
-    type: basestring
+    type: str
   - name: registrationTimeFrom
     description: The time registrants register a meeting starts from the specified date and time (inclusive) in any ISO 8601 compliant format.
     optional: True
-    type: basestring
+    type: str
   - name: registrationTimeTo
     description: The time registrants register a meeting before the specified date and time (exclusive) in any ISO 8601 compliant format.
     optional: True
-    type: basestring
+    type: str
 list:
   properties:
     - name: registrantId
       description: New registrant's ID.
-      type: basestring
+      type: str
     - name: status
       description: New registrant's status.
-      type: basestring
+      type: str
     - name: firstName
       description: Registrant's first name.
-      type: basestring
+      type: str
     - name: lastName
       description: Registrant's last name.
-      type: basestring
+      type: str
     - name: email
       description: Registrant's email.
-      type: basestring
+      type: str
     - name: jobTitle
       description: Registrant's job title.
-      type: basestring
+      type: str
     - name: companyName
       description: Registrant's company.
-      type: basestring
+      type: str
     - name: address1
       description: Registrant's first address line.
-      type: basestring
+      type: str
     - name: address2
       description: Registrant's second address line.
-      type: basestring
+      type: str
     - name: city
       description: Registrant's city name.
-      type: basestring
+      type: str
     - name: state
       description: Registrant's state.
-      type: basestring
+      type: str
     - name: zipCode
       description: Registrant's postal code.
       type: int
     - name: countryRegion
       description: Registrant's country or region.
-      type: basestring
+      type: str
     - name: workPhone
       description: Registrant's work phone number.
-      type: basestring
+      type: str
     - name: fax
       description: Registrant's FAX number.
-      type: basestring
+      type: str
     - name: registrationTime
       description: Registrant's registration time.
-      type: basestring
+      type: str
     - name: customizedQuestions
       description: List of registrant's answers for customized questions,
       type: list
     - name: sourceId
       description: Registrant's source id.
-      type: basestring
+      type: str
     - name: registrationId
       description: Registrant's registration ID.
-      type: basestring
+      type: str
 
 create:
   required:

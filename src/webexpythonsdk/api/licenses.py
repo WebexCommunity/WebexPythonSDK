@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex Licenses API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,16 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
 
-from past.builtins import basestring
 
 from ..generator_containers import generator_container
 from ..restsession import RestSession
@@ -79,7 +70,7 @@ class LicensesAPI(object):
         authenticated user.
 
         Args:
-            orgId(basestring): Specify the organization, by ID.
+            orgId(str): Specify the organization, by ID.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
@@ -92,7 +83,7 @@ class LicensesAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(orgId, basestring, optional=True)
+        check_type(orgId, str, optional=True)
 
         params = dict_from_items_with_values(
             request_parameters,
@@ -110,7 +101,7 @@ class LicensesAPI(object):
         """Get the details of a License, by ID.
 
         Args:
-            licenseId(basestring): The ID of the License to be retrieved.
+            licenseId(str): The ID of the License to be retrieved.
 
         Returns:
             License: A License object with the details of the requested
@@ -121,7 +112,7 @@ class LicensesAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(licenseId, basestring)
+        check_type(licenseId, str)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + "/" + licenseId)

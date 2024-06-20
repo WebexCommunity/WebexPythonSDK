@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """pytest configuration and top-level fixtures.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.

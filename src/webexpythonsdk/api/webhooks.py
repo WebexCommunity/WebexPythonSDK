@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex Webhooks API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -22,16 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
 
-from past.builtins import basestring
 
 from ..generator_containers import generator_container
 from ..restsession import RestSession
@@ -127,13 +118,13 @@ class WebhooksAPI(object):
         """Create a webhook.
 
         Args:
-            name(basestring): A user-friendly name for this webhook.
-            targetUrl(basestring): The URL that receives POST requests for
+            name(str): A user-friendly name for this webhook.
+            targetUrl(str): The URL that receives POST requests for
                 each event.
-            resource(basestring): The resource type for the webhook.
-            event(basestring): The event type for the webhook.
-            filter(basestring): The filter that defines the webhook scope.
-            secret(basestring): The secret used to generate payload signature.
+            resource(str): The resource type for the webhook.
+            event(str): The event type for the webhook.
+            filter(str): The filter that defines the webhook scope.
+            secret(str): The secret used to generate payload signature.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
@@ -145,12 +136,12 @@ class WebhooksAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(name, basestring)
-        check_type(targetUrl, basestring)
-        check_type(resource, basestring)
-        check_type(event, basestring)
-        check_type(filter, basestring, optional=True)
-        check_type(secret, basestring, optional=True)
+        check_type(name, str)
+        check_type(targetUrl, str)
+        check_type(resource, str)
+        check_type(event, str)
+        check_type(filter, str, optional=True)
+        check_type(secret, str, optional=True)
 
         post_data = dict_from_items_with_values(
             request_parameters,
@@ -172,7 +163,7 @@ class WebhooksAPI(object):
         """Get the details of a webhook, by ID.
 
         Args:
-            webhookId(basestring): The ID of the webhook to be retrieved.
+            webhookId(str): The ID of the webhook to be retrieved.
 
         Returns:
             Webhook: A Webhook object with the details of the requested
@@ -183,7 +174,7 @@ class WebhooksAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(webhookId, basestring)
+        check_type(webhookId, str)
 
         # API request
         json_data = self._session.get(API_ENDPOINT + "/" + webhookId)
@@ -197,9 +188,9 @@ class WebhooksAPI(object):
         """Update a webhook, by ID.
 
         Args:
-            webhookId(basestring): The webhook ID.
-            name(basestring): A user-friendly name for this webhook.
-            targetUrl(basestring): The URL that receives POST requests for
+            webhookId(str): The webhook ID.
+            name(str): A user-friendly name for this webhook.
+            targetUrl(str): The URL that receives POST requests for
                 each event.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
@@ -213,9 +204,9 @@ class WebhooksAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(webhookId, basestring)
-        check_type(name, basestring, optional=True)
-        check_type(targetUrl, basestring, optional=True)
+        check_type(webhookId, str)
+        check_type(name, str, optional=True)
+        check_type(targetUrl, str, optional=True)
 
         put_data = dict_from_items_with_values(
             request_parameters,
@@ -235,14 +226,14 @@ class WebhooksAPI(object):
         """Delete a webhook, by ID.
 
         Args:
-            webhookId(basestring): The ID of the webhook to be deleted.
+            webhookId(str): The ID of the webhook to be deleted.
 
         Raises:
             TypeError: If the parameter types are incorrect.
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type(webhookId, basestring)
+        check_type(webhookId, str)
 
         # API request
         self._session.delete(API_ENDPOINT + "/" + webhookId)
