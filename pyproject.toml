@@ -53,10 +53,10 @@ build-backend = "poetry.core.masonry.api"
 [tool.versioneer]
 VCS = "git"
 style = "pep440-post"
-versionfile_source = "src/WebexPythonSDK/_version.py"
-versionfile_build = "WebexPythonSDK/_version.py"
+versionfile_source = "src/webexpythonsdk/_version.py"
+versionfile_build = "webexpythonsdk/_version.py"
 tag_prefix = "v"
-parentdir_prefix = "WebexPythonSDK-"
+parentdir_prefix = "webexpythonsdk-"
 
 [tool.pytest.ini_options]
 addopts = "--strict-markers"
@@ -66,7 +66,7 @@ markers = ["slow", "manual"]
 line-length = 79
 extend-exclude = [
     "versioneer.py",
-    "src/WebexPythonSDK/_version.py",
+    "src/webexpythonsdk/_version.py",
     "generator/**",
 ]
 
