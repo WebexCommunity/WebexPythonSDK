@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "WebexPythonSDK"
+name = "webexpythonsdk"
 version = "0.0.0"
 description = "Work with the Webex APIs in native Python!"
 authors = ["Chris Lunsford <cm@lunsford.io>"]
