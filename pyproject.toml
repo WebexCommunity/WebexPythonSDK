@@ -1,0 +1,87 @@
+[tool.poetry]
+name = "WebexPythonSDK"
+version = "0.0.0"
+description = "Work with the Webex APIs in native Python!"
+authors = ["Chris Lunsford <cm@lunsford.io>"]
+license = "MIT"
+readme = "README.rst"
+homepage = "https://github.com/WebexCommunity/WebexPythonSDK"
+repository = "https://github.com/WebexCommunity/WebexPythonSDK"
+documentation = "https://webexpythonsdk.readthedocs.io"
+include = ["LICENSE", "README.rst"]
+keywords = ["cisco", "webex", "api", "sdk", "python"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Natural Language :: English",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Telecommunications Industry",
+    "Topic :: Communications",
+    "Topic :: Communications :: Chat",
+    "Topic :: Communications :: Conferencing",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.32.3"
+requests-toolbelt = "^1.0.0"
+PyJWT = "^2.8.0"
+
+[tool.poetry.group.dev.dependencies]
+versioneer = "^0.29"
+PyYAML = "^6.0.1"
+ruff = "^0.4.9"
+pytest = "^8.2.2"
+ipython = "^8.25.0"
+
+[tool.poetry.group.docs.dependencies]
+sphinx = "^7.3.7"
+sphinx-rtd-theme = "^2.0.0"
+
+[build-system]
+requires = ["poetry-core", "versioneer[toml]"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.versioneer]
+VCS = "git"
+style = "pep440-post"
+versionfile_source = "src/WebexPythonSDK/_version.py"
+versionfile_build = "WebexPythonSDK/_version.py"
+tag_prefix = "v"
+parentdir_prefix = "WebexPythonSDK-"
+
+[tool.pytest.ini_options]
+addopts = "--strict-markers"
+markers = ["slow", "manual"]
+
+[tool.ruff]
+line-length = 79
+extend-exclude = [
+    "versioneer.py",
+    "src/WebexPythonSDK/_version.py",
+    "generator/**",
+]
+
+[tool.ruff.lint]
+# B: flake8-bugbear
+# Q: flake8-quotes
+extend-select = [ "B", "Q", "W" ]
+ignore-init-module-imports = true
+ignore = [
+    # E402 module level import not at top of file
+    "E402",
+    # F401 'builtins.*' imported but unused
+    "F401",
+    # F403 'from builtins import *' used; unable to detect undefined names
+    "F403",
+    # F405 'unicode' may be undefined, or defined from star imports: builtins
+    "F405",
+]

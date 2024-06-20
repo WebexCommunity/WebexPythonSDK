@@ -1,7 +1,0 @@
-versioneer
-Sphinx>=1.8.0
-sphinx-rtd-theme
-pytest
-flake8
-twine
-ipython
