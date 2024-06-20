@@ -106,10 +106,7 @@ class GuestIssuerAPI(object):
         key = base64.b64decode(secret)
         jwt_token = jwt.encode(payload, key, algorithm="HS256")
 
-        # TODO: Remove `.decode("utf-8")` when Python 2 is no longer supported
-        # v1.7.1 is the last release of PyJWT that supports Python 2, and it
-        # returns a byte string for the JWT token.
-        headers = {"Authorization": "Bearer " + jwt_token.decode("utf-8")}
+        headers = {"Authorization": "Bearer " + jwt_token}
 
         json_data = self._session.post(
             API_ENDPOINT + "/" + "login", headers=headers
