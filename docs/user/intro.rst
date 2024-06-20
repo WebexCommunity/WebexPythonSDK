@@ -146,7 +146,7 @@ distributed as a source distribution (no binaries) via :ref:`PyPI <Install>`,
 and the complete :ref:`source code <Source Code>` is available on GitHub.
 
 webexpythonsdk License
----------------------
+----------------------
 
 .. include:: ../../LICENSE
 
