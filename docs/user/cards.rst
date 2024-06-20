@@ -8,7 +8,7 @@ Webex supports `AdaptiveCards <https://www.adaptivecards.io/>`_ to allow
 new levels of interactivity for bots and integrations. You can read more about
 how cards and buttons work `in the official guide <https://developer.webex.com/docs/api/guides/cards>`_.
 
-In this guide I want to cover the abstraction built into the webexteamssdk that
+In this guide I want to cover the abstraction built into the webexpythonsdk that
 lets you author adaptive cards in pure python without having to touch the
 underlying JSON of an adaptive card.
 
@@ -19,11 +19,11 @@ Lets dive into a simple example that sends a card to a room
 
 .. code-block:: python
 
-    from webexteamssdk import WebexTeamsAPI
-    from webexteamssdk.models.cards.card import AdaptiveCard
-    from webexteamssdk.models.cards.inputs import Text, Number
-    from webexteamssdk.models.cards.components import TextBlock
-    from webexteamssdk.models.cards.actions import Submit
+    from webexpythonsdk import WebexAPI
+    from webexpythonsdk.models.cards.card import AdaptiveCard
+    from webexpythonsdk.models.cards.inputs import Text, Number
+    from webexpythonsdk.models.cards.components import TextBlock
+    from webexpythonsdk.models.cards.actions import Submit
 
     greeting = TextBlock("Hey hello there! I am a adaptive card")
     first_name = Text('first_name', placeholder="First Name")
@@ -33,7 +33,7 @@ Lets dive into a simple example that sends a card to a room
 
     card = AdaptiveCard(body=[greeting, first_name, age], actions=[submit])
 
-    api = WebexTeamsAPI()
+    api = WebexAPI()
     api.messages.create(text="fallback", roomId="...", attachments=[card])
 
 The message we send with this code then looks like this in our Webex space
@@ -46,9 +46,9 @@ Processing a card action
 ========================
 
 
-Adaptive card interactions are treated as "attachment actions". Once user interacts 
-with your card and submits an action, your app will receive a webhook from Webex. You 
-must :ref:`setup a webhook <webhooks>` in advance with ``resource = "attachmentActions"`` 
+Adaptive card interactions are treated as "attachment actions". Once user interacts
+with your card and submits an action, your app will receive a webhook from Webex. You
+must :ref:`setup a webhook <webhooks>` in advance with ``resource = "attachmentActions"``
 and ``event = "created"``.
 
 Webhook payload will contain a JSON:
@@ -64,8 +64,8 @@ Webhook payload will contain a JSON:
         }
     }
 
-Extract attachment action ID from ``['data']['id']`` and 
-use :ref:`attachment_actions.get() <attachment_actions>` to get full information 
+Extract attachment action ID from ``['data']['id']`` and
+use :ref:`attachment_actions.get() <attachment_actions>` to get full information
 about user action and any submitted data.
 
 .. code-block:: python

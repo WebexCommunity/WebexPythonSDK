@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Adaptive Card data model.
+"""Webex Adaptive Card data model.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -30,7 +30,7 @@ from .utils import check_type
 class AdaptiveCard(AdaptiveCardComponent):
     """Adaptive Card data model.
 
-    Note: Webex Teams currently supports version 1.1 of adaptive cards and thus
+    Note: Webex currently supports version 1.1 of adaptive cards and thus
     only features from that release are supported in this abstraction.
     """
 

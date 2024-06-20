@@ -14,7 +14,7 @@ def render_prop_mixin(
     properties: list,
     base_name: str,
     template_name: str = "mixins.py",
-    path_prefix: str = "../webexteamssdk/models/mixins/",
+    path_prefix: str = "../webexpythonsdk/models/mixins/",
 ) -> str:
     """Renders a simple property mixin for the SDK based on the
         information provided in the descriptor file.
@@ -30,7 +30,7 @@ def render_prop_mixin(
             the filenames.
         template_name(str): Name of the template to use. Default: mixins.py
         path_prefix(str): Path to the mixins folder.
-            Default: ../webexteamssdk/models/mixins/
+            Default: ../webexpythonsdk/models/mixins/
 
     Returns:
         str: Path to the generated
@@ -53,7 +53,7 @@ def render_api_class(
     descr: dict,
     base_name: str,
     template_name: str = "api.py",
-    path_prefix: str = "../webexteamssdk/api/",
+    path_prefix: str = "../webexpythonsdk/api/",
 ) -> str:
     """Renders an API class based on the properties described in
         the descr file.
@@ -67,7 +67,7 @@ def render_api_class(
             the filenames.
         template_name(str): Name of the template to use. Default: api.py
         path_prefix(str): Path to the target api folder that the output will
-            we placed in. Default: ../webexteamssdk/api/
+            we placed in. Default: ../webexpythonsdk/api/
 
     Returns:
         str: The path to the generated api class

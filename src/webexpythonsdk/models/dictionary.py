@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams data models.
+"""Webex data models.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -29,7 +29,7 @@ from __future__ import (
     unicode_literals,
 )
 
-from webexteamssdk.utils import json_dict
+from webexpythonsdk.utils import json_dict
 
 
 def dict_data_factory(model, json_data):
@@ -42,7 +42,7 @@ def dict_data_factory(model, json_data):
             which to initialize the object.
 
     Returns:
-        OrderedDict: An ordered dictionary with the contents of the Webex Teams
+        OrderedDict: An ordered dictionary with the contents of the Webex
          JSON object.
 
     Raises:

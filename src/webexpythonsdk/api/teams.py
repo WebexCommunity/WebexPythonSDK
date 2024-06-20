@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Teams-API wrapper.
+"""Webex Teams-API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -46,9 +46,9 @@ OBJECT_TYPE = "team"
 
 
 class TeamsAPI(object):
-    """Webex Teams Teams API.
+    """Webex Teams API.
 
-    Wraps the Webex Teams Teams API and exposes the API as native Python
+    Wraps the Webex Teams API and exposes the API as native Python
     methods that return native Python objects.
 
     """
@@ -58,7 +58,7 @@ class TeamsAPI(object):
 
         Args:
             session(RestSession): The RESTful session object to be used for
-                API calls to the Webex Teams service.
+                API calls to the Webex service.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -75,7 +75,7 @@ class TeamsAPI(object):
     def list(self, max=100, **request_parameters):
         """List teams to which the authenticated user belongs.
 
-        This method supports Webex Teams's implementation of RFC5988 Web
+        This method supports Webex's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
         container that incrementally yields all teams returned by the
         query.  The generator will automatically request additional 'pages' of
@@ -87,17 +87,17 @@ class TeamsAPI(object):
 
         Args:
             max(int): Limit the maximum number of items returned from the Webex
-                Teams service per request.
+                service per request.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-            yields the teams returned by the Webex Teams query.
+            yields the teams returned by the Webex query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(max, int, optional=True)
@@ -129,7 +129,7 @@ class TeamsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(name, basestring)
@@ -156,7 +156,7 @@ class TeamsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(teamId, basestring)
@@ -177,11 +177,11 @@ class TeamsAPI(object):
                 support for parameters that may be added in the future).
 
         Returns:
-            Team: A Team object with the updated Webex Teams team details.
+            Team: A Team object with the updated Webex team details.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(teamId, basestring)
@@ -208,7 +208,7 @@ class TeamsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(teamId, basestring)

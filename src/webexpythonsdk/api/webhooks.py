@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Webhooks API wrapper.
+"""Webex Webhooks API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -46,9 +46,9 @@ OBJECT_TYPE = "webhook"
 
 
 class WebhooksAPI(object):
-    """Webex Teams Webhooks API.
+    """Webex Webhooks API.
 
-    Wraps the Webex Teams Webhooks API and exposes the API as native Python
+    Wraps the Webex Webhooks API and exposes the API as native Python
     methods that return native Python objects.
 
     """
@@ -58,7 +58,7 @@ class WebhooksAPI(object):
 
         Args:
             session(RestSession): The RESTful session object to be used for
-                API calls to the Webex Teams service.
+                API calls to the Webex service.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -75,7 +75,7 @@ class WebhooksAPI(object):
     def list(self, max=100, **request_parameters):
         """List all of the authenticated user's webhooks.
 
-        This method supports Webex Teams's implementation of RFC5988 Web
+        This method supports Webex's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
         container that incrementally yields all webhooks returned by the
         query.  The generator will automatically request additional 'pages' of
@@ -87,17 +87,17 @@ class WebhooksAPI(object):
 
         Args:
             max(int): Limit the maximum number of items returned from the Webex
-                Teams service per request.
+                service per request.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-            yields the webhooks returned by the Webex Teams query.
+            yields the webhooks returned by the Webex query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(max, int, optional=True)
@@ -142,7 +142,7 @@ class WebhooksAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(name, basestring)
@@ -180,7 +180,7 @@ class WebhooksAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(webhookId, basestring)
@@ -205,12 +205,12 @@ class WebhooksAPI(object):
                 support for parameters that may be added in the future).
 
         Returns:
-            Webhook: A Webhook object with the updated Webex Teams webhook
+            Webhook: A Webhook object with the updated Webex webhook
                 details.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(webhookId, basestring)
@@ -239,7 +239,7 @@ class WebhooksAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(webhookId, basestring)

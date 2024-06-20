@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 #  -*- coding: utf-8 -*-
-"""Simple webexteamssdk demonstration script.
+"""Simple webexpythonsdk demonstration script.
 
 Very simple script to create a demo room, post a message, and post a file.
 If one or more rooms with the name of the demo room already exist, it will
 delete the previously existing rooms.
 
-The package natively retrieves your Webex Teams access token from the
-WEBEX_TEAMS_ACCESS_TOKEN environment variable.  You must have this environment
+The package natively retrieves your Webex access token from the
+WEBEX_ACCESS_TOKEN environment variable.  You must have this environment
 variable set to run this script.
 
 
@@ -33,19 +33,19 @@ SOFTWARE.
 """
 
 from __future__ import print_function
-from webexteamssdk import WebexTeamsAPI
+from webexpythonsdk import WebexAPI
 
 
-DEMO_ROOM_NAME = "webexteamssdk Demo Room"
+DEMO_ROOM_NAME = "webexpythonsdk Demo Room"
 DEMO_PEOPLE = ["test01@cmlccie.com", "test02@cmlccie.com"]
-DEMO_MESSAGE = "Webex Teams rocks!  \ud83d\ude0e"
+DEMO_MESSAGE = "Webex rocks!  \ud83d\ude0e"
 DEMO_FILE_URL = (
     "https://www.webex.com/content/dam/wbx/us/images/dg-integ/teams_icon.png"
 )
 
 
-# Create a WebexTeamsAPI connection object; uses your WEBEX_TEAMS_ACCESS_TOKEN
-api = WebexTeamsAPI()
+# Create a WebexAPI connection object; uses your WEBEX_ACCESS_TOKEN
+api = WebexAPI()
 
 
 # Clean up previous demo rooms

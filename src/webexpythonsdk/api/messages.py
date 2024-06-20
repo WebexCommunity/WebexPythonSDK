@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Messages API wrapper.
+"""Webex Messages API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -34,7 +34,7 @@ from builtins import *
 from past.builtins import basestring
 from requests_toolbelt import MultipartEncoder
 
-from webexteamssdk.models.cards import AdaptiveCard
+from webexpythonsdk.models.cards import AdaptiveCard
 from ..generator_containers import generator_container
 from ..restsession import RestSession
 from ..utils import (
@@ -52,9 +52,9 @@ OBJECT_TYPE = "message"
 
 
 class MessagesAPI(object):
-    """Webex Teams Messages API.
+    """Webex Messages API.
 
-    Wraps the Webex Teams Messages API and exposes the API as native Python
+    Wraps the Webex Messages API and exposes the API as native Python
     methods that return native Python objects.
 
     """
@@ -64,7 +64,7 @@ class MessagesAPI(object):
 
         Args:
             session(RestSession): The RESTful session object to be used for
-                API calls to the Webex Teams service.
+                API calls to the Webex service.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -92,7 +92,7 @@ class MessagesAPI(object):
 
         The list API sorts the messages in descending order by creation date.
 
-        This method supports Webex Teams's implementation of RFC5988 Web
+        This method supports Webex's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
         container that incrementally yields all messages returned by the
         query.  The generator will automatically request additional 'pages' of
@@ -112,17 +112,17 @@ class MessagesAPI(object):
             beforeMessage(basestring): List messages sent before a message,
                 by ID.
             max(int): Limit the maximum number of items returned from the Webex
-                Teams service per request.
+                service per request.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-            yields the messages returned by the Webex Teams query.
+            yields the messages returned by the Webex query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(roomId, basestring)
@@ -164,7 +164,7 @@ class MessagesAPI(object):
 
         The list API sorts the messages in descending order by creation date.
 
-        This method supports Webex Teams's implementation of RFC5988 Web
+        This method supports Webex's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
         container that incrementally yields all messages returned by the
         query.  The generator will automatically request additional 'pages' of
@@ -184,11 +184,11 @@ class MessagesAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-            yields the messages returned by the Webex Teams query.
+            yields the messages returned by the Webex query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(personId, basestring, optional=True)
@@ -254,7 +254,7 @@ class MessagesAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
             ValueError: If the files parameter is a list of length > 1, or if
                 the string in the list (the only element in the list) does not
                 contain a valid URL or path to a local file.
@@ -341,7 +341,7 @@ class MessagesAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(messageId, basestring)
@@ -360,7 +360,7 @@ class MessagesAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(messageId, basestring)
@@ -381,7 +381,7 @@ class MessagesAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(messageId, basestring)

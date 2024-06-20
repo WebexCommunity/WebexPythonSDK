@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""WebexTeamsAPI Team Memberships API fixtures and tests.
+"""WebexAPI Team Memberships API fixtures and tests.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -26,7 +26,7 @@ import itertools
 
 import pytest
 
-import webexteamssdk
+import webexpythonsdk
 
 
 # Helper Functions
@@ -34,7 +34,7 @@ import webexteamssdk
 
 def is_valid_team_membership(membership):
     return (
-        isinstance(membership, webexteamssdk.TeamMembership)
+        isinstance(membership, webexpythonsdk.TeamMembership)
         and membership.id is not None
     )
 

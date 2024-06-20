@@ -1,26 +1,26 @@
 .. _User API Doc:
 
-.. currentmodule:: webexteamssdk
+.. currentmodule:: webexpythonsdk
 
 ============
 User API Doc
 ============
 
 
-WebexTeamsAPI
+WebexAPI
 =============
 
-The :class:`WebexTeamsAPI` class creates "connection objects" for working with the Webex Teams APIs and hierarchically organizes the Webex Teams APIs and their endpoints underneath these connection objects.
+The :class:`WebexAPI` class creates "connection objects" for working with the Webex APIs and hierarchically organizes the Webex APIs and their endpoints underneath these connection objects.
 
 
 .. include:: api_structure_table.rst
 
 
-.. autoclass:: WebexTeamsAPI()
+.. autoclass:: WebexAPI()
     :members:
     :exclude-members: access_token, base_url
 
-    .. automethod:: WebexTeamsAPI.__init__
+    .. automethod:: WebexAPI.__init__
 
 
 .. _access_tokens:
@@ -28,7 +28,7 @@ The :class:`WebexTeamsAPI` class creates "connection objects" for working with t
 access_tokens
 -------------
 
-.. autoclass:: webexteamssdk.api.access_tokens.AccessTokensAPI()
+.. autoclass:: webexpythonsdk.api.access_tokens.AccessTokensAPI()
 
 
 .. _admin_audit_events:
@@ -36,7 +36,7 @@ access_tokens
 admin_audit_events
 ------------------
 
-.. autoclass:: webexteamssdk.api.admin_audit_events.AdminAuditEventsAPI()
+.. autoclass:: webexpythonsdk.api.admin_audit_events.AdminAuditEventsAPI()
 
 
 .. _attachment_actions:
@@ -44,7 +44,7 @@ admin_audit_events
 attachment_actions
 ------------------
 
-.. autoclass:: webexteamssdk.api.attachment_actions.AttachmentActionsAPI()
+.. autoclass:: webexpythonsdk.api.attachment_actions.AttachmentActionsAPI()
 
 
 .. _events:
@@ -52,7 +52,7 @@ attachment_actions
 events
 ------
 
-.. autoclass:: webexteamssdk.api.events.EventsAPI()
+.. autoclass:: webexpythonsdk.api.events.EventsAPI()
 
 
 .. _guest_issuer:
@@ -60,7 +60,7 @@ events
 guest_issuer
 ------------
 
-.. autoclass:: webexteamssdk.api.guest_issuer.GuestIssuerAPI()
+.. autoclass:: webexpythonsdk.api.guest_issuer.GuestIssuerAPI()
 
 
 .. _licenses:
@@ -68,7 +68,7 @@ guest_issuer
 licenses
 --------
 
-.. autoclass:: webexteamssdk.api.licenses.LicensesAPI()
+.. autoclass:: webexpythonsdk.api.licenses.LicensesAPI()
 
 
 .. _memberships:
@@ -76,7 +76,7 @@ licenses
 memberships
 -----------
 
-.. autoclass:: webexteamssdk.api.memberships.MembershipsAPI()
+.. autoclass:: webexpythonsdk.api.memberships.MembershipsAPI()
 
 
 .. _messages:
@@ -84,7 +84,7 @@ memberships
 messages
 --------
 
-.. autoclass:: webexteamssdk.api.messages.MessagesAPI()
+.. autoclass:: webexpythonsdk.api.messages.MessagesAPI()
 
 
 .. _organizations:
@@ -92,7 +92,7 @@ messages
 organizations
 -------------
 
-.. autoclass:: webexteamssdk.api.organizations.OrganizationsAPI()
+.. autoclass:: webexpythonsdk.api.organizations.OrganizationsAPI()
 
 
 .. _people:
@@ -100,7 +100,7 @@ organizations
 people
 ------
 
-.. autoclass:: webexteamssdk.api.people.PeopleAPI()
+.. autoclass:: webexpythonsdk.api.people.PeopleAPI()
 
 
 .. _roles:
@@ -108,7 +108,7 @@ people
 roles
 -----
 
-.. autoclass:: webexteamssdk.api.roles.RolesAPI()
+.. autoclass:: webexpythonsdk.api.roles.RolesAPI()
 
 
 .. _rooms:
@@ -116,7 +116,7 @@ roles
 rooms
 -----
 
-.. autoclass:: webexteamssdk.api.rooms.RoomsAPI()
+.. autoclass:: webexpythonsdk.api.rooms.RoomsAPI()
 
 
 .. _teams:
@@ -124,7 +124,7 @@ rooms
 teams
 -----
 
-.. autoclass:: webexteamssdk.api.teams.TeamsAPI()
+.. autoclass:: webexpythonsdk.api.teams.TeamsAPI()
 
 
 .. _team_memberships:
@@ -132,7 +132,7 @@ teams
 team_memberships
 ----------------
 
-.. autoclass:: webexteamssdk.api.team_memberships.TeamMembershipsAPI()
+.. autoclass:: webexpythonsdk.api.team_memberships.TeamMembershipsAPI()
 
 
 .. _webhooks:
@@ -140,13 +140,13 @@ team_memberships
 webhooks
 --------
 
-.. autoclass:: webexteamssdk.api.webhooks.WebhooksAPI()
+.. autoclass:: webexpythonsdk.api.webhooks.WebhooksAPI()
 
 
-.. _Webex Teams Data Objects:
+.. _Webex Data Objects:
 
-Webex Teams Data Objects
-========================
+Webex Data Objects
+==================
 
 
 .. _Access Token:
@@ -307,7 +307,7 @@ Webhook Event
 Exceptions
 ==========
 
-.. autoexception:: webexteamssdkException()
+.. autoexception:: webexpythonsdkException()
     :show-inheritance:
     :members:
 
@@ -333,7 +333,7 @@ Exceptions
 Warnings
 ========
 
-.. autoexception:: webexteamssdkWarning()
+.. autoexception:: webexpythonsdkWarning()
     :show-inheritance:
     :members:
 
@@ -350,88 +350,88 @@ Warnings
 Cards and Buttons
 =================
 
-.. autoclass:: webexteamssdk.cards.card.AdaptiveCard()
+.. autoclass:: webexpythonsdk.cards.card.AdaptiveCard()
 
 Components
 ----------
 
-.. autoclass:: webexteamssdk.cards.components.Image()
+.. autoclass:: webexpythonsdk.cards.components.Image()
    :members:
 
    .. automethod:: __init__
 
-.. autoclass:: webexteamssdk.cards.components.TextBlock()
+.. autoclass:: webexpythonsdk.cards.components.TextBlock()
    :members:
 
    .. automethod:: __init__
 
-.. autoclass:: webexteamssdk.cards.components.Column()
+.. autoclass:: webexpythonsdk.cards.components.Column()
 
-.. autoclass:: webexteamssdk.cards.components.Fact()
+.. autoclass:: webexpythonsdk.cards.components.Fact()
 
-.. autoclass:: webexteamssdk.cards.components.Choice()
+.. autoclass:: webexpythonsdk.cards.components.Choice()
 
 Options
 -------
 
-.. autoclass:: webexteamssdk.cards.options.VerticalContentAlignment()
+.. autoclass:: webexpythonsdk.cards.options.VerticalContentAlignment()
 
-.. autoclass:: webexteamssdk.cards.options.Colors()
+.. autoclass:: webexpythonsdk.cards.options.Colors()
 
-.. autoclass:: webexteamssdk.cards.options.HorizontalAlignment()
+.. autoclass:: webexpythonsdk.cards.options.HorizontalAlignment()
 
-.. autoclass:: webexteamssdk.cards.options.FontSize()
+.. autoclass:: webexpythonsdk.cards.options.FontSize()
 
-.. autoclass:: webexteamssdk.cards.options.FontWeight()
+.. autoclass:: webexpythonsdk.cards.options.FontWeight()
 
-.. autoclass:: webexteamssdk.cards.options.BlockElementHeight()
+.. autoclass:: webexpythonsdk.cards.options.BlockElementHeight()
 
-.. autoclass:: webexteamssdk.cards.options.Spacing()
+.. autoclass:: webexpythonsdk.cards.options.Spacing()
 
-.. autoclass:: webexteamssdk.cards.options.ImageSize()
+.. autoclass:: webexpythonsdk.cards.options.ImageSize()
 
-.. autoclass:: webexteamssdk.cards.options.ImageStyle()
+.. autoclass:: webexpythonsdk.cards.options.ImageStyle()
 
-.. autoclass:: webexteamssdk.cards.options.ContainerStyle()
+.. autoclass:: webexpythonsdk.cards.options.ContainerStyle()
 
-.. autoclass:: webexteamssdk.cards.options.TextInputStyle()
+.. autoclass:: webexpythonsdk.cards.options.TextInputStyle()
 
-.. autoclass:: webexteamssdk.cards.options.ChoiceInputStyle()
+.. autoclass:: webexpythonsdk.cards.options.ChoiceInputStyle()
 
 
 Container
 ---------
 
-.. autoclass:: webexteamssdk.cards.container.Container()
+.. autoclass:: webexpythonsdk.cards.container.Container()
 
-.. autoclass:: webexteamssdk.cards.container.ColumnSet()
+.. autoclass:: webexpythonsdk.cards.container.ColumnSet()
 
-.. autoclass:: webexteamssdk.cards.container.FactSet()
+.. autoclass:: webexpythonsdk.cards.container.FactSet()
 
-.. autoclass:: webexteamssdk.cards.container.ImageSet()
+.. autoclass:: webexpythonsdk.cards.container.ImageSet()
 
 Inputs
 ------
 
-.. autoclass:: webexteamssdk.cards.inputs.Text()
+.. autoclass:: webexpythonsdk.cards.inputs.Text()
 
-.. autoclass:: webexteamssdk.cards.inputs.Number()
+.. autoclass:: webexpythonsdk.cards.inputs.Number()
 
-.. autoclass:: webexteamssdk.cards.inputs.Date()
+.. autoclass:: webexpythonsdk.cards.inputs.Date()
 
-.. autoclass:: webexteamssdk.cards.inputs.Time()
+.. autoclass:: webexpythonsdk.cards.inputs.Time()
 
-.. autoclass:: webexteamssdk.cards.inputs.Toggle()
+.. autoclass:: webexpythonsdk.cards.inputs.Toggle()
 
-.. autoclass:: webexteamssdk.cards.inputs.Choices()
+.. autoclass:: webexpythonsdk.cards.inputs.Choices()
 
 Actions
 -------
 
-.. autoclass:: webexteamssdk.cards.actions.OpenUrl
+.. autoclass:: webexpythonsdk.cards.actions.OpenUrl
 
-.. autoclass:: webexteamssdk.cards.actions.Submit
+.. autoclass:: webexpythonsdk.cards.actions.Submit
 
-.. autoclass:: webexteamssdk.cards.actions.ShowCard
+.. autoclass:: webexpythonsdk.cards.actions.ShowCard
 
 *Copyright (c) 2016-2024 Cisco and/or its affiliates.*

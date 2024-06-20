@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Message data model.
+"""Webex Message data model.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -31,7 +31,7 @@ from __future__ import (
 
 from builtins import *
 
-from webexteamssdk.utils import WebexTeamsDateTime
+from webexpythonsdk.utils import WebexDateTime
 
 
 class MessageBasicPropertiesMixin(object):
@@ -86,7 +86,7 @@ class MessageBasicPropertiesMixin(object):
     def html(self):
         """The text content of the message, in HTML format.
 
-        This read-only property is used by the Webex Teams clients.
+        This read-only property is used by the Webex clients.
         """
         return self._json_data.get("html")
 
@@ -125,7 +125,7 @@ class MessageBasicPropertiesMixin(object):
         """The date and time the message was created."""
         created = self._json_data.get("created")
         if created:
-            return WebexTeamsDateTime.strptime(created)
+            return WebexDateTime.strptime(created)
         else:
             return None
 
@@ -134,6 +134,6 @@ class MessageBasicPropertiesMixin(object):
         """The date and time the message was updated."""
         updated = self._json_data.get("updated")
         if updated:
-            return WebexTeamsDateTime.strptime(updated)
+            return WebexDateTime.strptime(updated)
         else:
             return None

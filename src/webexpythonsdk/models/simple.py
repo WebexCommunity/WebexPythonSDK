@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Simple data model; models Webex Teams JSON objects as simple Python objects.
+"""Simple data model; models Webex JSON objects as simple Python objects.
 
 Classes:
-    SimpleDataModel: Models Webex Teams JSON objects as simple Python objects.
+    SimpleDataModel: Models Webex JSON objects as simple Python objects.
 
 The SimpleDataModel class models any JSON object passed to it as a string or
 Python dictionary as a native Python object; providing attribute access using
@@ -39,11 +39,11 @@ from __future__ import (
 import json
 from builtins import *
 
-from webexteamssdk.utils import json_dict
+from webexpythonsdk.utils import json_dict
 
 
 class SimpleDataModel(object):
-    """Model a Webex Teams JSON object as a simple Python object."""
+    """Model a Webex JSON object as a simple Python object."""
 
     def __init__(self, json_data):
         """Init a new SimpleDataModel object from a dictionary or JSON string.

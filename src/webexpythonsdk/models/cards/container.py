@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Adaptive Card container data models.
+"""Webex Adaptive Card container data models.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 

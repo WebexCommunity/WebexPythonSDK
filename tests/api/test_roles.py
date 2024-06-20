@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""WebexTeamsAPI Roles API fixtures and tests.
+"""WebexAPI Roles API fixtures and tests.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -24,14 +24,14 @@ SOFTWARE.
 
 import pytest
 
-import webexteamssdk
+import webexpythonsdk
 
 
 # Helper Functions
 
 
 def is_valid_role(obj):
-    return isinstance(obj, webexteamssdk.Role) and obj.id is not None
+    return isinstance(obj, webexpythonsdk.Role) and obj.id is not None
 
 
 def are_valid_roles(iterable):

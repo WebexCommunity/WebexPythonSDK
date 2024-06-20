@@ -33,9 +33,9 @@ from builtins import *
 
 from past.builtins import basestring
 
-from webexteamssdk.generator_containers import generator_container
-from webexteamssdk.restsession import RestSession
-from webexteamssdk.utils import check_type, dict_from_items_with_values
+from webexpythonsdk.generator_containers import generator_container
+from webexpythonsdk.restsession import RestSession
+from webexpythonsdk.utils import check_type, dict_from_items_with_values
 
 
 API_ENDPOINT = "adminAudit/events"
@@ -45,7 +45,7 @@ OBJECT_TYPE = "admin_audit_event"
 class AdminAuditEventsAPI(object):
     """Admin Audit Events API.
 
-    Wraps the Webex Teams Admin Audit Events API and exposes the API as native
+    Wraps the Webex Admin Audit Events API and exposes the API as native
     Python methods that return native Python objects.
 
     """
@@ -55,7 +55,7 @@ class AdminAuditEventsAPI(object):
 
         Args:
             session(RestSession): The RESTful session object to be used for
-                API calls to the Webex Teams service.
+                API calls to the Webex service.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -81,7 +81,7 @@ class AdminAuditEventsAPI(object):
     ):
         """List Organizations.
 
-        This method supports Webex Teams's implementation of RFC5988 Web
+        This method supports Webex's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
         container that incrementally yields all audit events returned by the
         query.  The generator will automatically request additional 'pages' of
@@ -106,11 +106,11 @@ class AdminAuditEventsAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-            yields the organizations returned by the Webex Teams query.
+            yields the organizations returned by the Webex query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
         """
         check_type(orgId, basestring)
         check_type(_from, basestring)

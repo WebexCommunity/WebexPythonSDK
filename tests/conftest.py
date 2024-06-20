@@ -30,15 +30,15 @@ import tempfile
 import pytest
 
 from tests.environment import (
-    WEBEX_TEAMS_TEST_DOMAIN,
-    WEBEX_TEAMS_TEST_FILE_URL,
-    WEBEX_TEAMS_TEST_ID_START,
+    WEBEX_TEST_DOMAIN,
+    WEBEX_TEST_FILE_URL,
+    WEBEX_TEST_ID_START,
 )
 from tests.utils import download_file
 
 
 pytest_plugins = [
-    "tests.test_webexteamssdk",
+    "tests.test_webexpythonsdk",
     "tests.api",
     "tests.api.test_attachment_actions",
     "tests.api.test_licenses",
@@ -54,12 +54,12 @@ pytest_plugins = [
     "tests.api.test_recordings",
 ]
 
-email_template = string.Template("test${number}@" + WEBEX_TEAMS_TEST_DOMAIN)
+email_template = string.Template("test${number}@" + WEBEX_TEST_DOMAIN)
 
 
 # Helper Functions
 def new_email_generator():
-    i = WEBEX_TEAMS_TEST_ID_START
+    i = WEBEX_TEST_ID_START
     while True:
         email_address = email_template.substitute(number=i)
         i += 1
@@ -80,7 +80,7 @@ def temp_directory():
 
 @pytest.fixture(scope="session")
 def local_file(temp_directory):
-    file = download_file(WEBEX_TEAMS_TEST_FILE_URL, temp_directory)
+    file = download_file(WEBEX_TEST_FILE_URL, temp_directory)
 
     yield file
 

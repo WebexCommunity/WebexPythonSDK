@@ -13,10 +13,10 @@ from __future__ import (
 
 from builtins import *
 
-import webexteamssdk
+import webexpythonsdk
 
 __copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-api = webexteamssdk.WebexTeamsAPI()
+api = webexpythonsdk.WebexAPI()

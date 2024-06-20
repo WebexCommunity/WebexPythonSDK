@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams People API wrapper.
+"""Webex People API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -46,9 +46,9 @@ OBJECT_TYPE = "person"
 
 
 class PeopleAPI(object):
-    """Webex Teams People API.
+    """Webex People API.
 
-    Wraps the Webex Teams People API and exposes the API as native Python
+    Wraps the Webex People API and exposes the API as native Python
     methods that return native Python objects.
 
     """
@@ -58,7 +58,7 @@ class PeopleAPI(object):
 
         Args:
             session(RestSession): The RESTful session object to be used for
-                API calls to the Webex Teams service.
+                API calls to the Webex service.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -93,7 +93,7 @@ class PeopleAPI(object):
         will not be shown if the authenticated user has disabled status
         sharing.
 
-        This method supports Webex Teams's implementation of RFC5988 Web
+        This method supports Webex's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
         container that incrementally yields all people returned by the
         query.  The generator will automatically request additional 'pages' of
@@ -111,17 +111,17 @@ class PeopleAPI(object):
                 separated by commas.
             orgId(basestring): The organization ID.
             max(int): Limit the maximum number of items returned from the Webex
-                Teams service per request.
+                service per request.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-            yields the people returned by the Webex Teams query.
+            yields the people returned by the Webex query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(id, basestring, optional=True)
@@ -210,7 +210,7 @@ class PeopleAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(emails, list)
@@ -278,7 +278,7 @@ class PeopleAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(personId, basestring)
@@ -306,7 +306,7 @@ class PeopleAPI(object):
 
         Only an admin can update a person's details.
 
-        Email addresses for a person cannot be changed via the Webex Teams API.
+        Email addresses for a person cannot be changed via the Webex API.
 
         Include all details for the person. This action expects all user
         details to be present in the request. A common approach is to first GET
@@ -335,7 +335,7 @@ class PeopleAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(emails, list, optional=True)
@@ -377,7 +377,7 @@ class PeopleAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(personId, basestring)
@@ -389,7 +389,7 @@ class PeopleAPI(object):
         """Get the details of the person accessing the API.
 
         Raises:
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         # API request

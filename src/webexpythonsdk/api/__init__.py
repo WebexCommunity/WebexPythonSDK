@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams API wrappers.
+"""Webex API wrappers.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -24,16 +24,16 @@ SOFTWARE.
 
 from past.types import basestring
 
-from webexteamssdk.config import (
+from webexpythonsdk.config import (
     DEFAULT_BASE_URL,
     DEFAULT_SINGLE_REQUEST_TIMEOUT,
     DEFAULT_WAIT_ON_RATE_LIMIT,
 )
-from webexteamssdk.environment import WEBEX_TEAMS_ACCESS_TOKEN
-from webexteamssdk.exceptions import AccessTokenError
-from webexteamssdk.models.immutable import immutable_data_factory
-from webexteamssdk.restsession import RestSession
-from webexteamssdk.utils import check_type
+from webexpythonsdk.environment import WEBEX_ACCESS_TOKEN
+from webexpythonsdk.exceptions import AccessTokenError
+from webexpythonsdk.models.immutable import immutable_data_factory
+from webexpythonsdk.restsession import RestSession
+from webexpythonsdk.utils import check_type
 from .access_tokens import AccessTokensAPI
 from .admin_audit_events import AdminAuditEventsAPI
 from .attachment_actions import AttachmentActionsAPI
@@ -59,14 +59,14 @@ from .meeting_registrants import MeetingRegistrantsAPI
 import os
 
 
-class WebexTeamsAPI(object):
-    """Webex Teams API wrapper.
+class WebexAPI(object):
+    """Webex API wrapper.
 
-    Creates a 'session' for all API calls through a created WebexTeamsAPI
+    Creates a 'session' for all API calls through a created WebexAPI
     object.  The 'session' handles authentication, provides the needed headers,
     and checks all responses for error conditions.
 
-    WebexTeamsAPI wraps all of the individual Webex Teams APIs and represents
+    WebexAPI wraps all of the individual Webex APIs and represents
     them in a simple hierarchical structure.
     """
 
@@ -86,17 +86,17 @@ class WebexTeamsAPI(object):
         caller=None,
         disable_ssl_verify=False,
     ):
-        """Create a new WebexTeamsAPI object.
+        """Create a new WebexAPI object.
 
-        An access token must be used when interacting with the Webex Teams API.
+        An access token must be used when interacting with the Webex API.
         This package supports three methods for you to provide that access
         token:
 
           1. You may manually specify the access token via the `access_token`
-             argument, when creating a new WebexTeamsAPI object.
+             argument, when creating a new WebexAPI object.
 
           2. If an access_token argument is not supplied, the package checks
-             for a WEBEX_TEAMS_ACCESS_TOKEN environment variable.
+             for a WEBEX_ACCESS_TOKEN environment variable.
 
           3. Provide the parameters (client_id, client_secret, oauth_code and
              oauth_redirect_uri) from your oauth flow.
@@ -106,19 +106,19 @@ class WebexTeamsAPI(object):
 
         Args:
             access_token(basestring): The access token to be used for API
-                calls to the Webex Teams service.  Defaults to checking for a
-                WEBEX_TEAMS_ACCESS_TOKEN environment variable.
+                calls to the Webex service.  Defaults to checking for a
+                WEBEX_ACCESS_TOKEN environment variable.
             base_url(basestring): The base URL to be prefixed to the
                 individual API endpoint suffixes.
-                Defaults to webexteamssdk.DEFAULT_BASE_URL.
+                Defaults to webexpythonsdk.DEFAULT_BASE_URL.
             single_request_timeout(int): Timeout (in seconds) for RESTful HTTP
                 requests. Defaults to
-                webexteamssdk.config.DEFAULT_SINGLE_REQUEST_TIMEOUT.
+                webexpythonsdk.config.DEFAULT_SINGLE_REQUEST_TIMEOUT.
             wait_on_rate_limit(bool): Enables or disables automatic rate-limit
                 handling. Defaults to
-                webexteamssdk.config.DEFAULT_WAIT_ON_RATE_LIMIT.
+                webexpythonsdk.config.DEFAULT_WAIT_ON_RATE_LIMIT.
             object_factory(callable): The factory function to use to create
-                Python objects from the returned Webex Teams JSON data objects.
+                Python objects from the returned Webex JSON data objects.
             client_id(basestring): The client id of your integration. Provided
                 upon creation in the portal.
             client_secret(basestring): The client secret of your integration.
@@ -140,7 +140,7 @@ class WebexTeamsAPI(object):
                 session won't verify ssl certs anymore.
 
         Returns:
-            WebexTeamsAPI: A new WebexTeamsAPI object.
+            WebexAPI: A new WebexAPI object.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -161,7 +161,7 @@ class WebexTeamsAPI(object):
         check_type(caller, basestring, optional=True)
         check_type(disable_ssl_verify, bool, optional=True)
 
-        access_token = access_token or WEBEX_TEAMS_ACCESS_TOKEN
+        access_token = access_token or WEBEX_ACCESS_TOKEN
 
         # Init AccessTokensAPI wrapper early to use for oauth requests
         self.access_tokens = AccessTokensAPI(
@@ -188,14 +188,14 @@ class WebexTeamsAPI(object):
         # variable, or obtained via an OAuth exchange raise an error.
         if not access_token:
             raise AccessTokenError(
-                "You must provide a Webex Teams access token to interact with "
-                "the Webex Teams APIs, either via a WEBEX_TEAMS_ACCESS_TOKEN "
+                "You must provide a Webex access token to interact with "
+                "the Webex APIs, either via a WEBEX_ACCESS_TOKEN "
                 "environment variable or via the access_token argument."
             )
 
         # Create the API session
-        # All of the API calls associated with a WebexTeamsAPI object will
-        # leverage a single RESTful 'session' connecting to the Webex Teams
+        # All of the API calls associated with a WebexAPI object will
+        # leverage a single RESTful 'session' connecting to the Webex
         # cloud.
         self._session = RestSession(
             access_token=access_token,
@@ -247,7 +247,7 @@ class WebexTeamsAPI(object):
 
     @property
     def access_token(self):
-        """The access token used for API calls to the Webex Teams service."""
+        """The access token used for API calls to the Webex service."""
         return self._session.access_token
 
     @property
@@ -266,7 +266,7 @@ class WebexTeamsAPI(object):
         return self._session.wait_on_rate_limit
 
     # Create a class attribute for the Access Tokens API that can be accessed
-    # before WebexTeamsAPI object is initialized.
+    # before WebexAPI object is initialized.
     access_tokens = AccessTokensAPI(
         base_url=DEFAULT_BASE_URL,
         object_factory=immutable_data_factory,
@@ -275,10 +275,10 @@ class WebexTeamsAPI(object):
 
     @classmethod
     def from_oauth_code(cls, client_id, client_secret, code, redirect_uri):
-        """Create a new WebexTeamsAPI connection object using an OAuth code.
+        """Create a new WebexAPI connection object using an OAuth code.
 
         Exchange an Authorization Code for an Access Token, then use the access
-        token to create a new WebexTeamsAPI connection object.
+        token to create a new WebexAPI connection object.
 
         Args:
             client_id(basestring): Provided when you created your integration.
@@ -290,12 +290,12 @@ class WebexTeamsAPI(object):
                 process.
 
         Returns:
-            WebexTeamsAPI: A new WebexTeamsAPI object initialized with the
+            WebexAPI: A new WebexAPI object initialized with the
             access token from the OAuth Authentication Code exchange.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
         """
         token_obj = cls.access_tokens.get(
             client_id, client_secret, code, redirect_uri
@@ -305,10 +305,10 @@ class WebexTeamsAPI(object):
 
     @classmethod
     def from_oauth_refresh(cls, client_id, client_secret, refresh_token):
-        """Create a new WebexTeamsAPI connection object using an OAuth refresh.
+        """Create a new WebexAPI connection object using an OAuth refresh.
 
         Exchange a refresh token for an Access Token, then use the access
-        token to create a new WebexTeamsAPI connection object.
+        token to create a new WebexAPI connection object.
 
         Args:
             client_id(basestring): Provided when you created your integration.
@@ -318,12 +318,12 @@ class WebexTeamsAPI(object):
                 Token.
 
         Returns:
-            WebexTeamsAPI: A new WebexTeamsAPI object initialized with the
+            WebexAPI: A new WebexAPI object initialized with the
             access token from the OAuth Refresh Token exchange.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
         """
         token_obj = cls.access_tokens.refresh(
             client_id, client_secret, refresh_token

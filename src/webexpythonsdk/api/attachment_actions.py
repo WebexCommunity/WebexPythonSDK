@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Attachment Actions API wrapper.
+"""Webex Attachment Actions API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -43,9 +43,9 @@ OBJECT_TYPE = "attachment_action"
 
 
 class AttachmentActionsAPI(object):
-    """Webex Teams Attachment Actions API.
+    """Webex Attachment Actions API.
 
-    Wraps the Webex Teams Attachment Actions API and exposes the API as
+    Wraps the Webex Attachment Actions API and exposes the API as
     native Python methods that return native Python objects.
 
     """
@@ -55,7 +55,7 @@ class AttachmentActionsAPI(object):
 
         Args:
             session(RestSession): The RESTful session object to be used for
-                API calls to the Webex Teams service.
+                API calls to the Webex service.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -83,7 +83,7 @@ class AttachmentActionsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
             ValueError: If the files parameter is a list of length > 1, or if
                 the string in the list (the only element in the list) does not
                 contain a valid URL or path to a local file.
@@ -114,7 +114,7 @@ class AttachmentActionsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(id, basestring)

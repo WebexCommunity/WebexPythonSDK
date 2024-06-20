@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Rooms API wrapper.
+"""Webex Rooms API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -46,9 +46,9 @@ OBJECT_TYPE = "room"
 
 
 class RoomsAPI(object):
-    """Webex Teams Rooms API.
+    """Webex Rooms API.
 
-    Wraps the Webex Teams Rooms API and exposes the API as native Python
+    Wraps the Webex Rooms API and exposes the API as native Python
     methods that return native Python objects.
 
     """
@@ -58,7 +58,7 @@ class RoomsAPI(object):
 
         Args:
             session(RestSession): The RESTful session object to be used for
-                API calls to the Webex Teams service.
+                API calls to the Webex service.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -84,7 +84,7 @@ class RoomsAPI(object):
 
         By default, lists rooms to which the authenticated user belongs.
 
-        This method supports Webex Teams's implementation of RFC5988 Web
+        This method supports Webex's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
         container that incrementally yields all rooms returned by the
         query.  The generator will automatically request additional 'pages' of
@@ -104,17 +104,17 @@ class RoomsAPI(object):
                 activity (`lastactivity`), or most recently created
                 (`created`).
             max(int): Limit the maximum number of items returned from the Webex
-                Teams service per request.
+                service per request.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-            yields the rooms returned by the Webex Teams query.
+            yields the rooms returned by the Webex query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(teamId, basestring, optional=True)
@@ -173,7 +173,7 @@ class RoomsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(title, basestring)
@@ -207,7 +207,7 @@ class RoomsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(roomId, basestring)
@@ -231,7 +231,7 @@ class RoomsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(roomId, basestring)
@@ -281,11 +281,11 @@ class RoomsAPI(object):
                 support for parameters that may be added in the future).
 
         Returns:
-            Room: A Room object with the updated Webex Teams room details.
+            Room: A Room object with the updated Webex room details.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(roomId, basestring)
@@ -326,7 +326,7 @@ class RoomsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(roomId, basestring)

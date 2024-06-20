@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Access-Tokens API wrapper.
+"""Webex Access-Tokens API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -54,9 +54,9 @@ OBJECT_TYPE = "access_token"
 
 
 class AccessTokensAPI(object):
-    """Webex Teams Access-Tokens API.
+    """Webex Access-Tokens API.
 
-    Wraps the Webex Teams Access-Tokens API and exposes the API as native
+    Wraps the Webex Access-Tokens API and exposes the API as native
     Python methods that return native Python objects.
 
     """
@@ -112,11 +112,11 @@ class AccessTokensAPI(object):
 
         Returns:
             AccessToken: An AccessToken object with the access token provided
-            by the Webex Teams cloud.
+            by the Webex cloud.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(client_id, basestring)
@@ -153,12 +153,12 @@ class AccessTokensAPI(object):
                 Token.
 
         Returns:
-            AccessToken: With the access token provided by the Webex Teams
+            AccessToken: With the access token provided by the Webex
             cloud.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(client_id, basestring)

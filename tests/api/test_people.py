@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""WebexTeamsAPI People API fixtures and tests.
+"""WebexAPI People API fixtures and tests.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -26,7 +26,7 @@ import itertools
 
 import pytest
 
-import webexteamssdk
+import webexpythonsdk
 
 
 # Helper Functions
@@ -53,7 +53,7 @@ def update_person(api, person, **person_attributes):
 
 
 def is_valid_person(obj):
-    return isinstance(obj, webexteamssdk.Person) and obj.id is not None
+    return isinstance(obj, webexpythonsdk.Person) and obj.id is not None
 
 
 def are_valid_people(iterable):
@@ -78,9 +78,9 @@ def get_test_person(api, get_new_email_address, me, licenses_dict):
         else:
             person = api.people.create(
                 emails=[person_email],
-                displayName="webexteamssdk",
-                firstName="webexteamssdk",
-                lastName="webexteamssdk",
+                displayName="webexpythonsdk",
+                firstName="webexpythonsdk",
+                lastName="webexpythonsdk",
                 orgId=me.orgId,
                 licenses=[licenses_dict["Advanced Messaging"].id],
                 callingData=True,
@@ -142,7 +142,7 @@ def test_people(api, get_test_person):
 
 @pytest.fixture()
 def temp_person(api, get_random_email_address, me, licenses_dict):
-    # Get an e-mail address not currently used on Webex Teams
+    # Get an e-mail address not currently used on Webex
     person_email = None
     person = True
     while person:
@@ -152,9 +152,9 @@ def temp_person(api, get_random_email_address, me, licenses_dict):
     # Create the person
     person = api.people.create(
         emails=[person_email],
-        displayName="webexteamssdk",
-        firstName="webexteamssdk",
-        lastName="webexteamssdk",
+        displayName="webexpythonsdk",
+        firstName="webexpythonsdk",
+        lastName="webexpythonsdk",
         orgId=me.orgId,
         licenses=[licenses_dict["Advanced Messaging"].id],
     )
@@ -163,7 +163,7 @@ def temp_person(api, get_random_email_address, me, licenses_dict):
 
     try:
         api.people.delete(person.id)
-    except webexteamssdk.ApiError:
+    except webexpythonsdk.ApiError:
         pass
 
 

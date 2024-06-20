@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Access-Token data model.
+"""Webex Access-Token data model.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -37,7 +37,7 @@ class AccessTokenBasicPropertiesMixin(object):
 
     @property
     def access_token(self):
-        """Webex Teams access token."""
+        """Webex access token."""
         return self._json_data.get("access_token")
 
     @property

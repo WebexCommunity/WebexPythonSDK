@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Adaptive Cards data models.
+"""Webex Adaptive Cards data models.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Memberships API wrapper.
+"""Webex Memberships API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -46,9 +46,9 @@ OBJECT_TYPE = "membership"
 
 
 class MembershipsAPI(object):
-    """Webex Teams Memberships API.
+    """Webex Memberships API.
 
-    Wraps the Webex Teams Memberships API and exposes the API as native Python
+    Wraps the Webex Memberships API and exposes the API as native Python
     methods that return native Python objects.
 
     """
@@ -58,7 +58,7 @@ class MembershipsAPI(object):
 
         Args:
             session(RestSession): The RESTful session object to be used for
-                API calls to the Webex Teams service.
+                API calls to the Webex service.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -91,7 +91,7 @@ class MembershipsAPI(object):
 
         Use either `personId` or `personEmail` to filter the results.
 
-        This method supports Webex Teams's implementation of RFC5988 Web
+        This method supports Webex's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
         container that incrementally yields all memberships returned by the
         query.  The generator will automatically request additional 'pages' of
@@ -107,17 +107,17 @@ class MembershipsAPI(object):
             personEmail(basestring): Limit results to a specific person, by
                 email address.
             max(int): Limit the maximum number of items returned from the Webex
-                Teams service per request.
+                service per request.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-            yields the memberships returned by the Webex Teams query.
+            yields the memberships returned by the Webex query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(roomId, basestring, optional=True)
@@ -167,7 +167,7 @@ class MembershipsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(roomId, basestring)
@@ -201,7 +201,7 @@ class MembershipsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(membershipId, basestring)
@@ -222,12 +222,12 @@ class MembershipsAPI(object):
                 support for parameters that may be added in the future).
 
         Returns:
-            Membership: A Membership object with the updated Webex Teams
+            Membership: A Membership object with the updated Webex
             membership details.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(membershipId, basestring)
@@ -254,7 +254,7 @@ class MembershipsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(membershipId, basestring)

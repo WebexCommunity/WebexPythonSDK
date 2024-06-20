@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Webhook-Event data model.
+"""Webex Webhook-Event data model.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -31,7 +31,7 @@ from __future__ import (
 
 from builtins import *
 
-from webexteamssdk.utils import WebexTeamsDateTime
+from webexpythonsdk.utils import WebexDateTime
 
 
 class AdminAuditEventDataBasicPropertiesMixin(object):
@@ -136,6 +136,6 @@ class AdminAuditEventBasicPropertiesMixin(object):
         """The date and time the event took place."""
         created = self._json_data.get("created")
         if created:
-            return WebexTeamsDateTime.strptime(created)
+            return WebexDateTime.strptime(created)
         else:
             return None

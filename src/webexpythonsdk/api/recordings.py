@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Recordings API wrapper.
+"""Webex Recordings API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -32,20 +32,20 @@ from __future__ import (
 from builtins import *
 from past.builtins import basestring
 
-from webexteamssdk.generator_containers import generator_container
+from webexpythonsdk.generator_containers import generator_container
 
-from webexteamssdk.utils import check_type, dict_from_items_with_values
+from webexpythonsdk.utils import check_type, dict_from_items_with_values
 
-from webexteamssdk.restsession import RestSession
+from webexpythonsdk.restsession import RestSession
 
 API_ENDPOINT = "recordings"
 OBJECT_TYPE = "recording"
 
 
 class RecordingsAPI(object):
-    """Webex Teams Recordings API.
+    """Webex Recordings API.
 
-    Wraps the Webex Teams Recordings API and exposes the API as native Python
+    Wraps the Webex Recordings API and exposes the API as native Python
     methods that return native Python objects.
 
     """
@@ -55,7 +55,7 @@ class RecordingsAPI(object):
 
         Args:
             session(RestSession): The RESTful session object to be used for
-                API calls to the Webex Teams service.
+                API calls to the Webex service.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -90,7 +90,7 @@ class RecordingsAPI(object):
         user will be listed. The list returned is sorted in descending order by
         the date and time that the recordings were created.
 
-        This method supports Webex Teams's implementation of RFC5988 Web
+        This method supports Webex's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
         container that incrementally yields all recordings returned by the
         query.  The generator will automatically request additional 'pages' of
@@ -102,7 +102,7 @@ class RecordingsAPI(object):
 
         Args:
             max(int): Limit the maximum number of items returned from the Webex
-                Teams service per request.
+                service per request.
             _from(basestring): List recordings which occurred after a specific
                 date and time.
             to(basestring): List recordings which occurred before a specific
@@ -127,11 +127,11 @@ class RecordingsAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-            yields the recordings returned by the Webex Teams query.
+            yields the recordings returned by the Webex query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
         """
         check_type(max, int, optional=True)
         check_type(_from, basestring, optional=True)
@@ -178,7 +178,7 @@ class RecordingsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(recordingId, basestring)
@@ -206,7 +206,7 @@ class RecordingsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(recordingId, basestring)

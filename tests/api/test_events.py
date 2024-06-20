@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""WebexTeamsAPI Events API fixtures and tests.
+"""WebexAPI Events API fixtures and tests.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -26,14 +26,14 @@ import itertools
 
 import pytest
 
-import webexteamssdk
+import webexpythonsdk
 
 
 # Helper Functions
 
 
 def is_valid_event(obj):
-    return isinstance(obj, webexteamssdk.Event) and obj.id is not None
+    return isinstance(obj, webexpythonsdk.Event) and obj.id is not None
 
 
 def are_valid_events(iterable):

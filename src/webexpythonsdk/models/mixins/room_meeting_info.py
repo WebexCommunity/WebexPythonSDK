@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Room Meeting Info data model.
+"""Webex Room Meeting Info data model.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 

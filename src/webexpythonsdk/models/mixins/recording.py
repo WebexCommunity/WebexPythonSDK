@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Recording data model.
+"""Webex Recording data model.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -31,7 +31,7 @@ from __future__ import (
 
 from builtins import *
 
-from webexteamssdk.utils import WebexTeamsDateTime
+from webexpythonsdk.utils import WebexDateTime
 
 
 class RecordingBasicPropertiesMixin(object):
@@ -82,14 +82,14 @@ class RecordingBasicPropertiesMixin(object):
         """
         created = self._json_data.get("createTime")
         if created:
-            return WebexTeamsDateTime.strptime(created)
+            return WebexDateTime.strptime(created)
 
     @property
     def timeRecorded(self):
         """The date and time recording started in ISO 8601 compliant format."""
         recorded = self._json_data.get("timeRecorded")
         if recorded:
-            return WebexTeamsDateTime.strptime(recorded)
+            return WebexDateTime.strptime(recorded)
 
     @property
     def siteUrl(self):

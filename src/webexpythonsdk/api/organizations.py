@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Organizations API wrapper.
+"""Webex Organizations API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -33,9 +33,9 @@ from builtins import *
 
 from past.builtins import basestring
 
-from webexteamssdk.generator_containers import generator_container
-from webexteamssdk.restsession import RestSession
-from webexteamssdk.utils import check_type, dict_from_items_with_values
+from webexpythonsdk.generator_containers import generator_container
+from webexpythonsdk.restsession import RestSession
+from webexpythonsdk.utils import check_type, dict_from_items_with_values
 
 
 API_ENDPOINT = "organizations"
@@ -43,9 +43,9 @@ OBJECT_TYPE = "organization"
 
 
 class OrganizationsAPI(object):
-    """Webex Teams Organizations API.
+    """Webex Organizations API.
 
-    Wraps the Webex Teams Organizations API and exposes the API as native
+    Wraps the Webex Organizations API and exposes the API as native
     Python methods that return native Python objects.
 
     """
@@ -55,7 +55,7 @@ class OrganizationsAPI(object):
 
         Args:
             session(RestSession): The RESTful session object to be used for
-                API calls to the Webex Teams service.
+                API calls to the Webex service.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -78,11 +78,11 @@ class OrganizationsAPI(object):
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-            yields the organizations returned by the Webex Teams query.
+            yields the organizations returned by the Webex query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         # API request - get items
@@ -106,7 +106,7 @@ class OrganizationsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(orgId, basestring)

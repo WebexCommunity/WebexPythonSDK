@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Membership data model.
+"""Webex Membership data model.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -33,7 +33,7 @@ from builtins import *
 
 import warnings
 
-from webexteamssdk.utils import WebexTeamsDateTime
+from webexpythonsdk.utils import WebexDateTime
 
 
 class MembershipBasicPropertiesMixin(object):
@@ -89,6 +89,6 @@ class MembershipBasicPropertiesMixin(object):
         """The date and time when the membership was created."""
         created = self._json_data.get("created")
         if created:
-            return WebexTeamsDateTime.strptime(created)
+            return WebexDateTime.strptime(created)
         else:
             return None

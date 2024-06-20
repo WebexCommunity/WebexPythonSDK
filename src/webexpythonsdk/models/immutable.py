@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Model Webex Teams JSON objects as native Python objects.
+"""Model Webex JSON objects as native Python objects.
 
 Classes:
-    ImmutableData: Models Webex Teams JSON objects as native Python objects.
+    ImmutableData: Models Webex JSON objects as native Python objects.
 
 The ImmutableData class models any JSON object passed to it as a string or
 Python dictionary as a native Python object; providing attribute access using
@@ -45,7 +45,7 @@ from builtins import *
 import json
 from collections import defaultdict
 
-from webexteamssdk.utils import json_dict
+from webexpythonsdk.utils import json_dict
 from .mixins.access_token import AccessTokenBasicPropertiesMixin
 from .mixins.admin_audit_event import (
     AdminAuditEventBasicPropertiesMixin,
@@ -76,7 +76,7 @@ from .mixins.meeting_registrants import MeetingRegistrantBasicPropertiesMixin
 
 
 class ImmutableData(object):
-    """Model a Webex Teams JSON object as an immutable native Python object."""
+    """Model a Webex JSON object as an immutable native Python object."""
 
     def __init__(self, json_data):
         """Init a new ImmutableData object from a dictionary or JSON string.
@@ -128,7 +128,7 @@ class ImmutableData(object):
         """A human-readable string representation of this object."""
         class_str = self.__class__.__name__
         json_str = json.dumps(self._json_data, indent=2)
-        return "Webex Teams {}:\n{}".format(class_str, json_str)
+        return "Webex {}:\n{}".format(class_str, json_str)
 
     def __repr__(self):
         """A string representing this object as valid Python expression."""
@@ -180,11 +180,11 @@ class ImmutableData(object):
         return self._json_data.copy()
 
     def to_dict(self):
-        """Convert the Webex Teams object data to a dictionary."""
+        """Convert the Webex object data to a dictionary."""
         return dict(self._json_data)
 
     def to_json(self, **kwargs):
-        """Convert the Webex Teams object data to JSON.
+        """Convert the Webex object data to JSON.
 
         Any keyword arguments provided are passed through the Python JSON
         encoder.
@@ -194,17 +194,17 @@ class ImmutableData(object):
 
 
 class AccessToken(ImmutableData, AccessTokenBasicPropertiesMixin):
-    """Webex Teams Access-Token data model."""
+    """Webex Access-Token data model."""
 
 
 class AdminAuditEventData(
     ImmutableData, AdminAuditEventDataBasicPropertiesMixin
 ):
-    """Webex Teams Admin Audit Event Data object data model."""
+    """Webex Admin Audit Event Data object data model."""
 
 
 class AdminAuditEvent(ImmutableData, AdminAuditEventBasicPropertiesMixin):
-    """Webex Teams Admin Audit Event data model."""
+    """Webex Admin Audit Event data model."""
 
     @property
     def data(self):
@@ -217,7 +217,7 @@ class AttachmentAction(ImmutableData, AttachmentActionBasicPropertiesMixin):
 
 
 class Event(ImmutableData, EventBasicPropertiesMixin):
-    """Webex Teams Event data model."""
+    """Webex Event data model."""
 
     @property
     def data(self):
@@ -230,55 +230,55 @@ class Event(ImmutableData, EventBasicPropertiesMixin):
 
 
 class License(ImmutableData, LicenseBasicPropertiesMixin):
-    """Webex Teams License data model."""
+    """Webex License data model."""
 
 
 class Membership(ImmutableData, MembershipBasicPropertiesMixin):
-    """Webex Teams Membership data model."""
+    """Webex Membership data model."""
 
 
 class Message(ImmutableData, MessageBasicPropertiesMixin):
-    """Webex Teams Message data model."""
+    """Webex Message data model."""
 
 
 class Organization(ImmutableData, OrganizationBasicPropertiesMixin):
-    """Webex Teams Organization data model."""
+    """Webex Organization data model."""
 
 
 class Person(ImmutableData, PersonBasicPropertiesMixin):
-    """Webex Teams Person data model."""
+    """Webex Person data model."""
 
 
 class Role(ImmutableData, RoleBasicPropertiesMixin):
-    """Webex Teams Role data model."""
+    """Webex Role data model."""
 
 
 class Room(ImmutableData, RoomBasicPropertiesMixin):
-    """Webex Teams Room data model."""
+    """Webex Room data model."""
 
 
 class RoomTab(ImmutableData, RoomTabBasicPropertiesMixin):
-    """Webex Teams Room Tab data model."""
+    """Webex Room Tab data model."""
 
 
 class RoomMeetingInfo(ImmutableData, RoomMeetingInfoBasicPropertiesMixin):
-    """Webex Teams Room Meeting Info data model."""
+    """Webex Room Meeting Info data model."""
 
 
 class Team(ImmutableData, TeamBasicPropertiesMixin):
-    """Webex Teams Team data model."""
+    """Webex Team data model."""
 
 
 class TeamMembership(ImmutableData, TeamMembershipBasicPropertiesMixin):
-    """Webex Teams Team-Membership data model."""
+    """Webex Team-Membership data model."""
 
 
 class Webhook(ImmutableData, WebhookBasicPropertiesMixin):
-    """Webex Teams Webhook data model."""
+    """Webex Webhook data model."""
 
 
 class WebhookEvent(ImmutableData, WebhookEventBasicPropertiesMixin):
-    """Webex Teams Webhook-Events data model."""
+    """Webex Webhook-Events data model."""
 
     @property
     def data(self):
@@ -287,11 +287,11 @@ class WebhookEvent(ImmutableData, WebhookEventBasicPropertiesMixin):
 
 
 class GuestIssuerToken(ImmutableData, GuestIssuerTokenBasicPropertiesMixin):
-    """Webex Teams Guest Issuer Token data model"""
+    """Webex Guest Issuer Token data model"""
 
 
 class Recording(ImmutableData, RecordingBasicPropertiesMixin):
-    """Webex Teams Recording data model"""
+    """Webex Recording data model"""
 
 
 class Meeting(ImmutableData, MeetingBasicPropertiesMixin):

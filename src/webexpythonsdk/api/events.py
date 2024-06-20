@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Events API wrapper.
+"""Webex Events API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -46,9 +46,9 @@ OBJECT_TYPE = "event"
 
 
 class EventsAPI(object):
-    """Webex Teams Events API.
+    """Webex Events API.
 
-    Wraps the Webex Teams Events API and exposes the API as native Python
+    Wraps the Webex Events API and exposes the API as native Python
     methods that return native Python objects.
 
     """
@@ -58,7 +58,7 @@ class EventsAPI(object):
 
         Args:
             session(RestSession): The RESTful session object to be used for
-                API calls to the Webex Teams service.
+                API calls to the Webex service.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -90,7 +90,7 @@ class EventsAPI(object):
         Note: `from` is a keyword in Python and may not be used as a variable
         name, so we had to use `_from` instead.
 
-        This method supports Webex Teams's implementation of RFC5988 Web
+        This method supports Webex's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
         container that incrementally yields all events returned by the
         query.  The generator will automatically request additional 'pages' of
@@ -112,17 +112,17 @@ class EventsAPI(object):
             to(basestring): Limit results to events which occurred before a
                 date and time, in ISO8601 format (yyyy-MM-dd'T'HH:mm:ss.SSSZ).
             max(int): Limit the maximum number of items returned from the Webex
-                Teams service per request.
+                service per request.
             **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
 
         Returns:
             GeneratorContainer: A GeneratorContainer which, when iterated,
-            yields the events returned by the Webex Teams query.
+            yields the events returned by the Webex query.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(resource, basestring, optional=True)
@@ -163,7 +163,7 @@ class EventsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(eventId, basestring)

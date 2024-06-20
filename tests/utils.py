@@ -28,15 +28,15 @@ import os
 import requests
 
 from tests.environment import (
-    WEBEX_TEAMS_TEST_STRING_PREFIX,
-    WEBEX_TEAMS_TEST_STRING_TEMPLATE,
+    WEBEX_TEST_STRING_PREFIX,
+    WEBEX_TEST_STRING_TEMPLATE,
 )
 
 
 def create_string(item):
     """Create strings for tests."""
-    return WEBEX_TEAMS_TEST_STRING_TEMPLATE.substitute(
-        prefix=WEBEX_TEAMS_TEST_STRING_PREFIX,
+    return WEBEX_TEST_STRING_TEMPLATE.substitute(
+        prefix=WEBEX_TEST_STRING_PREFIX,
         item=item,
         datetime=str(datetime.datetime.now()),
     )

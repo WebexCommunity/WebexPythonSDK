@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Community-developed Python SDK for the Webex Teams APIs.
+"""Community-developed Python SDK for the Webex APIs.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -31,7 +31,7 @@ from __future__ import (
 
 import logging
 
-import webexteamssdk.models.cards as cards
+import webexpythonsdk.models.cards as cards
 from ._metadata import (
     __author__,
     __author_email__,
@@ -43,7 +43,7 @@ from ._metadata import (
     __url__,
     __version__,
 )
-from .api import WebexTeamsAPI
+from .api import WebexAPI
 from .exceptions import (
     AccessTokenError,
     ApiError,
@@ -51,8 +51,8 @@ from .exceptions import (
     MalformedResponse,
     RateLimitError,
     RateLimitWarning,
-    webexteamssdkException,
-    webexteamssdkWarning,
+    webexpythonsdkException,
+    webexpythonsdkWarning,
 )
 from .models.dictionary import dict_data_factory
 from .models.immutable import (
@@ -82,7 +82,7 @@ from .models.immutable import (
     WebhookEvent,
 )
 from .models.simple import simple_data_factory, SimpleDataModel
-from .utils import WebexTeamsDateTime
+from .utils import WebexDateTime
 
 
 # Initialize Package Logging

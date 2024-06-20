@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Response Codes.
+"""Webex Response Codes.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 

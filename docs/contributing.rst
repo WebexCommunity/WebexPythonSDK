@@ -4,7 +4,7 @@
 Contributing
 ============
 
-*webexteamssdk* is a community development project.  Feedback, thoughts, ideas, and code contributions are most welcome!
+*webexpythonsdk* is a community development project.  Feedback, thoughts, ideas, and code contributions are most welcome!
 
 
 How to contribute Feedback, Issues, Thoughts and Ideas
@@ -12,7 +12,7 @@ How to contribute Feedback, Issues, Thoughts and Ideas
 
 Please use the `issues`_ page to report issues or post ideas for enhancement.
 
-Join our `webexteamssdk - Webex Teams SDK - Python Community Contributors <https://eurl.io/#BJ0A8gfOQ>`_ Webex Teams space to join the conversation with other contributors to this project.
+Join our `Webex Python SDK - Python Community Contributors <https://eurl.io/#BJ0A8gfOQ>`_ Webex space to join the conversation with other contributors to this project.
 
 
 
@@ -29,7 +29,7 @@ We have created some scripts to automate everyday actions needed when working on
 Notes on the Test Suite
 -----------------------
 
-To test all the API endpoints, the account that you use for testing must be an *admin* user for your Webex Teams Organization.  Additionally, you should know that that the testing process creates some test people, rooms, messages, teams, and etc. as part of executing the test suite. We strongly recommend *NOT* running the test suite using your personal Webex Teams account (not that you can't; it's just that you probably don't want it cluttering your account with all these test artifacts).
+To test all the API endpoints, the account that you use for testing must be an *admin* user for your Webex Organization.  Additionally, you should know that that the testing process creates some test people, rooms, messages, teams, and etc. as part of executing the test suite. We strongly recommend *NOT* running the test suite using your personal Webex account (not that you can't; it's just that you probably don't want it cluttering your account with all these test artifacts).
 
 If you cannot create a test account with *admin* privileges or configure your environment to run the test suite locally, you may always submit your code via a pull request.  We will test your code before merging and releasing the changes.
 
@@ -45,7 +45,7 @@ Contributing Code
 
 4. Configure the following environment variables in your development environment:
 
-   * ``WEBEX_TEAMS_ACCESS_TOKEN`` - Your test account's Webex Teams access token.
+   * ``WEBEX_ACCESS_TOKEN`` - Your test account's Webex access token.
 
 5. Add your code to your forked repository.
 
@@ -65,30 +65,30 @@ Running the Test Suite Locally
 
 Configure the following environment variables in your development environment:
 
-* ``WEBEX_TEAMS_ACCESS_TOKEN`` - Your test account's Webex Teams access token.
+* ``WEBEX_ACCESS_TOKEN`` - Your test account's Webex access token.
 
-* ``WEBEX_TEAMS_TEST_DOMAIN`` - The test suite creates some users as part of the testing process. The test suite uses this domain name as the e-mail suffix of for the user's e-mail addresses.
+* ``WEBEX_TEST_DOMAIN`` - The test suite creates some users as part of the testing process. The test suite uses this domain name as the e-mail suffix of for the user's e-mail addresses.
 
-* ``WEBEX_TEAMS_TEST_ID_START`` - The test suite uses this integer as the starting number for creating test user accounts (example: "test42@domain.com").
+* ``WEBEX_TEST_ID_START`` - The test suite uses this integer as the starting number for creating test user accounts (example: "test42@domain.com").
 
-* ``WEBEX_TEAMS_TEST_FILE_URL`` - Configure this environment variable with a URL referencing a file that can be downloaded and posted to Webex Teams as part of the testing process.
+* ``WEBEX_TEST_FILE_URL`` - Configure this environment variable with a URL referencing a file that can be downloaded and posted to Webex as part of the testing process.
 
 *Example:*
 
 .. code-block:: bash
 
    #!/usr/bin/env bash
-   export WEBEX_TEAMS_ACCESS_TOKEN="<test account's access token>"
-   export WEBEX_TEAMS_TEST_DOMAIN="domain.com"
-   export WEBEX_TEAMS_TEST_ID_START=42
-   export WEBEX_TEAMS_TEST_FILE_URL="https://www.webex.com/content/dam/wbx/us/images/dg-integ/teams_icon.png"
+   export WEBEX_ACCESS_TOKEN="<test account's access token>"
+   export WEBEX_TEST_DOMAIN="domain.com"
+   export WEBEX_TEST_ID_START=42
+   export WEBEX_TEST_FILE_URL="https://www.webex.com/content/dam/wbx/us/images/navigation/CiscoWebex-Logo_white.png"
 
 Ensure your code passes all of the default tests.  Run ``script/test`` and ensure all tests execute successfully.
 
 
-.. _script: https://github.com/CiscoDevNet/webexteamssdk/tree/master/script
-.. _issues: https://github.com/CiscoDevNet/webexteamssdk/issues
-.. _repository: https://github.com/CiscoDevNet/webexteamssdk
-.. _test: https://github.com/CiscoDevNet/webexteamssdk/tree/master/tests
+.. _script: https://github.com/WebexCommunity/WebexPythonSDK/tree/master/script
+.. _issues: https://github.com/WebexCommunity/WebexPythonSDK/issues
+.. _repository: https://github.com/WebexCommunity/WebexPythonSDK
+.. _test: https://github.com/WebexCommunity/WebexPythonSDK/tree/master/tests
 .. _PEP8: https://www.python.org/dev/peps/pep-0008/
-.. _pull request: https://github.com/CiscoDevNet/webexteamssdk/pulls
+.. _pull request: https://github.com/WebexCommunity/WebexPythonSDK/pulls

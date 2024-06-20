@@ -40,26 +40,26 @@ from .response_codes import RESPONSE_CODES
 logger = logging.getLogger(__name__)
 
 
-class webexteamssdkException(Exception):
-    """Base class for all webexteamssdk package exceptions."""
+class webexpythonsdkException(Exception):
+    """Base class for all webexpythonsdk package exceptions."""
 
     pass
 
 
-class webexteamssdkWarning(webexteamssdkException, Warning):
-    """Base class for all webexteamssdk warnings."""
+class webexpythonsdkWarning(webexpythonsdkException, Warning):
+    """Base class for all webexpythonsdk warnings."""
 
     pass
 
 
-class AccessTokenError(webexteamssdkException):
-    """Raised when an incorrect Webex Teams Access Token has been provided."""
+class AccessTokenError(webexpythonsdkException):
+    """Raised when an incorrect Webex Access Token has been provided."""
 
     pass
 
 
-class ApiError(webexteamssdkException):
-    """Errors returned in response to requests sent to the Webex Teams APIs.
+class ApiError(webexpythonsdkException):
+    """Errors returned in response to requests sent to the Webex APIs.
 
     Several data attributes are available for inspection.
     """
@@ -127,7 +127,7 @@ class ApiError(webexteamssdkException):
         )
 
 
-class ApiWarning(webexteamssdkWarning, ApiError):
+class ApiWarning(webexpythonsdkWarning, ApiError):
     """Warnings raised from API responses received from the Webex APIs.
 
     Several data attributes are available for inspection.
@@ -137,7 +137,7 @@ class ApiWarning(webexteamssdkWarning, ApiError):
 
 
 class RateLimitError(ApiError):
-    """Webex Teams Rate-Limit exceeded Error.
+    """Webex Rate-Limit exceeded Error.
 
     Raised when a rate-limit exceeded message is received and the request
     **will not** be retried.
@@ -148,18 +148,18 @@ class RateLimitError(ApiError):
 
         # Extended exception attributes
         self.retry_after = max(1, int(response.headers.get("Retry-After", 15)))
-        """The `Retry-After` time period (in seconds) provided by Webex Teams.
+        """The `Retry-After` time period (in seconds) provided by Webex.
 
         Defaults to 15 seconds if the response `Retry-After` header isn't
         present in the response headers, and defaults to a minimum wait time of
-        1 second if Webex Teams returns a `Retry-After` header of 0 seconds.
+        1 second if Webex returns a `Retry-After` header of 0 seconds.
         """
 
         super(RateLimitError, self).__init__(response)
 
 
 class RateLimitWarning(ApiWarning, RateLimitError):
-    """Webex Teams rate-limit exceeded warning.
+    """Webex rate-limit exceeded warning.
 
     Raised when a rate-limit exceeded message is received and the request will
     be retried.
@@ -168,7 +168,7 @@ class RateLimitWarning(ApiWarning, RateLimitError):
     pass
 
 
-class MalformedResponse(webexteamssdkException):
-    """Raised when a malformed response is received from Webex Teams."""
+class MalformedResponse(webexpythonsdkException):
+    """Raised when a malformed response is received from Webex."""
 
     pass

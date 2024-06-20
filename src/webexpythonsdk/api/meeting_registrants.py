@@ -58,7 +58,7 @@ class MeetingRegistrantsAPI(object):
 
         Args:
             session(RestSession): The RESTful session object to be used for
-                API calls to the Webex Teams service.
+                API calls to the Webex service.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -88,7 +88,7 @@ class MeetingRegistrantsAPI(object):
 
         Use query parameters to filter the response.
 
-        This method supports Webex Teams's implementation of RFC5988 Web
+        This method supports Webex's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
         container that incrementally yields all memberships returned by the
         query.  The generator will automatically request additional 'pages' of
@@ -123,7 +123,7 @@ class MeetingRegistrantsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(meetingId, basestring)
@@ -212,7 +212,7 @@ class MeetingRegistrantsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(meetingId, basestring)
@@ -271,7 +271,7 @@ class MeetingRegistrantsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(meetingId, basestring)
@@ -295,7 +295,7 @@ class MeetingRegistrantsAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         check_type(meetingId, basestring)

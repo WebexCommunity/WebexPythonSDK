@@ -63,4 +63,4 @@ def _get_access_token():
 
 
 # Package Environment Variables
-WEBEX_TEAMS_ACCESS_TOKEN = _get_access_token()
+WEBEX_ACCESS_TOKEN = _get_access_token()

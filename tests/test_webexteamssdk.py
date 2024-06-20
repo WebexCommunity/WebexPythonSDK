@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Test suite for the community-developed Python SDK for the Webex Teams APIs.
+"""Test suite for the community-developed Python SDK for the Webex APIs.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -22,41 +22,41 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import webexteamssdk
+import webexpythonsdk
 
 
-class TestWebexTeamsSDK:
+class TestWebexPythonSDK:
     """Test the package-level code."""
 
     def test_package_contents(self):
         """Ensure the package contains the correct top-level objects."""
-        # Webex Teams API Wrapper
-        assert hasattr(webexteamssdk, "WebexTeamsAPI")
+        # Webex API Wrapper
+        assert hasattr(webexpythonsdk, "WebexAPI")
 
         # Exceptions
-        assert hasattr(webexteamssdk, "ApiError")
-        assert hasattr(webexteamssdk, "AccessTokenError")
-        assert hasattr(webexteamssdk, "RateLimitError")
-        assert hasattr(webexteamssdk, "RateLimitWarning")
-        assert hasattr(webexteamssdk, "webexteamssdkException")
+        assert hasattr(webexpythonsdk, "ApiError")
+        assert hasattr(webexpythonsdk, "AccessTokenError")
+        assert hasattr(webexpythonsdk, "RateLimitError")
+        assert hasattr(webexpythonsdk, "RateLimitWarning")
+        assert hasattr(webexpythonsdk, "webexpythonsdkException")
 
         # Data Models
-        assert hasattr(webexteamssdk, "dict_data_factory")
-        assert hasattr(webexteamssdk, "AccessToken")
-        assert hasattr(webexteamssdk, "AttachmentAction")
-        assert hasattr(webexteamssdk, "Event")
-        assert hasattr(webexteamssdk, "License")
-        assert hasattr(webexteamssdk, "Membership")
-        assert hasattr(webexteamssdk, "Message")
-        assert hasattr(webexteamssdk, "Organization")
-        assert hasattr(webexteamssdk, "Person")
-        assert hasattr(webexteamssdk, "Role")
-        assert hasattr(webexteamssdk, "Room")
-        assert hasattr(webexteamssdk, "Team")
-        assert hasattr(webexteamssdk, "TeamMembership")
-        assert hasattr(webexteamssdk, "Webhook")
-        assert hasattr(webexteamssdk, "WebhookEvent")
-        assert hasattr(webexteamssdk, "Recording")
-        assert hasattr(webexteamssdk, "immutable_data_factory")
-        assert hasattr(webexteamssdk, "SimpleDataModel")
-        assert hasattr(webexteamssdk, "simple_data_factory")
+        assert hasattr(webexpythonsdk, "dict_data_factory")
+        assert hasattr(webexpythonsdk, "AccessToken")
+        assert hasattr(webexpythonsdk, "AttachmentAction")
+        assert hasattr(webexpythonsdk, "Event")
+        assert hasattr(webexpythonsdk, "License")
+        assert hasattr(webexpythonsdk, "Membership")
+        assert hasattr(webexpythonsdk, "Message")
+        assert hasattr(webexpythonsdk, "Organization")
+        assert hasattr(webexpythonsdk, "Person")
+        assert hasattr(webexpythonsdk, "Role")
+        assert hasattr(webexpythonsdk, "Room")
+        assert hasattr(webexpythonsdk, "Team")
+        assert hasattr(webexpythonsdk, "TeamMembership")
+        assert hasattr(webexpythonsdk, "Webhook")
+        assert hasattr(webexpythonsdk, "WebhookEvent")
+        assert hasattr(webexpythonsdk, "Recording")
+        assert hasattr(webexpythonsdk, "immutable_data_factory")
+        assert hasattr(webexpythonsdk, "SimpleDataModel")
+        assert hasattr(webexpythonsdk, "simple_data_factory")

@@ -83,19 +83,19 @@ additional_code: >
             properties.
           **request_parameters: Additional request parameters (provides
                 support for parameters that may be added in the future).
-        
+
         Returns:
           GeneratorContainer: A GeneratorContainer which, when iterated,
             yields the meetingInvitees returned by the Webex query.
 
         Raises:
           TypeError: If the parameter types are incorrect.
-          ApiError: If the Webex Teams cloud returns an error.
+          ApiError: If the Webex cloud returns an error.
         """
         check_type(meetingId, basestring)
         check_type(hostEmail, basestring, optional=True)
         check_type(items, list, optional=True)
-        
+
         post_data = dict_from_items_with_values(
             request_parameters,
             meetingId=meetingId,
@@ -110,6 +110,3 @@ additional_code: >
         # Return an object created from the response JSON data
         for itm in json_data['items']:
           yield self._object_factory(OBJECT_TYPE, itm)
-
-
-        

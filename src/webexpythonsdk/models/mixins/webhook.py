@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Webhook data model.
+"""Webex Webhook data model.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -31,7 +31,7 @@ from __future__ import (
 
 from builtins import *
 
-from webexteamssdk.utils import WebexTeamsDateTime
+from webexpythonsdk.utils import WebexDateTime
 
 
 class WebhookBasicPropertiesMixin(object):
@@ -134,6 +134,6 @@ class WebhookBasicPropertiesMixin(object):
         """The date and time the webhook was created."""
         created = self._json_data.get("created")
         if created:
-            return WebexTeamsDateTime.strptime(created)
+            return WebexDateTime.strptime(created)
         else:
             return None

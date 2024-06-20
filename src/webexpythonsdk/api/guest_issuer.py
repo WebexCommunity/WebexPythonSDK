@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Guest Issuer API wrapper.
+"""Webex Guest Issuer API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -52,9 +52,9 @@ OBJECT_TYPE = "guest_issuer_token"
 
 
 class GuestIssuerAPI(object):
-    """Webex Teams Guest Issuer API.
+    """Webex Guest Issuer API.
 
-    Wraps the Webex Teams Guest Issuer API and exposes the API as native
+    Wraps the Webex Guest Issuer API and exposes the API as native
     methods that return native Python objects.
 
     """
@@ -64,7 +64,7 @@ class GuestIssuerAPI(object):
 
         Args:
             session(RestSession): The RESTful session object to be used for
-            API calls to the Webex Teams service
+            API calls to the Webex service
 
         Raises:
             TypeError: If the parameter types are incorrect
@@ -86,9 +86,9 @@ class GuestIssuerAPI(object):
                 and public identifier for the guest user. This claim may
                 contain only letters, numbers, and hyphens.
             name(basestring): The display name of the guest user. This will be
-                the name shown in Webex Teams clients.
+                the name shown in Webex clients.
             iss(basestring): The issuer of the token. Use the Guest
-                Issuer ID provided in My Webex Teams Apps.
+                Issuer ID provided in My Webex Apps.
             exp(basestring): The exp time of the token, as a UNIX
                 timestamp in seconds. Use the lowest practical value for the
                 use of the token. This is not the exp time for the guest

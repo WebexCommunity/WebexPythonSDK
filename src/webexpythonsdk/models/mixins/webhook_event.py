@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Webhook-Event data model.
+"""Webex Webhook-Event data model.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 

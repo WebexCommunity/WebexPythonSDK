@@ -46,7 +46,7 @@ from datetime import datetime, timedelta, tzinfo
 
 from past.builtins import basestring
 
-from .config import WEBEX_TEAMS_DATETIME_FORMAT
+from .config import WEBEX_DATETIME_FORMAT
 from .exceptions import (
     ApiError,
     RateLimitError,
@@ -295,24 +295,24 @@ class ZuluTimeZone(tzinfo):
         return timedelta(0)
 
 
-class WebexTeamsDateTime(datetime):
-    """Webex Teams formatted Python datetime."""
+class WebexDateTime(datetime):
+    """Webex formatted Python datetime."""
 
     @classmethod
-    def strptime(cls, date_string, format=WEBEX_TEAMS_DATETIME_FORMAT):
-        """strptime with the Webex Teams DateTime format as the default."""
+    def strptime(cls, date_string, format=WEBEX_DATETIME_FORMAT):
+        """strptime with the Webex DateTime format as the default."""
         return (
-            super(WebexTeamsDateTime, cls)
+            super(WebexDateTime, cls)
             .strptime(date_string, format)
             .replace(tzinfo=ZuluTimeZone())
         )
 
-    def strftime(self, fmt=WEBEX_TEAMS_DATETIME_FORMAT):
-        """strftime with the Webex Teams DateTime format as the default."""
-        return super(WebexTeamsDateTime, self).strftime(fmt)
+    def strftime(self, fmt=WEBEX_DATETIME_FORMAT):
+        """strftime with the Webex DateTime format as the default."""
+        return super(WebexDateTime, self).strftime(fmt)
 
     def __str__(self):
-        """Human readable string representation of this WebexTeamsDateTime."""
+        """Human readable string representation of this WebexDateTime."""
         if self.tzinfo:
             dt = self.astimezone(ZuluTimeZone())
         else:

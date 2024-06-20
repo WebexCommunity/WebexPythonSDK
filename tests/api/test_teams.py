@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""WebexTeamsAPI Team API fixtures and tests.
+"""WebexAPI Team API fixtures and tests.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -26,7 +26,7 @@ import itertools
 
 import pytest
 
-import webexteamssdk
+import webexpythonsdk
 from tests.utils import create_string
 
 
@@ -34,7 +34,7 @@ from tests.utils import create_string
 
 
 def is_valid_team(obj):
-    return isinstance(obj, webexteamssdk.Team) and obj.id is not None
+    return isinstance(obj, webexpythonsdk.Team) and obj.id is not None
 
 
 def are_valid_teams(iterable):
@@ -66,7 +66,7 @@ def temp_team(api):
 
     try:
         api.teams.delete(team.id)
-    except webexteamssdk.ApiError:
+    except webexpythonsdk.ApiError:
         pass
 
 
@@ -84,7 +84,7 @@ def add_teams(api):
     for team in teams:
         try:
             api.teams.delete(team.id)
-        except webexteamssdk.ApiError:
+        except webexpythonsdk.ApiError:
             pass
 
 

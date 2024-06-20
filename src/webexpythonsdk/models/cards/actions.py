@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Adaptive Card actions.
+"""Webex Adaptive Card actions.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 

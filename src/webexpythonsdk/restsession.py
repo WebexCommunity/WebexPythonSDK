@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""RestSession class for creating connections to the Webex Teams APIs.
+"""RestSession class for creating connections to the Webex APIs.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -66,7 +66,7 @@ logger = logging.getLogger(__name__)
 def _fix_next_url(next_url, params):
     """Remove max=null parameter from URL.
 
-    Patch for Webex Teams Defect: "next" URL returned in the Link headers of
+    Patch for Webex Defect: "next" URL returned in the Link headers of
     the responses contain an errant "max=null" parameter, which  causes the
     next request (to this URL) to fail if the URL is requested as-is.
 
@@ -99,7 +99,7 @@ def _fix_next_url(next_url, params):
             query_list.remove("max=null")
             warnings.warn(
                 "`max=null` still present in next-URL returned "
-                "from Webex Teams",
+                "from Webex",
                 RuntimeWarning,
                 stacklevel=1,
             )
@@ -184,7 +184,7 @@ def user_agent(be_geo_id=None, caller=None):
 
 # Main module interface
 class RestSession(object):
-    """RESTful HTTP session class for making calls to the Webex Teams APIs."""
+    """RESTful HTTP session class for making calls to the Webex APIs."""
 
     def __init__(
         self,
@@ -200,7 +200,7 @@ class RestSession(object):
         """Initialize a new RestSession object.
 
         Args:
-            access_token(basestring): The Webex Teams access token to be used
+            access_token(basestring): The Webex access token to be used
                 for this session.
             base_url(basestring): The base URL that will be suffixed onto API
                 endpoint relative URLs to produce a callable absolute URL.
@@ -265,7 +265,7 @@ class RestSession(object):
 
     @property
     def access_token(self):
-        """The Webex Teams access token used for this session."""
+        """The Webex access token used for this session."""
         return self._access_token
 
     @property
@@ -287,7 +287,7 @@ class RestSession(object):
 
         This setting enables or disables automatic rate-limit handling.  When
         enabled, rate-limited requests will be automatically be retried after
-        waiting `Retry-After` seconds (provided by Webex Teams in the
+        waiting `Retry-After` seconds (provided by Webex in the
         rate-limit response header).
 
         """
@@ -338,24 +338,24 @@ class RestSession(object):
             return url
 
     def request(self, method, url, erc, **kwargs):
-        """Abstract base method for making requests to the Webex Teams APIs.
+        """Abstract base method for making requests to the Webex APIs.
 
         This base method:
             * Expands the API endpoint URL to an absolute URL
             * Makes the actual HTTP request to the API endpoint
-            * Provides support for Webex Teams rate-limiting
+            * Provides support for Webex rate-limiting
             * Inspects response codes and raises exceptions as appropriate
 
         Args:
             method(basestring): The request-method type ("GET", "POST", etc.).
             url(basestring): The URL of the API endpoint to be called.
             erc(int): The expected response code that should be returned by the
-                Webex Teams API endpoint to indicate success.
+                Webex API endpoint to indicate success.
             **kwargs: Passed on to the requests package.
 
         Raises:
             ApiError: If anything other than the expected response code is
-                returned by the Webex Teams API endpoint.
+                returned by the Webex API endpoint.
 
         """
         # Ensure the url is an absolute URL
@@ -396,7 +396,7 @@ class RestSession(object):
 
         Raises:
             ApiError: If anything other than the expected response code is
-                returned by the Webex Teams API endpoint.
+                returned by the Webex API endpoint.
 
         """
         check_type(url, basestring)
@@ -422,7 +422,7 @@ class RestSession(object):
 
         Raises:
             ApiError: If anything other than the expected response code is
-                returned by the Webex Teams API endpoint.
+                returned by the Webex API endpoint.
 
         """
         check_type(url, basestring)
@@ -440,7 +440,7 @@ class RestSession(object):
             if response.links.get("next"):
                 next_url = response.links.get("next").get("url")
 
-                # Patch for Webex Teams "max=null" in next URL bug + missing
+                # Patch for Webex "max=null" in next URL bug + missing
                 # params, like mentionedPeople, which can be mandatory for
                 # bots
                 # Testing shows that patch is no longer needed; raising a
@@ -457,7 +457,7 @@ class RestSession(object):
     def get_items(self, url, params=None, **kwargs):
         """Return a generator that GETs and yields individual JSON `items`.
 
-        Yields individual `items` from Webex Teams"s top-level {"items": [...]}
+        Yields individual `items` from Webex"s top-level {"items": [...]}
         JSON objects. Provides native support for RFC5988 Web Linking.  The
         generator will request additional pages as needed until all items have
         been returned.
@@ -471,7 +471,7 @@ class RestSession(object):
 
         Raises:
             ApiError: If anything other than the expected response code is
-                returned by the Webex Teams API endpoint.
+                returned by the Webex API endpoint.
             MalformedResponse: If the returned response does not contain a
                 top-level dictionary with an "items" key.
 
@@ -509,7 +509,7 @@ class RestSession(object):
 
         Raises:
             ApiError: If anything other than the expected response code is
-                returned by the Webex Teams API endpoint.
+                returned by the Webex API endpoint.
 
         """
         check_type(url, basestring)
@@ -535,7 +535,7 @@ class RestSession(object):
 
         Raises:
             ApiError: If anything other than the expected response code is
-                returned by the Webex Teams API endpoint.
+                returned by the Webex API endpoint.
 
         """
         check_type(url, basestring)
@@ -559,7 +559,7 @@ class RestSession(object):
 
         Raises:
             ApiError: If anything other than the expected response code is
-                returned by the Webex Teams API endpoint.
+                returned by the Webex API endpoint.
 
         """
         check_type(url, basestring)

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Webex Teams Person data model.
+"""Webex Person data model.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -31,7 +31,7 @@ from __future__ import (
 
 from builtins import *
 
-from webexteamssdk.utils import WebexTeamsDateTime
+from webexpythonsdk.utils import WebexDateTime
 
 
 class PersonBasicPropertiesMixin(object):
@@ -140,7 +140,7 @@ class PersonBasicPropertiesMixin(object):
         """The date and time the person was created."""
         created = self._json_data.get("created")
         if created:
-            return WebexTeamsDateTime.strptime(created)
+            return WebexDateTime.strptime(created)
         else:
             return None
 
@@ -149,7 +149,7 @@ class PersonBasicPropertiesMixin(object):
         """The date and time the person was last changed."""
         last_modified = self._json_data.get("lastModified")
         if last_modified:
-            return WebexTeamsDateTime.strptime(last_modified)
+            return WebexDateTime.strptime(last_modified)
         else:
             return None
 
@@ -164,11 +164,10 @@ class PersonBasicPropertiesMixin(object):
 
     @property
     def lastActivity(self):
-        """The date and time of the person"s last activity within Webex
-        Teams."""
+        """The date and time of the person"s last activity within Webex."""
         last_activity = self._json_data.get("lastActivity")
         if last_activity:
-            return WebexTeamsDateTime.strptime(last_activity)
+            return WebexDateTime.strptime(last_activity)
         else:
             return None
 
@@ -225,7 +224,7 @@ class PersonBasicPropertiesMixin(object):
         activation.
 
         Person Invite Pending Enum:
-            `true`: The person has been invited to Webex Teams but has not
+            `true`: The person has been invited to Webex but has not
                 created an account
 
             `false`: An invite is not pending for this person
@@ -234,12 +233,12 @@ class PersonBasicPropertiesMixin(object):
 
     @property
     def loginEnabled(self):
-        """Whether or not the user is allowed to use Webex Teams.
+        """Whether or not the user is allowed to use Webex.
 
         Person Login Enabled Enum:
-            `true`: The person can log into Webex Teams
+            `true`: The person can log into Webex
 
-            "false": The person cannot log into Webex Teams
+            "false": The person cannot log into Webex
         """
         return self._json_data.get("loginEnabled")
 
