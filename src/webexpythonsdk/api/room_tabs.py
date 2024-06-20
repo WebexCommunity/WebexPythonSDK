@@ -21,9 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
-
-
 from ..generator_containers import generator_container
 from ..restsession import RestSession
 from ..utils import (

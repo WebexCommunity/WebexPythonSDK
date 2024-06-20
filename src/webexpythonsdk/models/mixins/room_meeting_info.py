@@ -22,8 +22,6 @@ SOFTWARE.
 """
 
 
-
-
 class RoomMeetingInfoBasicPropertiesMixin(object):
     """Room basic properties."""
 

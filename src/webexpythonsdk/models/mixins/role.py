@@ -22,8 +22,6 @@ SOFTWARE.
 """
 
 
-
-
 class RoleBasicPropertiesMixin(object):
     """Role basic properties."""
 

@@ -21,8 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
-
 native_str = str
 
 import json
@@ -64,18 +62,16 @@ def to_unicode(string):
 
 
 def to_bytes(string):
-    """Convert a string (bytes, str or unicode) to bytes."""
-    assert isinstance(string, str)
-    if sys.version_info[0] >= 3:
-        if isinstance(string, str):
-            return string.encode("utf-8")
-        else:
-            return string
+    """Convert a string (bytes, str) to bytes."""
+    if isinstance(string, str):
+        return string.encode("utf-8")
+    elif isinstance(string, bytes):
+        return string
     else:
-        if isinstance(string, unicode):
-            return string.encode("utf-8")
-        else:
-            return string
+        raise TypeError(
+            "'string' must be a string or bytes object; "
+            "received: {!r}".format(string)
+        )
 
 
 def validate_base_url(base_url):

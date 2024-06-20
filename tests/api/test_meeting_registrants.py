@@ -33,7 +33,8 @@ from tests.utils import create_string
 
 def is_valid_registrant(obj):
     return (
-        isinstance(obj, webexpythonsdk.MeetingRegistrant) and obj.id is not None
+        isinstance(obj, webexpythonsdk.MeetingRegistrant)
+        and obj.id is not None
     )
 
 

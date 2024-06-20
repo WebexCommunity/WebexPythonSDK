@@ -22,8 +22,6 @@ SOFTWARE.
 """
 
 
-
-
 class AccessTokenBasicPropertiesMixin(object):
     """Access Token basic properties."""
 

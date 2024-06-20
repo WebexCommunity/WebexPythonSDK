@@ -27,8 +27,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
-
 __author__ = "Jose Bogarín Solano"
 __author_email__ = "jose@bogarin.co.cr"
 __contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]

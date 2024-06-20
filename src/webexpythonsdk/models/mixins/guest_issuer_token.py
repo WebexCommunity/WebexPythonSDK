@@ -22,8 +22,6 @@ SOFTWARE.
 """
 
 
-
-
 class GuestIssuerTokenBasicPropertiesMixin(object):
     """Guest issuer token basic properties"""
 

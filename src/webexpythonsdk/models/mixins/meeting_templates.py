@@ -22,8 +22,6 @@ SOFTWARE.
 """
 
 
-
-
 class MeetingTemplateBasicPropertiesMixin(object):
     """MeetingTemplate basic properties."""
 

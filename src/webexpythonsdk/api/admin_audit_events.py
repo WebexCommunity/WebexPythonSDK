@@ -21,9 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
-
-
 from webexpythonsdk.generator_containers import generator_container
 from webexpythonsdk.restsession import RestSession
 from webexpythonsdk.utils import check_type, dict_from_items_with_values

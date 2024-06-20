@@ -22,8 +22,6 @@ SOFTWARE.
 """
 
 
-
-
 class WebhookEventBasicPropertiesMixin(object):
     """Webhook Event basic properties."""
 

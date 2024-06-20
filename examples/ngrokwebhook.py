@@ -34,8 +34,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
-
 __author__ = "Brad Bester"
 __author_email__ = "brbester@cisco.com"
 __contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]

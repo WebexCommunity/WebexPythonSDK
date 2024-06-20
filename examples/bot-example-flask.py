@@ -43,8 +43,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
-
 __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
 __contributors__ = ["Brad Bester <brbester@cisco.com>"]

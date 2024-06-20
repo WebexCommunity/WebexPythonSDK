@@ -21,8 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from past.types import str
-
 from webexpythonsdk.config import (
     DEFAULT_BASE_URL,
     DEFAULT_SINGLE_REQUEST_TIMEOUT,

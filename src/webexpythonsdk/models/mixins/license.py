@@ -22,8 +22,6 @@ SOFTWARE.
 """
 
 
-
-
 class LicenseBasicPropertiesMixin(object):
     """License basic properties."""
 

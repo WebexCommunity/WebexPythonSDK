@@ -22,8 +22,6 @@ SOFTWARE.
 """
 
 
-
-
 class MeetingRegistrantBasicPropertiesMixin(object):
     """MeetingRegistrant basic properties."""
 

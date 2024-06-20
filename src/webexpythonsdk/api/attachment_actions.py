@@ -21,9 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
-
-
 from ..models.immutable import AttachmentAction
 from ..restsession import RestSession
 from ..utils import check_type, dict_from_items_with_values

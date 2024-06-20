@@ -21,10 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
-
-
-
 import json
 import logging
 import platform
@@ -87,8 +83,7 @@ def _fix_next_url(next_url, params):
         if "max=null" in query_list:
             query_list.remove("max=null")
             warnings.warn(
-                "`max=null` still present in next-URL returned "
-                "from Webex",
+                "`max=null` still present in next-URL returned " "from Webex",
                 RuntimeWarning,
                 stacklevel=1,
             )

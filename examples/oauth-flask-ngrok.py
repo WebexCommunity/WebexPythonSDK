@@ -36,7 +36,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from flask import Flask, url_for, session, redirect, request
 import urllib.parse
 from uuid import uuid4
