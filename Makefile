@@ -13,14 +13,14 @@ clean:
 	rm -rf docs/_build/*
 
 setup:
-	-poetry env remove
+	-poetry env remove --all
 	poetry install
 
 format:
 	poetry run ruff format .
 
 lint:
-	poetry run check .
+	poetry run ruff check .
 
 build:
 	poetry build
