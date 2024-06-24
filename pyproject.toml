@@ -1,6 +1,10 @@
+# -------------------------------------------------------------------------------------------------
+# Webex Python SDK Package Configuration
+# -------------------------------------------------------------------------------------------------
+
 [tool.poetry]
 name = "webexpythonsdk"
-version = "0.0.0"
+version = "0.0.0"  # This will be overwritten by the build process
 description = "Work with the Webex APIs in native Python!"
 authors = ["Chris Lunsford <cm@lunsford.io>"]
 license = "MIT"
@@ -29,11 +33,21 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
+
+# --------------------------------------------------------------------------------------
+# Package Dependencies
+# --------------------------------------------------------------------------------------
+
 [tool.poetry.dependencies]
 python = "^3.10"
 requests = "^2.32.3"
 requests-toolbelt = "^1.0.0"
 PyJWT = "^2.8.0"
+
+
+# --------------------------------------------------------------------------------------
+# Development Dependencies
+# --------------------------------------------------------------------------------------
 
 [tool.poetry.group.dev.dependencies]
 PyYAML = "^6.0.1"
@@ -41,26 +55,30 @@ ruff = "^0.4.9"
 pytest = "^8.2.2"
 ipython = "^8.25.0"
 
+# --------------------------------------------------------------------------------------
+# Documentation Dependencies
+# --------------------------------------------------------------------------------------
+
 [tool.poetry.group.docs.dependencies]
 sphinx = "^7.3.7"
 sphinx-rtd-theme = "^2.0.0"
+
+# --------------------------------------------------------------------------------------
+# Build System
+# --------------------------------------------------------------------------------------
 
 [build-system]
 requires = ["poetry-core>=1.2.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.poetry-dynamic-versioning]
-enable = true
-vcs = "git"
-style = "pep440"
 
-[tool.poetry-dynamic-versioning.substitution]
-files = ["src/webexpythonsdk/_metadata.py"]
+# -------------------------------------------------------------------------------------------------
+# Tool Configurations
+# -------------------------------------------------------------------------------------------------
 
-
-[tool.pytest.ini_options]
-addopts = "--strict-markers"
-markers = ["slow", "manual"]
+# --------------------------------------------------------------------------------------
+# Ruff
+# --------------------------------------------------------------------------------------
 
 [tool.ruff]
 line-length = 79
@@ -82,3 +100,25 @@ ignore = [
     # F405 'unicode' may be undefined, or defined from star imports: builtins
     "F405",
 ]
+
+
+# --------------------------------------------------------------------------------------
+# Pytest
+# --------------------------------------------------------------------------------------
+
+[tool.pytest.ini_options]
+addopts = "--strict-markers"
+markers = ["slow", "manual"]
+
+
+# --------------------------------------------------------------------------------------
+# Poetry Dynamic Versioning
+# --------------------------------------------------------------------------------------
+
+[tool.poetry-dynamic-versioning]
+enable = true
+vcs = "git"
+style = "pep440"
+
+[tool.poetry-dynamic-versioning.substitution]
+files = ["src/webexpythonsdk/_metadata.py"]
