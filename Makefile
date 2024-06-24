@@ -1,4 +1,4 @@
-.PHONY: clean setup format lint build tests tests-manual tests-slow tests-all docs
+.PHONY: clean setup update format lint build tests tests-manual tests-slow tests-all docs
 
 clean:
 	find . -name '*.pyc' -exec rm -f {} +
@@ -15,6 +15,9 @@ clean:
 setup:
 	-poetry env remove --all
 	poetry install
+
+update:
+	poetry update
 
 format:
 	poetry run ruff format .
