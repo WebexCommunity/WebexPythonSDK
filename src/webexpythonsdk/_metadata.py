@@ -22,6 +22,7 @@ SOFTWARE.
 """
 
 __title__ = "webexpythonsdk"
+__version__ = "0.0.0"  # This will be overwritten by the build process
 __description__ = "Community-developed Python SDK for the Webex APIs"
 __url__ = "https://github.com/WebexCommunity/WebexPythonSDK"
 __download_url__ = "https://pypi.python.org/pypi/webexpythonsdk"
@@ -29,12 +30,3 @@ __author__ = "Chris Lunsford"
 __author_email__ = "chrlunsf@cisco.com"
 __copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
-
-
-# Only import the ._version module and compute the version when this module is
-# imported.
-if __name__ == "webexpythonsdk._metadata":
-    from ._version import get_versions
-
-    __version__ = get_versions()["version"]
-    del get_versions
