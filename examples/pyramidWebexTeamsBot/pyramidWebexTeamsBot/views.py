@@ -47,7 +47,7 @@ __author__ = "Jose Bogarín Solano"
 __author_email__ = "jose@bogarin.co.cr"
 __contributors__ = [
     "Brad Bester <brbester@cisco.com>",
-    "Chris Lunsford <chrlunsf@cisco.com>",
+    "Chris Lunsford <cm@lunsford.io>",
 ]
 __copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"

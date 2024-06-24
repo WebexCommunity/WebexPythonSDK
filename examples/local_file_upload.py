@@ -45,7 +45,7 @@ from webexpythonsdk import WebexAPI
 
 __author__ = "Jeff Levensailor"
 __author_email__ = "jeff@levensailor.com"
-__contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
+__contributors__ = ["Chris Lunsford <cm@lunsford.io>"]
 __copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
 

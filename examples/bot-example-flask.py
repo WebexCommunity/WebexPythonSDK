@@ -44,7 +44,7 @@ SOFTWARE.
 """
 
 __author__ = "Chris Lunsford"
-__author_email__ = "chrlunsf@cisco.com"
+__author_email__ = "cm@lunsford.io"
 __contributors__ = ["Brad Bester <brbester@cisco.com>"]
 __copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
