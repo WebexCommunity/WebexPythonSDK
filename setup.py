@@ -39,6 +39,7 @@ PACKAGE_CLASSIFIERS = [
     "Programming Language :: Python :: 2.7",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Topic :: Communications",
     "Topic :: Communications :: Chat",
 ]
@@ -50,7 +51,7 @@ INSTALLATION_REQUIREMENTS = [
     "future",
     "requests>=2.4.2",
     "requests-toolbelt",
-    "PyJWT==1.7.1",
+    "PyJWT>=2.4.0",
 ]
 
 

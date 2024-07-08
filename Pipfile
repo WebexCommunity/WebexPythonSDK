@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 webexteamssdk = {editable = true,path = "."}
+PyJWT = ">=2.4.0"
 
 [dev-packages]
 versioneer = "*"
