@@ -5,14 +5,14 @@ import sys
 sys.path.insert(0, os.path.abspath(".."))
 
 
-from webexpythonsdk._version import get_versions
+import webexpythonsdk
 
 
 project = "webexpythonsdk"
 copyright = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 author = "Chris Lunsford"
-version = get_versions()["version"]
-release = get_versions()["version"]
+version = webexpythonsdk.__version__
+release = webexpythonsdk.__version__
 language = "en"
 
 
