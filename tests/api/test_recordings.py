@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-"""WebexTeamsAPI Recordings API fixtures and tests.
+"""WebexAPI Recordings API fixtures and tests.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -28,15 +27,15 @@ from datetime import timedelta, timezone
 
 import pytest
 
-import webexteamssdk
+import webexpythonsdk
 
-to_datetime = webexteamssdk.WebexTeamsDateTime.now(tz=timezone.utc)
+to_datetime = webexpythonsdk.WebexDateTime.now(tz=timezone.utc)
 from_datetime = to_datetime - timedelta(days=364)
 
 
 # Helper Functions
 def is_valid_recording(obj):
-    return isinstance(obj, webexteamssdk.Recording) and obj.id is not None
+    return isinstance(obj, webexpythonsdk.Recording) and obj.id is not None
 
 
 def are_valid_recording(iterable):

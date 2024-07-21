@@ -24,7 +24,7 @@ SOFTWARE.
 
 __author__ = "Jose Bogarín Solano"
 __author_email__ = "jose@bogarin.co.cr"
-__contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
+__contributors__ = ["Chris Lunsford <cm@lunsford.io>"]
 __copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
 
@@ -39,9 +39,9 @@ with open(os.path.join(here, "README.rst")) as f:
 
 
 setup(
-    name="pyramidWebexTeamsBot",
+    name="pyramidWebexBot",
     version=0.1,
-    description="Pyramid Webex Teams Bot application",
+    description="Pyramid Webex Bot application",
     long_description=README,
     classifiers=[
         "Programming Language :: Python",
@@ -55,9 +55,9 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    install_requires=["cornice", "waitress", "webexteamssdk"],
+    install_requires=["cornice", "waitress", "webexpythonsdk"],
     entry_points="""[paste.app_factory]
-                    main=pyramidWebexTeamsBot:main
+                    main=pyramidWebexBot:main
                     """,
     paster_plugins=["pyramid"],
 )

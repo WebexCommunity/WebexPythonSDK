@@ -5,7 +5,7 @@ card, and handling the events generated when a user hits the Submit button.
 
 A bot must be created and pointed to this server in the My Apps section of
 https://developer.webex.com.  The bot's Access Token should be added as a
-"WEBEX_TEAMS_ACCESS_TOKEN" environment variable on the web server hosting this
+"WEBEX_ACCESS_TOKEN" environment variable on the web server hosting this
 script.
 
 This script must expose a public IP address in order to receive notifications
@@ -14,7 +14,7 @@ back to your server if your machine sits behind a firewall.
 
 The following environment variables are needed for this to run
 
-* WEBEX_TEAMS_ACCESS_TOKEN -- Access token for a Webex bot
+* WEBEX_ACCESS_TOKEN -- Access token for a Webex bot
 * WEBHOOK_URL -- URL for Webex Webhooks (ie: https://2fXX9c.ngrok.io)
 * PORT - Port for Webhook URL (ie: the port param passed to ngrok)
 
@@ -58,13 +58,13 @@ from urllib.parse import urljoin
 
 from flask import Flask, request
 
-from webexteamssdk import WebexTeamsAPI, Webhook
+from webexpythonsdk import WebexAPI, Webhook
 
 
 # Script metadata
 __author__ = "JP Shipherd"
 __author_email__ = "jshipher@cisco.com"
-__contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
+__contributors__ = ["Chris Lunsford <cm@lunsford.io>"]
 __copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
 
@@ -161,13 +161,13 @@ CARD_CONTENT = {
 # Module variables
 webhook_url = os.environ.get("WEBHOOK_URL", "")
 port = int(os.environ.get("PORT", 0))
-access_token = os.environ.get("WEBEX_TEAMS_ACCESS_TOKEN", "")
+access_token = os.environ.get("WEBEX_ACCESS_TOKEN", "")
 if not all((webhook_url, port, access_token)):
     print(
         """Missing required environment variable.  You must set:
         * WEBHOOK_URL -- URL for Webex Webhooks (ie: https://2fXX9c.ngrok.io)
         * PORT - Port for Webhook URL (ie: the port param passed to ngrok)
-        * WEBEX_TEAMS_ACCESS_TOKEN -- Access token for a Webex bot
+        * WEBEX_ACCESS_TOKEN -- Access token for a Webex bot
         """
     )
     sys.exit()
@@ -175,8 +175,8 @@ if not all((webhook_url, port, access_token)):
 # Initialize the environment
 # Create the web application instance
 flask_app = Flask(__name__)
-# Create the Webex Teams API connection object
-api = WebexTeamsAPI()
+# Create the Webex API connection object
+api = WebexAPI()
 # Get the details for the account who's access token we are using
 me = api.people.me()
 
@@ -191,7 +191,7 @@ def delete_webhooks_with_name():
 
 
 def create_webhooks(webhook_url):
-    """Create the Webex Teams webhooks we need for our bot."""
+    """Create the Webex webhooks we need for our bot."""
     print("Creating Message Created Webhook...")
     webhook = api.webhooks.create(
         resource=MESSAGE_WEBHOOK_RESOURCE,
@@ -281,10 +281,10 @@ def respond_to_message(webhook):
 # Core bot functionality
 # Webex will post to this server when a message is created for the bot
 # or when a user clicks on an Action.Submit button in a card posted by this bot
-# Your Webex Teams webhook should point to http://<serverip>:<port>/events
+# Your Webex webhook should point to http://<serverip>:<port>/events
 @flask_app.route("/events", methods=["POST"])
 def webex_teams_webhook_events():
-    """Respond to inbound webhook JSON HTTP POST from Webex Teams."""
+    """Respond to inbound webhook JSON HTTP POST from Webex."""
     # Create a Webhook object from the JSON data
     webhook_obj = Webhook(request.json)
 

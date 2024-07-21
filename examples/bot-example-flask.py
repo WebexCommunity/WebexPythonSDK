@@ -9,15 +9,15 @@ port 5000 you can change this default if desired (see `flask_app.run(...)`).
 ngrok (https://ngrok.com/) can be used to tunnel traffic back to your server
 if your machine sits behind a firewall.
 
-You must create a Webex Teams webhook that points to the URL where this script
-is hosted.  You can do this via the WebexTeamsAPI.webhooks.create() method.
+You must create a Webex webhook that points to the URL where this script
+is hosted.  You can do this via the WebexAPI.webhooks.create() method.
 
-Additional Webex Teams webhook details can be found here:
+Additional Webex webhook details can be found here:
 https://developer.webex.com/webhooks-explained.html
 
 A bot must be created and pointed to this server in the My Apps section of
 https://developer.webex.com.  The bot's Access Token should be added as a
-'WEBEX_TEAMS_ACCESS_TOKEN' environment variable on the web server hosting this
+'WEBEX_ACCESS_TOKEN' environment variable on the web server hosting this
 script.
 
 This script supports Python versions 2 and 3.
@@ -43,18 +43,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-# Use future for Python v2 and v3 compatibility
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
-from builtins import *
-
-
 __author__ = "Chris Lunsford"
-__author_email__ = "chrlunsf@cisco.com"
+__author_email__ = "cm@lunsford.io"
 __contributors__ = ["Brad Bester <brbester@cisco.com>"]
 __copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
@@ -63,7 +53,7 @@ __license__ = "MIT"
 from flask import Flask, request
 import requests
 
-from webexteamssdk import WebexTeamsAPI, Webhook
+from webexpythonsdk import WebexAPI, Webhook
 
 
 # Module constants
@@ -73,8 +63,8 @@ CAT_FACTS_URL = "https://catfact.ninja/fact"
 # Initialize the environment
 # Create the web application instance
 flask_app = Flask(__name__)
-# Create the Webex Teams API connection object
-api = WebexTeamsAPI()
+# Create the Webex API connection object
+api = WebexAPI()
 
 
 # Helper functions
@@ -92,7 +82,7 @@ def get_catfact():
 
 
 # Core bot functionality
-# Your Webex Teams webhook should point to http://<serverip>:5000/events
+# Your Webex webhook should point to http://<serverip>:5000/events
 @flask_app.route("/events", methods=["GET", "POST"])
 def webex_teams_webhook_events():
     """Processes incoming requests to the '/events' URI."""
@@ -101,7 +91,7 @@ def webex_teams_webhook_events():
                    <html lang="en">
                        <head>
                            <meta charset="UTF-8">
-                           <title>Webex Teams Bot served via Flask</title>
+                           <title>Webex Bot served via Flask</title>
                        </head>
                    <body>
                    <p>
@@ -115,9 +105,9 @@ def webex_teams_webhook_events():
                    </html>
                 """.format(get_catfact())
     elif request.method == "POST":
-        """Respond to inbound webhook JSON HTTP POST from Webex Teams."""
+        """Respond to inbound webhook JSON HTTP POST from Webex."""
 
-        # Get the POST data sent from Webex Teams
+        # Get the POST data sent from Webex
         json_data = request.json
         print("\n")
         print("WEBHOOK POST RECEIVED:")

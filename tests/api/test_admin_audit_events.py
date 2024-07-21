@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-"""WebexTeamsAPI Admin Audit Events API fixtures and tests.
+"""WebexAPI Admin Audit Events API fixtures and tests.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -27,10 +26,10 @@ from datetime import timedelta, timezone
 
 import pytest
 
-import webexteamssdk
+import webexpythonsdk
 
 
-to_datetime = webexteamssdk.WebexTeamsDateTime.now(tz=timezone.utc)
+to_datetime = webexpythonsdk.WebexDateTime.now(tz=timezone.utc)
 from_datetime = to_datetime - timedelta(days=364)
 
 
@@ -39,7 +38,7 @@ from_datetime = to_datetime - timedelta(days=364)
 
 def is_valid_admin_audit_event(obj):
     return (
-        isinstance(obj, webexteamssdk.AdminAuditEvent) and obj.id is not None
+        isinstance(obj, webexpythonsdk.AdminAuditEvent) and obj.id is not None
     )
 
 

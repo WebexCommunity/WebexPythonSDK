@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 #  -*- coding: utf-8 -*-
-"""Script to demonstrate the use of webexteamssdk for the people API
+"""Script to demonstrate the use of webexpythonsdk for the people API
 
-The package natively retrieves your Webex Teams access token from the
-WEBEX_TEAMS_ACCESS_TOKEN environment variable.  You must have this environment
+The package natively retrieves your Webex access token from the
+WEBEX_ACCESS_TOKEN environment variable.  You must have this environment
 variable set to run this script.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -27,27 +27,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
-from builtins import *
-
-
 __author__ = "Jose Bogarín Solano"
 __author_email__ = "jose@bogarin.co.cr"
-__contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
+__contributors__ = ["Chris Lunsford <cm@lunsford.io>"]
 __copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
 
-from webexteamssdk import WebexTeamsAPI
+from webexpythonsdk import WebexAPI
 
 
-# Create a WebexTeamsAPI connection object; uses your WEBEX_TEAMS_ACCESS_TOKEN
+# Create a WebexAPI connection object; uses your WEBEX_ACCESS_TOKEN
 # environment variable
-api = WebexTeamsAPI()
+api = WebexAPI()
 
 
 # Get my user information

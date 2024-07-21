@@ -3,17 +3,17 @@
 """Demo script showing how to upload a local file.
 
 A simple script showing how to upload a local file when creating a message in
-a Webex Teams space.
+a Webex space.
 
 You upload a file by using the `files=` parameter of the
-`WebexTeamsAPI.messages.create()` method, which expects to receive a list
+`WebexAPI.messages.create()` method, which expects to receive a list
 containing a single string with the path to file to be attached to the created
 message (Example: `files=["./image.png"]`).  The files parameter receives a
 list to allow for future expansion; however today, only one file may be
-included when creating a message via the Webex Teams APIs.
+included when creating a message via the Webex APIs.
 
-The WebexTeamsSDK natively retrieves your Webex Teams access token from the
-WEBEX_TEAMS_ACCESS_TOKEN environment variable.  You must have this environment
+The WebexPythonSDK natively retrieves your Webex access token from the
+WEBEX_ACCESS_TOKEN environment variable.  You must have this environment
 variable set to run this script.
 
 
@@ -38,16 +38,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from __future__ import print_function
-
 import os
 
-from webexteamssdk import WebexTeamsAPI
+from webexpythonsdk import WebexAPI
 
 
 __author__ = "Jeff Levensailor"
 __author_email__ = "jeff@levensailor.com"
-__contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
+__contributors__ = ["Chris Lunsford <cm@lunsford.io>"]
 __copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
 
@@ -56,8 +54,8 @@ ROOM_ID = "<your_room_id>"
 FILE_PATH = "<the_path_to_the_local_file>"
 
 
-# Create a WebexTeamsAPI connection object; uses your WEBEX_TEAMS_ACCESS_TOKEN
-api = WebexTeamsAPI()
+# Create a WebexAPI connection object; uses your WEBEX_ACCESS_TOKEN
+api = WebexAPI()
 
 
 # Let's make sure the file exists

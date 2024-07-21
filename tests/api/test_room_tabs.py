@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-"""WebexTeamsAPI Rooms API fixtures and tests.
+"""WebexAPI Rooms API fixtures and tests.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -27,14 +26,14 @@ import os
 
 import pytest
 
-import webexteamssdk
+import webexpythonsdk
 from tests.utils import create_string
 
-WEBEX_TEAMS_TEST_FILE_URL = os.environ.get("WEBEX_TEAMS_TEST_FILE_URL")
+WEBEX_TEST_FILE_URL = os.environ.get("WEBEX_TEST_FILE_URL")
 
-if not WEBEX_TEAMS_TEST_FILE_URL:
+if not WEBEX_TEST_FILE_URL:
     pytest.skip(
-        "WEBEX_TEAMS_TEST_FILE_URL environment variable is not set.",
+        "WEBEX_TEST_FILE_URL environment variable is not set.",
         allow_module_level=True,
     )
 
@@ -43,7 +42,7 @@ if not WEBEX_TEAMS_TEST_FILE_URL:
 
 
 def is_valid_room_tab(obj):
-    return isinstance(obj, webexteamssdk.RoomTab) and obj.id is not None
+    return isinstance(obj, webexpythonsdk.RoomTab) and obj.id is not None
 
 
 def are_valid_room_tabs(iterable):
@@ -55,7 +54,7 @@ def are_valid_room_tabs(iterable):
 def room_tab(api, group_room):
     room_tab = api.room_tabs.create(
         roomId=group_room.id,
-        contentUrl=WEBEX_TEAMS_TEST_FILE_URL,
+        contentUrl=WEBEX_TEST_FILE_URL,
         displayName=create_string("RoomTab"),
     )
 
@@ -68,7 +67,7 @@ def room_tab(api, group_room):
 def temp_room_tab(api, group_room):
     temp_room_tab = api.room_tabs.create(
         roomId=group_room.id,
-        contentUrl=WEBEX_TEAMS_TEST_FILE_URL,
+        contentUrl=WEBEX_TEST_FILE_URL,
         displayName=create_string("RoomTab"),
     )
 
@@ -76,7 +75,7 @@ def temp_room_tab(api, group_room):
 
     try:
         api.room_tabs.delete(temp_room_tab.id)
-    except webexteamssdk.ApiError:
+    except webexpythonsdk.ApiError:
         pass
 
 

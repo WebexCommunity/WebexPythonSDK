@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Test suite environment variables.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -26,35 +25,35 @@ import os
 import string
 
 
-WEBEX_TEAMS_TEST_DOMAIN = os.getenv("WEBEX_TEAMS_TEST_DOMAIN")
-if WEBEX_TEAMS_TEST_DOMAIN is None:
+WEBEX_TEST_DOMAIN = os.getenv("WEBEX_TEST_DOMAIN")
+if WEBEX_TEST_DOMAIN is None:
     raise RuntimeError(
         "You must set a {} environment variable to run the test suite"
-        "".format("WEBEX_TEAMS_TEST_DOMAIN")
+        "".format("WEBEX_TEST_DOMAIN")
     )
 
-WEBEX_TEAMS_TEST_ID_START = int(os.getenv("WEBEX_TEAMS_TEST_ID_START"))
-if WEBEX_TEAMS_TEST_ID_START is None:
+WEBEX_TEST_ID_START = int(os.getenv("WEBEX_TEST_ID_START"))
+if WEBEX_TEST_ID_START is None:
     raise RuntimeError(
         "You must set a {} environment variable to run the test suite"
-        "".format("WEBEX_TEAMS_TEST_ID_START")
+        "".format("WEBEX_TEST_ID_START")
     )
 
-WEBEX_TEAMS_TEST_FILE_URL = os.getenv("WEBEX_TEAMS_TEST_FILE_URL")
-if WEBEX_TEAMS_TEST_FILE_URL is None:
+WEBEX_TEST_FILE_URL = os.getenv("WEBEX_TEST_FILE_URL")
+if WEBEX_TEST_FILE_URL is None:
     raise RuntimeError(
         "You must set a {} environment variable to run the test suite"
-        "".format("WEBEX_TEAMS_TEST_FILE_URL")
+        "".format("WEBEX_TEST_FILE_URL")
     )
 
-WEBEX_TEAMS_TEST_STRING_PREFIX = os.getenv(
-    "WEBEX_TEAMS_TEST_STRING_PREFIX",
-    default="webexteamssdk pytest",
+WEBEX_TEST_STRING_PREFIX = os.getenv(
+    "WEBEX_TEST_STRING_PREFIX",
+    default="webexpythonsdk pytest",
 )
 
-WEBEX_TEAMS_TEST_STRING_TEMPLATE = string.Template(
+WEBEX_TEST_STRING_TEMPLATE = string.Template(
     os.getenv(
-        "WEBEX_TEAMS_TEST_STRING_TEMPLATE",
+        "WEBEX_TEST_STRING_TEMPLATE",
         default="$prefix $item [$datetime]",
     )
 )

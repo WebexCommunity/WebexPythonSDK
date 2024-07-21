@@ -7,15 +7,15 @@ web server will be reachable at port 8080 - append a different port when
 launching the script if desired.  ngrok can be used to tunnel traffic back to
 your server if you don't wish to expose your machine publicly to the Internet.
 
-You must create a Webex Teams webhook that points to the URL where this script
-is hosted.  You can do this via the WebexTeamsAPI.webhooks.create() method.
+You must create a Webex webhook that points to the URL where this script
+is hosted.  You can do this via the WebexAPI.webhooks.create() method.
 
-Additional Webex Teams webhook details can be found here:
+Additional Webex webhook details can be found here:
 https://developer.webex.com/webhooks-explained.html
 
 A bot must be created and pointed to this server in the My Apps section of
 https://developer.webex.com.  The bot's Access Token should be added as a
-'WEBEX_TEAMS_ACCESS_TOKEN' environment variable on the web server hosting this
+'WEBEX_ACCESS_TOKEN' environment variable on the web server hosting this
 script.
 
 NOTE:  While this script is written to support Python versions 2 and 3, as of
@@ -43,19 +43,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-# Use future for Python v2 and v3 compatibility
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
-from builtins import *
-
-
 __author__ = "Brad Bester"
 __author_email__ = "brbester@cisco.com"
-__contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
+__contributors__ = ["Chris Lunsford <cm@lunsford.io>"]
 __copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
 
@@ -63,7 +53,7 @@ __license__ = "MIT"
 import web
 import requests
 
-from webexteamssdk import WebexTeamsAPI, Webhook
+from webexpythonsdk import WebexAPI, Webhook
 
 
 # Module constants
@@ -71,12 +61,12 @@ CAT_FACTS_URL = "https://catfact.ninja/fact"
 
 
 # Global variables
-# Your Webex Teams webhook should point to http://<serverip>:8080/events
+# Your Webex webhook should point to http://<serverip>:8080/events
 urls = ("/events", "webhook")
 # Create the web application instance
 app = web.application(urls, globals())
-# Create the Webex Teams API connection object
-api = WebexTeamsAPI()
+# Create the Webex API connection object
+api = WebexAPI()
 
 
 def get_catfact():
@@ -94,8 +84,8 @@ def get_catfact():
 
 class webhook(object):
     def POST(self):
-        """Respond to inbound webhook JSON HTTP POSTs from Webex Teams."""
-        # Get the POST data sent from Webex Teams
+        """Respond to inbound webhook JSON HTTP POSTs from Webex."""
+        # Get the POST data sent from Webex
         json_data = web.data()
         print("\nWEBHOOK POST RECEIVED:")
         print(json_data, "\n")

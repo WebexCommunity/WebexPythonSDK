@@ -5,10 +5,10 @@ Introduction
 ============
 
 
-Work with the Webex Teams APIs in Native Python!
-------------------------------------------------
+Work with the Webex APIs in Native Python!
+------------------------------------------
 
-Sure, working with the Webex Teams APIs is easy (see
+Sure, working with the Webex APIs is easy (see
 `developer.webex.com`_).  They are RESTful,  naturally structured,
 require only a simple Access Token for authentication, and the data is
 elegantly represented in intuitive JSON.  What could be easier?
@@ -47,16 +47,16 @@ Like I said, EASY.  However, in use, the code can become rather repetitive...
 - When requesting lists of items, you have to deal with pagination_
 
 
-Enter **webexteamssdk**, a simple API wrapper that wraps all of the Webex Teams API
+Enter **webexpythonsdk**, a simple API wrapper that wraps all of the Webex API
 calls and returned JSON objects within native Python objects and methods.
 
-With webexteamssdk, the above Python code can be consolidated to the following:
+With webexpythonsdk, the above Python code can be consolidated to the following:
 
 .. code-block:: python
 
-    from webexteamssdk import WebexTeamsAPI
+    from webexpythonsdk import WebexAPI
 
-    api = WebexTeamsAPI()
+    api = WebexAPI()
     try:
         message = api.messages.create('<room_id>', text='<message_text>')
         print("New message created, with ID:", message.id)
@@ -65,12 +65,12 @@ With webexteamssdk, the above Python code can be consolidated to the following:
         print(e)
 
 
-**webexteamssdk handles all of this for you:**
+**webexpythonsdk handles all of this for you:**
 
-+ Reads your Webex Teams access token from a ``WEBEX_TEAMS_ACCESS_TOKEN`` environment
++ Reads your Webex access token from a ``WEBEX_ACCESS_TOKEN`` environment
   variable
 
-+ Wraps and represents all Webex Teams API calls as a simple hierarchical tree of
++ Wraps and represents all Webex API calls as a simple hierarchical tree of
   native-Python methods (with default arguments provided everywhere possible!)
 
 + If your Python IDE supports **auto-completion** (like PyCharm_), you can
@@ -80,14 +80,14 @@ With webexteamssdk, the above Python code can be consolidated to the following:
   access all of the object's attributes using native *dot.syntax*
 
 + **Automatic and Transparent Pagination!**  When requesting 'lists of objects'
-  from Webex Teams, requests for additional pages of responses are efficiently and
+  from Webex, requests for additional pages of responses are efficiently and
   automatically requested as needed
 
-+ **Automatic Rate-Limit Handling**  Sending a lot of requests to Webex Teams?
-  Don't worry; we have you covered.  Webex Teams will respond with a rate-limit
++ **Automatic Rate-Limit Handling**  Sending a lot of requests to Webex?
+  Don't worry; we have you covered.  Webex will respond with a rate-limit
   response, which will automatically be caught and "handled" for you.  Your
   requests and script will automatically be "paused" for the amount of time
-  specified by Webex Teams, while we wait for the Webex Teams rate-limit timer to cool
+  specified by Webex, while we wait for the Webex rate-limit timer to cool
   down.  After the cool-down, your request will automatically be retried, and
   your script will continue to run as normal.  Handling all of this requires
   zero (0) changes to your code - you're welcome.  😎
@@ -103,20 +103,20 @@ All of this, combined, lets you do powerful things simply:
 
 .. code-block:: python
 
-    from webexteamssdk import WebexTeamsAPI
+    from webexpythonsdk import WebexAPI
 
-    api = WebexTeamsAPI()
+    api = WebexAPI()
 
-    # Find all rooms that have 'webexteamssdk Demo' in their title
+    # Find all rooms that have 'webexpythonsdk Demo' in their title
     all_rooms = api.rooms.list()
-    demo_rooms = [room for room in all_rooms if 'webexteamssdk Demo' in room.title]
+    demo_rooms = [room for room in all_rooms if 'webexpythonsdk Demo' in room.title]
 
     # Delete all of the demo rooms
     for room in demo_rooms:
         api.rooms.delete(room.id)
 
     # Create a new demo room
-    demo_room = api.rooms.create('webexteamssdk Demo')
+    demo_room = api.rooms.create('webexpythonsdk Demo')
 
     # Add people to the new demo room
     email_addresses = ["test01@cmlccie.com", "test02@cmlccie.com"]
@@ -125,15 +125,15 @@ All of this, combined, lets you do powerful things simply:
 
     # Post a message to the new room, and upload a file
     api.messages.create(demo_room.id, text="Welcome to the room!",
-                        files=["https://www.webex.com/content/dam/wbx/us/images/dg-integ/teams_icon.png"])
+                        files=["https://www.webex.com/content/dam/wbx/us/images/navigation/CiscoWebex-Logo_white.png"])
 
 
-That's more than 6 Webex Teams API calls in less than 23 lines of code (with comments
-and whitespace), and likely more than that since webexteamssdk handles
+That's more than 6 Webex API calls in less than 23 lines of code (with comments
+and whitespace), and likely more than that since webexpythonsdk handles
 pagination_ for you automatically!
 
 Head over to the :ref:`Quickstart` page to begin working with the
-**Webex Teams APIs in native Python**!
+**Webex APIs in native Python**!
 
 
 .. _MITLicense:
@@ -141,12 +141,12 @@ Head over to the :ref:`Quickstart` page to begin working with the
 MIT License
 -----------
 
-webexteamssdk is currently licensed under the `MIT Open Source License`_, and
+webexpythonsdk is currently licensed under the `MIT Open Source License`_, and
 distributed as a source distribution (no binaries) via :ref:`PyPI <Install>`,
 and the complete :ref:`source code <Source Code>` is available on GitHub.
 
-webexteamssdk License
----------------------
+webexpythonsdk License
+----------------------
 
 .. include:: ../../LICENSE
 

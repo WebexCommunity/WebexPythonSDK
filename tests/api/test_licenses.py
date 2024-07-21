@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-"""WebexTeamsAPI Licenses API fixtures and tests.
+"""WebexAPI Licenses API fixtures and tests.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -24,14 +23,14 @@ SOFTWARE.
 
 import pytest
 
-import webexteamssdk
+import webexpythonsdk
 
 
 # Helper Functions
 
 
 def is_valid_license(obj):
-    return isinstance(obj, webexteamssdk.License) and obj.id is not None
+    return isinstance(obj, webexpythonsdk.License) and obj.id is not None
 
 
 def are_valid_licenses(iterable):

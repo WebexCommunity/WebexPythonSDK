@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-"""webexteamssdk/restsession.py Fixtures & Tests
+"""webexpythonsdk/restsession.py Fixtures & Tests
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -27,7 +26,7 @@ import warnings
 
 import pytest
 
-import webexteamssdk
+import webexpythonsdk
 
 
 logging.captureWarnings(True)
@@ -37,7 +36,7 @@ logging.captureWarnings(True)
 def rate_limit_detected(w):
     """Check to see if a rate-limit warning is in the warnings list."""
     while w:
-        if issubclass(w.pop().category, webexteamssdk.RateLimitWarning):
+        if issubclass(w.pop().category, webexpythonsdk.RateLimitWarning):
             return True
     return False
 

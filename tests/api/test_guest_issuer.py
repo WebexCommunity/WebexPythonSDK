@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-"""WebexTeamsAPI Licenses API fixtures and tests.
+"""WebexAPI Licenses API fixtures and tests.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -26,19 +25,17 @@ import os
 import time
 import pytest
 
-import webexteamssdk
+import webexpythonsdk
 
 
 TOKEN_EXPIRATION_SECONDS = 60 * 5
-WEBEX_TEAMS_GUEST_ISSUER_ID = os.environ.get("WEBEX_TEAMS_GUEST_ISSUER_ID")
-WEBEX_TEAMS_GUEST_ISSUER_SECRET = os.environ.get(
-    "WEBEX_TEAMS_GUEST_ISSUER_SECRET"
-)
+WEBEX_GUEST_ISSUER_ID = os.environ.get("WEBEX_GUEST_ISSUER_ID")
+WEBEX_GUEST_ISSUER_SECRET = os.environ.get("WEBEX_GUEST_ISSUER_SECRET")
 
-if WEBEX_TEAMS_GUEST_ISSUER_ID is None or not WEBEX_TEAMS_GUEST_ISSUER_SECRET:
+if WEBEX_GUEST_ISSUER_ID is None or not WEBEX_GUEST_ISSUER_SECRET:
     pytest.skip(
-        "Required WEBEX_TEAMS_GUEST_ISSUER_ID and/or "
-        "WEBEX_TEAMS_GUEST_ISSUER_SECRET environment variables are not set.",
+        "Required WEBEX_GUEST_ISSUER_ID and/or "
+        "WEBEX_GUEST_ISSUER_SECRET environment variables are not set.",
         allow_module_level=True,
     )
 
@@ -48,7 +45,7 @@ if WEBEX_TEAMS_GUEST_ISSUER_ID is None or not WEBEX_TEAMS_GUEST_ISSUER_SECRET:
 
 def is_valid_guest_issuer_token(obj):
     return (
-        isinstance(obj, webexteamssdk.GuestIssuerToken)
+        isinstance(obj, webexpythonsdk.GuestIssuerToken)
         and obj.token is not None
     )
 
@@ -60,9 +57,9 @@ def test_get_guest_issuer_token(api):
     guest_issuer_token = api.guest_issuer.create(
         sub="test-guest-user",
         name="Test Guest User",
-        iss=WEBEX_TEAMS_GUEST_ISSUER_ID,
+        iss=WEBEX_GUEST_ISSUER_ID,
         exp=str(int(time.time()) + TOKEN_EXPIRATION_SECONDS),
-        secret=WEBEX_TEAMS_GUEST_ISSUER_SECRET,
+        secret=WEBEX_GUEST_ISSUER_SECRET,
     )
 
     assert is_valid_guest_issuer_token(guest_issuer_token)

@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-"""WebexTeamsAPI Rooms API fixtures and tests.
+"""WebexAPI Rooms API fixtures and tests.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -26,7 +25,7 @@ import itertools
 
 import pytest
 
-import webexteamssdk
+import webexpythonsdk
 from tests.utils import create_string
 
 
@@ -34,12 +33,12 @@ from tests.utils import create_string
 
 
 def is_valid_room(obj):
-    return isinstance(obj, webexteamssdk.Room) and obj.id is not None
+    return isinstance(obj, webexpythonsdk.Room) and obj.id is not None
 
 
 def is_valid_room_meeting_info(obj):
     return (
-        isinstance(obj, webexteamssdk.RoomMeetingInfo)
+        isinstance(obj, webexpythonsdk.RoomMeetingInfo)
         and obj.roomId is not None
     )
 
@@ -102,7 +101,7 @@ def temp_room(api):
 
     try:
         api.rooms.delete(room.id)
-    except webexteamssdk.ApiError:
+    except webexpythonsdk.ApiError:
         pass
 
 
@@ -120,7 +119,7 @@ def add_rooms(api):
     for room in rooms:
         try:
             api.rooms.delete(room.id)
-        except webexteamssdk.ApiError:
+        except webexpythonsdk.ApiError:
             pass
 
 

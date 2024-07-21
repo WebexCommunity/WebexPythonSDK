@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import os
 import sys
 
@@ -7,14 +5,14 @@ import sys
 sys.path.insert(0, os.path.abspath(".."))
 
 
-from webexteamssdk._version import get_versions
+import webexpythonsdk
 
 
-project = "webexteamssdk"
+project = "webexpythonsdk"
 copyright = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 author = "Chris Lunsford"
-version = get_versions()["version"]
-release = get_versions()["version"]
+version = webexpythonsdk.__version__
+release = webexpythonsdk.__version__
 language = "en"
 
 
@@ -74,7 +72,7 @@ html_theme_options = {"collapse_navigation": False}
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-# html_title = u'webexteamssdk vv0.3'
+# html_title = u'webexpythonsdk vv0.3'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
@@ -174,7 +172,7 @@ html_theme_options = {"collapse_navigation": False}
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "webexteamssdkdoc"
+htmlhelp_basename = "webexpythonsdkdoc"
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -200,8 +198,8 @@ latex_elements = {
 latex_documents = [
     (
         master_doc,
-        "webexteamssdk.tex",
-        "webexteamssdk Documentation",
+        "webexpythonsdk.tex",
+        "webexpythonsdk Documentation",
         "Chris Lunsford",
         "manual",
     ),
@@ -245,7 +243,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, "webexteamssdk", "webexteamssdk Documentation", [author], 1)
+    (master_doc, "webexpythonsdk", "webexpythonsdk Documentation", [author], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -261,10 +259,10 @@ man_pages = [
 texinfo_documents = [
     (
         master_doc,
-        "webexteamssdk",
-        "webexteamssdk Documentation",
+        "webexpythonsdk",
+        "webexpythonsdk Documentation",
         author,
-        "webexteamssdk",
+        "webexpythonsdk",
         "One line description of project.",
         "Miscellaneous",
     ),

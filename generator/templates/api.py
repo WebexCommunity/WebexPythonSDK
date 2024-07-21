@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Webex {{ name }}s API wrapper.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
@@ -23,16 +22,8 @@ SOFTWARE.
 """
 
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from builtins import *
 
-from past.builtins import basestring
 
 from ..generator_containers import generator_container
 from ..restsession import RestSession
@@ -59,7 +50,7 @@ class {{ name }}sAPI(object):
 
         Args:
             session(RestSession): The RESTful session object to be used for
-                API calls to the Webex Teams service.
+                API calls to the Webex service.
 
         Raises:
             TypeError: If the parameter types are incorrect.
@@ -86,7 +77,7 @@ class {{ name }}sAPI(object):
 
         Use query parameters to filter the response.
 
-        This method supports Webex Teams's implementation of RFC5988 Web
+        This method supports Webex's implementation of RFC5988 Web
         Linking to provide pagination support.  It returns a generator
         container that incrementally yields all memberships returned by the
         query.  The generator will automatically request additional 'pages' of
@@ -113,7 +104,7 @@ class {{ name }}sAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         {% for up in url_parameters -%}
@@ -187,7 +178,7 @@ class {{ name }}sAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         {% for up in url_parameters -%}
@@ -234,7 +225,7 @@ class {{ name }}sAPI(object):
             {% for up in url_parameters -%}
             {{up['name']}} ({{ up['type']}}): {{ up['description']}}
             {% endfor -%}
-            {{ object_type }}Id(basestring): The {{ object_type }} ID.
+            {{ object_type }}Id(str): The {{ object_type }} ID.
 
         Returns:
             {{ name }}: A {{ name }} object with the details of the requested
@@ -242,10 +233,10 @@ class {{ name }}sAPI(object):
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
-        check_type({{ object_type }}Id, basestring)
+        check_type({{ object_type }}Id, str)
 
         # Add URL parameters to the API endpoint
         request_url = API_ENDPOINT.format({{ ups|join(", ") }})
@@ -267,17 +258,17 @@ class {{ name }}sAPI(object):
             {% for up in url_parameters -%}
             {{up['name']}} ({{ up['type']}}): {{ up['description']}}
             {% endfor -%}
-            {{ object_type }}Id(basestring): The {{ object_type }} ID.
+            {{ object_type }}Id(str): The {{ object_type }} ID.
 
         Raises:
             TypeError: If the parameter types are incorrect.
-            ApiError: If the Webex Teams cloud returns an error.
+            ApiError: If the Webex cloud returns an error.
 
         """
         {% for up in url_parameters -%}
         check_type({{ up['name'] }}, {{ up['type'] }})
         {% endfor -%}
-        check_type({{ object_type }}Id, basestring)
+        check_type({{ object_type }}Id, str)
         {%- if url_parameters %}
             {%- set ups = [] -%}
             {% for up in url_parameters|map(attribute='name') -%}
@@ -306,7 +297,7 @@ class {{ name }}sAPI(object):
             {% for up in url_parameters -%}
             {{up['name']}} ({{ up['type']}}): {{ up['description']}}
             {% endfor -%}
-            {{ object_type }}Id(basestring): The {{ object_type }} ID.
+            {{ object_type }}Id(str): The {{ object_type }} ID.
             {% for up in update_parameters -%}
             {{ up['name'] }} ({{ up['type']}}): {{ up['description']}}
             {% endfor -%}
@@ -322,7 +313,7 @@ class {{ name }}sAPI(object):
             ApiError: If the Webex cloud returns an error.
 
         """
-        check_type({{ object_type }}Id, basestring)
+        check_type({{ object_type }}Id, str)
         {% for up in update_parameters -%}
         check_type({{ up['name'] }}, {{ up['type'] }}{% if up['optional'] %}, optional=True{% endif %})
         {% endfor %}

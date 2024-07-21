@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-"""WebexTeamsAPI Messages API fixtures and tests.
+"""WebexAPI Messages API fixtures and tests.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -28,8 +27,8 @@ import os
 
 import pytest
 
-import webexteamssdk
-from tests.environment import WEBEX_TEAMS_TEST_FILE_URL
+import webexpythonsdk
+from tests.environment import WEBEX_TEST_FILE_URL
 from tests.utils import create_string
 
 
@@ -41,7 +40,7 @@ adaptive_card_path = os.path.abspath(
 
 # Helper Functions
 def is_valid_message(obj):
-    return isinstance(obj, webexteamssdk.Message) and obj.id is not None
+    return isinstance(obj, webexpythonsdk.Message) and obj.id is not None
 
 
 def are_valid_messages(iterable):
@@ -135,7 +134,7 @@ def send_group_room_message(api):
     for message in messages:
         try:
             api.messages.delete(message.id)
-        except webexteamssdk.ApiError:
+        except webexpythonsdk.ApiError:
             pass
 
 
@@ -176,7 +175,7 @@ def group_room_markdown_message(
 def group_room_message_with_file_by_url(group_room, send_group_room_message):
     text = "File posted via URL"
     return send_group_room_message(
-        room_id=group_room.id, text=text, files=[WEBEX_TEAMS_TEST_FILE_URL]
+        room_id=group_room.id, text=text, files=[WEBEX_TEST_FILE_URL]
     )
 
 

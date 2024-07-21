@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "charliermarsh.ruff",
+    "github.vscode-github-actions",
+    "github.vscode-pull-request-github",
+    "ms-python.debugpy",
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "streetsidesoftware.code-spell-checker"
+  ]
+}

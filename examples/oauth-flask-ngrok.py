@@ -36,13 +36,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
 from flask import Flask, url_for, session, redirect, request
 import urllib.parse
 from uuid import uuid4
 import requests
 
-from webexteamssdk import WebexTeamsAPI
+from webexpythonsdk import WebexAPI
 
 # Parameters configured in Webex Integration
 OAUTH_CLIENT_ID = "your integration Client ID"
@@ -149,7 +148,7 @@ def callback():
     # will exchange the OAuth authorization code to an access token behind the
     # scenes. It is the easiest, but the drawback is the refresh token is lost
     # and cannot be saved.
-    api = WebexTeamsAPI(
+    api = WebexAPI(
         client_id=OAUTH_CLIENT_ID,
         client_secret=OAUTH_CLIENT_SECRET,
         oauth_code=oauth_code,
@@ -164,7 +163,7 @@ def callback():
     # access token is valid for 14 days. The refresh token may be saved
     # somewhere and later used to refresh the access token with
     # access_tokens.refresh()
-    # api = WebexTeamsAPI("any string")
+    # api = WebexAPI("any string")
     # access_tokens = api.access_tokens.get(
     #     client_id=OAUTH_CLIENT_ID,
     #     client_secret=OAUTH_CLIENT_SECRET,

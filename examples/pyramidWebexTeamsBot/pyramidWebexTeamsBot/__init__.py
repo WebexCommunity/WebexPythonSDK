@@ -24,7 +24,7 @@ SOFTWARE.
 
 __author__ = "Jose Bogarín Solano"
 __author_email__ = "jose@bogarin.co.cr"
-__contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
+__contributors__ = ["Chris Lunsford <cm@lunsford.io>"]
 __copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
 
@@ -35,5 +35,5 @@ from pyramid.config import Configurator
 def main(global_config, **settings):
     config = Configurator(settings=settings)
     config.include("cornice")
-    config.scan("pyramidWebexTeamsBot.views")
+    config.scan("pyramidWebexBot.views")
     return config.make_wsgi_app()

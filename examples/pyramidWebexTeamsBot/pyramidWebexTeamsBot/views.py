@@ -4,20 +4,20 @@
 This sample script leverages the Pyramid web framework https://trypyramid.com/
 with Cornice https://cornice.readthedocs.io.  By default the web server will be
 reachable at port 6543 you can change this default if desired
-(see `pyramidWebexTeamsBot.ini`).
+(see `pyramidWebexBot.ini`).
 
 ngrok (https://ngrok.com/) can be used to tunnel traffic back to your server
 if your machine sits behind a firewall.
 
-You must create a Webex Teams webhook that points to the URL where this script
-is hosted.  You can do this via the WebexTeamsAPI.webhooks.create() method.
+You must create a Webex webhook that points to the URL where this script
+is hosted.  You can do this via the WebexAPI.webhooks.create() method.
 
-Additional Webex Teams webhook details can be found here:
+Additional Webex webhook details can be found here:
 https://developer.webex.com/webhooks-explained.html
 
 A bot must be created and pointed to this server in the My Apps section of
 https://developer.webex.com.  The bot's Access Token should be added as a
-'WEBEX_TEAMS_ACCESS_TOKEN' environment variable on the web server hosting this
+'WEBEX_ACCESS_TOKEN' environment variable on the web server hosting this
 script.
 
 This script supports Python versions 2 and 3.
@@ -43,28 +43,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-# Use future for Python v2 and v3 compatibility
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
-from builtins import *
-
-
 __author__ = "Jose Bogarín Solano"
 __author_email__ = "jose@bogarin.co.cr"
 __contributors__ = [
     "Brad Bester <brbester@cisco.com>",
-    "Chris Lunsford <chrlunsf@cisco.com>",
+    "Chris Lunsford <cm@lunsford.io>",
 ]
 __copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
-from webexteamssdk import Webhook
-from webexteamssdk.api import WebexTeamsAPI
+from webexpythonsdk import Webhook
+from webexpythonsdk.api import WebexAPI
 from cornice import Service
 import requests
 
@@ -79,8 +69,8 @@ CAT_FACTS_URL = "https://catfact.ninja/fact"
 
 
 # Initialize the environment
-# Create the Webex Teams API connection object
-api = WebexTeamsAPI()
+# Create the Webex API connection object
+api = WebexAPI()
 
 
 # Helper functions
@@ -100,7 +90,7 @@ def get_catfact():
 events_service = Service(
     name="events",
     path="/events",
-    description="Webex Teams Webhook",
+    description="Webex Webhook",
 )
 
 
@@ -110,12 +100,12 @@ def get_events_service(request):
     return {"fact": get_catfact()}
 
 
-# Your Webex Teams webhook should point to http://<serverip>:6543/events
+# Your Webex webhook should point to http://<serverip>:6543/events
 @events_service.post()
 def post_events_service(request):
-    """Respond to inbound webhook JSON HTTP POST from Webex Teams."""
+    """Respond to inbound webhook JSON HTTP POST from Webex."""
 
-    # Get the POST data sent from Webex Teams
+    # Get the POST data sent from Webex
     json_data = request.json
     log.info("\n")
     log.info("WEBHOOK POST RECEIVED:")

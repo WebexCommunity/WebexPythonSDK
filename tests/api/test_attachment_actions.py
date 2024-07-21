@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-"""WebexTeamsAPI Messages API fixtures and tests.
+"""WebexAPI Messages API fixtures and tests.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -27,7 +26,7 @@ import os
 
 import pytest
 
-import webexteamssdk
+import webexpythonsdk
 from tests.utils import create_string
 
 
@@ -40,7 +39,7 @@ attachment_actions_card_path = os.path.abspath(
 # Helper Functions
 def is_valid_attachment_action(obj):
     return (
-        isinstance(obj, webexteamssdk.AttachmentAction) and obj.id is not None
+        isinstance(obj, webexpythonsdk.AttachmentAction) and obj.id is not None
     )
 
 

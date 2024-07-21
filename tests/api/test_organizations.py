@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-"""WebexTeamsAPI Organizations API fixtures and tests.
+"""WebexAPI Organizations API fixtures and tests.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -24,14 +23,14 @@ SOFTWARE.
 
 import pytest
 
-import webexteamssdk
+import webexpythonsdk
 
 
 # Helper Functions
 
 
 def is_valid_organization(obj):
-    return isinstance(obj, webexteamssdk.Organization) and obj.id is not None
+    return isinstance(obj, webexpythonsdk.Organization) and obj.id is not None
 
 
 def are_valid_organizations(iterable):

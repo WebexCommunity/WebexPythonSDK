@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-"""WebexTeamsAPI Meetings API fixtures and tests.
+"""WebexAPI Meetings API fixtures and tests.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -25,7 +24,7 @@ SOFTWARE.
 import pytest
 import datetime
 
-import webexteamssdk
+import webexpythonsdk
 
 from tests.utils import create_string
 
@@ -33,7 +32,7 @@ from tests.utils import create_string
 
 
 def is_valid_meeting(obj):
-    return isinstance(obj, webexteamssdk.Meeting) and obj.id is not None
+    return isinstance(obj, webexpythonsdk.Meeting) and obj.id is not None
 
 
 def get_start_end_time():
@@ -60,7 +59,7 @@ def meeting(api):
 
     try:
         api.meetings.delete(meeting.id)
-    except webexteamssdk.ApiError:
+    except webexpythonsdk.ApiError:
         pass
 
 
@@ -76,7 +75,7 @@ def webinar(api):
 
     try:
         api.meetings.delete(webinar.id)
-    except webexteamssdk.ApiError:
+    except webexpythonsdk.ApiError:
         pass
 
 

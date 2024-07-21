@@ -3,7 +3,7 @@
 """Sample script to read local ngrok info and create a corresponding webhook.
 
 Sample script that reads ngrok info from the local ngrok client api and creates
-a Webex Teams Webhook pointint to the ngrok tunnel's public HTTP URL.
+a Webex Webhook pointint to the ngrok tunnel's public HTTP URL.
 
 Typically ngrok is called run with the following syntax to redirect an
 Internet accesible ngrok url to localhost port 8080:
@@ -11,7 +11,7 @@ Internet accesible ngrok url to localhost port 8080:
     $ ngrok http 8080
 
 To use script simply launch ngrok, and then launch this script.  After ngrok is
-killed, run this script a second time to remove webhook from Webex Teams.
+killed, run this script a second time to remove webhook from Webex.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -34,26 +34,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-# Use future for Python v2 and v3 compatibility
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
-from builtins import *
-
-
 __author__ = "Brad Bester"
 __author_email__ = "brbester@cisco.com"
-__contributors__ = ["Chris Lunsford <chrlunsf@cisco.com>"]
+__contributors__ = ["Chris Lunsford <cm@lunsford.io>"]
 __copyright__ = "Copyright (c) 2016-2024 Cisco and/or its affiliates."
 __license__ = "MIT"
 
 
 import sys
 
-from webexteamssdk import WebexTeamsAPI
+from webexpythonsdk import WebexAPI
 import requests
 
 
@@ -104,7 +94,7 @@ def delete_webhooks_with_name(api, name):
 
 
 def create_ngrok_webhook(api, ngrok_public_url):
-    """Create a Webex Teams webhook pointing to the public ngrok URL."""
+    """Create a Webex webhook pointing to the public ngrok URL."""
     print("Creating Webhook...")
     webhook = api.webhooks.create(
         name=WEBHOOK_NAME,
@@ -119,7 +109,7 @@ def create_ngrok_webhook(api, ngrok_public_url):
 
 def main():
     """Delete previous webhooks. If local ngrok tunnel, create a webhook."""
-    api = WebexTeamsAPI()
+    api = WebexAPI()
     delete_webhooks_with_name(api, name=WEBHOOK_NAME)
     public_url = get_ngrok_public_url()
     if public_url is not None:

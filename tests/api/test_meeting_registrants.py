@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-"""WebexTeamsAPI MeetingRegistrants API fixtures and tests.
+"""WebexAPI MeetingRegistrants API fixtures and tests.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -25,7 +24,7 @@ SOFTWARE.
 import pytest
 import datetime
 
-import webexteamssdk
+import webexpythonsdk
 
 from tests.utils import create_string
 
@@ -34,7 +33,8 @@ from tests.utils import create_string
 
 def is_valid_registrant(obj):
     return (
-        isinstance(obj, webexteamssdk.MeetingRegistrant) and obj.id is not None
+        isinstance(obj, webexpythonsdk.MeetingRegistrant)
+        and obj.id is not None
     )
 
 
@@ -62,7 +62,7 @@ def meeting(api):
 
     try:
         api.meetings.delete(meeting.id)
-    except webexteamssdk.ApiError:
+    except webexpythonsdk.ApiError:
         pass
 
 
@@ -84,7 +84,7 @@ def webinar(api):
 
     try:
         api.meetings.delete(webinar.id)
-    except webexteamssdk.ApiError:
+    except webexpythonsdk.ApiError:
         pass
 
 
@@ -101,7 +101,7 @@ def registrant(api, webinar):
 
     try:
         api.meeting_registrants.delete(webinar.id, registrant.id)
-    except webexteamssdk.ApiError:
+    except webexpythonsdk.ApiError:
         pass
 
 
@@ -110,7 +110,7 @@ def registrant(api, webinar):
 
 def test_register_for_meeting(api, meeting):
     # it is expected that registration does not work for a plain meeting
-    with pytest.raises(webexteamssdk.ApiError) as ex_info:
+    with pytest.raises(webexpythonsdk.ApiError) as ex_info:
         api.meeting_registrants.create(
             meeting.id,
             firstName=create_string("FirstName"),
