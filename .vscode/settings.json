@@ -2,5 +2,5 @@
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
   "python.testing.pytestArgs": ["-s", "-m", "not slow and not manual"],
-  "cSpell.words": ["webexpythonsdk"]
+  "cSpell.words": ["ciscosparkapi", "webexpythonsdk", "webexteamssdk"]
 }
