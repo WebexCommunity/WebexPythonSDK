@@ -1,18 +1,18 @@
 .. currentmodule:: webexpythonsdk
 
-=============
-webexpythonsdk
-=============
+==============
+WebexPythonSDK
+==============
 
 *Simple, lightweight, scalable Python API wrapper for the Webex APIs*
 
 -------------------------------------------------------------------------------
 
-Welcome to the docs!  webexpythonsdk is a *community developed* Pythonic wrapping of the Webex APIs.  The package represents all of the Cisco Webex API interactions via native Python tools.  Making working with the Cisco Webex APIs in Python a *native* and *natural* experience.
+Welcome to the docs!  ``webexpythonsdk`` is a *community developed* Pythonic wrapping of the Webex APIs.  The package represents all of the Cisco Webex API interactions via native Python tools.  Making working with the Cisco Webex APIs in Python a *native* and *natural* experience.
 
-**webexpythonsdk helps you get things done faster.**  We take care of the API semantics, and you can focus on writing your code.
+``webexpythonsdk`` **helps you get things done faster.**  We take care of the API semantics, and you can focus on writing your code.
 
-With webexpythonsdk, you can easily:
+With ``webexpythonsdk``, you can easily:
 
 * Interact with the Webex APIs in an interactive Python session
 
@@ -30,6 +30,7 @@ The User Guide
     :maxdepth: 2
 
     installation
+    user/migrate
     user/intro
     user/quickstart
     user/api

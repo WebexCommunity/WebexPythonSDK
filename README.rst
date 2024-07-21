@@ -13,20 +13,19 @@ webexpythonsdk
 .. image:: https://readthedocs.org/projects/webexpythonsdk/badge/?version=latest
     :target: http://webexpythonsdk.readthedocs.io/en/latest/?badge=latest
 
-------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+
+Welcome to the new **webexpythonsdk** library! The latest release removes support for Python v2 and
+is compatible with Python v3.10+. The new Webex Python SDK replaces the previous `webexteamssdk`_;
+and with the exception of the Python version support and the name change, the two libraries are
+functionally equivalent. The new library is the recommended choice for new projects, and
+webexteamssdk users are encouraged to `migrate`_ to **webexpythonsdk**.
+
+---------------------------------------------------------------------------------------------------
 
 
-**webexpythonsdk** v1.7 will be the last 🤞 release of the `webexpythonsdk` package. This will be the last release
-supporting Python v2 and v3 compatibility; it is compatible Python v3 releases *up to Python v3.10*.
-
-Going forward, the `webexpythonsdk` package will be replaced by the `WebexPythonSDK` package, which will support Python
-v3.10+.
-
-------------------------------------------------------------------------------------------------------------------------
-
-
-**webexpythonsdk** is a *community developed* Python library for working with the Webex APIs.  Our goal is to make
-working with Webex in Python a *native* and *natural* experience!
+**webexpythonsdk** is a *community developed* Python library for working with the Webex APIs.  Our
+goal is to make working with Webex in Python a *native* and *natural* experience!
 
 .. code-block:: Python
 
@@ -55,8 +54,8 @@ working with Webex in Python a *native* and *natural* experience!
                         files=["https://www.webex.com/content/dam/wbx/us/images/navigation/CiscoWebex-Logo_white.png"])
 
 
-That's more than 6 Webex API calls in less than 23 lines of code (with comments and whitespace), and likely more
-than that, since webexpythonsdk handles pagination_ for you automatically!
+That's more than 6 Webex API calls in less than 23 lines of code (with comments and whitespace),
+and likely more than that, since webexpythonsdk handles pagination_ for you automatically!
 
 webexpythonsdk makes your life better...  `Learn how!`__
 
@@ -70,8 +69,8 @@ webexpythonsdk does all of this for you:
 
 * Transparently sources your Webex access token from your local environment
 
-* Provides and uses default arguments and settings everywhere possible, so you don't have to think about things like API
-  endpoint URLs, HTTP headers and JSON formats
+* Provides and uses default arguments and settings everywhere possible, so you don't have to think
+  about things like API endpoint URLs, HTTP headers and JSON formats
 
 * Represents all Webex API interactions using native Python tools
 
@@ -130,18 +129,18 @@ __ Contribution_
 Release Notes
 -------------
 
-Please see the releases_ page for release notes on the incremental functionality and bug fixes incorporated into the
-published releases.
+Please see the releases_ page for release notes on the incremental functionality and bug fixes
+incorporated into the published releases.
 
 
 Questions, Support & Discussion
 -------------------------------
 
-webexpythonsdk is a *community developed* and *community-supported* project.  If you experience any issues using this
-package, please report them using the issues_ page.
+webexpythonsdk is a *community developed* and *community-supported* project.  If you experience any
+issues using this package, please report them using the issues_ page.
 
-Please join the `Python Webex Devs`__ Webex space to ask questions, join the discussion, and share your
-projects and creations.
+Please join the `Python Webex Devs`__ Webex space to ask questions, join the discussion, and share
+your projects and creations.
 
 __ Community_
 
@@ -149,38 +148,52 @@ __ Community_
 Contribution
 ------------
 
-webexpythonsdk is a community development project.  Feedback, thoughts, ideas, and code contributions are welcome!
-Please see the `Contributing`_ guide for more information.
+webexpythonsdk is a community development project.  Feedback, thoughts, ideas, and code
+contributions are welcome! Please see the `Contributing`_ guide for more information.
 
 
 History
 -------
 
-The Webex Python SDK (webexpythonsdk) library started as Cisco Spark API (ciscosparkapi). We updated the library's name in
-alignment with Cisco's re-brand of Cisco Spark to Webex. The Cisco Spark API library has been deprecated and is no
-longer supported; however, its open-source codebase is still available in the `ciscosparkapi`_ branch of this
-repository.
+The Webex Python SDK (webexpythonsdk) library started as Cisco Spark API (ciscosparkapi) which
+became Webex Teams SDK and then Webex Python SDK (webexpythonsdk). We updated the library's name in
+alignment with Cisco's re-brand of Cisco Spark to Webex and then again to align the name with the
+broader set of Webex APIs accessible via the SDK (meetings, recordings, etc.). The previous
+versions of the library are deprecated and no longer supported; however, their open-source codebase
+is still available in the `release/v0/ciscosparkapi`_ and `release/v1/webexteamssdk`_ branches in
+this repository.
 
-The development team may make additional name changes as the library evolves with the Webex APIs published on
-developer.webex.com.
+* `webexpythonsdk`_ (current) is compatible with Python v3.10+ and is the recommended library for
+  new projects.
+
+* `webexteamssdk`_ (deprecated) is compatible with Python v2 and v3 (<= v3.10) and is still
+  available for existing projects. Users are encouraged to migrate to `webexpythonsdk`_.
+
+* `ciscosparkapi`_ (deprecated) is compatible with Python v2 and v3 (<= v3.6) and should no longer
+  be used.
 
 
 *Copyright (c) 2016-2024 Cisco and/or its affiliates.*
 
 
-.. _Release Plan: https://github.com/WebexCommunity/WebexPythonSDK/wiki/Release-Plans
-.. _Introduction: http://webexpythonsdk.readthedocs.io/en/latest/user/intro.html
-.. _pagination: https://developer.webex.com/docs/basics#pagination
-.. _webexpythonsdk.readthedocs.io: https://webexpythonsdk.readthedocs.io
-.. _Quickstart: http://webexpythonsdk.readthedocs.io/en/latest/user/quickstart.html
-.. _examples: https://github.com/WebexCommunity/WebexPythonSDK/tree/master/examples
-.. _webexpythonsdk: https://github.com/WebexCommunity/WebexPythonSDK
-.. _issues: https://github.com/WebexCommunity/WebexPythonSDK/issues
+.. _ciscosparkapi: `_release/v0/ciscosparkapi`_
 .. _Community: https://eurl.io/#HkMxO-_9-
+.. _Contributing: https://github.com/WebexCommunity/WebexPythonSDK/blob/master/docs/contributing.rst
+.. _examples: https://github.com/WebexCommunity/WebexPythonSDK/tree/master/examples
+.. _Introduction: http://webexpythonsdk.readthedocs.io/en/latest/user/intro.html
+.. _issues: https://github.com/WebexCommunity/WebexPythonSDK/issues
+.. _migrate: https://webexpythonsdk.readthedocs.io/en/latest/user/migrate.html
+.. _pagination: https://developer.webex.com/docs/basics#pagination
 .. _projects: https://github.com/WebexCommunity/WebexPythonSDK/projects
+.. _pull request: `pull requests`_
 .. _pull requests: https://github.com/WebexCommunity/WebexPythonSDK/pulls
+.. _Quickstart: http://webexpythonsdk.readthedocs.io/en/latest/user/quickstart.html
+.. _Release Plan: https://github.com/WebexCommunity/WebexPythonSDK/wiki/Release-Plans
+.. _release/v0/ciscosparkapi: https://github.com/WebexCommunity/WebexPythonSDK/tree/release/v0/ciscosparkapi
+.. _release/v1/webexteamssdk: https://github.com/WebexCommunity/WebexPythonSDK/tree/release/v1/webexteamssdk
 .. _releases: https://github.com/WebexCommunity/WebexPythonSDK/releases
 .. _the repository: webexpythonsdk_
-.. _pull request: `pull requests`_
-.. _Contributing: https://github.com/WebexCommunity/WebexPythonSDK/blob/master/docs/contributing.rst
-.. _ciscosparkapi: https://github.com/CiscoDevNet/ciscosparkapi/tree/ciscosparkapi
+.. _webexpythonsdk: https://github.com/WebexCommunity/WebexPythonSDK
+.. _webexpythonsdk: https://github.com/WebexCommunity/WebexPythonSDK
+.. _webexpythonsdk.readthedocs.io: https://webexpythonsdk.readthedocs.io
+.. _webexteamssdk: `_release/v1/webexteamssdk`_

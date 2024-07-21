@@ -12,18 +12,15 @@ How to contribute Feedback, Issues, Thoughts and Ideas
 
 Please use the `issues`_ page to report issues or post ideas for enhancement.
 
-Join our `Webex Python SDK - Python Community Contributors <https://eurl.io/#BJ0A8gfOQ>`_ Webex space to join the conversation with other contributors to this project.
-
-
 
 Interested in Contributing Code?
 ================================
 
 
-Developer Scripts
------------------
+Common Developer Tasks
+----------------------
 
-We have created some scripts to automate everyday actions needed when working on the project.  Please see the `script`_ directory, and it's README for more information.
+See the project's `Makefile` targets for a list of common developer tasks, which you can run by simply running `make <target>` from the repository root directory.
 
 
 Notes on the Test Suite
@@ -41,19 +38,28 @@ Contributing Code
 
 2. Fork a copy of the `repository`_ and clone your forked repository to your development environment.
 
-3. Run ``script/setup`` to install the development dependencies and setup your environment.
+3. Use the ``setup`` target to install the project dependencies and setup your environment for development.
 
-4. Configure the following environment variables in your development environment:
+   .. code-block:: bash
 
-   * ``WEBEX_ACCESS_TOKEN`` - Your test account's Webex access token.
+      make setup
 
-5. Add your code to your forked repository.
+4. Add your code to your forked repository.
 
-   If you are creating some new feature or functionality (excellent!), please also write a `test`_ to verify that your code works as expected.
+   If you are creating some new feature or functionality (excellent!), please also write tests to verify that your code works as expected.
 
-6. We follow `PEP8`_ reasonably strictly for this project.  Please make sure your code passes the linter.
+5. Please format your code and make sure your code passes the linter.
 
-   Run ``script/test lint`` or simply run ``flake8`` from the project root.
+   .. code-block:: bash
+
+      make format
+      make lint
+
+6. If you running the test suite locally, ensure your code passes all of the default tests.  Use the ``test`` target and ensure all tests execute successfully.
+
+   .. code-block:: bash
+
+      make test
 
 7. Commit your changes.
 
@@ -63,7 +69,7 @@ Contributing Code
 Running the Test Suite Locally
 ------------------------------
 
-Configure the following environment variables in your development environment:
+To run the test suite locally, you must configure the following environment variables in your development environment:
 
 * ``WEBEX_ACCESS_TOKEN`` - Your test account's Webex access token.
 
@@ -83,12 +89,17 @@ Configure the following environment variables in your development environment:
    export WEBEX_TEST_ID_START=42
    export WEBEX_TEST_FILE_URL="https://www.webex.com/content/dam/wbx/us/images/navigation/CiscoWebex-Logo_white.png"
 
-Ensure your code passes all of the default tests.  Run ``script/test`` and ensure all tests execute successfully.
+If you are updating or testing the guest issuer functionality, you will also need to configure the following environment variables:
+
+* ``WEBEX_GUEST_ISSUER_ID`` - The issuer ID for the guest issuer account.
+* ``WEBEX_GUEST_ISSUER_SECRET`` - The issuer secret for the guest issuer account.
+
+
+Ensure your code passes all of the default tests.  Run ``make test`` and ensure all tests execute successfully.
 
 
 .. _script: https://github.com/WebexCommunity/WebexPythonSDK/tree/master/script
 .. _issues: https://github.com/WebexCommunity/WebexPythonSDK/issues
 .. _repository: https://github.com/WebexCommunity/WebexPythonSDK
 .. _test: https://github.com/WebexCommunity/WebexPythonSDK/tree/master/tests
-.. _PEP8: https://www.python.org/dev/peps/pep-0008/
 .. _pull request: https://github.com/WebexCommunity/WebexPythonSDK/pulls
