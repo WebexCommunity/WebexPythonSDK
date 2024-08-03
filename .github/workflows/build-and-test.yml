@@ -17,6 +17,9 @@ jobs:
     env:
       POETRY_VIRTUALENVS_CREATE: false
     steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
       - uses: Gr1N/setup-poetry@v9
       - uses: actions/checkout@v4
         with:

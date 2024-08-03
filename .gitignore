@@ -1,3 +1,6 @@
+# Don't commit the poetry.lock file for this library project
+poetry.lock
+
 # Local Files
 local/
 .vscode/
