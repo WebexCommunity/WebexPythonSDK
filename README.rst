@@ -1,6 +1,6 @@
-=============
+==============
 webexpythonsdk
-=============
+==============
 
 *Work with the Webex APIs in native Python!*
 
