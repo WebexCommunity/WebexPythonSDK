@@ -20,23 +20,33 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: pip
+
       - uses: Gr1N/setup-poetry@v9
+
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           fetch-tags: true
+
       - name: Install Dependencies
-        run: poetry install --no-root --only=dev
+        run: |
+          poetry self add "poetry-dynamic-versioning[plugin]"
+          poetry install --no-root --only=dev
+
       - name: Get Webex Token
         id: webex_token
         run: |
           WEBEX_ACCESS_TOKEN=$(curl -s ${{ secrets.WEBEX_TOKEN_KEEPER_URL }} | jq -r .access_token)
           echo "WEBEX_ACCESS_TOKEN=$WEBEX_ACCESS_TOKEN" >> "$GITHUB_OUTPUT"
           echo "::add-mask::$WEBEX_ACCESS_TOKEN"
+
       - name: Build
         run: poetry build
+
       - name: Install
         run: pip install dist/*.whl
+
       - name: Test
         run: pytest -s -m "not slow and not manual"
         env:
@@ -46,6 +56,7 @@ jobs:
           WEBEX_TEST_FILE_URL: ${{ vars.WEBEX_TEST_FILE_URL }}
           WEBEX_GUEST_ISSUER_ID: ${{ secrets.WEBEX_GUEST_ISSUER_ID }}
           WEBEX_GUEST_ISSUER_SECRET: ${{ secrets.WEBEX_GUEST_ISSUER_SECRET }}
+
       - name: Upload Distribution Files
         uses: actions/upload-artifact@v4
         with:
