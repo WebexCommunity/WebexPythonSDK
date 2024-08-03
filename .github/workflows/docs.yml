@@ -43,3 +43,5 @@ jobs:
 
       - name: Build & Publish Docs
         uses: sphinx-notes/pages@v3
+        with:
+          checkout: false
