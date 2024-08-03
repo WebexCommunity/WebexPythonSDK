@@ -1,0 +1,45 @@
+name: Docs
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  build-and-publish:
+    name: Build and Publish Docs
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+    env:
+      POETRY_VIRTUALENVS_CREATE: false
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: Gr1N/setup-poetry@v9
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Install Dependencies
+        run: |
+          poetry self add "poetry-dynamic-versioning[plugin]"
+          poetry install --no-root --only=docs
+
+      - name: Build Package
+        run: poetry build
+
+      - name: Install Package
+        run: pip install dist/*.whl
+
+      - name: Build & Publish Docs
+        uses: sphinx-notes/pages@v3
