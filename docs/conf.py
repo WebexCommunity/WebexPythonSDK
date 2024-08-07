@@ -6,6 +6,7 @@ sys.path.insert(0, os.path.abspath(".."))
 
 
 import webexpythonsdk
+import sphinx_rtd_theme
 
 
 project = "webexpythonsdk"
@@ -52,13 +53,9 @@ todo_include_todos = True
 # a list of builtin themes.
 #
 # html_theme = 'alabaster'
-on_rtd = os.environ.get("READTHEDOCS", None) == "True"
 
-if not on_rtd:
-    import sphinx_rtd_theme
-
-    html_theme = "sphinx_rtd_theme"
-    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+html_theme = "sphinx_rtd_theme"
+html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
