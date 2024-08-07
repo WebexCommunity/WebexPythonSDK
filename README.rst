@@ -10,8 +10,6 @@ webexpythonsdk
     :target: https://pypi.org/project/webexpythonsdk/
 .. image:: https://img.shields.io/pypi/dw/webexpythonsdk.svg
     :target: https://pypi.org/project/webexpythonsdk/
-.. image:: https://readthedocs.org/projects/webexpythonsdk/badge/?version=latest
-    :target: http://webexpythonsdk.readthedocs.io/en/latest/?badge=latest
 
 ---------------------------------------------------------------------------------------------------
 
@@ -111,7 +109,7 @@ Documentation
 -------------
 
 **Excellent documentation is now available at:**
-http://webexpythonsdk.readthedocs.io
+https://webexcommunity.github.io/WebexPythonSDK
 
 Check out the Quickstart_ to dive in and begin using webexpythonsdk.
 
@@ -180,14 +178,14 @@ this repository.
 .. _Community: https://eurl.io/#BJ0A8gfOQ
 .. _Contributing: https://github.com/WebexCommunity/WebexPythonSDK/blob/master/docs/contributing.rst
 .. _examples: https://github.com/WebexCommunity/WebexPythonSDK/tree/master/examples
-.. _Introduction: http://webexpythonsdk.readthedocs.io/en/latest/user/intro.html
+.. _Introduction: https://webexcommunity.github.io/WebexPythonSDK/user/intro.html
 .. _issues: https://github.com/WebexCommunity/WebexPythonSDK/issues
-.. _migrate: https://webexpythonsdk.readthedocs.io/en/latest/user/migrate.html
+.. _migrate: https://webexcommunity.github.io/WebexPythonSDK/user/migrate.html
 .. _pagination: https://developer.webex.com/docs/basics#pagination
 .. _projects: https://github.com/WebexCommunity/WebexPythonSDK/projects
 .. _pull request: https://github.com/WebexCommunity/WebexPythonSDK/pulls
 .. _pull requests: https://github.com/WebexCommunity/WebexPythonSDK/pulls
-.. _Quickstart: http://webexpythonsdk.readthedocs.io/en/latest/user/quickstart.html
+.. _Quickstart: https://webexcommunity.github.io/WebexPythonSDK/user/quickstart.html
 .. _Release Plan: https://github.com/WebexCommunity/WebexPythonSDK/wiki/Release-Plans
 .. _release/v0/ciscosparkapi: https://github.com/WebexCommunity/WebexPythonSDK/tree/release/v0/ciscosparkapi
 .. _release/v1/webexteamssdk: https://github.com/WebexCommunity/WebexPythonSDK/tree/release/v1/webexteamssdk
@@ -195,5 +193,4 @@ this repository.
 .. _the repository: https://github.com/WebexCommunity/WebexPythonSDK
 .. _webexpythonsdk: https://github.com/WebexCommunity/WebexPythonSDK
 .. _webexpythonsdk: https://github.com/WebexCommunity/WebexPythonSDK
-.. _webexpythonsdk.readthedocs.io: https://webexpythonsdk.readthedocs.io
 .. _webexteamssdk: https://github.com/WebexCommunity/WebexPythonSDK/tree/release/v1/webexteamssdk
