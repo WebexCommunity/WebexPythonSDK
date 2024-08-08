@@ -17,6 +17,7 @@ webexpythonsdk
     :target: https://pypistats.org/packages/webexteamssdk
     :alt: webexteamssdk PyPI Downloads
 .. image:: https://img.shields.io/github/actions/workflow/status/WebexCommunity/WebexPythonSDK/.github%2Fworkflows%2Fbuild-and-test.yml?label=tests
+    :target: https://github.com/WebexCommunity/WebexPythonSDK/actions/workflows/build-and-test.yml
     :alt: Tests Status
 .. image:: https://img.shields.io/github/actions/workflow/status/WebexCommunity/WebexPythonSDK/.github%2Fworkflows%2Fdocs.yml?label=docs
     :target: https://webexcommunity.github.io/WebexPythonSDK/
