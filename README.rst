@@ -6,10 +6,22 @@ webexpythonsdk
 
 .. image:: https://img.shields.io/badge/license-MIT-blue.svg
     :target: https://github.com/WebexCommunity/WebexPythonSDK/blob/master/LICENSE
-.. image:: https://img.shields.io/pypi/v/webexpythonsdk.svg
+    :alt: License MIT
+.. image:: https://img.shields.io/pypi/v/webexpythonsdk
     :target: https://pypi.org/project/webexpythonsdk/
-.. image:: https://img.shields.io/pypi/dw/webexpythonsdk.svg
-    :target: https://pypi.org/project/webexpythonsdk/
+    :alt: PyPI Version
+.. image:: https://img.shields.io/pypi/dw/webexpythonsdk?label=webexpythonsdk
+    :target: https://pypistats.org/packages/webexpythonsdk
+    :alt: webexpythonsdk PyPI Downloads
+.. image:: https://img.shields.io/pypi/dw/webexteamssdk?label=webexteamssdk
+    :target: https://pypistats.org/packages/webexteamssdk
+    :alt: webexteamssdk PyPI Downloads
+.. image:: https://img.shields.io/github/actions/workflow/status/WebexCommunity/WebexPythonSDK/.github%2Fworkflows%2Fbuild-and-test.yml?label=tests
+    :alt: Tests Status
+.. image:: https://img.shields.io/github/actions/workflow/status/WebexCommunity/WebexPythonSDK/.github%2Fworkflows%2Fdocs.yml?label=docs
+    :target: https://webexcommunity.github.io/WebexPythonSDK/
+    :alt: Documentation Status
+
 
 ---------------------------------------------------------------------------------------------------
 
@@ -191,6 +203,5 @@ this repository.
 .. _release/v1/webexteamssdk: https://github.com/WebexCommunity/WebexPythonSDK/tree/release/v1/webexteamssdk
 .. _releases: https://github.com/WebexCommunity/WebexPythonSDK/releases
 .. _the repository: https://github.com/WebexCommunity/WebexPythonSDK
-.. _webexpythonsdk: https://github.com/WebexCommunity/WebexPythonSDK
 .. _webexpythonsdk: https://github.com/WebexCommunity/WebexPythonSDK
 .. _webexteamssdk: https://github.com/WebexCommunity/WebexPythonSDK/tree/release/v1/webexteamssdk
