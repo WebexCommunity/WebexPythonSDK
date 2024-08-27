@@ -357,8 +357,8 @@ class MessagesAPI(object):
         # API request
         self._session.delete(API_ENDPOINT + "/" + messageId)
 
-    def edit(self, messageId=None, roomId=None, text=None, markdown=None):
-        """Edit a message.
+    def update(self, messageId=None, roomId=None, text=None, markdown=None):
+        """Update (edit) a message.
 
         Args:
             messageId(str): The ID of the message to be edit.
@@ -391,3 +391,6 @@ class MessagesAPI(object):
 
         # Return a message object created from the response JSON data
         return self._object_factory(OBJECT_TYPE, json_data)
+
+    # Add edit() as an alias to the update() method for backward compatibility
+    edit = update
