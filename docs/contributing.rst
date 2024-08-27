@@ -30,8 +30,7 @@ To test all the API endpoints, the account that you use for testing must be an *
 
 We strongly recommend *NOT* running the test suite using your personal Webex account (not that you can't; it's just that you probably don't want it cluttering your account with all these test artifacts).
 
-Webex now offers a free developer sandbox organization that you can use for testing purposes.  You can request the sandbox at https://developer.webex.com/docs/developer-sandbox-guide.
-Once you have your sandbox organization, you can create a test account with *admin* and *compliance officer* privileges via [Webex Control Hub](https://admin.webex.com) and use that account for testing. (Be sure to login to Control Hub with the new admin so that the roles are assigned properly to the Webex token.)
+Webex now offers a free developer sandbox organization that you can use for testing purposes.  You can request the sandbox at https://developer.webex.com/docs/developer-sandbox-guide. Once you have your sandbox organization, you can create a test account with *admin* and *compliance officer* privileges via [Webex Control Hub](https://admin.webex.com) and use that account for testing. (Be sure to login to Control Hub with the new admin so that the roles are assigned properly to the Webex token.)
 
 If you cannot create a test account with *admin* privileges or configure your environment to run the test suite locally, you may always submit your code via a pull request.  We will test your code before merging and releasing the changes.
 
