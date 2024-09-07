@@ -1,4 +1,4 @@
-"""Webex Adaptive Card Component base class.
+"""Webex Adaptive Card - Component Base Class Model.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -21,14 +21,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import json
 import enum
+import json
 
 
 class AdaptiveCardComponent:
-    """Base class for all Adaptive Card components.
+    """
+    Base class for all Adaptive Card elements.
 
-    Each component should inherit from this class and specify which of its
+    Each element should inherit from this class and specify which of its
     properties fall into the following two categories:
 
     * Simple properties are basic types (int, float, str, etc.).
@@ -39,7 +40,8 @@ class AdaptiveCardComponent:
     """
 
     def __init__(self, serializable_properties, simple_properties):
-        """Initialize a serializable object.
+        """
+        Initialize a serializable object.
 
         Args:
             serializable_properties(list): List of all serializable properties
@@ -49,13 +51,14 @@ class AdaptiveCardComponent:
         self.simple_properties = simple_properties
 
     def to_dict(self):
-        """Serialize the component into a Python dictionary.
+        """
+        Serialize the element into a Python dictionary.
 
         The to_dict() method recursively serializes the object's data into
         a Python dictionary.
 
         Returns:
-            dict: Dictionary representation of this component.
+            dict: Dictionary representation of this element.
         """
         serialized_data = {}
 
@@ -69,14 +72,15 @@ class AdaptiveCardComponent:
 
                 serialized_data[property_name] = property_value
 
-        # Recursively serialize sub-components
+        # Recursively serialize sub-elements
         for property_name in self.serializable_properties:
             property_value = getattr(self, property_name, None)
 
             if property_value is not None:
                 if isinstance(property_value, list):
                     serialized_data[property_name] = [
-                        item.to_dict() for item in property_value
+                        item.to_dict() if hasattr(item, "to_dict") else item
+                        for item in property_value
                     ]
                 else:
                     serialized_data[property_name] = property_value.to_dict()
@@ -84,7 +88,8 @@ class AdaptiveCardComponent:
         return serialized_data
 
     def to_json(self, **kwargs):
-        """Serialize the component into JSON text.
+        """
+        Serialize the element into JSON text.
 
         Any keyword arguments provided are passed through the Python JSON
         encoder.
