@@ -58,8 +58,8 @@ def check_type(
             error_message = (
                 "We were expecting to receive a list of objects of the "
                 "following types: "
-                f"{", ".join([repr(t.__name__) for t in acceptable_types])}"
-                f"{" or 'None'" if optional else ""}; instead we received "
+                f"{', '.join([repr(t.__name__) for t in acceptable_types])}"
+                f"{' or \'None\'' if optional else ''}; instead we received "
                 f"{obj} which is a {repr(type(obj).__name__)}."
             )
             raise TypeError(error_message)
@@ -69,8 +69,8 @@ def check_type(
                 error_message = (
                     "We were expecting to receive an object of one of the "
                     "following types: "
-                    f"{", ".join(repr(t.__name__) for t in acceptable_types)}"
-                    f"{" or 'None'" if optional else ""}; instead we "
+                    f"{', '.join(repr(t.__name__) for t in acceptable_types)}"
+                    f"{' or \'None\'' if optional else ''}; instead we "
                     f"received {o} which is a {repr(type(o).__name__)}."
                 )
                 raise TypeError(error_message)
@@ -81,8 +81,8 @@ def check_type(
     else:
         error_message = (
             "We were expecting to receive an instance of one of the following "
-            f"types: {", ".join(repr(t.__name__) for t in acceptable_types)}"
-            f"{" or 'None'" if optional else ""}; but instead we received "
+            f"types: {', '.join(repr(t.__name__) for t in acceptable_types)}"
+            f"{' or \'None\'' if optional else ''}; but instead we received "
             f"{obj} which is a {repr(type(obj).__name__)}."
         )
 
@@ -140,7 +140,7 @@ def validate_input(
     # Check if the value is in the tuple of allowed values
     if value_to_check not in allowed_values:
         raise ValueError(
-            f"Invalid value: \"{input_value}\". "
+            f"Invalid value: '{input_value}'. "
             f"Must be one of {expected_values}."
         )
 
@@ -172,20 +172,20 @@ def validate_dict_str(
         return
 
     if not isinstance(input_value, dict):
-        raise TypeError(f"\"{input_value}\" is not of type \"dict\"")
+        raise TypeError(f"'{input_value}' is not of type 'dict'")
 
     errors = []
 
     for key, value in input_value.items():
         if not isinstance(key, key_type):
             errors.append(
-                f"Key \"{key}\" of type \"{type(key).__name__}\" "
-                f"is not of type \"{key_type.__name__}\"."
+                f"Key '{key}' of type '{type(key).__name__}' "
+                f"is not of type '{key_type.__name__}'."
             )
         if not isinstance(value, value_type):
             errors.append(
-                f"Value \"{value}\" of type \"{type(value).__name__}\" "
-                f"is not of type \"{value_type.__name__}\"."
+                f"Value '{value}' of type '{type(value).__name__}' "
+                f"is not of type '{value_type.__name__}'."
             )
 
     if errors:
@@ -219,7 +219,7 @@ def validate_uri(
         return
 
     if not isinstance(uri, str):
-        raise TypeError(f"\"{uri}\" is not of type \"str\"")
+        raise TypeError(f"'{uri}' is not of type 'str'")
 
     # First validate using urlparse
     parsed_uri = urlparse(uri)
