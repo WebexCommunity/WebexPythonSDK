@@ -1,4 +1,4 @@
-"""Webex Access-Tokens API wrapper.
+"""Webex Adaptive Card - Utilities Model.
 
 Copyright (c) 2016-2024 Cisco and/or its affiliates.
 
@@ -21,14 +21,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+from enum import Enum
+from typing import Any, Type
+from urllib.parse import urlparse
 
-def set_if_not_none(property_name, property, export):
-    if property is not None:
-        export[property_name] = property.to_dict()
 
-
-def check_type(obj, acceptable_types, optional=False, is_list=False):
-    """Object is an instance of one of the acceptable types or None.
+def check_type(
+        obj: object,
+        acceptable_types: Any,
+        optional: bool = False,
+        is_list: bool = False,
+        ):
+    """
+    Object is an instance of one of the acceptable types or None.
 
     Args:
         obj: The object to be inspected.
@@ -52,15 +57,10 @@ def check_type(obj, acceptable_types, optional=False, is_list=False):
         if not isinstance(obj, list):
             error_message = (
                 "We were expecting to receive a list of objects of the "
-                "following types: {types}{none}; instead we received {o} "
-                "which is a {o_type}.".format(
-                    types=", ".join(
-                        [repr(t.__name__) for t in acceptable_types]
-                    ),
-                    none="or None" if optional else "",
-                    o=obj,
-                    o_type=repr(type(obj).__name__),
-                )
+                "following types: "
+                f"{', '.join([repr(t.__name__) for t in acceptable_types])}"
+                f"{' or \'None\'' if optional else ''}; instead we received "
+                f"{obj} which is a {repr(type(obj).__name__)}."
             )
             raise TypeError(error_message)
 
@@ -68,15 +68,10 @@ def check_type(obj, acceptable_types, optional=False, is_list=False):
             if not isinstance(o, acceptable_types):
                 error_message = (
                     "We were expecting to receive an object of one of the "
-                    "following types: {types}{none}; but instead we received "
-                    "{o} which is a {o_type}.".format(
-                        types=", ".join(
-                            [repr(t.__name__) for t in acceptable_types]
-                        ),
-                        none="or None" if optional else "",
-                        o=o,
-                        o_type=repr(type(o).__name__),
-                    )
+                    "following types: "
+                    f"{', '.join(repr(t.__name__) for t in acceptable_types)}"
+                    f"{' or \'None\'' if optional else ''}; instead we "
+                    f"received {o} which is a {repr(type(o).__name__)}."
                 )
                 raise TypeError(error_message)
         return
@@ -86,12 +81,156 @@ def check_type(obj, acceptable_types, optional=False, is_list=False):
     else:
         error_message = (
             "We were expecting to receive an instance of one of the following "
-            "types: {types}{none}; but instead we received {o} which is a "
-            "{o_type}.".format(
-                types=", ".join([repr(t.__name__) for t in acceptable_types]),
-                none="or 'None'" if optional else "",
-                o=obj,
-                o_type=repr(type(obj).__name__),
-            )
+            f"types: {', '.join(repr(t.__name__) for t in acceptable_types)}"
+            f"{' or \'None\'' if optional else ''}; but instead we received "
+            f"{obj} which is a {repr(type(obj).__name__)}."
         )
+
         raise TypeError(error_message)
+
+
+def validate_input(
+        input_value: Any,
+        allowed_values: Any,
+        optional: bool = False,
+        ):
+    """
+    Validate if the input value is in the tuple of allowed values.
+
+    Args:
+        input_value: The value to be validated.
+        allowed_values (str | tuple | Enum): A string, a tuple of allowed
+            values, or an Enum subclass.
+        optional (bool): Whether or not the object may be None.
+
+    Raises:
+        ValueError: If the value is not in the allowed values.
+        TypeError: If allowed_values is neither a string, a tuple, nor an Enum
+            subclass.
+    """
+    # Return if the argument is optional and if the input is None
+    if optional and input_value is None:
+        return
+
+    # If allowed_values is an Enum subclass, get its members' values as a tuple
+    if isinstance(allowed_values, type) and issubclass(allowed_values, Enum):
+        expected_values = tuple(
+            f"{item.__class__.__name__}.{item.name}" for item in allowed_values
+        )
+        allowed_values = tuple(
+            item.value for item in allowed_values
+        )
+
+    # Convert a single string to a tuple of one string
+    if isinstance(allowed_values, str):
+        allowed_values = (allowed_values,)
+        expected_values = allowed_values
+
+    # Ensure allowed_values is a tuple
+    if not isinstance(allowed_values, tuple):
+        raise TypeError(
+            "allowed_values must be a string, a tuple, or an Enum subclass."
+        )
+
+    # Determine the value to check based on its type
+    value_to_check = (
+        input_value.value if isinstance(input_value, Enum) else input_value
+    )
+
+    # Check if the value is in the tuple of allowed values
+    if value_to_check not in allowed_values:
+        raise ValueError(
+            f"Invalid value: '{input_value}'. "
+            f"Must be one of {expected_values}."
+        )
+
+    return
+
+
+def validate_dict_str(
+        input_value: Any,
+        key_type: Type,
+        value_type: Type,
+        optional: bool = False,
+        ):
+    """
+    Validate that the input is a dictionary and that all keys and values in the
+    dictionary are of the specified types.
+
+    Args:
+        input_value (Any): The input to validate.
+        key_type (Type): The expected type for the dictionary keys.
+        value_type (Type): The expected type for the dictionary values.
+        optional(bool): Whether or not the object may be None.
+
+    Raises:
+        TypeError: If the input is not a dictionary or any key or value in the
+            dictionary does not match the specified types, with details about
+            the non-conforming elements.
+    """
+    if optional and input_value is None:
+        return
+
+    if not isinstance(input_value, dict):
+        raise TypeError(f"'{input_value}' is not of type 'dict'")
+
+    errors = []
+
+    for key, value in input_value.items():
+        if not isinstance(key, key_type):
+            errors.append(
+                f"Key '{key}' of type '{type(key).__name__}' "
+                f"is not of type '{key_type.__name__}'."
+            )
+        if not isinstance(value, value_type):
+            errors.append(
+                f"Value '{value}' of type '{type(value).__name__}' "
+                f"is not of type '{value_type.__name__}'."
+            )
+
+    if errors:
+        raise TypeError("\n".join(errors))
+
+    return
+
+
+class URIException(Exception):
+    """
+    Custom exception for invalid URIs.
+    """
+
+
+def validate_uri(
+        uri: Any,
+        optional=False,
+        ):
+    """
+    Validate the given URI and raise an exception if it is invalid.
+
+    Args:
+        uri (str): The URI to validate.
+        optional(bool): Whether or not the object may be None.
+
+    Raises:
+        TypeError: If the input is not a string.
+        URIException: If the URI is invalid.
+    """
+    if optional and uri is None:
+        return
+
+    if not isinstance(uri, str):
+        raise TypeError(f"'{uri}' is not of type 'str'")
+
+    # First validate using urlparse
+    parsed_uri = urlparse(uri)
+
+    # Check if the URI has a scheme
+    if not parsed_uri.scheme:
+        raise URIException("Invalid URI: Missing scheme")
+
+    # Check if the URI has a heir-part location
+    if not parsed_uri.netloc:
+        raise URIException("Invalid URI: Missing heir part location")
+
+    # Return if every check is passed
+    return
