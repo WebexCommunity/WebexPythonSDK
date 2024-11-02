@@ -174,6 +174,9 @@ def test_get_room_details(api, group_room):
     assert is_valid_room(room)
 
 
+@pytest.mark.xfail(
+    reason="API Error: The API is not returning the expected results"
+)
 def test_get_room_meeting_info(api, group_room):
     room_meeting_info = api.rooms.get_meeting_info(group_room.id)
     assert is_valid_room_meeting_info(room_meeting_info)
