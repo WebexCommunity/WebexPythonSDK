@@ -176,6 +176,11 @@ class RoomsAPI(object):
             request_parameters,
             title=title,
             teamId=teamId,
+            classificationId=classificationId,
+            isLocked=isLocked,
+            isPublic=isPublic,
+            description=description,
+            isAnnouncementOnly=isAnnouncementOnly,
         )
 
         # API request

@@ -85,3 +85,45 @@ class RoomBasicPropertiesMixin(object):
     def ownerId(self):
         """The ID of the organization which owns this room."""
         return self._json_data.get("ownerId")
+
+    @property
+    def classificationId(self):
+        """The ID of the current classification."""
+        return self._json_data.get("ownerId")
+
+    @property
+    def isAnnouncementOnly(self):
+        """Indicates when a space is in Announcement Mode (only moderators can post)."""
+        return self._json_data.get("ownerId")
+
+    @property
+    def isReadOnly(self):
+        """Room is read-only.
+
+        A compliance officer can set a direct room as read-only, which will disallow any
+        new information exchanges in this space, while maintaining historical data.
+        """
+        return self._json_data.get("ownerId")
+
+    @property
+    def isPublic(self):
+        """Room is public.
+
+        The room is public and therefore discoverable within the org. Anyone can find
+        and join the room.
+        """
+        return self._json_data.get("ownerId")
+
+    @property
+    def madePublic(self):
+        """Date and time when the room was made public."""
+        made_public = self._json_data.get("created")
+        if made_public:
+            return WebexDateTime.strptime(made_public)
+        else:
+            return None
+
+    @property
+    def description(self):
+        """The description of the room."""
+        return self._json_data.get("ownerId")
