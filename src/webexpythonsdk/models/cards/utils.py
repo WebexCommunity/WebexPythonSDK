@@ -59,8 +59,8 @@ def check_type(
                 "We were expecting to receive a list of objects of the "
                 "following types: "
                 f"{', '.join([repr(t.__name__) for t in acceptable_types])}"
-                f"{' or \'None\'' if optional else ''}; instead we received "
-                f"{obj} which is a {repr(type(obj).__name__)}."
+                f"{' or None' if optional else ''}; instead we received "
+                f"'{obj}' which is a '{repr(type(obj).__name__)}'."
             )
             raise TypeError(error_message)
 
@@ -70,8 +70,8 @@ def check_type(
                     "We were expecting to receive an object of one of the "
                     "following types: "
                     f"{', '.join(repr(t.__name__) for t in acceptable_types)}"
-                    f"{' or \'None\'' if optional else ''}; instead we "
-                    f"received {o} which is a {repr(type(o).__name__)}."
+                    f"{' or None' if optional else ''}; instead we "
+                    f"received '{o}' which is a '{repr(type(o).__name__)}'."
                 )
                 raise TypeError(error_message)
         return
@@ -82,8 +82,8 @@ def check_type(
         error_message = (
             "We were expecting to receive an instance of one of the following "
             f"types: {', '.join(repr(t.__name__) for t in acceptable_types)}"
-            f"{' or \'None\'' if optional else ''}; but instead we received "
-            f"{obj} which is a {repr(type(obj).__name__)}."
+            f"{' or None' if optional else ''}; but instead we received "
+            f"'{obj}' which is a '{repr(type(obj).__name__)}'."
         )
 
         raise TypeError(error_message)
@@ -141,7 +141,7 @@ def validate_input(
     if value_to_check not in allowed_values:
         raise ValueError(
             f"Invalid value: '{input_value}'. "
-            f"Must be one of {expected_values}."
+            f"Must be one of '{expected_values}'."
         )
 
     return
