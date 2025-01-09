@@ -219,7 +219,8 @@ class AdaptiveCard(AdaptiveCardComponent):
                 "actions",
                 "selectAction",
                 *(
-                    ["backgroundImage"] if hasattr(backgroundImage, "to_dict")
+                    ["backgroundImage"]
+                    if hasattr(backgroundImage, "to_dict")
                     else []
                 ),
             ],
@@ -228,7 +229,8 @@ class AdaptiveCard(AdaptiveCardComponent):
                 "version",
                 "fallbackText",
                 *(
-                    [] if hasattr(backgroundImage, "to_dict")
+                    []
+                    if hasattr(backgroundImage, "to_dict")
                     else ["backgroundImage"]
                 ),
                 "minHeight",

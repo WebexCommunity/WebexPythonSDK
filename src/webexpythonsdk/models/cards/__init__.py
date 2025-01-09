@@ -22,11 +22,9 @@ SOFTWARE.
 """
 
 from webexpythonsdk.models.cards.adaptive_card_component import (
-    AdaptiveCardComponent
+    AdaptiveCardComponent,
 )
-from webexpythonsdk.models.cards.cards import (
-    AdaptiveCard
-)
+from webexpythonsdk.models.cards.cards import AdaptiveCard
 from webexpythonsdk.models.cards.card_elements import (
     TextBlock,
     Image,

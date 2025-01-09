@@ -186,15 +186,11 @@ class ActionSet(AdaptiveCardComponent):
         super().__init__(
             serializable_properties=[
                 "actions",
-                *(
-                    ["fallback"] if hasattr(fallback, "to_dict") else []
-                ),
+                *(["fallback"] if hasattr(fallback, "to_dict") else []),
             ],
             simple_properties=[
                 "type",
-                *(
-                    [] if hasattr(fallback, "to_dict") else ["fallback"]
-                ),
+                *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "height",
                 "separator",
                 "spacing",
@@ -455,12 +451,11 @@ class Container(AdaptiveCardComponent):
                 "items",
                 "selectAction",
                 *(
-                    ["backgroundImage"] if hasattr(backgroundImage, "to_dict")
+                    ["backgroundImage"]
+                    if hasattr(backgroundImage, "to_dict")
                     else []
                 ),
-                *(
-                    ["fallback"] if hasattr(fallback, "to_dict") else []
-                ),
+                *(["fallback"] if hasattr(fallback, "to_dict") else []),
             ],
             simple_properties=[
                 "type",
@@ -468,13 +463,12 @@ class Container(AdaptiveCardComponent):
                 "verticalContentAlignment",
                 "bleed",
                 *(
-                    [] if hasattr(backgroundImage, "to_dict")
+                    []
+                    if hasattr(backgroundImage, "to_dict")
                     else ["backgroundImage"]
                 ),
                 "minHeight",
-                *(
-                    [] if hasattr(fallback, "to_dict") else ["fallback"]
-                ),
+                *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "height",
                 "separator",
                 "spacing",
@@ -504,7 +498,7 @@ class ColumnSet(AdaptiveCardComponent):
         minHeight: str = None,
         horizontalAlignment: OPTIONS.HorizontalAlignment = None,
         fallback: object = None,
-        height: OPTIONS.BlockElementHeight=None,
+        height: OPTIONS.BlockElementHeight = None,
         separator: bool = None,
         spacing: OPTIONS.Spacing = None,
         id: str = None,
@@ -698,9 +692,7 @@ class ColumnSet(AdaptiveCardComponent):
             serializable_properties=[
                 "columns",
                 "selectAction",
-                *(
-                    ["fallback"] if hasattr(fallback, "to_dict") else []
-                ),
+                *(["fallback"] if hasattr(fallback, "to_dict") else []),
             ],
             simple_properties=[
                 "type",
@@ -708,9 +700,7 @@ class ColumnSet(AdaptiveCardComponent):
                 "bleed",
                 "minHeight",
                 "horizontalAlignment",
-                *(
-                    [] if hasattr(fallback, "to_dict") else ["fallback"]
-                ),
+                *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "height",
                 "separator",
                 "spacing",
@@ -959,24 +949,22 @@ class Column(AdaptiveCardComponent):
             serializable_properties=[
                 "items",
                 *(
-                    ["backgroundImage"] if hasattr(backgroundImage, "to_dict")
+                    ["backgroundImage"]
+                    if hasattr(backgroundImage, "to_dict")
                     else []
                 ),
-                *(
-                    ["fallback"] if hasattr(fallback, "to_dict") else []
-                ),
+                *(["fallback"] if hasattr(fallback, "to_dict") else []),
                 "selectAction",
             ],
             simple_properties=[
                 "type",
                 *(
-                    [] if hasattr(backgroundImage, "to_dict")
+                    []
+                    if hasattr(backgroundImage, "to_dict")
                     else ["backgroundImage"]
                 ),
                 "bleed",
-                *(
-                    [] if hasattr(fallback, "to_dict") else ["fallback"]
-                ),
+                *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "minHeight",
                 "separator",
                 "spacing",
@@ -1135,15 +1123,11 @@ class FactSet(AdaptiveCardComponent):
         super().__init__(
             serializable_properties=[
                 "facts",
-                *(
-                    ["fallback"] if hasattr(fallback, "to_dict") else []
-                ),
+                *(["fallback"] if hasattr(fallback, "to_dict") else []),
             ],
             simple_properties=[
                 "type",
-                *(
-                    [] if hasattr(fallback, "to_dict") else ["fallback"]
-                ),
+                *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "height",
                 "separator",
                 "id",
@@ -1215,7 +1199,7 @@ class ImageSet(AdaptiveCardComponent):
         height: OPTIONS.BlockElementHeight = None,
         separator: bool = None,
         spacing: OPTIONS.Spacing = None,
-        id: str  = None,
+        id: str = None,
         isVisible: bool = True,
         requires: dict[str, str] = None,
     ):
@@ -1357,16 +1341,12 @@ class ImageSet(AdaptiveCardComponent):
         super().__init__(
             serializable_properties=[
                 "images",
-                *(
-                    ["fallback"] if hasattr(fallback, "to_dict") else []
-                ),
+                *(["fallback"] if hasattr(fallback, "to_dict") else []),
             ],
             simple_properties=[
                 "type",
                 "imageSize",
-                *(
-                    [] if hasattr(fallback, "to_dict") else ["fallback"]
-                ),
+                *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "height",
                 "separator",
                 "spacing",

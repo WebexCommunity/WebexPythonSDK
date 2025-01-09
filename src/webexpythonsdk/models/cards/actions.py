@@ -153,9 +153,7 @@ class OpenUrl(AdaptiveCardComponent):
 
         super().__init__(
             serializable_properties=[
-                *(
-                    ["fallback"] if hasattr(fallback, "to_dict") else []
-                ),
+                *(["fallback"] if hasattr(fallback, "to_dict") else []),
             ],
             simple_properties=[
                 "type",
@@ -164,9 +162,7 @@ class OpenUrl(AdaptiveCardComponent):
                 "iconUrl",
                 "id",
                 "style",
-                *(
-                    [] if hasattr(fallback, "to_dict") else ["fallback"]
-                ),
+                *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "requires",
             ],
         )
@@ -246,7 +242,7 @@ class Submit(AdaptiveCardComponent):
                 str,
                 object,
             ),
-            optional=True
+            optional=True,
         )
 
         validate_input(
@@ -315,9 +311,7 @@ class Submit(AdaptiveCardComponent):
 
         super().__init__(
             serializable_properties=[
-                *(
-                    ["fallback"] if hasattr(fallback, "to_dict") else []
-                ),
+                *(["fallback"] if hasattr(fallback, "to_dict") else []),
             ],
             simple_properties=[
                 "type",
@@ -327,9 +321,7 @@ class Submit(AdaptiveCardComponent):
                 "iconUrl",
                 "id",
                 "style",
-                *(
-                    [] if hasattr(fallback, "to_dict") else ["fallback"]
-                ),
+                *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "requires",
             ],
         )
@@ -461,9 +453,7 @@ class ShowCard(AdaptiveCardComponent):
         super().__init__(
             serializable_properties=[
                 "card",
-                *(
-                    ["fallback"] if hasattr(fallback, "to_dict") else []
-                ),
+                *(["fallback"] if hasattr(fallback, "to_dict") else []),
             ],
             simple_properties=[
                 "type",
@@ -471,9 +461,7 @@ class ShowCard(AdaptiveCardComponent):
                 "iconUrl",
                 "id",
                 "style",
-                *(
-                    [] if hasattr(fallback, "to_dict") else ["fallback"]
-                ),
+                *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "requires",
             ],
         )
@@ -608,9 +596,7 @@ class ToggleVisibility(AdaptiveCardComponent):
         super().__init__(
             serializable_properties=[
                 "targetElements",
-                *(
-                    ["fallback"] if hasattr(fallback, "to_dict") else []
-                ),
+                *(["fallback"] if hasattr(fallback, "to_dict") else []),
             ],
             simple_properties=[
                 "type",
@@ -618,9 +604,7 @@ class ToggleVisibility(AdaptiveCardComponent):
                 "iconUrl",
                 "id",
                 "style",
-                *(
-                    [] if hasattr(fallback, "to_dict") else ["fallback"]
-                ),
+                *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "requires",
             ],
         )
