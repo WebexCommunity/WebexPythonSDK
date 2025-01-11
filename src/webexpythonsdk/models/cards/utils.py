@@ -27,11 +27,11 @@ from urllib.parse import urlparse
 
 
 def check_type(
-        obj: object,
-        acceptable_types: Any,
-        optional: bool = False,
-        is_list: bool = False,
-        ):
+    obj: object,
+    acceptable_types: Any,
+    optional: bool = False,
+    is_list: bool = False,
+):
     """
     Object is an instance of one of the acceptable types or None.
 
@@ -59,7 +59,7 @@ def check_type(
                 "We were expecting to receive a list of objects of the "
                 "following types: "
                 f"{', '.join([repr(t.__name__) for t in acceptable_types])}"
-                f"{' or \'None\'' if optional else ''}; instead we received "
+                f"{' or None' if optional else ''}; instead we received "
                 f"{obj} which is a {repr(type(obj).__name__)}."
             )
             raise TypeError(error_message)
@@ -70,7 +70,7 @@ def check_type(
                     "We were expecting to receive an object of one of the "
                     "following types: "
                     f"{', '.join(repr(t.__name__) for t in acceptable_types)}"
-                    f"{' or \'None\'' if optional else ''}; instead we "
+                    f"{' or None' if optional else ''}; instead we "
                     f"received {o} which is a {repr(type(o).__name__)}."
                 )
                 raise TypeError(error_message)
@@ -82,7 +82,7 @@ def check_type(
         error_message = (
             "We were expecting to receive an instance of one of the following "
             f"types: {', '.join(repr(t.__name__) for t in acceptable_types)}"
-            f"{' or \'None\'' if optional else ''}; but instead we received "
+            f"{' or None' if optional else ''}; but instead we received "
             f"{obj} which is a {repr(type(obj).__name__)}."
         )
 
@@ -90,10 +90,10 @@ def check_type(
 
 
 def validate_input(
-        input_value: Any,
-        allowed_values: Any,
-        optional: bool = False,
-        ):
+    input_value: Any,
+    allowed_values: Any,
+    optional: bool = False,
+):
     """
     Validate if the input value is in the tuple of allowed values.
 
@@ -117,9 +117,7 @@ def validate_input(
         expected_values = tuple(
             f"{item.__class__.__name__}.{item.name}" for item in allowed_values
         )
-        allowed_values = tuple(
-            item.value for item in allowed_values
-        )
+        allowed_values = tuple(item.value for item in allowed_values)
 
     # Convert a single string to a tuple of one string
     if isinstance(allowed_values, str):
@@ -141,18 +139,18 @@ def validate_input(
     if value_to_check not in allowed_values:
         raise ValueError(
             f"Invalid value: '{input_value}'. "
-            f"Must be one of {expected_values}."
+            f"Must be one of '{expected_values}'."
         )
 
     return
 
 
 def validate_dict_str(
-        input_value: Any,
-        key_type: Type,
-        value_type: Type,
-        optional: bool = False,
-        ):
+    input_value: Any,
+    key_type: Type,
+    value_type: Type,
+    optional: bool = False,
+):
     """
     Validate that the input is a dictionary and that all keys and values in the
     dictionary are of the specified types.
@@ -201,9 +199,9 @@ class URIException(Exception):
 
 
 def validate_uri(
-        uri: Any,
-        optional=False,
-        ):
+    uri: Any,
+    optional=False,
+):
     """
     Validate the given URI and raise an exception if it is invalid.
 

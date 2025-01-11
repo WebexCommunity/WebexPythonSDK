@@ -267,9 +267,7 @@ class TextBlock(AdaptiveCardComponent):
 
         super().__init__(
             serializable_properties=[
-                *(
-                    ["fallback"] if hasattr(fallback, "to_dict") else []
-                ),
+                *(["fallback"] if hasattr(fallback, "to_dict") else []),
             ],
             simple_properties=[
                 "type",
@@ -282,9 +280,7 @@ class TextBlock(AdaptiveCardComponent):
                 "size",
                 "weight",
                 "wrap",
-                *(
-                    [] if hasattr(fallback, "to_dict") else ["fallback"]
-                ),
+                *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "height",
                 "separator",
                 "spacing",
@@ -531,9 +527,7 @@ class Image(AdaptiveCardComponent):
         super().__init__(
             serializable_properties=[
                 "selectAction",
-                *(
-                    ["fallback"] if hasattr(fallback, "to_dict") else []
-                ),
+                *(["fallback"] if hasattr(fallback, "to_dict") else []),
             ],
             simple_properties=[
                 "type",
@@ -545,9 +539,7 @@ class Image(AdaptiveCardComponent):
                 "size",
                 "style",
                 "width",
-                *(
-                    [] if hasattr(fallback, "to_dict") else ["fallback"]
-                ),
+                *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "separator",
                 "spacing",
                 "id",
@@ -726,17 +718,13 @@ class Media(AdaptiveCardComponent):
         super().__init__(
             serializable_properties=[
                 "sources",
-                *(
-                    ["fallback"] if hasattr(fallback, "to_dict") else []
-                ),
+                *(["fallback"] if hasattr(fallback, "to_dict") else []),
             ],
             simple_properties=[
                 "type",
                 "poster",
                 "altText",
-                *(
-                    [] if hasattr(fallback, "to_dict") else ["fallback"]
-                ),
+                *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "height",
                 "separator",
                 "spacing",
@@ -954,16 +942,12 @@ class RichTextBlock(AdaptiveCardComponent):
         super().__init__(
             serializable_properties=[
                 "inlines",
-                *(
-                    ["fallback"] if hasattr(fallback, "to_dict") else []
-                ),
+                *(["fallback"] if hasattr(fallback, "to_dict") else []),
             ],
             simple_properties=[
                 "type",
                 "horizontalAlignment",
-                *(
-                    [] if hasattr(fallback, "to_dict") else ["fallback"]
-                ),
+                *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "height",
                 "separator",
                 "spacing",

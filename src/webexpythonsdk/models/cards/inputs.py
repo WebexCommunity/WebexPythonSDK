@@ -277,9 +277,7 @@ class Text(AdaptiveCardComponent):
         super().__init__(
             serializable_properties=[
                 "inlineAction",
-                *(
-                    ["fallback"] if hasattr(fallback, "to_dict") else []
-                ),
+                *(["fallback"] if hasattr(fallback, "to_dict") else []),
             ],
             simple_properties=[
                 "type",
@@ -293,9 +291,7 @@ class Text(AdaptiveCardComponent):
                 "errorMessage",
                 "isRequired",
                 "label",
-                *(
-                    [] if hasattr(fallback, "to_dict") else ["fallback"]
-                ),
+                *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "height",
                 "separator",
                 "spacing",
@@ -506,9 +502,7 @@ class Number(AdaptiveCardComponent):
 
         super().__init__(
             serializable_properties=[
-                *(
-                    ["fallback"] if hasattr(fallback, "to_dict") else []
-                ),
+                *(["fallback"] if hasattr(fallback, "to_dict") else []),
             ],
             simple_properties=[
                 "type",
@@ -520,9 +514,7 @@ class Number(AdaptiveCardComponent):
                 "errorMessage",
                 "isRequired",
                 "label",
-                *(
-                    [] if hasattr(fallback, "to_dict") else ["fallback"]
-                ),
+                *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "height",
                 "separator",
                 "spacing",
@@ -733,9 +725,7 @@ class Date(AdaptiveCardComponent):
 
         super().__init__(
             serializable_properties=[
-                *(
-                    ["fallback"] if hasattr(fallback, "to_dict") else []
-                ),
+                *(["fallback"] if hasattr(fallback, "to_dict") else []),
             ],
             simple_properties=[
                 "type",
@@ -747,9 +737,7 @@ class Date(AdaptiveCardComponent):
                 "errorMessage",
                 "isRequired",
                 "label",
-                *(
-                    [] if hasattr(fallback, "to_dict") else ["fallback"]
-                ),
+                *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "height",
                 "separator",
                 "spacing",
@@ -777,7 +765,7 @@ class Time(AdaptiveCardComponent):
         value: str = None,
         errorMessage: str = None,
         isRequired: bool = None,
-        label:  str = None,
+        label: str = None,
         fallback: object = None,
         height: OPTIONS.BlockElementHeight = None,
         separator: bool = None,
@@ -960,9 +948,7 @@ class Time(AdaptiveCardComponent):
 
         super().__init__(
             serializable_properties=[
-                *(
-                    ["fallback"] if hasattr(fallback, "to_dict") else []
-                ),
+                *(["fallback"] if hasattr(fallback, "to_dict") else []),
             ],
             simple_properties=[
                 "id",
@@ -974,9 +960,7 @@ class Time(AdaptiveCardComponent):
                 "errorMessage",
                 "isRequired",
                 "label",
-                *(
-                    [] if hasattr(fallback, "to_dict") else ["fallback"]
-                ),
+                *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "height",
                 "separator",
                 "spacing",
@@ -1196,9 +1180,7 @@ class Toggle(AdaptiveCardComponent):
 
         super().__init__(
             serializable_properties=[
-                *(
-                    ["fallback"] if hasattr(fallback, "to_dict") else []
-                ),
+                *(["fallback"] if hasattr(fallback, "to_dict") else []),
             ],
             simple_properties=[
                 "type",
@@ -1211,9 +1193,7 @@ class Toggle(AdaptiveCardComponent):
                 "errorMessage",
                 "isRequired",
                 "label",
-                *(
-                    [] if hasattr(fallback, "to_dict") else ["fallback"]
-                ),
+                *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "height",
                 "separator",
                 "spacing",
@@ -1450,9 +1430,7 @@ class ChoiceSet(AdaptiveCardComponent):
         super().__init__(
             serializable_properties=[
                 "choices",
-                *(
-                    ["fallback"] if hasattr(fallback, "to_dict") else []
-                ),
+                *(["fallback"] if hasattr(fallback, "to_dict") else []),
             ],
             simple_properties=[
                 "type",
@@ -1465,9 +1443,7 @@ class ChoiceSet(AdaptiveCardComponent):
                 "errorMessage",
                 "isRequired",
                 "label",
-                *(
-                    [] if hasattr(fallback, "to_dict") else ["fallback"]
-                ),
+                *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "height",
                 "separator",
                 "spacing",
