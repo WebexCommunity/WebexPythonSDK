@@ -226,8 +226,8 @@ def validate_uri(
     if not parsed_uri.scheme:
         raise URIException("Invalid URI: Missing scheme")
 
-    # Check if the URI has a heir-part location
-    if not parsed_uri.netloc:
+    # Check if the URI has a heir-part location if scheme isn't "data"
+    if parsed_uri.scheme != "data" and not parsed_uri.netloc:
         raise URIException("Invalid URI: Missing heir part location")
 
     # Return if every check is passed
