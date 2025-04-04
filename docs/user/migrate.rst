@@ -8,14 +8,13 @@ Migration
 
 This *should* 🤞 be easy!
 
-``webexpythonsdk`` is designed to be a drop-in replacement for the ``webexteamssdk`` package. The SDK interface and data objects are largely unchanged with only a few minor name changes.
+The transition from `webexteamssdk` to `webexpythonsdk` is not entirely a "drop-in replacement" due to substantial changes in class structures and functionalities. This guide aims to clarify these changes and offer solutions to ease the migration process.
 
 Major changes that you should be aware of:
 
 * The package name has changed from ``webexteamssdk`` to ``webexpythonsdk``
 * ``webexpythonsdk`` drops support for Python v2, and supports Python 3.10+
 * The primary API object has changed from ``WebexTeamsAPI`` to ``WebexAPI``
-
 
 
 ---------------
@@ -39,7 +38,9 @@ The following table summarizes the name changes that need to be made to migrate 
 
 *Note:* The old ``WEBEX_TEAMS_ACCESS_TOKEN`` environment variable should continue to work with the new package; however, you will receive a deprecation warning. It is recommended to update the environment variable name to ``WEBEX_ACCESS_TOKEN``.
 
-**Doing a quick search-and-replace in your codebase should be all you need to do to migrate.**
+
+
+**Doing a quick search-and-replace in your codebase will help when migrating.**
 
 Detailed Steps
 --------------
@@ -63,6 +64,80 @@ Detailed Steps
     **Imports:** Replace all imports from ``webexteamssdk`` to ``webexpythonsdk``.
 
     **Primary API Object:** Replace all instances of ``WebexTeamsAPI`` with ``WebexAPI``.
+
+Key Changes For Adaptive Cards
+------------------------------
+
+Module and Class Changes
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following table outlines the changes in module and class names:
+
+.. list-table::
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - Old Module/Class
+     - New Module/Class
+     - Example Usage
+   * - `webexteamssdk.models.cards.components.TextBlock`
+     - `webexpythonsdk.models.cards.card_elements.TextBlock`
+     - `TextBlock(color=Colors.light)`
+   * - `webexteamssdk.models.cards.container.ColumnSet`
+     - `webexpythonsdk.models.cards.containers.ColumnSet`
+     - `ColumnSet(columns=[Column()])`
+   * - `webexteamssdk.models.cards.components.Image`
+     - `webexpythonsdk.models.cards.card_elements.Image`
+     - `Image(url="https://example.com/image.jpg")`
+   * - `webexteamssdk.models.cards.components.Choice`
+     - `webexpythonsdk.models.cards.inputs.Choice`
+     - `Choice(title="Option", value="option")`
+   * - `webexteamssdk.models.cards.options.BlockElementHeight`
+     - `webexpythonsdk.models.cards.options.BlockElementHeight`
+     - `BlockElementHeight(height="stretch")`
+   * - New Imports
+     - `webexpythonsdk.models.cards.actions.OpenUrl`, `Submit`, `ShowCard`
+     - `OpenUrl(url="https://example.com")`
+   * - New Imports
+     - `webexpythonsdk.models.cards.types.BackgroundImage`
+     - `BackgroundImage(url="https://example.com/image.jpg")`
+
+Enums and Case Sensitivity
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Attributes now require specific enums for values, which are case-sensitive. For example:
+
+- **Previous**: `TextBlock.color = "Light"`
+- **New**: `TextBlock.color = Colors.light`
+
+Refer to the `Adaptive Cards TextBlock documentation <https://adaptivecards.io/explorer/TextBlock.html>`_ for valid enum values.
+
+Compatibility Solutions
+-----------------------
+
+Wrapper Classes
+~~~~~~~~~~~~~~~
+
+To facilitate backward compatibility, consider using the following wrapper classes:
+
+.. code-block:: python
+
+   # Example wrapper for components.py
+   from webexpythonsdk.models.cards.card_elements import TextBlock, Image
+   from webexpythonsdk.models.cards.containers import Column, Fact
+
+   # Example wrapper for container.py
+   from webexpythonsdk.models.cards.containers import Container, ColumnSet, FactSet
+
+Module Flag for Compatibility
+-----------------------------
+
+A module flag can be introduced to bypass the `validate_input` function where backward compatibility is needed. Ensure this flag is set before executing legacy code.
+
+.. code-block:: python
+
+   # Example usage
+   webexpythonsdk.enable_backward_compatibility(True)
 
 ----------------
 For Contributors
@@ -93,6 +168,7 @@ Project changes that you should be aware of:
     +-------------------------------------+-------------------------------+
     | ``WEBEX_TEAMS_GUEST_ISSUER_SECRET`` | ``WEBEX_GUEST_ISSUER_SECRET`` |
     +-------------------------------------+-------------------------------+
+
 
 
 *Copyright (c) 2016-2024 Cisco and/or its affiliates.*

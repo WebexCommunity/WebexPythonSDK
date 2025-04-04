@@ -8,7 +8,7 @@ Webex supports `AdaptiveCards <https://www.adaptivecards.io/>`_ to allow
 new levels of interactivity for bots and integrations. You can read more about
 how cards and buttons work `in the official guide <https://developer.webex.com/docs/api/guides/cards>`_.
 
-In this guide I want to cover the abstraction built into the webexpythonsdk that
+In this guide we want to cover the abstraction built into the webexpythonsdk that
 lets you author adaptive cards in pure python without having to touch the
 underlying JSON of an adaptive card.
 
@@ -22,7 +22,7 @@ Lets dive into a simple example that sends a card to a room
     from webexpythonsdk import WebexAPI
     from webexpythonsdk.models.cards.card import AdaptiveCard
     from webexpythonsdk.models.cards.inputs import Text, Number
-    from webexpythonsdk.models.cards.components import TextBlock
+    from webexpythonsdk.models.cards.card_elements import TextBlock
     from webexpythonsdk.models.cards.actions import Submit
 
     greeting = TextBlock("Hey hello there! I am a adaptive card")
