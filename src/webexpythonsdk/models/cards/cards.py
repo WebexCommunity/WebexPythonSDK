@@ -61,6 +61,7 @@ class AdaptiveCard(AdaptiveCardComponent):
         backgroundImage: object = None,
         minHeight: str = None,
         speak: str = None,
+        style: OPTIONS.ContainerStyle = None,
         lang: str = None,
         verticalContentAlignment: OPTIONS.VerticalContentAlignment = None,
     ):
@@ -94,6 +95,11 @@ class AdaptiveCard(AdaptiveCardComponent):
             speak (str, Optional): Specifies what should be spoken for this
                 entire card. This is simple text or SSML fragment. **_Defaults
                 to None._**
+            style (ContainerStyle, Optional): Style hint for Container.
+                **_Defaults to None._**Allowed value(s):
+                ContainerStyle.DEFAULT, ContainerStyle.EMPHASIS,
+                ContainerStyle.GOOD, ContainerStyle.ATTENTION,
+                ContainerStyle.WARNING, or ContainerStyle.ACCENT
             lang (str, Optional): The 2-letter ISO-639-1 language used in the
                 card. Used to localize any date/time functions. **_Defaults to
                 None._**
@@ -184,6 +190,12 @@ class AdaptiveCard(AdaptiveCardComponent):
             optional=True,
         )
 
+        validate_input(
+            verticalContentAlignment,
+            OPTIONS.ContainerStyle,
+            optional=True,
+        )
+
         check_type(
             lang,
             str,
@@ -210,6 +222,7 @@ class AdaptiveCard(AdaptiveCardComponent):
         self.backgroundImage = backgroundImage
         self.minHeight = minHeight
         self.speak = speak
+        self.style = style
         self.lang = lang
         self.verticalContentAlignment = verticalContentAlignment
 
