@@ -51,6 +51,7 @@ class ActionSet(AdaptiveCardComponent):
         actions: list[object],
         fallback: object = None,
         height: OPTIONS.BlockElementHeight = None,
+        horizontalAlignment: OPTIONS.HorizontalAlignment = None,
         separator: bool = None,
         spacing: OPTIONS.Spacing = None,
         id: str = None,
@@ -77,6 +78,13 @@ class ActionSet(AdaptiveCardComponent):
             height (BlockElementHeight, Optional): Specifies the height of the
                 element. **_Defaults to None._** Allowed value(s):
                 BlockElementHeight.AUTO or BlockElementHeight.STRETCH
+            horizontalAlignment (HorizontalAlignment, Optional): Controls the
+                horizontal alignment of the ColumnSet. When not specified, the
+                value of horizontalAlignment is inherited from the parent
+                container. If no parent container has horizontalAlignment set,
+                it defaults to Left. Allowed value(s):
+                HorizontalAlignment.LEFT, HorizontalAlignment.CENTER, or
+                HorizontalAlignment.RIGHT
             separator (bool, Optional): When true, draw a separating line at
                 the top of the element. **_Defaults to None._**
             spacing (Spacing, Optional): Controls the amount of spacing
@@ -142,6 +150,12 @@ class ActionSet(AdaptiveCardComponent):
             optional=True,
         )
 
+        validate_input(
+            horizontalAlignment,
+            OPTIONS.HorizontalAlignment,
+            optional=True,
+        )
+
         check_type(
             separator,
             bool,
@@ -177,6 +191,7 @@ class ActionSet(AdaptiveCardComponent):
         self.actions = actions
         self.fallback = fallback
         self.height = height
+        self.horizontalAlignment = horizontalAlignment
         self.separator = separator
         self.spacing = spacing
         self.id = id
@@ -192,6 +207,7 @@ class ActionSet(AdaptiveCardComponent):
                 "type",
                 *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "height",
+                "horizontalAlignment",
                 "separator",
                 "spacing",
                 "id",
@@ -221,6 +237,7 @@ class Container(AdaptiveCardComponent):
         minHeight: str = None,
         fallback: object = None,
         height: OPTIONS.BlockElementHeight = None,
+        horizontalAlignment: OPTIONS.HorizontalAlignment = None,
         separator: bool = None,
         spacing: OPTIONS.Spacing = None,
         id: str = None,
@@ -275,6 +292,13 @@ class Container(AdaptiveCardComponent):
             height (BlockElementHeight, Optional): Specifies the height of the
                 element. **_Defaults to None._** Allowed value(s):
                 BlockElementHeight.AUTO or BlockElementHeight.STRETCH
+            horizontalAlignment (HorizontalAlignment, Optional): Controls the
+                horizontal alignment of the ColumnSet. When not specified, the
+                value of horizontalAlignment is inherited from the parent
+                container. If no parent container has horizontalAlignment set,
+                it defaults to Left. Allowed value(s):
+                HorizontalAlignment.LEFT, HorizontalAlignment.CENTER, or
+                HorizontalAlignment.RIGHT
             separator (bool, Optional): When true, draw a separating line at
                 the top of the element. **_Defaults to None._**
             spacing (Spacing, Optional): Controls the amount of spacing
@@ -399,6 +423,12 @@ class Container(AdaptiveCardComponent):
             optional=True,
         )
 
+        validate_input(
+            horizontalAlignment,
+            OPTIONS.HorizontalAlignment,
+            optional=True,
+        )
+
         check_type(
             separator,
             bool,
@@ -440,6 +470,7 @@ class Container(AdaptiveCardComponent):
         self.minHeight = minHeight
         self.fallback = fallback
         self.height = height
+        self.horizontalAlignment = horizontalAlignment
         self.separator = separator
         self.spacing = spacing
         self.id = id
@@ -547,6 +578,13 @@ class ColumnSet(AdaptiveCardComponent):
             height (BlockElementHeight, Optional): Specifies the height of the
                 element. **_Defaults to None._** Allowed value(s):
                 BlockElementHeight.AUTO or BlockElementHeight.STRETCH
+            horizontalAlignment (HorizontalAlignment, Optional): Controls the
+                horizontal alignment of the ColumnSet. When not specified, the
+                value of horizontalAlignment is inherited from the parent
+                container. If no parent container has horizontalAlignment set,
+                it defaults to Left. Allowed value(s):
+                HorizontalAlignment.LEFT, HorizontalAlignment.CENTER, or
+                HorizontalAlignment.RIGHT
             separator (bool, Optional): When true, draw a separating line at
                 the top of the element. **_Defaults to None._**
             spacing (Spacing, Optional): Controls the amount of spacing
@@ -702,6 +740,7 @@ class ColumnSet(AdaptiveCardComponent):
                 "horizontalAlignment",
                 *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "height",
+                "horizontalAlignment",
                 "separator",
                 "spacing",
                 "id",
@@ -726,6 +765,7 @@ class Column(AdaptiveCardComponent):
         backgroundImage: object = None,
         bleed: bool = None,
         fallback: object = None,
+        horizontalAlignment: OPTIONS.HorizontalAlignment = None,
         minHeight: str = None,
         separator: bool = None,
         spacing: OPTIONS.Spacing = None,
@@ -761,6 +801,13 @@ class Column(AdaptiveCardComponent):
                 Note: "drop" causes this element to be dropped immediately
                 when unknown elements are encountered. The unknown element
                 doesn't bubble up any higher.
+            horizontalAlignment (HorizontalAlignment, Optional): Controls the
+                horizontal alignment of the ColumnSet. When not specified, the
+                value of horizontalAlignment is inherited from the parent
+                container. If no parent container has horizontalAlignment set,
+                it defaults to Left. Allowed value(s):
+                HorizontalAlignment.LEFT, HorizontalAlignment.CENTER, or
+                HorizontalAlignment.RIGHT
             minHeight (str, Optional): Specifies the minimum height of the
                 container in pixels, like "80px". **_Defaults to None._**
             separator (bool, Optional): When true, draw a separating line at
@@ -861,6 +908,12 @@ class Column(AdaptiveCardComponent):
                 optional=True,
             )
 
+        validate_input(
+            horizontalAlignment,
+            OPTIONS.HorizontalAlignment,
+            optional=True,
+        )
+
         check_type(
             minHeight,
             str,
@@ -934,6 +987,7 @@ class Column(AdaptiveCardComponent):
         self.backgroundImage = backgroundImage
         self.bleed = bleed
         self.fallback = fallback
+        self.horizontalAlignment = horizontalAlignment
         self.minHeight = minHeight
         self.separator = separator
         self.spacing = spacing
@@ -965,6 +1019,7 @@ class Column(AdaptiveCardComponent):
                 ),
                 "bleed",
                 *([] if hasattr(fallback, "to_dict") else ["fallback"]),
+                "horizontalAlignment",
                 "minHeight",
                 "separator",
                 "spacing",
@@ -1197,6 +1252,7 @@ class ImageSet(AdaptiveCardComponent):
         imageSize: OPTIONS.ImageSize = OPTIONS.ImageSize.MEDIUM,
         fallback: object = None,
         height: OPTIONS.BlockElementHeight = None,
+        horizontalAlignment: OPTIONS.HorizontalAlignment = None,
         separator: bool = None,
         spacing: OPTIONS.Spacing = None,
         id: str = None,
@@ -1230,6 +1286,13 @@ class ImageSet(AdaptiveCardComponent):
             height (BlockElementHeight, Optional): Specifies the height of the
                 element. **_Defaults to None._** Allowed value(s):
                 BlockElementHeight.AUTO or BlockElementHeight.STRETCH
+            horizontalAlignment (HorizontalAlignment, Optional): Controls the
+                horizontal alignment of the ColumnSet. When not specified, the
+                value of horizontalAlignment is inherited from the parent
+                container. If no parent container has horizontalAlignment set,
+                it defaults to Left. Allowed value(s):
+                HorizontalAlignment.LEFT, HorizontalAlignment.CENTER, or
+                HorizontalAlignment.RIGHT
             separator (bool, Optional): When true, draw a separating line at
                 the top of the element. **_Defaults to None._**
             spacing (Spacing, Optional): Controls the amount of spacing
@@ -1296,6 +1359,12 @@ class ImageSet(AdaptiveCardComponent):
             optional=True,
         )
 
+        validate_input(
+            horizontalAlignment,
+            OPTIONS.HorizontalAlignment,
+            optional=True,
+        )
+
         check_type(
             separator,
             bool,
@@ -1332,6 +1401,7 @@ class ImageSet(AdaptiveCardComponent):
         self.imageSize = imageSize
         self.fallback = fallback
         self.height = height
+        self.horizontalAlignment = horizontalAlignment
         self.separator = separator
         self.spacing = spacing
         self.id = id
@@ -1348,6 +1418,7 @@ class ImageSet(AdaptiveCardComponent):
                 "imageSize",
                 *([] if hasattr(fallback, "to_dict") else ["fallback"]),
                 "height",
+                "horizontalAlignment",
                 "separator",
                 "spacing",
                 "id",
