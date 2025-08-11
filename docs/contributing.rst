@@ -26,7 +26,7 @@ See the project's `Makefile` targets for a list of common developer tasks, which
 Notes on the Test Suite
 -----------------------
 
-To test all the API endpoints, the account that you use for testing must be an *admin* and *compliance officer* user for your Webex Organization.  Additionally, you should know that that the testing process creates some test people, rooms, messages, teams, and etc. as part of executing the test suite. 
+To test all the API endpoints, the account that you use for testing must be an *admin* and *compliance officer* user for your Webex Organization.  Additionally, you should know that that the testing process creates some test people, rooms, messages, teams, and etc. as part of executing the test suite.
 
 We strongly recommend *NOT* running the test suite using your personal Webex account (not that you can't; it's just that you probably don't want it cluttering your account with all these test artifacts).
 
@@ -42,32 +42,45 @@ Contributing Code
 
 2. Fork a copy of the `repository`_ and clone your forked repository to your development environment.
 
-3. Use the ``setup`` target to install the project dependencies and setup your environment for development.
+3. Create a Python virtual environment and install the project dependencies.
+
+   .. code-block:: bash
+
+      python -m venv .venv
+      source .venv/bin/activate
+
+4. Use the ``setup`` target to install the project dependencies and setup your environment for development.
 
    .. code-block:: bash
 
       make setup
 
-4. Add your code to your forked repository.
+5. Install the SDK in Editable Mode.
+
+   .. code-block:: bash
+
+      pip install -e
+
+5. Add your code to your forked repository.
 
    If you are creating some new feature or functionality (excellent!), please also write tests to verify that your code works as expected.
 
-5. Please format your code and make sure your code passes the linter.
+6. Please format your code and make sure your code passes the linter.
 
    .. code-block:: bash
 
       make format
       make lint
 
-6. If you running the test suite locally, ensure your code passes all of the default tests.  Use the ``test`` target and ensure all tests execute successfully.
+7. If you running the test suite locally, ensure your code passes all of the default tests.  Use the ``test`` target and ensure all tests execute successfully.
 
    .. code-block:: bash
 
-      make test
+      make tests
 
-7. Commit your changes.
+8. Commit your changes.
 
-8. Submit a `pull request`_.
+9. Submit a `pull request`_.
 
 
 Running the Test Suite Locally
@@ -78,6 +91,7 @@ To run the test suite locally, you must configure the following environment vari
 * ``WEBEX_ACCESS_TOKEN`` - Your test account's Webex access token.
 
 * ``WEBEX_TEST_DOMAIN`` - The test suite creates some users as part of the testing process. The test suite uses this domain name as the e-mail suffix of for the user's e-mail addresses.
+To ensure that the developer passes all tests, the developer should use the domain name of the sandbox organization that they have created.
 
 * ``WEBEX_TEST_ID_START`` - The test suite uses this integer as the starting number for creating test user accounts (example: "test42@domain.com").
 

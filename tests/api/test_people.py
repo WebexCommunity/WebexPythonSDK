@@ -51,6 +51,14 @@ def update_person(api, person, **person_attributes):
     return api.people.update(person.id, **new_attributes)
 
 
+def delete_person(api, person):
+    """Delete a person and swallow any API Error."""
+    try:
+        api.people.delete(person.id)
+    except webexpythonsdk.ApiError:
+        pass
+
+
 def is_valid_person(obj):
     return isinstance(obj, webexpythonsdk.Person) and obj.id is not None
 
@@ -118,16 +126,8 @@ class PeopleManager(object):
         return iter(self.list)
 
     def __del__(self):
-        # TODO: Enable test account clean-up.
-        # Licensed privileges aren't taking effect for accounts that have
-        # just been created and this is causing some tests to fail.
-        # I am temporarily disabling test account clean-up to enable the
-        # accounts (with their privileges) to persist.  It would be good to
-        # find a way around this.
-
-        # for person in self.test_people.values():
-        #     delete_person(self._api, person)
-        pass
+        for person in self.test_people.values():
+            delete_person(self._api, person)
 
 
 @pytest.fixture(scope="session")
