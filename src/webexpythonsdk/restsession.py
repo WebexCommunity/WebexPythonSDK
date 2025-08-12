@@ -49,16 +49,19 @@ logger = logging.getLogger(__name__)
 
 # Helper Functions
 def _fix_next_url(next_url, params):
-    """Remove max=null parameter from URL.
+    """Remove max=null parameter from URL and ensure critical parameters are preserved.
 
     Patch for Webex Defect: "next" URL returned in the Link headers of
-    the responses contain an errant "max=null" parameter, which  causes the
+    the responses contain an errant "max=null" parameter, which causes the
     next request (to this URL) to fail if the URL is requested as-is.
 
-    This patch parses the next_url to remove the max=null parameter.
+    This patch parses the next_url to remove the max=null parameter and
+    ensures that critical parameters like 'max' are properly preserved
+    across pagination requests.
 
     Args:
         next_url(str): The "next" URL to be parsed and cleaned.
+        params(dict): The original request parameters to ensure are preserved.
 
     Returns:
         str: The clean URL to be used for the "next" request.
@@ -80,20 +83,46 @@ def _fix_next_url(next_url, params):
 
     if parsed_url.query:
         query_list = parsed_url.query.split("&")
+
+        # Remove the problematic max=null parameter
         if "max=null" in query_list:
             query_list.remove("max=null")
             warnings.warn(
-                "`max=null` still present in next-URL returned " "from Webex",
+                "`max=null` still present in next-URL returned from Webex",
                 RuntimeWarning,
                 stacklevel=1,
             )
+
+        # Parse existing query parameters into a dict for easier manipulation
+        existing_params = {}
+        for param in query_list:
+            if "=" in param:
+                key, value = param.split("=", 1)
+                existing_params[key] = value
+
+        # Ensure critical parameters from the original request are preserved
         if params:
             for k, v in params.items():
-                if not any(p.startswith("{}=".format(k)) for p in query_list):
-                    query_list.append("{}={}".format(k, v))
-        new_query = "&".join(query_list)
+                # Always preserve critical parameters like 'max' to maintain consistent pagination
+                if k in ['max', 'roomId', 'parentId', 'mentionedPeople', 'before', 'beforeMessage']:
+                    existing_params[k] = str(v)
+                # For other parameters, only add if they don't exist
+                elif k not in existing_params:
+                    existing_params[k] = str(v)
+
+        # Rebuild the query string
+        new_query_list = [f"{k}={v}" for k, v in existing_params.items()]
+        new_query = "&".join(new_query_list)
+
         parsed_url = list(parsed_url)
         parsed_url[4] = new_query
+    else:
+        # No query parameters in next_url, add all params
+        if params:
+            new_query_list = [f"{k}={v}" for k, v in params.items()]
+            new_query = "&".join(new_query_list)
+            parsed_url = list(parsed_url)
+            parsed_url[4] = new_query
 
     return urllib.parse.urlunparse(parsed_url)
 
