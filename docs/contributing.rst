@@ -46,41 +46,41 @@ Contributing Code
 
    .. code-block:: bash
 
-      python -m venv .venv
-      source .venv/bin/activate
+      python3 -m venv venv
+      source venv/bin/activate
 
-4. Use the ``setup`` target to install the project dependencies and setup your environment for development.
+4. Install poetry.
+
+   .. code-block:: bash
+
+      pip install poetry
+
+5. Use the ``setup`` target to install the project dependencies and setup your environment for development.
 
    .. code-block:: bash
 
       make setup
 
-5. Install the SDK in Editable Mode.
-
-   .. code-block:: bash
-
-      pip install -e
-
-5. Add your code to your forked repository.
+6. Add your code to your forked repository.
 
    If you are creating some new feature or functionality (excellent!), please also write tests to verify that your code works as expected.
 
-6. Please format your code and make sure your code passes the linter.
+7. Please format your code and make sure your code passes the linter.
 
    .. code-block:: bash
 
       make format
       make lint
 
-7. If you running the test suite locally, ensure your code passes all of the default tests.  Use the ``test`` target and ensure all tests execute successfully.
+8. If you running the test suite locally, ensure your code passes all of the default tests.  Use the ``test`` target and ensure all tests execute successfully.
 
    .. code-block:: bash
 
       make tests
 
-8. Commit your changes.
+9. Commit your changes.
 
-9. Submit a `pull request`_.
+10. Submit a `pull request`_.
 
 
 Running the Test Suite Locally
@@ -90,8 +90,7 @@ To run the test suite locally, you must configure the following environment vari
 
 * ``WEBEX_ACCESS_TOKEN`` - Your test account's Webex access token.
 
-* ``WEBEX_TEST_DOMAIN`` - The test suite creates some users as part of the testing process. The test suite uses this domain name as the e-mail suffix of for the user's e-mail addresses.
-To ensure that the developer passes all tests, the developer should use the domain name of the sandbox organization that they have created.
+* ``WEBEX_TEST_DOMAIN`` - The test suite creates some users as part of the testing process. The test suite uses this domain name as the e-mail suffix of for the user's e-mail addresses. To ensure that the developer passes all tests, the developer should use the domain name of the sandbox organization that they have created.
 
 * ``WEBEX_TEST_ID_START`` - The test suite uses this integer as the starting number for creating test user accounts (example: "test42@domain.com").
 
@@ -103,7 +102,7 @@ To ensure that the developer passes all tests, the developer should use the doma
 
    #!/usr/bin/env bash
    export WEBEX_ACCESS_TOKEN="<test account's access token>"
-   export WEBEX_TEST_DOMAIN="domain.com"
+   export WEBEX_TEST_DOMAIN="<your sandbox organization domain>"
    export WEBEX_TEST_ID_START=42
    export WEBEX_TEST_FILE_URL="https://www.webex.com/content/dam/wbx/us/images/navigation/CiscoWebex-Logo_white.png"
 
