@@ -138,12 +138,28 @@ class RateLimitError(ApiError):
         assert isinstance(response, requests.Response)
 
         # Extended exception attributes
-        self.retry_after = max(1, int(response.headers.get("Retry-After", 15)))
+        try:
+            retry_after = int(response.headers.get("Retry-After", 15))
+        except (ValueError, TypeError):
+            # Handle malformed Retry-After headers gracefully
+            # Log a warning for debugging purposes
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.warning(
+                f"Malformed Retry-After header received: {response.headers.get('Retry-After')}. "
+                "Defaulting to 15 seconds."
+            )
+            retry_after = 15
+
+        self.retry_after = max(1, retry_after)
         """The `Retry-After` time period (in seconds) provided by Webex.
 
         Defaults to 15 seconds if the response `Retry-After` header isn't
         present in the response headers, and defaults to a minimum wait time of
         1 second if Webex returns a `Retry-After` header of 0 seconds.
+
+        Note: If the Retry-After header contains malformed values (non-integer strings,
+        etc.), it will default to 15 seconds and log a warning.
         """
 
         super(RateLimitError, self).__init__(response)

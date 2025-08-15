@@ -47,7 +47,11 @@ Contributing Code
    .. code-block:: bash
 
       python3 -m venv venv
+
+      # On Mac/Linux
       source venv/bin/activate
+      # On Windows
+      venv\Scripts\activate.bat
 
 4. Install poetry.
 
@@ -75,7 +79,7 @@ Contributing Code
 8. If you running the test suite locally, ensure your code passes all of the default tests.  Use the ``test`` target and ensure all tests execute successfully.
 
    .. code-block:: bash
-
+      # see below for more information on running the test suite locally
       make tests
 
 9. Commit your changes.
