@@ -104,7 +104,14 @@ def _fix_next_url(next_url, params):
         if params:
             for k, v in params.items():
                 # Always preserve critical parameters like 'max' to maintain consistent pagination
-                if k in ['max', 'roomId', 'parentId', 'mentionedPeople', 'before', 'beforeMessage']:
+                if k in [
+                    "max",
+                    "roomId",
+                    "parentId",
+                    "mentionedPeople",
+                    "before",
+                    "beforeMessage",
+                ]:
                     existing_params[k] = str(v)
                 # For other parameters, only add if they don't exist
                 elif k not in existing_params:
