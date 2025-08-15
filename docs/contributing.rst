@@ -79,6 +79,7 @@ Contributing Code
 8. If you running the test suite locally, ensure your code passes all of the default tests.  Use the ``test`` target and ensure all tests execute successfully.
 
    .. code-block:: bash
+      
       # see below for more information on running the test suite locally
       make tests
 
