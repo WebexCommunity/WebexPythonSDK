@@ -144,6 +144,7 @@ class RateLimitError(ApiError):
             # Handle malformed Retry-After headers gracefully
             # Log a warning for debugging purposes
             import logging
+
             logger = logging.getLogger(__name__)
             logger.warning(
                 f"Malformed Retry-After header received: {response.headers.get('Retry-After')}. "
