@@ -89,12 +89,12 @@ class RoomBasicPropertiesMixin(object):
     @property
     def classificationId(self):
         """The ID of the current classification."""
-        return self._json_data.get("ownerId")
+        return self._json_data.get("classificationId")
 
     @property
     def isAnnouncementOnly(self):
         """Indicates when a space is in Announcement Mode (only moderators can post)."""
-        return self._json_data.get("ownerId")
+        return self._json_data.get("isAnnouncementOnly")
 
     @property
     def isReadOnly(self):
@@ -103,7 +103,7 @@ class RoomBasicPropertiesMixin(object):
         A compliance officer can set a direct room as read-only, which will disallow any
         new information exchanges in this space, while maintaining historical data.
         """
-        return self._json_data.get("ownerId")
+        return self._json_data.get("isReadOnly")
 
     @property
     def isPublic(self):
@@ -112,7 +112,7 @@ class RoomBasicPropertiesMixin(object):
         The room is public and therefore discoverable within the org. Anyone can find
         and join the room.
         """
-        return self._json_data.get("ownerId")
+        return self._json_data.get("isPublic")
 
     @property
     def madePublic(self):
@@ -126,4 +126,4 @@ class RoomBasicPropertiesMixin(object):
     @property
     def description(self):
         """The description of the room."""
-        return self._json_data.get("ownerId")
+        return self._json_data.get("description")
