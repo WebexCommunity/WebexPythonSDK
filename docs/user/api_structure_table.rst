@@ -30,6 +30,13 @@
 |                        | :ref:`organizations`      | :meth:`list() <webexpythonsdk.api.organizations.OrganizationsAPI.list>`         |
 |                        |                           | :meth:`create() <webexpythonsdk.api.organizations.OrganizationsAPI.create>`     |
 +------------------------+---------------------------+---------------------------------------------------------------------------------+
+|                        | :ref:`org_contacts`      | :meth:`list() <webexpythonsdk.api.organization_contacts.OrganizationContactsAPI.list>`|
+|                        |                           | :meth:`search() <webexpythonsdk.api.organization_contacts.OrganizationContactsAPI.search>`|
+|                        |                           | :meth:`create() <webexpythonsdk.api.organization_contacts.OrganizationContactsAPI.create>`|
+|                        |                           | :meth:`get() <webexpythonsdk.api.organization_contacts.OrganizationContactsAPI.get>`|
+|                        |                           | :meth:`update() <webexpythonsdk.api.organization_contacts.OrganizationContactsAPI.update>`|
+|                        |                           | :meth:`delete() <webexpythonsdk.api.organization_contacts.OrganizationContactsAPI.delete>`|
++------------------------+---------------------------+---------------------------------------------------------------------------------+
 |                        | :ref:`people`             | :meth:`list() <webexpythonsdk.api.people.PeopleAPI.list>`                       |
 |                        |                           | :meth:`create() <webexpythonsdk.api.people.PeopleAPI.create>`                   |
 |                        |                           | :meth:`get() <webexpythonsdk.api.people.PeopleAPI.get>`                         |

@@ -48,6 +48,7 @@ class TestWebexPythonSDK:
         assert hasattr(webexpythonsdk, "Membership")
         assert hasattr(webexpythonsdk, "Message")
         assert hasattr(webexpythonsdk, "Organization")
+        assert hasattr(webexpythonsdk, "OrganizationContact")
         assert hasattr(webexpythonsdk, "Person")
         assert hasattr(webexpythonsdk, "Role")
         assert hasattr(webexpythonsdk, "Room")
