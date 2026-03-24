@@ -74,6 +74,7 @@ from .models.immutable import (
     WebhookEvent,
 )
 from .models.simple import simple_data_factory, SimpleDataModel
+from .thread_utils import collect_thread_text_and_attachments
 from .utils import WebexDateTime
 
 
