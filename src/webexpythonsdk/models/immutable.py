@@ -44,6 +44,9 @@ from .mixins.license import LicenseBasicPropertiesMixin
 from .mixins.membership import MembershipBasicPropertiesMixin
 from .mixins.message import MessageBasicPropertiesMixin
 from .mixins.organization import OrganizationBasicPropertiesMixin
+from .mixins.organization_contact import (
+    OrganizationContactBasicPropertiesMixin,
+)
 from .mixins.person import PersonBasicPropertiesMixin
 from .mixins.role import RoleBasicPropertiesMixin
 from .mixins.room import RoomBasicPropertiesMixin
@@ -231,6 +234,12 @@ class Organization(ImmutableData, OrganizationBasicPropertiesMixin):
     """Webex Organization data model."""
 
 
+class OrganizationContact(
+    ImmutableData, OrganizationContactBasicPropertiesMixin
+):
+    """Webex Organization Contact data model."""
+
+
 class Person(ImmutableData, PersonBasicPropertiesMixin):
     """Webex Person data model."""
 
@@ -306,6 +315,7 @@ immutable_data_models = defaultdict(
     membership=Membership,
     message=Message,
     organization=Organization,
+    organization_contact=OrganizationContact,
     person=Person,
     role=Role,
     room=Room,

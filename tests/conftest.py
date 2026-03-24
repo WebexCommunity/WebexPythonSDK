@@ -44,6 +44,7 @@ pytest_plugins = [
     "tests.api.test_memberships",
     "tests.api.test_messages",
     "tests.api.test_organizations",
+    "tests.api.test_organization_contacts",
     "tests.api.test_people",
     "tests.api.test_roles",
     "tests.api.test_rooms",

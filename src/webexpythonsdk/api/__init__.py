@@ -39,6 +39,7 @@ from .guest_issuer import GuestIssuerAPI
 from .licenses import LicensesAPI
 from .memberships import MembershipsAPI
 from .messages import MessagesAPI
+from .organization_contacts import OrganizationContactsAPI
 from .organizations import OrganizationsAPI
 from .people import PeopleAPI
 from .roles import RolesAPI
@@ -52,6 +53,7 @@ from .meetings import MeetingsAPI
 from .meeting_templates import MeetingTemplatesAPI
 from .meeting_invitees import MeetingInviteesAPI
 from .meeting_registrants import MeetingRegistrantsAPI
+from .hunt_groups import HuntGroupsAPI
 
 import os
 
@@ -219,6 +221,10 @@ class WebexAPI(object):
         self.licenses = LicensesAPI(self._session, object_factory)
         self.memberships = MembershipsAPI(self._session, object_factory)
         self.messages = MessagesAPI(self._session, object_factory)
+        self.organization_contacts = OrganizationContactsAPI(
+            self._session,
+            object_factory,
+        )
         self.organizations = OrganizationsAPI(self._session, object_factory)
         self.people = PeopleAPI(self._session, object_factory)
         self.roles = RolesAPI(self._session, object_factory)
@@ -241,6 +247,7 @@ class WebexAPI(object):
         self.meeting_registrants = MeetingRegistrantsAPI(
             self._session, object_factory
         )
+        self.hunt_groups = HuntGroupsAPI(self._session, object_factory)
 
     @property
     def access_token(self):
