@@ -95,6 +95,15 @@ organizations
 .. autoclass:: webexpythonsdk.api.organizations.OrganizationsAPI()
 
 
+.. _org_contacts:
+.. _organization_contacts:
+
+organization_contacts
+---------------------
+
+.. autoclass:: webexpythonsdk.api.organization_contacts.OrganizationContactsAPI()
+
+
 .. _people:
 
 people
@@ -227,6 +236,15 @@ Organization
 ------------
 
 .. autoclass:: Organization()
+    :inherited-members:
+
+
+.. _OrganizationContact:
+
+Organization Contact
+--------------------
+
+.. autoclass:: OrganizationContact()
     :inherited-members:
 
 

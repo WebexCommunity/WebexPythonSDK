@@ -61,6 +61,7 @@ from .models.immutable import (
     MeetingTemplate,
     Membership,
     Message,
+    OrganizationContact,
     Organization,
     Person,
     Recording,
