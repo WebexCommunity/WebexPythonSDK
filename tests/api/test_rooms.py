@@ -111,7 +111,8 @@ def add_rooms(api):
 
     def inner(num_rooms):
         for _ in range(num_rooms):
-            rooms.append(api.rooms.create(create_string("Additional Room")))
+            r = api.rooms.create(create_string("Additional Room"))
+            rooms.append(r)
         return rooms
 
     yield inner
@@ -184,9 +185,14 @@ def test_get_room_meeting_info(api, group_room):
 
 def test_update_room_title(api, group_room):
     new_title = create_string("Updated Group Room")
-    room = api.rooms.update(group_room.id, title=new_title)
+    room = api.rooms.update(
+        group_room.id,
+        title=new_title,
+        isLocked=True,
+    )
     assert is_valid_room(room)
     assert room.title == new_title
+    assert room.isLocked is True
 
 
 def test_delete_room(api, temp_room):
