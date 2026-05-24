@@ -233,6 +233,16 @@ class MessagesAPI(object):
                 be posted into the room. Only one file is allowed per message.
             attachments(list): Content attachments to attach to the message.
                 See the Cards Guide for more information.
+
+                .. warning::
+                    Sending a card does **not** automatically enable your
+                    application to receive webhook notifications when a user
+                    interacts with it (e.g. submits a form). To receive those
+                    events you must explicitly create a webhook with
+                    ``resource="attachmentActions"`` and ``event="created"``
+                    via ``api.webhooks.create()``. Without that webhook, card
+                    actions are silently discarded from your application's
+                    perspective.
             parentId(str): The parent message to reply to. This will
                 start or reply to a thread.
             **request_parameters: Additional request parameters (provides

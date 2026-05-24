@@ -46,6 +46,13 @@ class AdaptiveCard(AdaptiveCardComponent):
 
     **_Note:_** Webex currently supports version 1.3 of adaptive cards and
     thus only features from that release are supported in this abstraction.
+
+    **Webhook requirement for card actions:** Posting a card does *not*
+    automatically deliver user interactions (button clicks, form submits) to
+    your application. You must create a dedicated webhook with
+    ``resource="attachmentActions"`` and ``event="created"`` via
+    ``api.webhooks.create()`` to receive those events. Without that webhook,
+    card actions are invisible to your application.
     """
 
     type = "AdaptiveCard"
